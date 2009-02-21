@@ -1,0 +1,50 @@
+div.jplex-window {
+	border:4px #666666 solid;
+	font-size:0.9em;
+	position:absolute;
+    border-radius:6px;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+}
+
+div.jplex-window div.header {
+	border-bottom:1px #c0c0c0 solid;
+	background:yellowgreen;
+    color:#333333;
+    padding:0.3em 2em 0.3em 0.3em;
+}
+
+div.jplex-window div.footer {
+    border-top: 1px #c0c0c0 solid;
+    background: #fefefe;
+    padding:0.3em;
+}
+
+div.jplex-window div.body {
+	padding:0.6em;
+    background:#fdfdfd;
+}
+
+div.jplex-window a.close {
+	background:url('icon_close.png') no-repeat;
+    width:15px;
+    height:15px;
+    position:absolute;
+    right:0.3em;
+}
+
+div.jplex-window a.close:hover {
+    background:url('icon_close_h.png') no-repeat;
+    cursor:pointer;
+}
+
+div.loading {
+    background:url( 'loading.gif' ) center center no-repeat;
+    padding:4em;
+    background-color:#ffffff;
+}
+
+div.jplex-window .draggable:hover {
+    cursor:move;
+}
+

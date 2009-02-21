@@ -1,0 +1,112 @@
+input.calendar[type=text] {
+	background-image: url( 'icon-calendar.gif' );
+    background-repeat: no-repeat;
+	background-position: 6.7em center;
+	border: 1px #c0c0c0 solid;
+	padding:0.1em 1em 0.1em 0.1em;
+	width:7em;
+}
+input.calendar[type=button] {
+	background-image: url( 'icon-calendar.gif' );
+    background-repeat: no-repeat;
+	background-position: center center;
+	border:1px #909090 solid;
+	padding:0.1em 1em 0.1em 0.1em;
+	margin-left:0.2em;
+	width:30px;
+	border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+	overflow:visible;
+}
+div.calendar {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background: #bfe2f6;
+    padding: 5px;
+    border: 1px #7ecbf7 solid;
+}
+
+div.calendar table {
+    border: 1px #7ecbf7 solid;
+    background: white;
+	position:static;
+}
+
+div.calendar th {
+    border-bottom: 1px #7ecbf7 solid;
+}
+
+div.calendar td {
+    text-align: center;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 1px transparent solid;
+    line-height:1em;
+}
+
+div.calendar td:hover, div.calendar td.ie6-hover {
+    background: #bfe2f6;
+    cursor: pointer;
+}
+
+div.calendar td.outofmonth {
+    color: #aaaaaa;
+}
+
+div.calendar td.selected {
+    background: #DA8892;
+    color: white;
+    font-weight: bold;
+}
+
+div.calendar td.focused {
+	border: 1px #c0a0a0 dashed;
+}
+
+div.calendar td.disabled {
+	background:#ededed;
+	font-style:italic;
+	color:#bbbbbb;
+}
+
+div.calendar span.previous {
+    font-size: 14px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+div.calendar span.next {
+    font-size: 14px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+div.calendar span.next:hover, div.calendar span.previous:hover {
+    background: white;
+    color: blue;
+    cursor: pointer;
+}
+
+div.calendar span.title {
+    font-weight: bold;
+}
+
+div.calendar div.top {
+    text-align: center;
+}
+
+div.calendar div.close {
+    text-align: center;
+    clear: both;
+    font-size: 12px;
+}
+
+div.calendar div.close:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

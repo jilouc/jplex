@@ -1,0 +1,3 @@
+ul.jplex-tabs li {
+    margin-left: expression(this.previousSibling==null?'50px':'-1px');
+}

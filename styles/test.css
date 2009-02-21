@@ -1,0 +1,64 @@
+body, div, p, h1, h2, h3, ul, ol, span, a, table, td, form, img, li {
+    font-family: sans-serif;
+}
+
+body {
+    font-size: 0.8em;
+}
+
+.log {
+    margin-bottom: 1em;
+}
+ 
+.loading {
+    width: 16px;
+    height: 16px;
+    background-image: url(../styles/loading.gif);
+    float: right;
+}
+table.tester {
+    padding: 0;
+    border-collapse: collapse;
+    width: 90%;
+    margin: 0 auto;
+}
+
+table.tester td {
+    margin: 0;
+    padding-left: 1em;
+    padding-right: 1em;
+    border: 1px solid black;
+}
+
+.logsummary {
+    margin-bottom: 1em;
+    padding: 1ex;
+    border: 1px solid #000;
+    font-weight: bold;
+}
+
+.log table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px dotted #666;
+}
+
+.log table td, .log table th {
+    text-align: left;
+    padding: 3px 8px;
+    border: 1px dotted #666;
+}
+
+.passed {
+    background-color: #cfc;
+}
+
+.failed, .error {
+    background-color: #fcc;
+}
+
+#results {
+    float: right;
+    border: 1px black solid;
+    padding: 10px;
+}
