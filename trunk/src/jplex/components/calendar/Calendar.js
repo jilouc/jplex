@@ -37,6 +37,14 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
              */
             maxDate: false,
             /**
+             * Pattern to format the output string of the calendar
+             * (e.g. the value of the linked text input field). To know
+             * more about pattern tokens, see jPlex.xprototype.Date#format
+             * @see jPlex.xprototype.Date#format
+             * @default "d-m-Y"
+             */
+            dateFormat:"d-m-Y",
+            /**
              * Time in seconds to show/hide the popup calendar
              * @config fade
              * @default 0.3
@@ -59,7 +67,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
                 /**
                  * When a new date is selected
                  * @event onSelectEvent
-                 * @param date {Date} The selected date
+                 * @param {Date} date The selected date
                  */
                 onSelectEvent: Prototype.emptyFunction,
                 /**
@@ -134,7 +142,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
                     this.oFocus.select(null, true);
                 else
                     this.show();
-            }.bind(this)
+            }.bind(this);
 
             this.eSrc.bindKey(Event.Key.ENTER, select, {preventDefault:true});
             this.eSrc.bindKey(Event.Key.SPACE, select, {preventDefault:true});
@@ -310,7 +318,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
         this.component.addClassName('calendar');
 
         if (this.eSrc) {
-            this.eSrc.addClassName('calendar')
+            this.eSrc.addClassName('calendar');
             this.component.setStyle({display:'none'});
             if (this.eSrc.getAttribute('type') == 'button' && Prototype.Browser.IE6) {
                 this.eSrc.addClassName('calendar-button');
@@ -469,11 +477,11 @@ jPlex.extend('jplex.components.Calendar', {
             }).update(oDate.getDate().toString());
 
             if (Prototype.Browser.IE6) {
-                this._eCell.observe("mouseover", function() {               
-                    this._eCell.addClassName("ie6-hover")
+                this._eCell.observe("mouseover", function() {
+                    this._eCell.addClassName("ie6-hover");
                 }.bind(this));
                 this._eCell.observe("mouseout", function() {
-                    this._eCell.removeClassName("ie6-hover")
+                    this._eCell.removeClassName("ie6-hover");
                 }.bind(this));
             }
 
@@ -499,8 +507,7 @@ jPlex.extend('jplex.components.Calendar', {
             }
             this.focus();
             this._oCalendar.setSelected(this);
-            //TODO : toFormattedDate(format)            
-            this._oCalendar.setValue(this.getDate().toFrenchString());
+            this._oCalendar.setValue(this.getDate().format(this._oCalendar.cfg("dateFormat")));
             if (bIsClick && this._oCalendar.eDest) {
                 this._oCalendar.hide();
             }

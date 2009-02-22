@@ -16,21 +16,29 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
         defaultConfig: {
             header: true,
             footer: false,
-            modal: false,
             center: true,
+
             close:'clickout', // jplex.components.Window.CLOSE_CLICK_OUT
             draggable:false,
+
+            title: "",
+
+            ajax: null,
+            ajaxParameters: {},
+
+            modal: false,
+            zBase: 0,
+
+            overlay: false,
+            overlayColor:'#000000',
+            overlayOpacity:0.6,
+            overlayFade:false,
+
             width: null,
             heigth: null,
             top: null,
             left: null,
-            title: "",
-            ajax: null,
-            ajaxParameters: {},
-            zBase: 0,
-            overlay: false,
-            overlayColor:'#000000',
-            overlayOpacity:'0.6',
+            constrainToViewport:true, // TODO
 
             events: {
                 beforeRenderEvent: Prototype.emptyFunction,
@@ -46,7 +54,6 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
     },
 
     initialize: function($super, eElement, oConfig) {
-
         $super(eElement, oConfig);
         
         this.nLevel = this.cfg('zBase') + 2 * jplex.components.Window.list.length + 1;
@@ -82,7 +89,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
         }
 
         if (this.cfg("close") == jplex.components.Window.CLOSE_BUTTON) {
-            if(!hd) { /* Error */ }
+            if(!hd) { /* TODO Error */ }
             this._addCloseButton();
         }
 
@@ -162,13 +169,14 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
     },
 
     _addOverlay: function() {
+        
         this.oOverlay = new jplex.components.Overlay(this.sID+"-overlay", {
             color:this.cfg('overlayColor'),
-            z:this.nLevel - 1,
-            fade:0.4,
+            z: this.nLevel - 1,
+            fade:this.cfg('overlayFade'),
             opacity:this.cfg('overlayOpacity')
         });
-        
+
         this.oOverlay.component.observe("click", function(e) {
             if(this.cfg('close') == jplex.components.Window.CLOSE_CLICK_OUT) {
                 this.hide();
@@ -178,7 +186,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
     },
 
     _addCloseButton: function() {
-        var close = new Element('a'),
+        var close = new Element('a', {id:this.ID+"-closecross"}),
             elt = this.component.down('div.header') || this.component.down('div.body');
 
         close.addClassName('close').update('&nbsp;');
@@ -232,8 +240,9 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
     },
 
     show: function() {
-        if(this.cfg('modal'))
+        if(this.cfg('modal')) {
             this.oOverlay.show();
+        }
         if(this.cfg('center')) {
             this.makeCentered();
             Event.observe(window, 'scroll', this._evtMakeCentered);

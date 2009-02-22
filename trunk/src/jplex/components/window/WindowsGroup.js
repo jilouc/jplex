@@ -34,7 +34,7 @@ jPlex.provide('jplex.components.window.WindowsGroup', 'jplex.common.Component', 
 
     add: function(oElement) {
         var w = typeof(oElement) == 'string' ?
-                new jplex.components.Window(oElement, {center:false,draggable:true, header:true, close:Window.CLOSE_BUTTON}) :
+                new jplex.components.Window(oElement, {modal:false,center:false,draggable:true, header:true, close:Window.CLOSE_BUTTON}) :
                 oElement;
         var length = this.windows.length;
         w.setHeader('Window #'+length);

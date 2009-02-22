@@ -3,27 +3,30 @@
  * @class window.Dialog
  * @extends jplex.components.Window
  */
-jPlex.provide('jplex.components.window.Dialog', 'jplex.components.Window', {
-
+jPlex.provide('jplex.components.window.Dialog', 'jplex.components.window.Modal', {
+    
     _definition: {
         name: 'WindowDialog',
         defaultConfig: {
             header:true,
             footer:true,
-            modal:false,
+
             center:true,
             close:jplex.components.Window.CLOSE_BUTTON,
             draggable:true,
-            width: null,
-            heigth: null,
-            top: null,
-            left: null,
-            icon: '',
-            title:'Dialog',
+
             okButton: true,
             cancelButton: true,
-            okText: '',
-            cancelText: '',
+            okButtonLabel: '',
+            cancelButtonLabel: '',
+
+            zBase:9998,
+            /**
+             * Array of optional button, each item of the array is an object like the following
+             * { label: "Label of the button", click: function: { Function triggered on click } }
+             * Note that in the 'click' function, 'this' will refer to the Window.Dialog object.
+             */
+            otherButtons: [],
 
             events: {
                 onShowEvent: Prototype.emptyFunction,
@@ -44,20 +47,36 @@ jPlex.provide('jplex.components.window.Dialog', 'jplex.components.Window', {
 
     initialize: function($super, eElement, oConfig) {
 
-       oConfig = Object.extend(this._definition.defaultConfig, oConfig);
+       oConfig = Object.extend(Object.clone(this._definition.defaultConfig), oConfig);
        $super(eElement, oConfig);
 
        this._addButtons();
+
+       if($(this.ID+"-closecross")) {
+           $(this.ID+"-closecross").observe('click', this._cancelButtonClick.bind(this));
+       }
     },
 
     _addButtons: function() {
+        var down = this.component.down('div.footer');        
+
+        $A(this.cfg("otherButtons")).each(function(s,i) {
+            var bt = new Element('input', {
+                type: 'button',
+                id: this.sID+'-bt'+i,
+                value: s.label
+            });
+            down.appendChild(bt);
+            bt.observe('click', s.click.bindAsEventListener(this));
+        }.bind(this));
+
         if(this.cfg('okButton')) {
             var ok = new Element('input', {
                 type: 'button',
                 id: this.sID+'-ok',
-                value: this.cfg('okText').blank() ? this.lang('OK') : this.cfg('okText')
+                value: this.cfg('okButtonLabel').blank() ? this.lang('OK') : this.cfg('okButtonLabel')
             });
-            this.component.down('div.footer').appendChild(ok);
+            down.appendChild(ok);
             ok.observe('click', this._okButtonClick.bindAsEventListener(this));
         }
 
@@ -65,23 +84,27 @@ jPlex.provide('jplex.components.window.Dialog', 'jplex.components.Window', {
             var cancel = new Element('input', {
                 type: 'button',
                 id: this.sID+'-cancel',
-                value: this.cfg('cancelText').blank() ? this.lang('CANCEL') : this.cfg('cancelText')
+                value: this.cfg('cancelButtonLabel').blank() ? this.lang('CANCEL') : this.cfg('cancelButtonLabel')
             });
-            this.component.down('div.footer').appendChild(cancel);
+            down.appendChild(cancel);
             cancel.observe('click', this._cancelButtonClick.bindAsEventListener(this));
         }
+
+
+        
     },
 
     _okButtonClick: function() {
         this.fireEvent('onOkButtonClickEvent');
+        this.hide();
     },
 
     _cancelButtonClick: function() {
         this.fireEvent('onCancelButtonClickEvent');
+        this.hide();
     },
 
     hide: function($super) {
-        this.fireEvent('onCancelButtonClickEvent');
         $super();
     }
 });
