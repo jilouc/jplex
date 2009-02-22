@@ -102,7 +102,7 @@ jPlex.provide('jplex.common.Component', {
         // Build the configuration object with the default properties and those
         // set by the user
         this._definition.defaultConfig = this._definition.defaultConfig || {};
-        this._definition.events = this._definition.Events || {};
+        this._definition.events = this._definition.events || {};
 
         oConfig = oConfig || {};
         oConfig.events = oConfig.events || {};

@@ -20,7 +20,7 @@ jPlex.provide('jplex.components.Overlay', 'jplex.common.Component',  {
         name:"Overlay",
         defaultConfig: {
             opacity:0.75,
-            fade:0,
+            fade:false,
             z:1,
             color:"#000000",
 
@@ -115,7 +115,7 @@ jPlex.provide('jplex.components.Overlay', 'jplex.common.Component',  {
  * Show the overlay
  */
     show: function() {
-        if(this.cfg('fade') == 0) {
+        if(!this.cfg('fade')) {
             this.component.show();
         } else {
             new Effect.Appear(this.component, {duration:this.cfg('fade'), to:this.cfg('opacity')});
@@ -128,7 +128,7 @@ jPlex.provide('jplex.components.Overlay', 'jplex.common.Component',  {
  * Hide the overlay
  */
     hide: function() {
-        if(this.cfg('fade') == 0) {
+        if(!this.cfg('fade')) {
             this.component.hide();
         } else {
             new Effect.Fade(this.component, {duration:this.cfg('fade')});
