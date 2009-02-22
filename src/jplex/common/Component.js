@@ -71,6 +71,9 @@ jPlex.provide('jplex.common.Component', {
         // using the component default container. It's added to the body of the document
         this.component = $(eElement);
 
+        if (this._extension) 
+            this._definition = Object.extendRecursive(this._definition, this._extension);
+
         if (!this._definition ||
             !this._definition.name ||
             (!this._definition.defaultContainer && !this.component))
