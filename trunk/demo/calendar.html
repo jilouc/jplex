@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
+	<link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>  
+    <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar.css" type="text/css"/>  
+	<!--[if IE 6]><link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar-ie6.css" type="text/css"/><![endif]-->  
+    <script src="../src/jPlex.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8"></script> 
+</head>
+<body>
+<h1>jPlex Calendar Demo</h1>
+
+	<h2>Faded calendar from text input (fr)</h2>
+	<h3>XHTML Code</h3>
+
+    <textarea name="code" class="xml">
+<input type="text" id="demo-fr" /></textarea>
+
+    <h3>JS Code</h3>
+
+    <textarea name="code" class="js">
+var date = new Date();
+date.setDate(date.getDate()+10);
+new Calendar('myCalendar-fr', {minDate: new Date(), maxDate: date, src:"demo-fr"});</textarea>
+
+    <h3>Result</h3>
+    <input type="text" id="demo-fr"/><br /><br />
+
+    <select><option>Test IE6- windowed elements bug</option></select><br /><br />
+
+    <h2>Calendafor without fading (en)</h2>
+
+    <h3>XHTML Code</h3>
+
+	<textarea name="code" class="xml">
+<input type="text" id="demo-en-value"/>
+<input type="button" id="demo-en" /></textarea>
+
+	<h3>JS Code</h3>
+
+	<textarea name="code" class="js">
+new Calendar('myCalendar-en', {lang:'en', fade:0, dest:"demo-en-value", src:"demo-en", dateFormat:"Y/m/d"});</textarea>
+
+	<h3>Result</h3>
+
+    <input type="text" id="demo-en-value"/>
+    <input type="button" id="demo-en" />
+
+    <h2>Calendar on button</h2>
+
+    <h3>XHTML Code</h3>
+
+    <textarea name="code" class="xml">
+<select id="day">
+    <option value="01">01</option>
+    ...
+    <option value="31">31</option>
+</select>
+<select id="month">
+    <option value="01">01</option>
+    ...
+    <option value="12">12</option>
+</select>
+<input type="text" maxlength="4" readonly="true" id="year" size="4" />
+<input type="button" id="demo-only-button" /></textarea>
+
+    <h3>JS Code</h3>
+
+	<textarea name="code" class="js">
+new Calendar('myButtonCalendar', {src:"demo-only-button"});
+
+$C("myButtonCalendar").setEvent("onSelectEvent", function(o) {
+    $("day").value = o.date.format('d');
+    $("month").value = o.date.format('m');
+    $("year").value = o.date.format('Y');
+
+})</textarea>
+
+    <h3>Result</h3>
+
+    <select id="day">
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+        <option value="31">31</option>
+    </select>
+    <select id="month">
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+    <input type="text" maxlength="4" readonly="true" id="year" size="4" />
+    <input type="button" id="demo-only-button" />
+
+    <h2>Simple calendar</h2>
+
+    <h3>XHTML Code</h3>
+
+    <textarea name="code" class="xml">
+<td>
+    <div id="mySimpleCalendar"></div>
+</td></textarea>
+
+    <h3>JS Code</h3>
+
+    <textarea name="code" class="js">
+new Calendar('mySimpleCalendar');</textarea>
+
+    <h3>Result</h3>
+
+    <table border="1">
+        <tr>
+            <td>
+                Some content
+            </td>
+            <td>Some other content</td>
+        </tr>
+        <tr>
+            <td><div id="mySimpleCalendar"></div></td>
+            <td>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
+    eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
+    voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
+    voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+    velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut
+    enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
+    consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
+    vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</td>
+        </tr>
+    </table>
+
+
+<script type="text/javascript">
+    <!--
+    jPlex.include('jplex.components.Calendar');
+
+	var date = new Date();
+	date.setDate(date.getDate()+10);
+    new Calendar('myCalendar-fr', {minDate: new Date(), maxDate: date, src:"demo-fr"});
+
+	new Calendar('myCalendar-en', {lang:'en', fade:0, dest:"demo-en-value", src:"demo-en", dateFormat:"Y/m/d"});
+
+	new Calendar('myButtonCalendar', {src:"demo-only-button"});
+
+	new Calendar('mySimpleCalendar');
+
+	$C("myButtonCalendar").setEvent("onSelectEvent", function(o) {
+        $("day").value = o.date.format('d');
+        $("month").value = o.date.format('m');
+        $("year").value = o.date.format('Y');
+
+    })
+    -->
+</script>
+</body>
+</html> 

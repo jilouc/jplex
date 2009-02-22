@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
+    <link rel="stylesheet" href="demos.css" type="text/css"/>
+    <link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/window/assets/window.css" type="text/css"/>  
+    <script src="../src/jPlex.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8"></script> 
+</head>
+<body>
+<h1>jPlex Window Demo</h1>
+
+<input type="button" id="launcher" value="Create modal" />
+
+
+<script type="text/javascript">
+	<!--
+    jPlex.include('jplex.components.Window');
+    Window.Dialog = jPlex.include('jplex.components.window.Dialog');
+    Window.WindowsGroup = jPlex.include('jplex.components.window.WindowsGroup');
+
+    var g = new Window.WindowsGroup('test');
+    var w1 = g.add('w1'); w1.setBody("<img src='img/emo_cat.jpg' alt='emoCat' />");
+    var w2 = g.add('w2'); w2.setBody("<img src='img/emo_cat.jpg' alt='emoCat' />");
+    var w3 = g.add('w3'); w3.setBody("<img src='img/emo_cat.jpg' alt='emoCat' />"); 
+    /*var cancel = function() {alert('cancel');};
+    var w = new Window.Dialog('d1', {
+        okButton:false,
+        title:"Etape 1",
+        overlayFade:1,
+        overlayColor:'#ff0000',
+        overlayOpacity: 0.4,
+        otherButtons:[
+            {
+                label:'Suiv. >',
+                click: function() {
+                    this.hide();
+                    var w2 = $C('d2');
+                    if(!w2) {
+                        w2 = new Window.Dialog('d2', {
+                            title: "Etape 2",
+                            okButton: false,
+                            overlayColor:'#0000ff',
+                            otherButtons:[
+                                {
+                                    label: "< Préc.",
+                                    click: function() {
+                                        this.hide();
+                                        $C('d1').show();
+                                    }
+                                },
+                                {
+                                    label: "Suiv. >",
+                                    click: function() {
+                                        this.hide();
+                                        var w3 = $C('d3');
+                                        if(!w3) {
+                                            w3 = new Window.Dialog("d3", {
+                                                title: "Etape finale",
+                                                okButton:true,
+                                                overlayColor:'#00ff00',
+                                                otherButtons: [
+                                                    {
+                                                        label:"< Préc.",
+                                                        click:function() {
+                                                            this.hide();
+                                                            $C('d2').show();
+                                                        }
+                                                    }
+                                                ],
+                                                events: {
+                                                    onOkButtonClickEvent:function() {
+                                                        alert("woot woot !");
+                                                    },
+                                                    onCancelButtonClickEvent:cancel
+                                                }
+                                            });
+                                        }
+                                        w3.show();
+                                    }
+                                }
+                            ],
+                            events: {
+                                onCancelButtonClickEvent: cancel
+                            }
+                        });
+                    }
+                    w2.show();
+                }
+            }
+        ],
+        events: {
+            onCancelButtonClickEvent: cancel
+        }
+    });  */
+    g.add($C('d1'));
+    //w.setBody('Voulez-vous ?');
+    //w.show();
+    //-->
+</script>
+</body>
+</html>

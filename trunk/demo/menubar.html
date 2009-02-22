@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
+    <link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/menubar/assets/menubar.css" type="text/css"/>
+    <script src="../src/jPlex.js" type="text/javascript" charset="utf-8">
+    </script>
+    <script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8">
+    </script>
+    <style type="text/css">
+        body {
+            font-family: "Trebuchet MS", sans-serif;
+            font-size:0.9em;
+        }
+
+        div.menubar {
+            top: 0;
+            left: 0;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+<br/>
+
+<div id="events"></div>
+<br/>
+
+<h1>jPlex MenuBar Demo</h1>
+
+Both following methods are equivalent to build the above menu bar (which actually uses the first one)<br/><br/>
+<table>
+    <tr>
+        <td style="vertical-align:top;">
+            <h3>Using one single array</h3>
+            which contains menu items
+            <textarea name="code" class="js">
+clickHandler = function() {
+    var div = new Element("div");
+    div.setStyle({
+        padding: "3px",
+        margin: "3px",
+        border: "1px #c0efc0 solid"
+    }).update("Trigger Handler for " + this.sLabel);
+    $("events").appendChild(div);
+};
+                
+var myData = [{
+    name: "Menu #1",
+    items: [{
+        name: "Item 1.1",
+        icon: "img/001.png",
+        items: [{
+            name: "Item 1.1.1",
+            items: [{
+                name: "Item 1.1.1.1",
+                click: clickHandler,
+                keySC: {
+                    key: Event.Key.P,
+                    ctrl: true,
+                    text: "Ctrl + P"
+                }
+            }, {
+                name: "Item 1.1.1.2",
+                click: clickHandler,
+                keySC: {
+                    key: Event.Key.H,
+                    ctrl: true,
+                    text: "Ctrl + H"
+                }
+            }]
+        }, {
+            name: "Item 1.1.2"
+        }, ]
+    }, {
+        name: "Item 1.2"
+    }]
+}, {
+    name: "Menu #2",
+    items:[{
+        name:"Item 2.1",
+        icon:"img/031.png",
+        link:"http://www.google.fr"
+    }, {
+        name:"Item 2.2"
+    }]
+}];
+var m = new MenuBar("menubar", {data:myData});
+            </textarea>
+        </td>
+        <td style="vertical-align:top; padding-left:4em;">
+            <h3>Progressive build</h3>
+            (item are added on the fly)
+            <textarea name="code" class="js">
+clickHandler = function() {
+    var div = new Element("div");
+    div.setStyle({
+        padding: "3px",
+        margin: "3px",
+        border: "1px #c0efc0 solid"
+    }).update("Trigger Handler for "+this.sLabel);
+    $("events").appendChild(div);
+};
+
+var m = new MenuBar("menubar");
+
+m.addItem({name:"Menu #1"})
+    .addItem({name:"Menu #2"}).getItem(0)
+    .addItem({name:"Item 1.1", icon:"img/001.png"})
+    .addItem({name:"Item 1.2"}).getItem(0)
+    .addItem({name:"Item 1.1.1"})
+    .addItem({name:"Item 1.1.2"}).getItem(0)
+    .addItem({name:"Item 1.1.1.1", click:clickHandler, keySC:{key:Event.Key.P, ctrl:true, text:"Ctrl+P"}})
+    .addItem({name:"Item 1.1.1.2", click:clickHandler, keySC:{key:Event.Key.H, ctrl:true, text:"Ctrl+H"}});
+m.getItem(1)
+    .addItem({name:"Item 2.1", icon:"img/031.png", link:"http://www.google.fr"})
+    .addItem({name:"Item 2.2"});</textarea>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+
+var t = new Date().getTime();
+jPlex.include('jplex.components.MenuBar');
+Logger.log((new Date().getTime() - t) + "ms to load jplex MenuBar")
+clickHandler = function() {
+    var div = new Element("div");
+    div.setStyle({
+        padding: "3px",
+        margin: "3px",
+        border: "1px #c0efc0 solid"
+    }).update("Trigger Handler for " + this.sLabel);
+    $("events").appendChild(div);
+}
+
+var myData = [{
+    name: "Menu #1 - "+(new Date().format('d-m-Y')),
+    items: [{
+        name: "Item 1.1",
+        icon: "img/001.png",
+        items: [{
+            name: "Item 1.1.1",
+            items: [{
+                name: "Item 1.1.1.1",
+                click: clickHandler,
+                keySC: {
+                    key: Event.Key.P,
+                    ctrl: true,
+                    text: "Ctrl + P"
+                }
+            }, {
+                name: "Item 1.1.1.2",
+                click: clickHandler,
+                keySC: {
+                    key: Event.Key.H,
+                    ctrl: true,
+                    text: "Ctrl + H"
+                }
+            }]
+        }, {
+            name: "Item 1.1.2"
+        }, ]
+    }, {
+        name: "Item 1.2"
+    }]
+}, {
+    name: "Menu #2",
+    items:[{
+        name:"Item 2.1",
+        icon:"img/031.png",
+        link:"http://www.google.fr"
+    }, {
+        name:"Item 2.2"
+    }]
+}];
+var m = new MenuBar("menubar", {data:myData});
+</script>
+</body>
+</html>
