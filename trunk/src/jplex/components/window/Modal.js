@@ -9,27 +9,21 @@ jPlex.provide("jplex.components.window.Modal", "jplex.components.Window", {
     // (par exemple dans le cas Modal ci-dessous, les paramètres 'footer', 'overlayColor', 'overlayOpacity' etc. ne sont plus
     // pris en compte au niveau de Window (et Component) parce que this._definition vaut le hash qu'on définit juste là.
     // (en rendant Object.extend récursif ???)
-    _definition: {
-        name: 'WindowDialog',
+ 
+    _extension: {
+        name: 'WindowModal',
         defaultConfig: {
             header:false,
             modal:true,
             close:'clickout',
 
-            zBase: 9998,
-
-            events: {
-                onShowEvent: Prototype.emptyFunction,
-                onHideEvent: Prototype.emptyFunction,
-                onPositionChangeEvent: Prototype.emptyFunction
-            }
-        },
-        defaultContainer: "div"
+            zBase: 9998
+        }
     },
 
     initialize: function($super, eElement, oConfig) {
-        oConfig = Object.extend(Object.clone(this._definition.defaultConfig), oConfig);
-        oConfig.modal = true;
+        //oConfig = Object.extend(Object.clone(this._definition.defaultConfig), oConfig);
+        //oConfig.modal = true;
         $super(eElement, oConfig);
     }
 });
