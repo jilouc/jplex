@@ -232,7 +232,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
                 this._getTbody().appendChild(eTR);
             }
             var oDayItem = new Calendar.Item(this, oDay, i),
-                    eDay = oDayItem.get();
+                    eDay = oDayItem.getCell();
             var diff = this.cfg('date').getTime() - oDay.getTime();
             if (diff >= 0 && diff < 86400000) {
                 oDayItem.select();
@@ -257,10 +257,11 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
      * Go to the next month
      */
     next: function() {
+        var n = this.oCurrent.getIndex();
         this.oMonth = this.oMonth.lastDayOfMonth();
         this.oMonth.setNextDay();
         this.render();
-        this.oItems[0].focus();
+        this.oItems[n].select(null, false);
         if (this.eSrc)
             this.eSrc.activate();
     },
@@ -500,10 +501,10 @@ jPlex.extend('jplex.components.Calendar', {
         select: function(eEvent, bIsClick) {
             if (!this.check()) return;
 
-            if (this._oCalendar.oCurrent.get)
+            if (this._oCalendar.oCurrent.getCell)
                 this._oCalendar.oCurrent._unselect();
-            if (!this.get().hasClassName('selected')) {
-                this.get().addClassName('selected');
+            if (!this.getCell().hasClassName('selected')) {
+                this.getCell().addClassName('selected');
             }
             this.focus();
             this._oCalendar.setSelected(this);
@@ -519,7 +520,7 @@ jPlex.extend('jplex.components.Calendar', {
          * @private
          */
         _unselect: function() {
-            this.get().removeClassName('selected');
+            this.getCell().removeClassName('selected');
         },
 
         /**
@@ -528,10 +529,10 @@ jPlex.extend('jplex.components.Calendar', {
         focus: function() {
             if (!this.check()) return;
 
-            if (this._oCalendar.oFocus.get)
+            if (this._oCalendar.oFocus.getCell)
                 this._oCalendar.oFocus._blur();
-            if (!this.get().hasClassName('focused')) {
-                this.get().addClassName('focused');
+            if (!this.getCell().hasClassName('focused')) {
+                this.getCell().addClassName('focused');
             }
             this._oCalendar.setFocused(this);
         },
@@ -541,7 +542,7 @@ jPlex.extend('jplex.components.Calendar', {
          * @private
          */
         _blur: function() {
-            this.get().removeClassName('focused');
+            this.getCell().removeClassName('focused');
         },
 
         /**
@@ -560,7 +561,7 @@ jPlex.extend('jplex.components.Calendar', {
          * Get the cell (td) element representing the item
          * @return {Element} the td element for the item
          */
-        get: function() {
+        getCell: function() {
             return this._eCell;
         },
 

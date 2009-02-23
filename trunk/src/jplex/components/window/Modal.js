@@ -4,26 +4,40 @@
  * @extends jplex.components.Window
  */
 jPlex.provide("jplex.components.window.Modal", "jplex.components.Window", {
-
-    // TODO trouver un moyen pour que la redéfinition ci-dessous ne shunte pas les paramètres de configuration non surchargés
-    // (par exemple dans le cas Modal ci-dessous, les paramètres 'footer', 'overlayColor', 'overlayOpacity' etc. ne sont plus
-    // pris en compte au niveau de Window (et Component) parce que this._definition vaut le hash qu'on définit juste là.
-    // (en rendant Object.extend récursif ???)
  
     _extension: {
         name: 'WindowModal',
         defaultConfig: {
+            /**
+             * Flag indicating whether the component has a title bar or not
+             * @config header
+             * @default false
+             */
             header:false,
+            /**
+             * Prevent the user to click outside and add an overlay to focus on the modal window
+             * @config modal
+             * @default true
+             */
             modal:true,
-            close:'clickout',
-
+            /**
+             * Determine the way the user will close the modal window
+             * @config close
+             * @default jplex.components.Window.CLOSE_CLICK_OUT
+             */
+            close: jplex.components.Window.CLOSE_CLICK_OUT,
+            /**
+             * z-index base for the window and its overlay
+             * @config zBase
+             * @default 9998
+             */
             zBase: 9998
         }
     },
 
     initialize: function($super, eElement, oConfig) {
-        //oConfig = Object.extend(Object.clone(this._definition.defaultConfig), oConfig);
-        //oConfig.modal = true;
+        // Force modal
+        oConfig.modal = true;
         $super(eElement, oConfig);
     }
 });

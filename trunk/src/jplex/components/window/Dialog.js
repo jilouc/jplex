@@ -3,16 +3,17 @@
  * @class window.Dialog
  * @extends jplex.components.Window
  */
-jPlex.provide('jplex.components.window.Dialog', 'jplex.components.window.Modal', {
+jPlex.provide('jplex.components.window.Dialog', 'jplex.components.Window', {
     
-    _definition: {
+    _extension: {
         name: 'WindowDialog',
         defaultConfig: {
             header:true,
             footer:true,
+            modal:false,
 
-            center:true,
-            close:jplex.components.Window.CLOSE_BUTTON,
+            center: true,
+
             draggable:true,
 
             okButton: true,
@@ -23,21 +24,22 @@ jPlex.provide('jplex.components.window.Dialog', 'jplex.components.window.Modal',
             zBase:9998,
             /**
              * Array of optional button, each item of the array is an object like the following
-             * { label: "Label of the button", click: function: { Function triggered on click } }
+             * <pre>{
+             * &nbsp;&nbsp;label: "Label of the button",
+             * &nbsp;&nbsp;click: function: { Function triggered on click }
+             * }</pre>
              * Note that in the 'click' function, 'this' will refer to the Window.Dialog object.
+             * @config otherButtons
+             * @default []
              */
             otherButtons: [],
 
             events: {
-                onShowEvent: Prototype.emptyFunction,
-                onHideEvent: Prototype.emptyFunction,
-                onPositionChangeEvent: Prototype.emptyFunction,
                 onOkButtonClickEvent: Prototype.emptyFunction,
                 onCancelButtonClickEvent: Prototype.emptyFunction
             }
 
         },
-        defaultContainer: "div",
         text: {
             fr: { OK: 'OK', CANCEL: 'Annuler'},
             en: { OK: 'OK', CANCEL: 'Cancel'}
@@ -46,8 +48,6 @@ jPlex.provide('jplex.components.window.Dialog', 'jplex.components.window.Modal',
 
 
     initialize: function($super, eElement, oConfig) {
-
-       oConfig = Object.extend(Object.clone(this._definition.defaultConfig), oConfig);
        $super(eElement, oConfig);
 
        this._addButtons();

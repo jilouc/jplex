@@ -9,16 +9,18 @@ jPlex.include('jplex.components.Overlay', true);
  * @param {Object} oConfig Optional. Configuration properties of the window
  * @constructor
  */
-jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
+jPlex.provide('jplex.components.Window', 'jplex.common.Component', {
 
     _definition: {
         name: "Window",
         defaultConfig: {
             header: true,
             footer: false,
-            center: true,
 
-            close:'clickout', // jplex.components.Window.CLOSE_CLICK_OUT
+            center: true,
+            constrainToCenter: false,
+
+            close:'button', // jplex.components.Window.CLOSE_CLICK_OUT
             draggable:false,
 
             title: "",
@@ -27,7 +29,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
             ajaxParameters: {},
 
             modal: false,
-            zBase: 0,
+            zBase: 9998,
 
             overlay: false,
             overlayColor:'#000000',
@@ -38,12 +40,14 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
             heigth: null,
             top: null,
             left: null,
-            constrainToViewport:true, // TODO
+            constrainToViewport: true,
 
             events: {
                 beforeRenderEvent: Prototype.emptyFunction,
                 afterRenderEvent: Prototype.emptyFunction,
-                onAjaxRequestCompleteEvent: Prototype.emptyFunction
+                onAjaxRequestCompleteEvent: Prototype.emptyFunction,
+                onShowEvent: Prototype.emptyFunction,
+                onHideEvent: Prototype.emptyFunction
             }
         },
         defaultContainer:"div",
@@ -55,17 +59,17 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
 
     initialize: function($super, eElement, oConfig) {
         $super(eElement, oConfig);
-        
+
         this.nLevel = this.cfg('zBase') + 2 * jplex.components.Window.list.length + 1;
         this.render();
 
         jplex.components.Window.list.push(this);
-            
+
         this._evtMakeCentered = this.makeCentered.bind(this);
     },
 
     render: function() {
-        
+
         this.fireEvent("beforeRenderEvent");
 
         this.component.addClassName("jplex-window");
@@ -89,7 +93,8 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
         }
 
         if (this.cfg("close") == jplex.components.Window.CLOSE_BUTTON) {
-            if(!hd) { /* TODO Error */ }
+            if (!hd) { /* TODO Error */
+            }
             this._addCloseButton();
         }
 
@@ -99,9 +104,14 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
 
         if (this.cfg("draggable")) {
             if (hd) {
-                this.drag = new Draggable(this.component, {handle:hd});
+                this.drag = new Draggable(this.component, {
+                    handle: hd,
+                    snap: this._constrainToViewport.bind(this)
+                });
             } else {
-                this.drag = new Draggable(this.component);
+                this.drag = new Draggable(this.component, {
+                    snap: this._constrainToViewport.bind(this)
+                });
             }
         }
 
@@ -123,27 +133,31 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
         return hd;
     },
 
+    setTitle: function(sTitle) {
+        this.setHeader(sTitle);  
+    },
+
     setBody: function(sBody) {
         var bd = this.component.down("div.body");
         if (bd) {
             bd.update(sBody);
 
-            if(this.cfg('center')) {
+            if (this.cfg('center')) {
                 // If the window contains images, we have to wait them to be loaded
                 // to get the correct position of the window
                 var imgs = bd.getElementsByTagName('img');
                 var loaded = $A([]);
-                if(imgs.length > 0) {
+                if (imgs.length > 0) {
                     this.setLoading(true);
                 }
-                $A(imgs).each(function(s,i) {
+                $A(imgs).each(function(s, i) {
                     var img = $(s);
                     loaded[i] = false;
                     img.hide();
                     img.observe('load', function(e, pic, n) {
                         loaded[n] = true;
                         pic.show();
-                        if(loaded.all()) {
+                        if (loaded.all()) {
                             this.setLoading(false);
                             this.makeCentered();
                         }
@@ -169,8 +183,8 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
     },
 
     _addOverlay: function() {
-        
-        this.oOverlay = new jplex.components.Overlay(this.sID+"-overlay", {
+
+        this.oOverlay = new jplex.components.Overlay(this.sID + "-overlay", {
             color:this.cfg('overlayColor'),
             z: this.nLevel - 1,
             fade:this.cfg('overlayFade'),
@@ -178,7 +192,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
         });
 
         this.oOverlay.component.observe("click", function(e) {
-            if(this.cfg('close') == jplex.components.Window.CLOSE_CLICK_OUT) {
+            if (this.cfg('close') == jplex.components.Window.CLOSE_CLICK_OUT) {
                 this.hide();
             }
             e.stop();
@@ -186,8 +200,8 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
     },
 
     _addCloseButton: function() {
-        var close = new Element('a', {id:this.ID+"-closecross"}),
-            elt = this.component.down('div.header') || this.component.down('div.body');
+        var close = new Element('a', {id:this.ID + "-closecross"}),
+                elt = this.component.down('div.header') || this.component.down('div.body');
 
         close.addClassName('close').update('&nbsp;');
         close.observe('click', this.hide.bind(this));
@@ -196,7 +210,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
 
     _addHeader: function(content) {
         var hd = new Element('div'),
-            span = new Element('span');
+                span = new Element('span');
         hd.appendChild(span.addClassName('title').update(content || ''));
         hd.addClassName('header');
         this.component.insert({top:hd});
@@ -205,13 +219,13 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
 
     _addBody: function(content) {
         var bd = new Element("div"),
-            hd = this.component.down("div.header"),
-            ft = this.component.down("div.footer");
+                hd = this.component.down("div.header"),
+                ft = this.component.down("div.footer");
 
         bd.addClassName("body").update(content || "");
-        if(hd) {
+        if (hd) {
             hd.insert({after:bd});
-        } else if(ft) {
+        } else if (ft) {
             ft.insert({before:ft});
         } else {
             this.component.insert(bd);
@@ -240,44 +254,62 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
     },
 
     show: function() {
-        if(this.cfg('modal')) {
+        if (this.cfg('modal')) {
             this.oOverlay.show();
         }
-        if(this.cfg('center')) {
+        if (this.cfg('constrainToCenter')) {
             this.makeCentered();
             Event.observe(window, 'scroll', this._evtMakeCentered);
             Event.observe(window, 'resize', this._evtMakeCentered);
         }
         this.component.show();
 
+        this.fireEvent("onShowEvent");
+
     },
 
     hide: function() {
-        if(this.cfg('modal'))
+        if (this.cfg('modal'))
             this.oOverlay.hide();
         this.component.hide();
         Event.stopObserving(window, 'scroll', this._evtMakeCentered);
         Event.stopObserving(window, 'resize', this._evtMakeCentered);
+
+        this.fireEvent("onHideEvent");
+
     },
 
     makeCentered: function(stop) {
+
         var dim = this.component.getDimensions();
         var vdim = document.viewport.getDimensions();
         var scroll = document.viewport.getScrollOffsets();
         this.component.setStyle({
-            top: (vdim.height/2-dim.height/2+scroll.top)+"px",
-            left: (vdim.width/2-dim.width/2+scroll.left)+"px"
+            top: Math.max(0, vdim.height / 2 - dim.height / 2 + scroll.top) + "px",
+            left: Math.max(0, vdim.width / 2 - dim.width / 2 + scroll.left) + "px"
         });
-        if(!stop)
+        if (!stop)
             this._evtMakeCentered.delay(0.1, true);
+    },
+
+    _constrainToViewport: function(x, y, draggable) {
+        if (!this.cfg("constrainToViewport"))
+            return [x,y];
+        var vpw = document.viewport.getWidth(),
+                vph = document.viewport.getHeight(),
+                w = draggable.element.getWidth(),
+                h = draggable.element.getHeight();
+        return[
+            w > vpw ? 0 : (x < vpw - w ? (x > 0 ? x : 0 ) : vpw - w),
+            h > vph ? 0 : (y < vph - h ? (y > 0 ? y : 0) : vph - h)];
     },
 
     setLoading: function(mode) {
         var bd = this.component.down('div.body');
         var ld = this.component.down('div.loading');
-        if(mode) {
+        if (mode) {
             bd.hide();
-            if(!ld) {
+            if (!ld) {
                 var loading = new Element("div").addClassName('loading');
                 this.component.insertBefore(loading, bd);
             } else {
@@ -285,7 +317,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
             }
         } else {
             bd.show();
-            if(ld) {
+            if (ld) {
                 ld.hide();
             }
         }
@@ -297,12 +329,12 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component',  {
 // Static properties
 
 jPlex.extend('jplex.components.Window', {
-/**
- *
- * @property list
- * @type Array
- * @static
- */
+    /**
+     *
+     * @property list
+     * @type Array
+     * @static
+     */
     list: $A([]),
     CLOSE_BUTTON: 'button',
     CLOSE_CLICK_OUT: 'clickout',

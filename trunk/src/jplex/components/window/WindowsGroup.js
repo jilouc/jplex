@@ -34,10 +34,11 @@ jPlex.provide('jplex.components.window.WindowsGroup', 'jplex.common.Component', 
 
     add: function(oElement) {
         var w = typeof(oElement) == 'string' ?
-                new jplex.components.Window(oElement, {modal:false,center:false,draggable:true, header:true, close:Window.CLOSE_BUTTON}) :
+                new jplex.components.Window(oElement, {draggable:true}) :
                 oElement;
         var length = this.windows.length;
-        w.setHeader('Window #'+length);
+
+        if(typeof(oElement) == 'string') w.setHeader('Window #'+length);
         w.show();
         this.windows.push(w);
         w.toFront = this._winToFront.methodize();
