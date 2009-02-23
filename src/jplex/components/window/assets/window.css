@@ -1,5 +1,5 @@
 div.jplex-window {
-	border:4px #666666 solid;
+	border:4px #888899 solid;
 	font-size:0.9em;
 	position:absolute;
     border-radius:6px;
@@ -9,7 +9,7 @@ div.jplex-window {
 
 div.jplex-window div.header {
 	border-bottom:1px #c0c0c0 solid;
-	background:yellowgreen;
+	background:#d3d3e3;
     color:#333333;
     padding:0.3em 2em 0.3em 0.3em;
 }

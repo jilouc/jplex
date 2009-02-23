@@ -87,8 +87,8 @@ a:visited { color: #003399;}
     margin-left:0;
     padding-left:0;
 }
-#doc3 table.events { float:right; }  
-#doc3 table.config { float:left; }
+#doc3 table.events { width:70%; margin:auto; margin-top:1em; }  
+#doc3 table.config { width:70%; margin:auto; margin-top:1em; }
 
 /* index page autocomplete */
 #propertysearch {;position:absolute;margin:1em;width:35em;}/* set width of widget here*/
