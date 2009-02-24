@@ -2,62 +2,33 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
-    <link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>
+    <link rel="stylesheet" href="./syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/menubar/assets/menubar.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/window/assets/window.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/tabs/assets/tabs.css" type="text/css"/>
+    <link rel="stylesheet" href="./global/styles.css" type="text/css"/>
     <script src="../src/jPlex.js" type="text/javascript" charset="utf-8">
     </script>
     <script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8">
     </script>
-    <style type="text/css">
-        body {
-            font-family: "Trebuchet MS", sans-serif;
-            font-size: 1.2em;
-            background: url( img/eire.jpg ) no-repeat;
-            background-size: 100%;
-
-        }
-
-        div.menubar {
-            top: 0;
-            left: 0;
-            position: absolute;
-        }
-
-        div#remote-pic-modal div.body,
-            div#local-pic div.body {
-            padding: 0
-        }
-
-        div#what {
-            width: 40%;
-            text-align:justify;
-        }  
-        div#about {
-            width: 40%;
-            text-align:justify;
-        }
-        div#about table {
-            text-align:center;
-        }
-    </style>
 </head>
 <body>
 
 <script type="text/javascript">
     <!--
-    jPlex.include("jplex.components.MenuBar");        
+    jPlex.include("jplex.components.MenuBar");
     var Window = jPlex.include('jplex.components.Window');
     jPlex.include('jplex.components.window.WindowsGroup');
+    jPlex.include('jplex.components.Tabs');
+
     var g = new WindowsGroup('test');
-    var first = g.add('what');
-    var what = "<p><h3>Welcome to jPlex Pangolin!</h3>" +
-               "jPlex is a javascript library that provides a set of usual user-interface components and some "+ 
-               "functions to help the everyday's life of a webdevelopper. It focuses on components that you can find "+
-               "on each web-application like calendar, menubar or windows. <br/><br/>You are on the provided window system "+
-               "<br/>Look on top of this page, you can see the menubar for further demo. Enjoy!"
-               "</p>" ;
-    first.setBody("<img src='img/logo.png' width='200' style='float:right;' />" + what);
+    var first = new Window('what', {
+        close: Window.CLOSE_CUSTOM,
+        ajax: "./global/home.html",
+        draggable: true
+    });
+    g.add(first);
+
     first.setTitle("Welcome!");
 
     function clickHandler() {
@@ -71,6 +42,7 @@
             icon: "img/001.png",
             items: [{
                 name: "Window...",
+                icon: "./global/img/sheet2.png",
                 items: [{
                     name: "Modal",
                     click: clickHandler,
@@ -119,24 +91,41 @@
         {
             name: "Help",
             items:[{
-                name:"What do I see ?"
+                name:"What do I see ?",
+                icon: "./global/img/misc.png"
             }, {
                 name:"About",
+
+                icon: "./global/img/help.png",
                 click: function() {
-                    if(!(about = $C("about"))) {
-                    var about = new Window('about', {draggable:true, modal:true});
-                    about.setBody("<img src='img/logo.png' width='200' style='float:right;' /><h3>jPlex release &alpha;-Pangolin</h3>"+
-                               "Main contributors: <ul><li>Jean-Luc Dagon</li><li>Loic Petit</li></ul>"+
-                               "Version: <table width='100%' border=0><tr><td>jPlex</td></td>Prototype</td><td>Scriptaculous</td></tr>"+
-                                          "<tr><td>"+jPlex.version+"</td><td>"+Prototype.Version+"</td><td>"+Scriptaculous.Version+"</td></tr></table>");                    
-                    about.setTitle("About");
-                    } 
+                    if (!(about = $C("about"))) {
+                        var about = new Window('about', {draggable:true, modal:true});
+                        about.setBody("<img src='./img/logo.png' width='200' style='float:right;' /><h3>jPlex release &alpha;-Pangolin</h3>" +
+                                      "Main contributors: <ul><li>Jean-Luc Dagon</li><li>Loic Petit</li></ul>" +
+                                      "Version: <table width='100%' border=0><tr><td>jPlex</td></td>Prototype</td><td>Scriptaculous</td></tr>" +
+                                      "<tr><td>" + jPlex.version + "</td><td>" + Prototype.Version + "</td><td>" + Scriptaculous.Version + "</td></tr></table>");
+                        about.setTitle("About");
+                    }
                     about.show();
                 }
             }]
         }];
-    var m = new MenuBar("menubar", {data:myData});
-    //-->
+
+    first.setEvent('onAjaxRequestCompleteEvent', function() {
+        Event.onElementReady('menu', function() {
+            new MenuBar("menu", {data:myData});
+        });
+
+        Event.onElementReady('home-tabs', function() {
+            var myTabsData = [
+                {title: 'What is jPlex ?', content:'tab-what-is-jplex'},
+                {title: 'Why jPlex ?', content:'tab-why-jplex'}];
+            new Tabs("home-tabs", {data: myTabsData});
+        });
+
+    })
+
+        //-->
 </script>
 </body>
 </html>

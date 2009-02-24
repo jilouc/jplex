@@ -184,7 +184,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component', {
 
     _addOverlay: function() {
 
-        this.oOverlay = new jplex.components.Overlay(this.sID + "-overlay", {
+        this.oOverlay = new jplex.components.Overlay(this._sIDPrefix + "-overlay", {
             color:this.cfg('overlayColor'),
             z: this.nLevel - 1,
             fade:this.cfg('overlayFade'),
@@ -200,7 +200,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component', {
     },
 
     _addCloseButton: function() {
-        var close = new Element('a', {id:this.ID + "-closecross"}),
+        var close = new Element('a', {id:this.sID + "-closecross"}),
                 elt = this.component.down('div.header') || this.component.down('div.body');
 
         close.addClassName('close').update('&nbsp;');
