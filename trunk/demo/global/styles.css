@@ -5,7 +5,16 @@ body {
 }
 
 div.jplex-window div.header {
-    background:#ffdd79;
+    background:#323232;
+    color:#fefefe;
+}
+
+div.jplex-window a.close, div.jplex-window a.close:hover {
+	background:url('../../src/jplex/components/window/assets/window-close.png') no-repeat;
+}
+
+div.jplex-window a.close:hover {
+	background-position:0 -15px;
 }
 
 div.menubar {
@@ -20,6 +29,34 @@ div.menubar li.item {
 div#what {
     width:60%;
     text-align: justify;
+}
+
+ul.jplex-tabs li {
+    -moz-border-radius:15px;
+
+    -webkit-border-radius:14px;
+    background:#c3d9ff;
+    padding:0.2em 0.8em 0.2em 0.8em;
+    border:3px #79b3ec solid;
+    margin-right:1em;
+}
+
+ul.jplex-tabs li:first-child {
+    margin-left:0;
+}
+
+ul.jplex-tabs li:hover, ul.jplex-tabs li.jplex-tabs-active:hover {
+    background:#79b3ec;
+    color:#ffffff;
+}
+
+div#tabs-line {
+    border:2px #79b3ec solid;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    position:relative;
+    top:-1em;
+    z-index:1;
 }
 
 div#what div.body {

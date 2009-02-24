@@ -116,11 +116,13 @@
             new MenuBar("menu", {data:myData});
         });
 
-        Event.onElementReady('home-tabs', function() {
+        Event.onElementReady('tab-why-jplex', function() {
             var myTabsData = [
                 {title: 'What is jPlex ?', content:'tab-what-is-jplex'},
                 {title: 'Why jPlex ?', content:'tab-why-jplex'}];
-            new Tabs("home-tabs", {data: myTabsData});
+            var tabs = new Tabs("home-tabs", {data: myTabsData});
+            tabs.setEvent("onSwitchEvent", first.makeCentered.bind(first));
+
         });
 
     })
