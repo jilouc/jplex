@@ -10,8 +10,13 @@
     <script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8"></script>
     <style type="text/css">
         div#remote-pic-modal div.body,
-        div#local-pic div.body { padding:0 }
-        div#lorem { width:40%; }
+            div#local-pic div.body {
+            padding: 0
+        }
+
+        div#lorem {
+            width: 40%;
+        }
 
     </style>
 </head>
@@ -34,30 +39,31 @@
 
     var g = new Window.WindowsGroup('test');
 
-    var first = g.add('lorem');
+    // TODO pourquoi l'evt de 'dialog' est déclenché sur 'first'??
+    var first = new Window('lorem', {draggable: true});
     first.setBody("<img src='http://www.fredx.fr/logojplexbyfredx.png' width='200' style='float:left' />" + lorem);
     first.setTitle("Remote picture with text");
+    g.add(first);
 
     var w2 = new Window('local-pic', { title:"Local picture", draggable: true });
     g.add(w2);
     w2.setBody("<img src='img/emo_cat.jpg' alt='emoCat' />");
 
 
+    var dialog2 = new Window.Dialog("dialog-group");
+        dialog2.setTitle("But this one is !");
+        dialog2.setBody("And therefore can disappear under<br/>the other windows of the group.<br/>(Except maybe on Internet Explorer ;)");
+
     var dialog = new Window.Dialog('dialog', {
-        title: "Alert",
-        events: {
-            onOkButtonClickEvent: function() {
-                var dialog2 = new Window.Dialog("dialog-group");
-                dialog2.setTitle("But this one is !");
-                dialog2.setBody("And therefore can disappear under<br/>the other windows of the group.<br/>(Except maybe on Internet Explorer ;)");
-                g.add(dialog2);
-            },
-            onCancelButtonClickEvent: function() {
-                alert('cancel')
-            }
-        }
+        title: "Alert"
     });
-    
+    dialog.setEvent("onOkButtonClickEvent", function() {
+        g.add(dialog2);
+    });
+    dialog.setEvent("onCancelButtonClickEvent", function() {
+        alert('cancel')
+    });
+
     dialog.setBody('You exited the slideshow !<br />This dialog box isn\'t part of the windows group, <br />so it can\'t interact with its windows.');
     dialog.hide();
 
@@ -78,8 +84,14 @@
     w3.setFooter('<a href="javascript:previous()">Préc.</a> &minus; <a href="javascript:next()">Suiv.</a>');
     w3.show();
 
-    var previous = function() { i = (4 + i - 1)%4; $C('remote-pic-modal').setBody(pics[i]); };
-    var next = function() { i = (i + 1)%4; $C('remote-pic-modal').setBody(pics[i]); };
+    var previous = function() {
+        i = (4 + i - 1) % 4;
+        $C('remote-pic-modal').setBody(pics[i]);
+    };
+    var next = function() {
+        i = (i + 1) % 4;
+        $C('remote-pic-modal').setBody(pics[i]);
+    };
 
     document.bindKey(Event.Key.LEFT_ARROW, previous);
     document.bindKey(Event.Key.RIGHT_ARROW, next);

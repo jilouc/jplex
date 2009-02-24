@@ -1,0 +1,36 @@
+body {
+    font: 13px / 18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+div.jplex-window div.header {
+    background:#ffdd79;
+}
+
+div.menubar {
+    position:relative;
+    margin-bottom:10px;
+    font-size:1em;
+}
+div.menubar li.item {
+    height:22px;
+}
+
+div#what {
+    width:60%;
+    text-align: justify;
+}
+
+div#what div.body {
+    padding:0;
+}
+
+div#about {
+    width: 40%;
+    text-align: justify;
+}
+
+div#about table {
+    text-align: center;
+}

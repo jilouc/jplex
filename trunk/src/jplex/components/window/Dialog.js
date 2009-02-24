@@ -10,7 +10,6 @@ jPlex.provide('jplex.components.window.Dialog', 'jplex.components.Window', {
         defaultConfig: {
             header:true,
             footer:true,
-            modal:false,
 
             center: true,
 
@@ -52,8 +51,8 @@ jPlex.provide('jplex.components.window.Dialog', 'jplex.components.Window', {
 
        this._addButtons();
 
-       if($(this.ID+"-closecross")) {
-           $(this.ID+"-closecross").observe('click', this._cancelButtonClick.bind(this));
+       if($(this.sID+"-closecross")) {
+           $(this.sID+"-closecross").observe('click', this._cancelButtonClick.bind(this));
        }
     },
 
