@@ -70,8 +70,13 @@ div#what div.body {
 }
 
 div#about {
-    width: 40%;
+    width: 30%;
     text-align: justify;
+}
+
+div#about div.body {
+    padding:2em;
+    padding-top:0.5em;
 }
 
 div#about table {

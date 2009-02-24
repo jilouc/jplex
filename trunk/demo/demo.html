@@ -42,6 +42,7 @@
 
     jPlex.include("jplex.components.MenuBar");
     var Window = jPlex.include('jplex.components.Window');
+    jPlex.include('jplex.components.window.Modal');
     jPlex.include('jplex.components.window.WindowsGroup');
     jPlex.include('jplex.components.Tabs');
     jPlex.include('jplex.components.MouseOverImage');
@@ -54,7 +55,7 @@
         title: "Welcom!",
         footer: true
     });
-    first.setFooter("<pan id='code-snippet'>Click to get some information about the code used in the current page</span> "+
+    first.setFooter("<span id='code-snippet'>Click to get some information about the code used in the current page</span> "+
                     "<img src='./global/img/131.png' align='absmiddle' alt='' /> " +
                     "<input type='button' id='code' value='View code snippets' />");
     $('code').observe('click', viewSource.curry("home"));
@@ -130,14 +131,16 @@
                 icon: "./global/img/help.png",
                 click: function() {
                     if (!(about = $C("about"))) {
-                        var about = new Window('about', {draggable:true, modal:true});
-                        about.setBody("<img src='./img/logo.png' width='200' style='float:right;' /><h3>jPlex release &alpha;-Pangolin</h3>" +
-                                      "Main contributors: <ul><li>Jean-Luc Dagon</li><li>Loic Petit</li></ul>" +
-                                      "Version: <table width='100%' border=0><tr><td>jPlex</td></td>Prototype</td><td>Scriptaculous</td></tr>" +
-                                      "<tr><td>" + jPlex.version + "</td><td>" + Prototype.Version + "</td><td>" + Scriptaculous.Version + "</td></tr></table>");
+                        var about = new Modal('about', {
+                            draggable: true,
+                            ajax: "./global/about.html",
+                            overlayFade: 0.5
+                        });
+
                         about.setTitle("About");
                     }
                     about.show();
+
                 }
             }]
         }];
