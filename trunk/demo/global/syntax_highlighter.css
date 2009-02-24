@@ -1,0 +1,37 @@
+pre {
+  background: #f7f7f7;
+  padding: 3px 10px 3px 10px;
+  font-size: 90%;
+  line-height: 130%;
+}
+
+pre {
+  overflow: auto;
+}
+
+pre code {
+    font-family: Monaco, Consolas, "Lucida Console", monospace;
+    font-size: 92%;
+}
+
+.html .tag { color:#3344AA /*#BB7711*/ }
+.html .attribute { color:#BB7711 }
+.keywords { color: #f71; }
+.comment { color: #517; }
+.string { color: #392; }
+.regex {
+  background: #D0F0FF;
+  color: #27b;
+}
+
+#excerpt pre {
+  background: transparent;
+  padding: 2px;
+  font-size: 100% !important;
+  font-family: Monaco, Consolas, "Lucida Console", monospace;
+  margin: 5px 0;
+  font-weight: normal;
+  border-bottom: 1px dotted #fff;
+  color: #34a;
+}
+

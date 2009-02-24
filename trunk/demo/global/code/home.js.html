@@ -1,0 +1,27 @@
+Use our packaging function to include needed components on the page.
+<pre>
+    <code class="javascript">
+jPlex.include("jplex.components.MenuBar");
+jPlex.include("jplex.components.Window");
+jPlex.include("jplex.components.window.WindowsGroup");
+jPlex.include("jplex.components.Tabs");
+    </code>
+</pre>
+    Create the main windows set using the <strong>WindowsGroup</strong> component. This set will contain every windows
+    we'll use in this demo (except <strong>Modal</strong>s since they have a totally different behavior).<br />W
+    Then we create the main window with custom properties and add it to the windows set.
+<pre>        
+    <code class="javascript">
+var g = new WindowsGroup('test');
+var first = new Window('what', {
+    close: Window.CLOSE_CUSTOM, // Custom way of closing the window (i.e. no default behavior)
+    ajax: "./global/home.html", // The content of the window is in another file
+    draggable: true,            // This will be a draggable window (try it)
+    footer: true,               // with a footer
+    title: "Welcome"            // and an original title!
+});
+first.setFooter("&lt;input type='button' id='code' value='View source code'/&gt;");
+
+g.add(first);
+    </code>  
+</pre>
