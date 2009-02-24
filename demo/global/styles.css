@@ -26,6 +26,12 @@ div.menubar li.item {
     height:22px;
 }
 
+div.code-window div.body {
+    overflow:scroll;
+    max-height:400px;
+    max-width:500px;
+}
+
 div#what {
     width:60%;
     text-align: justify;
@@ -56,7 +62,7 @@ div#tabs-line {
     -webkit-border-radius:5px;
     position:relative;
     top:-1em;
-    z-index:1;
+    z-index:0;
 }
 
 div#what div.body {
@@ -70,4 +76,8 @@ div#about {
 
 div#about table {
     text-align: center;
+}
+
+div.jplex-window div.footer {
+    text-align:right;
 }
