@@ -71,8 +71,13 @@ jPlex.provide('jplex.common.Component', {
         // using the component default container. It's added to the body of the document
         this.component = $(eElement);
 
-        if (this._extension) 
-            this._definition = Object.extendRecursive(this._definition, this._extension);
+        // Seems to be buggy : in the global demo, if you first click the "About" menu item and then the "View code snippet"
+        // the window of the code snippet is created as Modal and that's not what is requested in the code!
+        // Workaround l.116-117 (clone of the config recursively extended).
+        // Still to fix : if we set the 'name' of _definition to the one defined in _extension,
+        // it will be shared by all Windows instances, even not Modal ones
+        /*if (this._extension)
+            def = Object.extendRecursive(this._definition, this._extension);*/
 
         if (!this._definition ||
             !this._definition.name ||
@@ -110,7 +115,8 @@ jPlex.provide('jplex.common.Component', {
         oConfig = oConfig || {};
         oConfig.events = oConfig.events || {};
 
-        var cfg = Object.clone(this._definition.defaultConfig);
+        var ext = this._extension ? this._extension.defaultConfig || {} : {};
+        var cfg = Object.extendRecursive(Object.clone(this._definition.defaultConfig), ext);
         cfg = Object.extend(cfg, oConfig);
         cfg.events = null;
 

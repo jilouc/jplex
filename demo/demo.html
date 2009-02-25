@@ -25,13 +25,13 @@
         var code = $C('code-'+file);
         if(code) {
             code.show();
+            code.toFront.bind(code).defer();
             return $C('code-'+file);
         }
         code = new Window("code-"+file, {draggable:true, title:"Code snippet"});
         code.setBody(res);
         code.component.addClassName('code-window');
         CodeHighlighter.init();
-
         var w = g.add(code);
         w.toFront.bind(w).defer();
 
