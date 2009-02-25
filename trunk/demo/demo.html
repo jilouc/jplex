@@ -63,9 +63,77 @@
 
     first.setTitle("Welcome!");
 
-    function clickHandler() {
-        alert("Coin");
-    }
+
+    Effect.Desktop = Class.create(Effect.Base, {
+        initialize: function(winGroup) {
+            this.group = $C(winGroup);
+            this._implode = this.implode.bind(this);
+
+            var dirs = ["right", "bottom", "left", "top"];
+
+            this.group.windows.each(function(s,i) {
+                this.explode(s, dirs[i%4]);
+
+            }.bind(this));
+        },
+
+        implode: function() {
+
+            this.group.windows.each(function(s, i) {
+                new Effect.Move(s.component, {
+                    x: s._oldXY.get("x"),
+                    y: s._oldXY.get("y"),
+                    mode: "absolute"
+                });
+                s.component.stopObserving("click", this._implode); 
+            }.bind(this));
+        },
+
+        explode: function(win, dir) {
+            var vpDim = document.viewport.getDimensions();
+            var dim = win.component.getDimensions();
+            var pos = win.component.cumulativeOffset();
+            win._oldXY = $H();
+            win._oldXY.set("x", pos.left);
+            win._oldXY.set("y", pos.top);
+
+            var x,y;
+
+            if(dir == 'right') {
+                x = vpDim.width - 100;
+                y = pos.top;
+            } else if(dir == 'left') {
+                x = - dim.width + 100;
+                y = pos.top;
+            } else if(dir == 'top') {
+                x = pos.left;
+                y = vpDim - 50;
+            } else {
+                x = pos.left;
+                y = - dim.height + 50;
+            }
+
+            new Effect.Move(win.component, {
+                x: x,
+                y: y,
+                mode: 'absolute'
+            });
+
+            win.component.observe("click", this._implode);
+        },
+
+        update: Prototype.emptyFunction
+    })
+
+    var e = null;
+    document.bindKey(Event.Key.F11, function() {
+        if(!e) {
+            e = new Effect.Desktop("test");
+        } else {
+            e.implode();
+            e = null;
+        }
+    },{preventDefault:true, ctrl:true});
 
     var myData = [{
         name: "File",
@@ -77,7 +145,7 @@
                 icon: "./global/img/sheet2.png",
                 items: [{
                     name: "Modal",
-                    click: clickHandler,
+                    click: Prototype.emptyFunction,
                     keySC: {
                         key: Event.Key.M,
                         ctrl: true,
@@ -85,7 +153,7 @@
                     }
                 }, {
                     name: "Dialog",
-                    click: clickHandler,
+                    click: Prototype.emptyFunction,
                     keySC: {
                         key: Event.Key.D,
                         ctrl: true,
