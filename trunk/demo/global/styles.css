@@ -1,3 +1,15 @@
+a {
+    color:#0000ff;
+    text-decoration:underline;
+}
+a:hover {
+    cursor:pointer;
+}
+
+div.jplex-window a.close {
+    text-decoration:none;
+}
+
 body {
     font: 13px / 18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
     background-color: #fff;
@@ -17,6 +29,13 @@ div.jplex-window a.close:hover {
 	background-position:0 -15px;
 }
 
+ul.smooth-tabs {
+    margin:2em;
+    position:absolute;
+    z-index:0;
+    top:3.7em;
+}
+
 div.menubar {
     position:relative;
     margin-bottom:10px;
@@ -27,7 +46,7 @@ div.menubar li.item {
 }
 
 div.code-window div.body {
-    overflow:scroll;
+    overflow:auto;
     max-height:400px;
     max-width:500px;
 }
@@ -37,7 +56,35 @@ div#what {
     text-align: justify;
 }
 
-ul.jplex-tabs li {
+ul.jplex-tabs.code-tabs {
+    float:right;
+    width:99%;
+    border-bottom:2px #79b3ec solid;
+    margin-bottom:1em;
+}
+
+ul.jplex-tabs.code-tabs li.jplex-tabs-active {
+    background:#79b3ec;
+    color:white;
+}
+
+ul.jplex-tabs.code-tabs li {
+    padding:0.1em 0.5em 0.1em 0.5em;
+    border:2px #79b3ec solid;
+    margin:0 0.4em -2px 0;
+    float:right;
+
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+}
+ul.jplex-tabs.code-tabs li:hover {
+    color:#333333;
+    background:#79b3ec;
+}
+
+ul.jplex-tabs.smooth-tabs li {
     -moz-border-radius:15px;
 
     -webkit-border-radius:14px;
@@ -47,16 +94,16 @@ ul.jplex-tabs li {
     margin-right:1em;
 }
 
-ul.jplex-tabs li:first-child {
+ul.jplex-tabs.smooth-tabs li:first-child {
     margin-left:0;
 }
 
-ul.jplex-tabs li:hover, ul.jplex-tabs li.jplex-tabs-active:hover {
+ul.jplex-tabs.smooth-tabs li:hover, ul.jplex-tabs li.jplex-tabs-active:hover {
     background:#79b3ec;
     color:#ffffff;
 }
 
-div#tabs-line {
+div.tabs-line {
     border:2px #79b3ec solid;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
