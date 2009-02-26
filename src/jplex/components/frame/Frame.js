@@ -6,13 +6,13 @@ jPlex.include('jplex.components.Overlay', true);
  * @extends jplex.common.Component
  * @requires Overlay
  * @param {Element|String} eElement HTML Element or ID of the container
- * @param {Object} oConfig Optional. Configuration properties of the window
+ * @param {Object} oConfig Optional. Configuration properties of the frame
  * @constructor
  */
-jPlex.provide('jplex.components.Window', 'jplex.common.Component', {
+jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
 
     _definition: {
-        name: "Window",
+        name: "Frame",
         defaultConfig: {
             header: true,
             footer: false,
@@ -20,7 +20,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component', {
             center: true,
             constrainToCenter: false,
 
-            close:'button', // jplex.components.Window.CLOSE_CLICK_OUT
+            close:'button', // jplex.components.Frame.CLOSE_CLICK_OUT
             draggable:false,
 
             title: "",
@@ -60,10 +60,10 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component', {
     initialize: function($super, eElement, oConfig) {
         $super(eElement, oConfig);
 
-        this.nLevel = this.cfg('zBase') + 2 * jplex.components.Window.list.length + 1;
+        this.nLevel = this.cfg('zBase') + 2 * jplex.components.Frame.list.length + 1;
         this.render();
 
-        jplex.components.Window.list.push(this);
+        jplex.components.Frame.list.push(this);
 
         this._evtMakeCentered = this.makeCentered.bind(this);
     },
@@ -92,7 +92,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component', {
             ft = this._addFooter();
         }
 
-        if (this.cfg("close") == jplex.components.Window.CLOSE_BUTTON) {
+        if (this.cfg("close") == jplex.components.Frame.CLOSE_BUTTON) {
             if (!hd) { /* TODO Error */
             }
             this._addCloseButton();
@@ -143,8 +143,8 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component', {
             bd.update(sBody);
 
             if (this.cfg('center')) {
-                // If the window contains images, we have to wait them to be loaded
-                // to get the correct position of the window
+                // If the frame contains images, we have to wait them to be loaded
+                // to get the correct position of the frame
                 var imgs = bd.getElementsByTagName('img');
                 var loaded = $A([]);
                 if (imgs.length > 0) {
@@ -192,7 +192,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component', {
         });
 
         this.oOverlay.component.observe("click", function(e) {
-            if (this.cfg('close') == jplex.components.Window.CLOSE_CLICK_OUT) {
+            if (this.cfg('close') == jplex.components.Frame.CLOSE_CLICK_OUT) {
                 this.hide();
             }
             e.stop();
@@ -328,7 +328,7 @@ jPlex.provide('jplex.components.Window', 'jplex.common.Component', {
 
 // Static properties
 
-jPlex.extend('jplex.components.Window', {
+jPlex.extend('jplex.components.Frame', {
     /**
      *
      * @property list

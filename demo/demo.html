@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
     <link rel="stylesheet" href="./global/syntax_highlighter.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/menubar/assets/menubar.css" type="text/css"/>
-    <link rel="stylesheet" href="../src/jplex/components/window/assets/window.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/frame/assets/frame.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/tabs/assets/tabs.css" type="text/css"/>
     <link rel="stylesheet" href="./global/styles.css" type="text/css"/>
     <script src="../src/jPlex.js" type="text/javascript" charset="utf-8">
@@ -28,7 +28,7 @@
             code.toFront.bind(code).defer();
             return $C('code-'+file);
         }
-        code = new Window("code-"+file, {draggable:true, title:"Code snippet"});
+        code = new Frame("code-"+file, {draggable:true, title:"Code snippet"});
         code.setBody(res);
         code.component.addClassName('code-window');
         CodeHighlighter.init();
@@ -41,15 +41,15 @@
 
 
     jPlex.include("jplex.components.MenuBar");
-    var Window = jPlex.include('jplex.components.Window');
-    jPlex.include('jplex.components.window.Modal');
-    jPlex.include('jplex.components.window.WindowsGroup');
+    jPlex.include('jplex.components.Frame');
+    jPlex.include('jplex.components.frame.Modal');
+    jPlex.include('jplex.components.frame.WindowsGroup');
     jPlex.include('jplex.components.Tabs');
     jPlex.include('jplex.components.MouseOverImage');
 
     var g = new WindowsGroup('test');
-    var first = new Window('what', {
-        close: Window.CLOSE_CUSTOM,
+    var first = new Frame('what', {
+        close: Frame.CLOSE_CUSTOM,
         ajax: "./global/home.html",
         draggable: true,
         title: "Welcom!",
@@ -141,7 +141,7 @@
             name: "New...",
             icon: "img/001.png",
             items: [{
-                name: "Window...",
+                name: "Frame...",
                 icon: "./global/img/sheet2.png",
                 items: [{
                     name: "Modal",

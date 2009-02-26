@@ -2,7 +2,6 @@
  * The main class of the jPlex Library
  * @module jPlex
  */
-
 /**
  * The main jPlex class. Contains the current major version, the dependencies and the list of packages provided.
  * It also provides packaging primitives and dependancies loading. This class is the only one that you need to
@@ -54,10 +53,10 @@ var jPlex = {
         'jplex.components.Overlay',
         'jplex.components.Tabs',
         'jplex.components.Tooltip',
-        'jplex.components.Window',
-        'jplex.components.window.Dialog',
-        'jplex.components.window.Modal',
-        'jplex.components.window.WindowsGroup'
+        'jplex.components.Frame',
+        'jplex.components.frame.Dialog',
+        'jplex.components.frame.Modal',
+        'jplex.components.frame.WindowsGroup'
     ],
 
     /**
@@ -119,9 +118,9 @@ var jPlex = {
                 if (typeof Prototype != 'undefined') return;
                 var includes = s.src.match(/\?.*load=([a-z,]*)/);
                 var deps = (includes ? includes[1] : jPlex._dependancies);
-                if (navigator.userAgent.indexOf("Firefox/2")) 
+                if (navigator.userAgent.indexOf("Firefox/2"))
                     deps = deps.concat(jPlex._dependanciesFF2);
-                
+
                 var tmp = path.split('/');
                 tmp.length -= 2;
                 var libpath = tmp.join('/') + "/libs/";
@@ -134,8 +133,8 @@ var jPlex = {
 
     /**
      * Packaging method. Includes the selected class by resolving its dependancies. When a class is included
-     * its variable is created. For instance, when you want to include 'jplex.components.Window', then the class Window
-     * will be available in the var <em>jplex.components.Window</em>. But by default and convention, the global var
+     * its variable is created. For instance, when you want to include 'jplex.components.Frame', then the class Window
+     * will be available in the var <em>jplex.components.Frame</em>. But by default and convention, the global var
      * <em>Window</em> is also defined/overwriten. If you do not want to override your global variable, just use the
      * optional argument.
      *
@@ -174,8 +173,10 @@ var jPlex = {
         acc += pack[pack.length - 1] + ".js";
         jPlex.load(acc);
         var res = jPlex.get(path);
-        if (!window[pack[pack.length - 1]] && !dontdefine)
-            window[pack[pack.length - 1]] = res;
+        var className = pack[pack.length - 1];
+        if (!window[className] && !dontdefine) {
+            window[className] = res;
+        }
         return res;
     },
     /**
