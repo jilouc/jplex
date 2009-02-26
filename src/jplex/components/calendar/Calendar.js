@@ -213,14 +213,17 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
 
         var oFirstDayOfMonth = this.oMonth.firstDayOfMonth(),
                 oLastDayOfMonth = this.oMonth.lastDayOfMonth();
+        this._fdom = oFirstDayOfMonth;
+        this._ldom = oLastDayOfMonth;
+        
         var oFirstDay = new Date(
-                oFirstDayOfMonth.getYear() + Date.YEAR_OFFSET,
+                oFirstDayOfMonth.getFullYear(),
                 oFirstDayOfMonth.getMonth(),
                 oFirstDayOfMonth.getDate() - oFirstDayOfMonth.getDay(),
                 0
                 ),
                 oLastDay = new Date(
-                        oLastDayOfMonth.getYear() + Date.YEAR_OFFSET,
+                        oLastDayOfMonth.getFullYear(),
                         oLastDayOfMonth.getMonth(),
                         oLastDayOfMonth.getDate() + 6 - oLastDayOfMonth.getDay(),
                         0
@@ -258,10 +261,16 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
      */
     next: function() {
         var n = this.oCurrent.getIndex();
+        var fd = this._fdom.getDay();
+
         this.oMonth = this.oMonth.lastDayOfMonth();
         this.oMonth.setNextDay();
         this.render();
-        this.oItems[n].select(null, false);
+        // Fix issue #1 : the same date will be selected in the next month
+        var newIndex = this._fdom.getDay()+Math.min(this._ldom.getDate()-1, n-fd);
+        this.oItems[newIndex].focus();
+        this.oItems[newIndex].select(null, false);
+
         if (this.eSrc)
             this.eSrc.activate();
     },
@@ -270,11 +279,18 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
      * Go to the previous month
      */
     previous: function() {
+        var n = this.oCurrent.getIndex();
+        var fd = this._fdom.getDay();
+
         this.oMonth = this.oMonth.firstDayOfMonth();
         this.oMonth.setPreviousDay();
         this.oMonth = this.oMonth.firstDayOfMonth();
         this.render();
-        this.oItems[0].focus();
+
+        // Fix issue #1 : the same date will be selected in the previous month
+        var newIndex = this._fdom.getDay()+Math.min(this._ldom.getDate()-1, n-fd);
+        this.oItems[newIndex].focus();
+        this.oItems[newIndex].select(null, false);
         if (this.eSrc)
             this.eSrc.activate();
     },
