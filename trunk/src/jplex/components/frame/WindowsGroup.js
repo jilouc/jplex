@@ -1,12 +1,12 @@
-jPlex.include('jplex.components.Window', true);
+jPlex.include('jplex.components.Frame', true);
 
 /**
  * Creates a group of windows.
- * @requires Window 
- * @class window.WindowsGroup
+ * @requires Frame 
+ * @class frame.WindowsGroup
  * @extends jplex.common.Component
  */
-jPlex.provide('jplex.components.window.WindowsGroup', 'jplex.common.Component', {
+jPlex.provide('jplex.components.frame.WindowsGroup', 'jplex.common.Component', {
 
     _definition: {
         name: 'WindowsGroup',
@@ -34,7 +34,7 @@ jPlex.provide('jplex.components.window.WindowsGroup', 'jplex.common.Component', 
 
     add: function(oElement) {
         var w = typeof(oElement) == 'string' ?
-                new jplex.components.Window(oElement, {draggable:true}) :
+                new jplex.components.Frame(oElement, {draggable:true}) :
                 oElement;
         var length = this.windows.length;
 

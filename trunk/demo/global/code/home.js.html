@@ -6,8 +6,8 @@
     <pre>
     <code class="javascript">
 jPlex.include("jplex.components.MenuBar");
-jPlex.include("jplex.components.Window");
-jPlex.include("jplex.components.window.WindowsGroup");
+jPlex.include("jplex.components.Frame");
+jPlex.include("jplex.components.frame.WindowsGroup");
 jPlex.include("jplex.components.Tabs");
     </code>
     </pre>
@@ -29,8 +29,8 @@ jPlex.include("jplex.components.*");
     <code class="javascript">
 var mainGroup = new WindowsGroup('main-w-group');
 
-var first = new Window('what', {
-    close: Window.CLOSE_CUSTOM, // Custom way of closing the window (i.e. no default behavior)
+var first = new Frame('what', {
+    close: Frame.CLOSE_CUSTOM, // Custom way of closing the window (i.e. no default behavior)
     ajax: "./global/home.html", // The content of the window is in another file
     draggable: true, // This will be a draggable window (try it)
     footer: true, // with a footer
@@ -148,7 +148,7 @@ var tabs = new Tabs("home-tabs", {data: myTabsData});
     In fact, we want the tabs to be created when the <code class="javascript">Ajax.Request</code> is complete (to work
     on DOM elements). <br/>
     That's why we use the custom event <code class="javascript">onAjaxRequestCompleteEvent</code> to perform instructions
-    when the request is completed! See <code class="javascript">jplex.component.Window</code> documentation for more
+    when the request is completed! See <code class="javascript">jplex.component.Frame</code> documentation for more
     details about available custom events.
           <pre>
           <code class="javascript">

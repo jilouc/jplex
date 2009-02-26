@@ -1,9 +1,9 @@
 /**
- * A preconfigured dialog box window class
- * @class window.Dialog
- * @extends jplex.components.Window
+ * A preconfigured dialog box frame class
+ * @class frame.Dialog
+ * @extends jplex.components.Frame
  */
-jPlex.provide('jplex.components.window.Dialog', 'jplex.components.Window', {
+jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
     
     _extension: {
         name: 'WindowDialog',
