@@ -30,11 +30,11 @@ new Test.Unit.Runner({
     },
     testDate: function() {
         var date = new Date(Date.UTC(2008, 9, 3));
-        this.assertEqual(date.firstDayOfMonth().toFrenchString(), "01-10-2008");
-        this.assertEqual(date.lastDayOfMonth().toFrenchString(), "31-10-2008");
-        this.assertEqual(date.setNextDay().toFrenchString(), "04-10-2008");
-        this.assertEqual(date.setPreviousDay().toFrenchString(), "03-10-2008");
-        this.assertEqual(date.setPreviousDay().setPreviousDay().setPreviousDay().toFrenchString(),
+        this.assertEqual(date.firstDayOfMonth().format("d-m-Y"), "01-10-2008");
+        this.assertEqual(date.lastDayOfMonth().format("d-m-Y"), "31-10-2008");
+        this.assertEqual(date.setNextDay().format("d-m-Y"), "04-10-2008");
+        this.assertEqual(date.setPreviousDay().format("d-m-Y"), "03-10-2008");
+        this.assertEqual(date.setPreviousDay().setPreviousDay().setPreviousDay().format("d-m-Y"),
                 "30-09-2008");
         this.assertEqual(date.compareTo(new Date(Date.UTC(2008, 8, 30))), 0);
         this.assertNotEqual(date.compareTo(new Date(Date.UTC(2001, 8, 30))), 0);

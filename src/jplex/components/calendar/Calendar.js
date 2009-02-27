@@ -236,11 +236,11 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
             }
             var oDayItem = new Calendar.Item(this, oDay, i),
                     eDay = oDayItem.getCell();
-            var diff = this.cfg('date').getTime() - oDay.getTime();
+            var diff = this.oCurrent._oDate.getTime() - oDay.getTime();
             if (diff >= 0 && diff < 86400000) {
                 oDayItem.select();
                 oDayItem.focus();
-            }
+            }            
 
             this.oItems[i++] = oDayItem;
 
@@ -260,7 +260,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
      * Go to the next month
      */
     next: function() {
-        var n = this.oCurrent.getIndex();
+        var n = this.oFocus.getIndex();
         var fd = this._fdom.getDay();
 
         this.oMonth = this.oMonth.lastDayOfMonth();
@@ -269,7 +269,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
         // Fix issue #1 : the same date will be selected in the next month
         var newIndex = this._fdom.getDay()+Math.min(this._ldom.getDate()-1, n-fd);
         this.oItems[newIndex].focus();
-        this.oItems[newIndex].select(null, false);
+        //this.oItems[newIndex].select(null, false);
 
         if (this.eSrc)
             this.eSrc.activate();
@@ -279,7 +279,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
      * Go to the previous month
      */
     previous: function() {
-        var n = this.oCurrent.getIndex();
+        var n = this.oFocus.getIndex();
         var fd = this._fdom.getDay();
 
         this.oMonth = this.oMonth.firstDayOfMonth();
@@ -290,7 +290,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
         // Fix issue #1 : the same date will be selected in the previous month
         var newIndex = this._fdom.getDay()+Math.min(this._ldom.getDate()-1, n-fd);
         this.oItems[newIndex].focus();
-        this.oItems[newIndex].select(null, false);
+        //this.oItems[newIndex].select(null, false);
         if (this.eSrc)
             this.eSrc.activate();
     },
