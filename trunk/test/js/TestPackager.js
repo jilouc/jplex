@@ -26,7 +26,7 @@ new Test.Unit.Runner({
         jPlex.provide('A.B.C', {
             test:1
         });           
-        this.assertEqual(A.B.C, jPlex.getCell('A.B.C'));
+        this.assertEqual(A.B.C, jPlex.get('A.B.C'));
         window.A = undefined;
     },
     testInclude: function() {

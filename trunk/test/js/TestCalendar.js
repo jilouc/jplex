@@ -2,7 +2,7 @@ jPlex.include('jplex.components.Calendar');
 function createTestCalendarField(opts) {
     var e = new Element('input', {type:'text'});
     document.body.appendChild(e);
-    return new Calendar('test', Object.extend(opts, {src:e, date: new Date(2004, 2, 4)}));
+    return new Calendar('test', Object.extend(opts, {src:e, date: new Date(2004, 2, 10)}));
 }
 var cal = createTestCalendarField({fade:0});
 new Test.Unit.Runner({
@@ -56,25 +56,25 @@ new Test.Unit.Runner({
         var s = cal.oCurrent;
         var d = s.getDate();
         this.assertEqual(cal.oCurrent, cal.oFocus);
-        this.assertEqual(d.toFrenchString(), cal.eSrc.value);
+        this.assertEqual(d.format("d-m-Y"), cal.eSrc.value);
         cal.next();
         //Do not modify
-        this.assertEqual(d.toFrenchString(), cal.oCurrent.getDate().toFrenchString());
-        this.assertEqual(d.toFrenchString(), cal.eSrc.value);
+        this.assertEqual(d.format("d-m-Y"), cal.oCurrent.getDate().format("d-m-Y"));
+        this.assertEqual(d.format("d-m-Y"), cal.eSrc.value);
         this.assertNotEqual(cal.oCurrent, cal.oFocus);             
         cal.previous();
         //Do not modify
-        this.assertEqual(d.toFrenchString(), cal.oCurrent.getDate().toFrenchString());
-        this.assertEqual(d.toFrenchString(), cal.eSrc.value);
-        this.assertEqual(cal.oCurrent, cal.oFocus);
+        this.assertEqual(d.format("d-m-Y"), cal.oCurrent.getDate().format("d-m-Y"));
+        this.assertEqual(d.format("d-m-Y"), cal.eSrc.value);
+        this.assertEqual(cal.oCurrent.getDate(), cal.oFocus.getDate());
         cal.oCurrent.select(); // in case of bugs
-        cal.up();
-        cal.oFocus.select();
         var d = cal.oFocus.getDate();
         var date = new Date(d.getTime());
+        cal.up();
+        cal.oFocus.select();
         date.setDate(date.getDate()-7);
-        this.assertEqual(date.toFrenchString(), cal.oCurrent.getDate().toFrenchString());
-        this.assertEqual(date.toFrenchString(), cal.eSrc.value);
+        this.assertEqual(date.format("d-m-Y"), cal.oFocus.getDate().format("d-m-Y"));
+        this.assertEqual(date.format("d-m-Y"), cal.eSrc.value);
                                 
         
     }
