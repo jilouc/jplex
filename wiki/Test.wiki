@@ -1,14 +1,12 @@
-#summary Stupid test but it's necessary
+#summary Class API for Calendar from module Components
 #labels Phase-Support,Deprecated
 
-= Introduction =
 
-Add your content here.
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= Config Table =
+|| *Name* || *Default Value* || *Description* ||
+|| date || new Date() ||                                 The default date to select ||
+|| dest || null ||                                 The textfield to modify when a new date is selected ||
+|| fade || 0.3 ||                                 Time in seconds to show/hide the popup calendar ||
+|| maxDate || false ||                                 All dates that are above this one are not allowed ||
+|| minDate || false ||                                 All dates that are bellow this one are not allowed ||
+|| src || null ||                                 The event source, can be a textfield or a button for example ||
