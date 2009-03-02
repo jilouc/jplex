@@ -1,120 +1,123 @@
 a {
-    color:#0000ff;
-    text-decoration:underline;
+    color: #0000ff;
+    text-decoration: underline;
 }
+
 a:hover {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 div.jplex-window a.close {
-    text-decoration:none;
+    text-decoration: none;
 }
 
 body {
     font: 13px / 18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
     background-color: #fff;
     color: #333;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 div.jplex-window div.header {
-    background:#323232;
-    color:#fefefe;
+    background: #323232;
+    color: #fefefe;
 }
 
 div.jplex-window a.close, div.jplex-window a.close:hover {
-	background:url('../../src/jplex/components/window/assets/window-close.png') no-repeat;
+    background: url('../../src/jplex/components/frame/assets/window-close.png') no-repeat;
 }
 
 div.jplex-window a.close:hover {
-	background-position:0 -15px;
+    background-position: 0 -15px;
 }
 
 ul.smooth-tabs {
-    margin:2em;
-    position:absolute;
-    z-index:0;
-    top:3.7em;
+    margin: 2em;
+    position: absolute;
+    z-index: 0;
+    top: 3.7em;
 }
 
 div.menubar {
-    position:relative;
-    margin-bottom:10px;
-    font-size:1em;
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 1em;
 }
+
 div.menubar li.item {
-    height:22px;
+    height: 22px;
 }
 
 div.code-window div.body {
-    overflow:auto;
-    max-height:400px;
-    max-width:500px;
+    overflow: auto;
+    max-height: 400px;
+    max-width: 500px;
 }
 
 div#what {
-    width:60%;
+    width: 60%;
     text-align: justify;
 }
 
 ul.jplex-tabs.code-tabs {
-    float:right;
-    width:99%;
-    border-bottom:2px #79b3ec solid;
-    margin-bottom:1em;
+    float: right;
+    width: 99%;
+    border-bottom: 2px #79b3ec solid;
+    margin-bottom: 1em;
 }
 
 ul.jplex-tabs.code-tabs li.jplex-tabs-active {
-    background:#79b3ec;
-    color:white;
+    background: #79b3ec;
+    color: white;
 }
 
 ul.jplex-tabs.code-tabs li {
-    padding:0.1em 0.5em 0.1em 0.5em;
-    border:2px #79b3ec solid;
-    margin:0 0.4em -2px 0;
-    float:right;
+    padding: 0.1em 0.5em 0.1em 0.5em;
+    border: 2px #79b3ec solid;
+    margin: 0 0.4em -2px 0;
+    float: right;
 
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-topright: 10px;
     -webkit-border-top-left-radius: 10px;
     -webkit-border-top-right-radius: 10px;
 }
+
 ul.jplex-tabs.code-tabs li:hover {
-    color:#333333;
-    background:#79b3ec;
+    color: #333333;
+    background: #79b3ec;
 }
 
 ul.jplex-tabs.smooth-tabs li {
-    -moz-border-radius:15px;
+    -moz-border-radius: 15px;
 
-    -webkit-border-radius:14px;
-    background:#c3d9ff;
-    padding:0.2em 0.8em 0.2em 0.8em;
-    border:3px #79b3ec solid;
-    margin-right:1em;
+    -webkit-border-radius: 14px;
+    background: #c3d9ff;
+    padding: 0.2em 0.8em 0.2em 0.8em;
+    border: 3px #79b3ec solid;
+    margin-right: 1em;
 }
 
 ul.jplex-tabs.smooth-tabs li:first-child {
-    margin-left:0;
+    margin-left: 0;
 }
 
 ul.jplex-tabs.smooth-tabs li:hover, ul.jplex-tabs li.jplex-tabs-active:hover {
-    background:#79b3ec;
-    color:#ffffff;
+    background: #79b3ec;
+    color: #ffffff;
 }
 
 div.tabs-line {
-    border:2px #79b3ec solid;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    position:relative;
-    top:-1em;
-    z-index:0;
+    border: 2px #79b3ec solid;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    position: relative;
+    top: -1em;
+    z-index: 0;
 }
 
 div#what div.body {
-    padding:0;
+    padding: 0;
 }
 
 div#about {
@@ -123,8 +126,8 @@ div#about {
 }
 
 div#about div.body {
-    padding:2em;
-    padding-top:0.5em;
+    padding: 2em;
+    padding-top: 0.5em;
 }
 
 div#about table {
@@ -132,5 +135,11 @@ div#about table {
 }
 
 div.jplex-window div.footer {
-    text-align:right;
+    text-align: right;
+}
+
+a.top {
+    position: absolute;
+    bottom: 1em;
+    right: 2em;
 }

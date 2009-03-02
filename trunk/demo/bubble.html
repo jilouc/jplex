@@ -37,26 +37,39 @@ var b = new Bubble("bubble");</textarea>
 <h2>InfoBubbles</h2>
 <ul>
 <li>The bubble appears at <span id="info-tr">top-right</span> when hovering the highlighted element.</li>
-<li>The bubble appears at top-left when hovering the highlighted <span id="info-tl">element</span>.</li>
+<li>The bubble appears at top-left when clicking on the highlighted <span id="info-tl">element</span>.</li>
 <li>The <span id="info-br">bubble</span> appears at bottom-right when hovering the highlighted element.</li>
-<li>The bubble appears at bottom-left when <span id="info-bl">hovering</span> the highlighted element.</li>
+<li>The bubble appears at bottom-left when <span id="info-bl">clicking on</span> the highlighted element.</li>
 </ul>
 
 <textarea name="code" class="xml">
 <ul>
 <li>The bubble appears at <span id="info-tr">top-right</span> when hovering the highlighted element.</li>
-<li>The bubble appears at top-left when hovering the highlighted <span id="info-tl">element</span>.</li>
+<li>The bubble appears at top-left when clicking on the highlighted <span id="info-tl">element</span>.</li>
 <li>The <span id="info-br">bubble</span> appears at bottom-right when hovering the highlighted element.</li>
-<li>The bubble appears at bottom-left when <span id="info-bl">hovering</span> the highlighted element.</li>
+<li>The bubble appears at bottom-left when <span id="info-bl">clicking on</span> the highlighted element.</li>
 </ul>
 </textarea>
 <textarea name="code" class="js">
 var infotext = "<br />You can put <a href='bubble.html'>HTML</a> too";
 
-new Tooltip("info-tr", {text:"Top-right corner"+infotext});
-new Tooltip("info-tl", {position:"top-left", text:"Top-left corner"+infotext});
-new Tooltip("info-br", {position:"bottom-right", text:"Bottom-right corner"+infotext});
-new Tooltip("info-bl", {position:"bottom-left", text:"Bottom-left corner"+infotext});</textarea>
+new Tooltip("info-tr", {
+    text:"Top-right corner"+infotext
+});
+new Tooltip("info-tl", {
+    position:"top-left",
+    text:"Top-left corner"+infotext,
+    trigger:Tooltip.TRIGGER_CLICK
+});
+new Tooltip("info-br", {
+    position:"bottom-right",
+    text:"Bottom-right corner"+infotext
+});
+new Tooltip("info-bl", {
+    position:"bottom-left",
+    text:"Bottom-left corner"+infotext,
+    trigger:Tooltip.TRIGGER_CLICK
+});</textarea>
 <br /><br /><br /><br /><br /><br />
 <script type="text/javascript">
     <!--
@@ -67,9 +80,9 @@ new Tooltip("info-bl", {position:"bottom-left", text:"Bottom-left corner"+infote
 	var infotext = "<br />You can put <a href='bubble.html'>HTML</a> too";
 					
 	var c = new Tooltip("info-tr", {text:"Top-right corner"+infotext, shadeWidth:3});
-	new Tooltip("info-tl", {position:"top-left", text:"Top-left corner"+infotext});
+	new Tooltip("info-tl", {position:"top-left", text:"Top-left corner"+infotext, trigger:Tooltip.TRIGGER_CLICK});
 	new Tooltip("info-br", {position:"bottom-right", text:"Bottom-right corner"+infotext});
-	new Tooltip("info-bl", {position:"bottom-left", text:"Bottom-left corner"+infotext});
+	new Tooltip("info-bl", {position:"bottom-left", text:"Bottom-left corner"+infotext, trigger:Tooltip.TRIGGER_CLICK});
 
     //-->
 </script>

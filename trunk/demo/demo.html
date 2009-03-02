@@ -79,7 +79,7 @@
 
         implode: function() {
 
-            this.group.windows.each(function(s, i) {
+            this.group.windows.each(function(s) {
                 new Effect.Move(s.component, {
                     x: s._oldXY.get("x"),
                     y: s._oldXY.get("y"),
@@ -93,9 +93,10 @@
             var vpDim = document.viewport.getDimensions();
             var dim = win.component.getDimensions();
             var pos = win.component.cumulativeOffset();
-            win._oldXY = $H();
-            win._oldXY.set("x", pos.left);
-            win._oldXY.set("y", pos.top);
+            win._oldXY = $H({
+                x: pos.left,
+                y: pos.top
+            });
 
             var x,y;
 
@@ -123,7 +124,7 @@
         },
 
         update: Prototype.emptyFunction
-    })
+    });
 
     var e = null;
     document.bindKey(Event.Key.F11, function() {
@@ -198,6 +199,7 @@
 
                 icon: "./global/img/help.png",
                 click: function() {
+
                     if (!(about = $C("about"))) {
                         var about = new Modal('about', {
                             draggable: true,
@@ -206,6 +208,7 @@
                         });
 
                         about.setTitle("About");
+                        
                     }
                     about.show();
 

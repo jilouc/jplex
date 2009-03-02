@@ -12,8 +12,11 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 		defaultConfig: {
 			text: "Tooltip",
 			position: "top-right",
-            shadeWidth: 1
+            shadeWidth: 1,
+            trigger: "mouseover" // jplex.components.Tooltip.TRIGGER_MOUSEOVER
         },
+        // TODO Add Events
+        // TODO Doc
         defaultContainer:"span",
         text: {
 			fr: {}, en: {}
@@ -23,10 +26,24 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 	initialize: function($super, eElement, oConfig) {
 		$super(eElement, oConfig);
 		this.render();
-		this.component.observe("mouseover", this._onMouseOver.bindAsEventListener(this));
-		this.oBubble.component.observe("mouseover", this._onMouseOver.bindAsEventListener(this));
-		this.component.observe("mouseout", this._onMouseOut.bindAsEventListener(this));
-		this.oBubble.component.observe("mouseout", this._onMouseOut.bindAsEventListener(this));
+
+        if(this.cfg("trigger") == jplex.components.Tooltip.TRIGGER_MOUSEOVER) {
+            this.component.observe("mouseover", this._onMouseOver.bindAsEventListener(this));
+            this.oBubble.component.observe("mouseover", this._onMouseOver.bindAsEventListener(this));
+            this.component.observe("mouseout", this._onMouseOut.bindAsEventListener(this));
+            this.oBubble.component.observe("mouseout", this._onMouseOut.bindAsEventListener(this));
+        } else if(this.cfg("trigger") == jplex.components.Tooltip.TRIGGER_CLICK) {
+            this.component.observe("click", this._onMouseOver.bindAsEventListener(this));
+            document.body.observe("click", (function(e) {
+                var x = e.pointerX(),
+                    y = e.pointerY();
+                if (!this.component.isWithin(x, y) &&
+                    !this.oBubble.component.isWithin(x, y)) {
+                    this._onMouseOut(e);
+                }
+
+            }).bindAsEventListener(this));
+        }
 	},
 
 	render: function() {
@@ -68,5 +85,23 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 	_onMouseOut: function(e) {
 		e = Event.extend(window.event ? window.event : e);
 		this.oBubble.hide();
-	}
+	},
+
+    show: function() {
+        this._onMouseOver();
+    },
+
+    hide: function() {
+        this._onMouseOut();
+    }
+});
+
+
+// Static properties
+
+jPlex.extend('jplex.components.Tooltip', {
+
+    TRIGGER_MOUSEOVER: "mouseover",
+    TRIGGER_CLICK: "click",
+    TRIGGER_CUSTOM: "custom"
 });
