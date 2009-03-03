@@ -152,7 +152,10 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                 }
                 $A(imgs).each(function(s, i) {
                     var img = $(s);
+                    var bak = img.src;
                     loaded[i] = false;
+                    if(Prototype.Browser.Opera) 
+                        img.src = "";
                     img.hide();
                     img.observe('load', function(e, pic, n) {
                         loaded[n] = true;
@@ -161,7 +164,12 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                             this.setLoading(false);
                             this.makeCentered();
                         }
-                    }.bindAsEventListener(this, img, i));
+                    }.bindAsEventListener(this, img, i));    
+                    if(Prototype.Browser.Opera) {
+                        img.src = bak;
+                        if (img.complete) 
+                        img.removeEvents();                                            
+                    }
                 }, this);
             }
             this.makeCentered();
