@@ -6,3 +6,8 @@ input.calendar-button {
 	margin-left:0.2em;
 	width:30px;
 }
+
+div.calendar td {
+    border: 0;
+    padding:1px;
+}

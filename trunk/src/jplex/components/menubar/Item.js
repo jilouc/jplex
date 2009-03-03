@@ -80,13 +80,25 @@ jPlex.provide('jplex.components.menubar.Item', {
         }
 
         if (sIcon) {
-            this.oParent.get().addClassName('with-icon');
-            this.eElement.addClassName('icon');
+            this.oParent.get().addClassName("with-icon");
+
+            if(Prototype.Browser.IE6) {
+                this.eElement.removeClassName("item");
+                this.eElement.addClassName("item-with-icon");
+            } else {
+                this.eElement.addClassName("icon");
+            }
             this.eElement.setStyle({
                 backgroundImage:"url('"+sIcon+"')"
             });
         } else {
-            this.eElement.addClassName('no-icon');
+            if(Prototype.Browser.IE6) {
+                this.eElement.removeClassName("item");
+                this.eElement.addClassName("item-without-icon");
+            } else {
+                this.eElement.addClassName("no-icon");
+            }
+
         }
 
         this.oSubmenu = new jplex.components.menubar.Submenu(this, oItems, this.nLevel);

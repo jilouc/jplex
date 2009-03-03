@@ -142,6 +142,15 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component',  {
             this.fireEvent("onClickEvent");
         }.bind(this));
 
+        // IE6 CSS3 Hacks
+        // TODO Le faire aussi quand on ajoute des items
+        if(Prototype.Browser.IE6) {
+            $$("div.menubar ul.with-icon > li.item-with-icon",
+                    "div.menubar ul.with-icon > li.item-without-icon").each(function(s) {
+                $(s).setStyle({paddingLeft: "26px"});
+            });
+        }
+
     },
     
     /**
