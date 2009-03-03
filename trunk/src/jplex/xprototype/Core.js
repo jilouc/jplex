@@ -17,6 +17,7 @@ Object.extend(Prototype.Browser, {
     IE6: Prototype.Browser.IE && 
             navigator.userAgent.indexOf("MSIE 6.0") != -1
 });
+var console;
 
 /**
  * Logger class. Is binded with firebug.
