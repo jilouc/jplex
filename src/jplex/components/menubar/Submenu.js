@@ -111,7 +111,8 @@ jPlex.provide('jplex.components.menubar.Submenu', {
      */
     _fixPosition: function() {
 
-        var parent = this.oParent.get(), pos = parent.positionedOffset();
+        var parent = this.oParent.get(),
+               pos = parent.positionedOffset();
         var top, left;
         if (this.nLevel == 0) {
             top = pos.top + parent.getHeight();
