@@ -17,6 +17,7 @@ div.menubar li.item-with-icon {
     background: no-repeat 4px 4px;
 }
 
+
 div.menubar li.item-without-icon {
     padding: 0 4.5em 0 0.7em;
     height: 1.5em;
@@ -29,3 +30,13 @@ div.menubar li.item-without-icon {
 div.menubar span.shortcut {
     line-height:1.2em;
 }
+
+div.menubar li.ie6-item-hover {
+    background: #d6f4fe no-repeat 4px 4px;
+    border: 1px #c0c0c0 dotted;
+}
+
+div.menubar li.ie6-first-hover {
+    background: url("bgs.png") 0 -1300px;
+}
+

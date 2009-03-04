@@ -37,17 +37,14 @@ div.menubar li.item {
 }
 
 div.menubar li.item:hover,
-div.menubar li.item.icon:hover,
-div.menubar li.item-ie6hover {
+div.menubar li.item.icon:hover {
     background: #d6f4fe no-repeat 4px 4px;
     border: 1px #c0c0c0 dotted;
 }
 
 div.menubar li.first:hover,
-    div.menubar li.first-selected,
-    div.menubar li.first-ie6hover {
+div.menubar li.first-selected {
     background: url("bgs.png") 0 -1300px;
-
 }
 
 div.menubar li a {

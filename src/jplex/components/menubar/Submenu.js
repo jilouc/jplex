@@ -88,11 +88,12 @@ jPlex.provide('jplex.components.menubar.Submenu', {
      */
     hide: function() {
         if (!this.isEmpty() && this.get().visible()) {
-            this.get().hide();
-            this.eShade.hide();
             this.oItems.each(function(s) {
                 s.oSubmenu.hide();
             });
+
+            this.get().hide();
+            this.eShade.hide();
         }
     },
 
