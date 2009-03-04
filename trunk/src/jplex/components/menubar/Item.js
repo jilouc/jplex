@@ -3,7 +3,7 @@ jPlex.include('jplex.components.menubar.Submenu', true);
  * @description MenuBar Item
  * @class menubar.Item
  * @param {MenuBar|MenuBar.Submenu} oParent parent menu of the item (i.e. the menu containing the item)
- * @param {Object} oItem the item 
+ * @param {Object} oItem the item
  * @param {Integer} nLevel depth of the item (equal to its parent menu depth)
  * @constructor
  * @requires jplex.components.menubar.Submenu
@@ -67,8 +67,10 @@ jPlex.provide('jplex.components.menubar.Item', {
      */
     render: function(oItems, oShortcut, sIcon, sLink) {
         this.eElement = new Element("li").update(this.sLabel);
-        if(sLink) {
-            this.eElement.observe('click', function(){window.location = sLink;});
+        if (sLink) {
+            this.eElement.observe('click', function() {
+                window.location = sLink;
+            });
         }
         this.eElement.addClassName(this.nLevel == 0 ? "first" : "item");
 
@@ -82,17 +84,17 @@ jPlex.provide('jplex.components.menubar.Item', {
         if (sIcon) {
             this.oParent.get().addClassName("with-icon");
 
-            if(Prototype.Browser.IE6) {
+            if (Prototype.Browser.IE6) {
                 this.eElement.removeClassName("item");
                 this.eElement.addClassName("item-with-icon");
             } else {
                 this.eElement.addClassName("icon");
             }
             this.eElement.setStyle({
-                backgroundImage:"url('"+sIcon+"')"
+                backgroundImage:"url('" + sIcon + "')"
             });
         } else {
-            if(Prototype.Browser.IE6) {
+            if (Prototype.Browser.IE6) {
                 this.eElement.removeClassName("item");
                 this.eElement.addClassName("item-without-icon");
             } else {
@@ -110,6 +112,22 @@ jPlex.provide('jplex.components.menubar.Item', {
             this.eElement.appendChild(span.addClassName("parent"));
         }
 
+        if (Prototype.Browser.IE6) {
+            var hoverClass = "ie6-item-hover";
+            if (this.nLevel == 0) {
+                hoverClass = "ie6-first-hover";
+            }
+
+            this.eElement.observe("mouseover", function() {
+                this.eElement.addClassName(hoverClass);
+            }.bind(this));
+            this.eElement.observe("mouseout", function() {
+                if (this.eElement.hasClassName(hoverClass)) {
+                    this.eElement.removeClassName(hoverClass);
+                }
+           }.bind(this));
+        }
+
     },
 
     /**
@@ -122,7 +140,7 @@ jPlex.provide('jplex.components.menubar.Item', {
 
     /**
      * Fires when the mouse enters the item
-     * The handlers are identical to those of the menu root 
+     * The handlers are identical to those of the menu root
      * @event _onMouseOver
      * @param {Event} e
      */
