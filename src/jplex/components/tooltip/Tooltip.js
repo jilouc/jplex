@@ -13,7 +13,8 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 			text: "Tooltip",
 			position: "top-right",
             shadeWidth: 1,
-            trigger: "mouseover" // jplex.components.Tooltip.TRIGGER_MOUSEOVER
+            trigger: "mouseover", // jplex.components.Tooltip.TRIGGER_MOUSEOVER
+            positionRatio: 0.83
         },
         // TODO Add Events
         // TODO Doc
@@ -53,7 +54,8 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 		document.body.appendChild(div);
 		this.oBubble = new jplex.components.tooltip.Bubble(div, {
 			pin: this.cfg("position"),
-            shadeWidth: this.cfg("shadeWidth")
+            shadeWidth: this.cfg("shadeWidth"),
+            positionRatio: this.cfg("positionRatio")
         });
 		this.oBubble.setBody(this.cfg("text"));
 		this.oBubble.hide();
@@ -67,17 +69,17 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 		var position = this.cfg("position"),
 			left = pos.left, top = pos.top;
 		if ("top-right" == position) {
-			top = top - this.oBubble.component.getHeight() - 10;
-			left += 10;
+			top = top - this.oBubble.component.getHeight() - 15;
+			left += Math.floor(this.component.getWidth()*this.cfg('positionRatio')) -10;
 		} else if("top-left" == position) {
-			top  = top - this.oBubble.component.getHeight() - 10;
-			left = left - (5*this.oBubble.component.getWidth())/6 + 30;
+			top  = top - this.oBubble.component.getHeight() - 15;
+			left = left - (5*this.oBubble.component.getWidth())/6 + this.component.getWidth()*(1-this.cfg('positionRatio'))-5;
 		} else if("bottom-left" == position) {
 			top = top + this.component.getHeight() + 15;
-			left = left - (5*this.oBubble.component.getWidth())/6 + 30;
+			left = left - (5*this.oBubble.component.getWidth())/6 + this.component.getWidth()*(1-this.cfg('positionRatio'))-5;
 		} else if("bottom-right" == position) {
 			top = top + this.component.getHeight() + 15;
-			left += 10;
+			left += Math.floor(this.component.getWidth()*this.cfg('positionRatio'))-10;
 		}
 		this.oBubble.setPosition(top, left);
 	},
