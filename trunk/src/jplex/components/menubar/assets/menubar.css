@@ -29,8 +29,9 @@ div.menubar li.first {
 
 div.menubar li.item {
     padding: 0 4.5em 0 0.7em;
-    height: 1.5em;
-    vertical-align: middle;
+    height: 1.9em;
+    line-height: 1.7em;
+	vertical-align: middle;
     white-space: nowrap !important;
     clear: both;
     border: 1px transparent solid;
@@ -69,7 +70,7 @@ div.menubar span.parent {
     right: 0;
     width: 1em;
     height: 1.2em;
-    background: url("submenu.png") no-repeat right;
+    background: url("submenu.png") no-repeat right 0.5em;
 }
 
 div.menubar li.item.icon {
