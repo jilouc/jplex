@@ -20,7 +20,6 @@ div.menubar li.item-with-icon {
 
 div.menubar li.item-without-icon {
     padding: 0 4.5em 0 0.7em;
-    height: 1.5em;
     vertical-align: middle;
     white-space: nowrap !important;
     clear: both;
