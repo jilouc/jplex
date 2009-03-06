@@ -1,3 +1,5 @@
+jPlex.include("jplex.components.Tooltip", false);
+
 /**
  * Components definition
  * @module Components
@@ -17,7 +19,7 @@
 jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
     _definition: {
         name: 'Calendar',
-        defaultConfig: {   
+        defaultConfig: {
             /**
              * The default date to select
              * @config date
@@ -29,7 +31,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
              * @config minDate
              * @default false
              */
-            minDate: false, 
+            minDate: false,
             /**
              * All dates that are above this one are not allowed
              * @config maxDate
@@ -49,19 +51,30 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
              * @config fade
              * @default 0.3
              */
-            fade: 0.3,   
+            fade: 0.3,
             /**
              * The textfield to modify when a new date is selected
              * @config dest
              * @default null
              */
-            dest: null, 
+            dest: null,
             /**
              * The event source, can be a textfield or a button for example
              * @config src
              * @default null
              */
             src: null,
+            /**
+             * If set to true, a click on the title of the calendar (month or year)
+             * will pop up a tooltip allowing the user to set a value for the month
+             * (or the year) using combo-boxes
+             */
+            fastBrowse: true,
+
+            fastBrowseYearStart: (new Date()).getFullYear() - 5,
+            fastBrowseYearEnd: (new Date()).getFullYear() + 5,
+            fastBrowseYearStep: 1, // TODO implement
+
             //TODO IMPLEMENT 
             events: {
                 /**
@@ -71,7 +84,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
                  */
                 onSelectEvent: Prototype.emptyFunction,
                 /**
-                 * When the calendar appears 
+                 * When the calendar appears
                  * @event onShowEvent
                  */
                 onShowEvent: Prototype.emptyFunction,
@@ -82,8 +95,18 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
         },
         defaultContainer: "div",
         text: {
-            fr: { CLOSE: 'Fermer' },
-            en: { CLOSE: 'Close' }
+            fr: {
+                CLOSE: 'Fermer',
+                SELECT_MONTH: 'Mois',
+                SELECT_YEAR: 'Année',
+                SELECT_END: 'Terminer'
+            },
+            en: {
+                CLOSE: 'Close',
+                SELECT_MONTH: 'Month',
+                SELECT_YEAR: 'Year',
+                SELECT_END: 'Finish'
+            }
         }
     },
 
@@ -133,7 +156,8 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
                 var x = eEvent.pointerX(),
                         y = eEvent.pointerY();
                 if (!this.eSrc.isWithin(x, y) &&
-                    !this.component.isWithin(x, y))
+                    !this.component.isWithin(x, y) &&
+                    !this._fastBrowseTooltip.oBubble.component.isWithin(x, y))
                     this.hide();
             }.bind(this));
 
@@ -215,7 +239,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
                 oLastDayOfMonth = this.oMonth.lastDayOfMonth();
         this._fdom = oFirstDayOfMonth;
         this._ldom = oLastDayOfMonth;
-        
+
         var oFirstDay = new Date(
                 oFirstDayOfMonth.getFullYear(),
                 oFirstDayOfMonth.getMonth(),
@@ -240,7 +264,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
             if (diff >= 0 && diff < 86400000) {
                 oDayItem.select();
                 oDayItem.focus();
-            }            
+            }
 
             this.oItems[i++] = oDayItem;
 
@@ -252,47 +276,69 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
 
             oDay.setNextDay();
         }
-        this._setTitle("&nbsp;" + this.locale('Date', 'MONTHS')[this.oMonth.getMonth()] + ' '
-                + (this.oMonth.getYear() + Date.YEAR_OFFSET) + "&nbsp;");
+
+        this._setTitle("&nbsp;" + this.locale('Date', 'MONTHS')[this.oMonth.getMonth()] + ' ' +
+                       + this.oMonth.getFullYear() + "&nbsp;");
+
+        if(this._fastBrowseOverlay && this._fastBrowseOverlay.visible()) {
+            this._fastBrowseOverlay.clonePosition(this.component);
+        }
+
+
     },
 
     /**
      * Go to the next month
      */
     next: function() {
-        var n = this.oFocus.getIndex();
-        var fd = this._fdom.getDay();
-
-        this.oMonth = this.oMonth.lastDayOfMonth();
-        this.oMonth.setNextDay();
-        this.render();
-        // Fix issue #1 : the same date will be selected in the next month
-        var newIndex = this._fdom.getDay()+Math.min(this._ldom.getDate()-1, n-fd);
-        this.oItems[newIndex].focus();
-        //this.oItems[newIndex].select(null, false);
-
-        if (this.eSrc)
-            this.eSrc.activate();
+        var month = this.oMonth.getMonth() + 1;
+        var year = this.oMonth.getFullYear();
+        if(month > 0) {
+            month = 0;
+            year++;
+        }
+        this.goTo(month, year);
     },
 
     /**
      * Go to the previous month
      */
     previous: function() {
+        var month = this.oMonth.getMonth() - 1;
+        var year = this.oMonth.getFullYear();
+        if(month < 0) {
+            month = 11;
+            year--;
+        }
+        this.goTo(month, year);
+    },
+
+    /**
+     * Change the page of the calendar to the specified month and year
+     * @param {Integer} month New month (optional) 
+     * @param {Integer} year New year (optional)
+     */
+    goTo: function(month, year) {
         var n = this.oFocus.getIndex();
         var fd = this._fdom.getDay();
+        var date = new Date();
 
-        this.oMonth = this.oMonth.firstDayOfMonth();
-        this.oMonth.setPreviousDay();
-        this.oMonth = this.oMonth.firstDayOfMonth();
+        if(!Object.isUndefined(month)) {
+            date.setMonth(month);
+        }
+        if(year) {
+            date.setYear(year);
+        }
+        this.oMonth = date.firstDayOfMonth();
+
         this.render();
 
-        // Fix issue #1 : the same date will be selected in the previous month
-        var newIndex = this._fdom.getDay()+Math.min(this._ldom.getDate()-1, n-fd);
+        var newIndex = this._fdom.getDay() + Math.min(this._ldom.getDate() - 1, n - fd);
         this.oItems[newIndex].focus();
         //this.oItems[newIndex].select(null, false);
         if (this.eSrc)
             this.eSrc.activate();
+
     },
 
     /**
@@ -340,7 +386,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
             if (this.eSrc.getAttribute('type') == 'button' && Prototype.Browser.IE6) {
                 this.eSrc.addClassName('calendar-button');
             }
-        }                                                                    
+        }
 
         var eTop = new Element('div').addClassName('top'),
                 eTitle = new Element('span', {
@@ -377,6 +423,95 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
         $A(this.locale('Date', 'DAYS_SHORT')).each(function(s) {
             eTR.appendChild(new Element('th').update(s));
         });
+
+        if (this.cfg("fastBrowse")) {
+            var selectMonth = new Element("select");
+            $A(this.locale("Date", "MONTHS")).each(function(s, i) {
+                selectMonth.appendChild((new Element("option", {value:i})).update(s));
+            });
+
+            var selectYear = new Element("select");
+            $R(this.cfg("fastBrowseYearStart"), this.cfg("fastBrowseYearEnd")).each(function(s) {
+                selectYear.appendChild((new Element("option", {value:s})).update(s));
+            });
+
+            var selectEnd = new Element("input", {
+                value: this.lang("SELECT_END"),
+                type: "button"
+            });
+            selectEnd.addClassName("end");
+
+            this._fastBrowseTooltip = new jplex.components.Tooltip(this._getTitle(), {
+                trigger:jplex.components.Tooltip.TRIGGER_CLICK,
+                position:"bottom-right",
+                text:"",
+                positionRatio:0.35
+            });
+
+            var tooltipBody = this._fastBrowseTooltip.oBubble.component.down("div.body");
+            tooltipBody.addClassName("jplex-fb-tooltip");
+
+
+            var divSelectMonth = new Element("div").update(this.lang("SELECT_MONTH")+"<br/>");
+            divSelectMonth.appendChild(selectMonth);
+            divSelectMonth.addClassName("select");
+            var divSelectYear = new Element("div").update(this.lang("SELECT_YEAR")+"<br/>");
+            divSelectYear.appendChild(selectYear);
+            divSelectYear.addClassName("select");
+
+
+            tooltipBody.appendChildren(
+                    divSelectMonth,
+                    divSelectYear,
+                    selectEnd
+            );
+            this._fastBrowseTooltip.setEvent("onShowEvent", function() {
+                if (!this._fastBrowseOverlay) {
+                    var overlay = new Element("div");
+
+                    document.body.appendChild(overlay);
+                    
+                    overlay.setStyle({
+                        zIndex: this.component.getStyle("zIndex") + 1,
+                        position: "absolute"
+                    });
+                    overlay.addClassName("jplex-fb-overlay");
+                    overlay.setOpacity(0);
+                    overlay.clonePosition(this.component);
+
+                    this._fastBrowseOverlay = overlay;
+
+                }
+                //this._fastBrowseOverlay.show();
+                new Effect.Appear(this._fastBrowseOverlay, {to:0.3});
+            }.bind(this));
+            
+            this._fastBrowseTooltip.setEvent("onHideEvent", function() {
+                if(this._fastBrowseOverlay)
+                    this._fastBrowseOverlay.hide();
+            }.bind(this));
+
+            var preventClick = function(e) {
+                e = Event.extend(window.event ? window.event : e);
+                e.cancelBubble = true;
+                return false;
+            };
+            selectMonth.observe("click", preventClick);
+            selectYear.observe("click", preventClick);
+            selectEnd.observe("click", this._fastBrowseTooltip.hide.bind(this._fastBrowseTooltip));
+
+            var change = function() {
+                this.goTo(parseInt(selectMonth.value), parseInt(selectYear.value));
+            }.bind(this);
+
+
+            selectMonth.observe("change", change);
+            selectYear.observe("change", change);
+
+            selectMonth.value = this.cfg("date").getMonth();
+            selectYear.value = this.cfg("date").getFullYear();
+        }
+
 
         this._fixPosition();
     },

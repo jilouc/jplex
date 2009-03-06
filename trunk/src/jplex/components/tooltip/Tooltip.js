@@ -16,7 +16,10 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
             trigger: "mouseover", // jplex.components.Tooltip.TRIGGER_MOUSEOVER
             positionRatio: 0.83
         },
-        // TODO Add Events
+        events: {
+            onShowEvent: Prototype.emptyFunction,
+            onHideEvent: Prototype.emptyFunction
+        },
         // TODO Doc
         defaultContainer:"span",
         text: {
@@ -29,18 +32,18 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 		this.render();
 
         if(this.cfg("trigger") == jplex.components.Tooltip.TRIGGER_MOUSEOVER) {
-            this.component.observe("mouseover", this._onMouseOver.bindAsEventListener(this));
+            this.component.observe("mouseover", this.show.bindAsEventListener(this));
             this.oBubble.component.observe("mouseover", this._onMouseOver.bindAsEventListener(this));
-            this.component.observe("mouseout", this._onMouseOut.bindAsEventListener(this));
+            this.component.observe("mouseout", this.hide.bindAsEventListener(this));
             this.oBubble.component.observe("mouseout", this._onMouseOut.bindAsEventListener(this));
         } else if(this.cfg("trigger") == jplex.components.Tooltip.TRIGGER_CLICK) {
-            this.component.observe("click", this._onMouseOver.bindAsEventListener(this));
-            document.body.observe("click", (function(e) {
+            this.component.observe("click", this.show.bindAsEventListener(this));
+            document.observe("click", (function(e) {
                 var x = e.pointerX(),
                     y = e.pointerY();
                 if (!this.component.isWithin(x, y) &&
                     !this.oBubble.component.isWithin(x, y)) {
-                    this._onMouseOut(e);
+                    this.hide(e);
                 }
 
             }).bindAsEventListener(this));
@@ -89,12 +92,14 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 		this.oBubble.hide();
 	},
 
-    show: function() {
-        this._onMouseOver();
+    show: function(e) {
+        this._onMouseOver(e);
+        this.fireEvent("onShowEvent");
     },
 
-    hide: function() {
-        this._onMouseOut();
+    hide: function(e) {
+        this._onMouseOut(e);
+        this.fireEvent("onHideEvent");
     }
 });
 
