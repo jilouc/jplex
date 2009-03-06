@@ -293,7 +293,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
     next: function() {
         var month = this.oMonth.getMonth() + 1;
         var year = this.oMonth.getFullYear();
-        if(month > 0) {
+        if(month > 11) {
             month = 0;
             year++;
         }
