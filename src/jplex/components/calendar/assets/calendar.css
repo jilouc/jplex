@@ -23,6 +23,8 @@ div.calendar {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
     background: #bfe2f6;
     padding: 5px;
     border: 1px #7ecbf7 solid;
@@ -109,4 +111,28 @@ div.calendar div.close {
 div.calendar div.close:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+div.jplex-fb-overlay {
+    background:#000000;
+    position:absolute;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+}
+
+div.jplex-fb-tooltip div.body {
+    padding:0;
+}
+
+div.jplex-fb-tooltip div.select {
+    color:#666666;
+    font-size:0.8em;
+    margin-top:0.5em;
+    
+}
+
+div.jplex-fb-tooltip input.end {
+    margin:0.5em 0 0.5em 0;
+}
+div.jplex-fb-tooltip select {
 }

@@ -162,3 +162,23 @@ Object.extend(document, {
     bindKey: Element.Methods.bindKey.methodize(), 
     unbindKey: Element.Methods.unbindKey.methodize() 
 });
+
+if(Prototype.Browser.IE) {
+    Element.addMethods({
+        getOffsetParent : Element.Methods.getOffsetParent.wrap(
+            /* Fixing Prototype Issue #365 Element#getStyle problem with IE 6 & 7
+               (IE returns 'html' node as parent for absolutely positioned elements
+               which cause getStyle to throw an error)
+               Should be fixed in release 1.6.0.4 of Prototype
+            */
+            function(proceed, element) {
+
+                var value = proceed(element);
+                if(value.tagName.toLowerCase() == 'html') {
+                    value = $(document.body);
+                }
+                return value;
+            }
+        )
+    });
+}
