@@ -71,14 +71,6 @@ jPlex.provide('jplex.common.Component', {
         // using the component default container. It's added to the body of the document
         this.component = $(eElement);
 
-        // Seems to be buggy : in the global demo, if you first click the "About" menu item and then the "View code snippet"
-        // the window of the code snippet is created as Modal and that's not what is requested in the code!
-        // Workaround l.116-117 (clone of the config recursively extended).
-        // Still to fix : if we set the 'name' of _definition to the one defined in _extension,
-        // it will be shared by all Windows instances, even not Modal ones
-        /*if (this._extension)
-            def = Object.extendRecursive(this._definition, this._extension);*/
-
         if (!this._definition ||
             !this._definition.name ||
             (!this._definition.defaultContainer && !this.component))
@@ -123,7 +115,7 @@ jPlex.provide('jplex.common.Component', {
         this._oConfig = new jplex.common.Config(cfg);
         this._oEvents = $H();
 
-        $H(Object.extend(this._definition.events, oConfig.events)).each(function(evt) {
+        $H(Object.extend(Object.clone(this._definition.events), oConfig.events)).each(function(evt) {
             this.setEvent(evt.key, evt.value);
         }, this);
 

@@ -1,4 +1,5 @@
 jPlex.include("jplex.components.Tooltip", false);
+jPlex.include("jplex.components.calendar.CalendarItem", false);
 
 /**
  * Components definition
@@ -8,7 +9,18 @@ jPlex.include("jplex.components.Tooltip", false);
 
 /**
  * Calendar component class.
- * Create a navigable calendar from a text field or a button.
+ * Create a browsable calendar from a text field, a button or directly on the page.
+ * <p>Main features:
+ * <ul>
+ * <li>Link the calendar to a simple text input (appears on focus), to a button (appears on click)
+ * and a text field. You could also use whichever control you want and specify the behavior with custom events.</li>
+ * <li>Browse the calendar by month or using the 'fast browse'</li>
+ * <li>Key shortcuts enabled: move the focused date using arrow keys or to
+ * the previous/next month using PageDown/PageUp</li>
+ * <li>Restrict the date to a chosen interval if you want</li>
+ * <li>Custom events are fired at given steps of the component lifecycle (show/hide/select)</li>
+ * <li>Use fade in/out from Script.aculo.us if you want so</li>
+ * </ul>
  *
  * @param {Element} eSrc The HTML Element linked with the calendar (an input of type text or button)
  * @param {Object} oConfig The configuration object
@@ -45,25 +57,36 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
              * @see jPlex.xprototype.Date#format
              * @default "d-m-Y"
              */
-            dateFormat:"d-m-Y",
+            dateFormat: "d-m-Y",
             /**
-             * Time in seconds to show/hide the popup calendar
+             * Time in seconds to show/hide the popup calendar.
+             * Set to 0 or false to disable fade in/out.
              * @config fade
              * @default 0.3
              */
             fade: 0.3,
             /**
-             * The textfield to modify when a new date is selected
+             * The textfield linked with the calendar (edited when a new date is selected)
+             * (see the source configuration parameter below for more details)
              * @config dest
              * @default null
              */
-            dest: null,
+            textField: null,
             /**
              * The event source, can be a textfield or a button for example
-             * @config src
+             * The source element for the calendar. Use one of the following configuration:
+             * <ul>
+             * <li><code>textField = null, source = a text field</code> : links the calendar to a single text field</li>
+             * <li><code>textField = a text field, source = a button</code> : links the calendar to a button, the result
+             * will be printed in the textfield</li>
+             * <li><code>textField = null, source = a button</code> : links the calendar to a button, use the custom event
+             * onSelectEvent to catch the selected date and do what you want with it</li>
+             * <li><code>textField = null, source = null</code> : just show a calendar without show/hide things</li>
+             * </li> 
+             * @config source
              * @default null
              */
-            src: null,
+            source: null,
             /**
              * If set to true, a click on the title of the calendar (month or year)
              * will pop up a tooltip allowing the user to set a value for the month
@@ -75,7 +98,6 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
             fastBrowseYearEnd: (new Date()).getFullYear() + 5,
             fastBrowseYearStep: 1, // TODO implement
 
-            //TODO IMPLEMENT 
             events: {
                 /**
                  * When a new date is selected
@@ -84,11 +106,21 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
                  */
                 onSelectEvent: Prototype.emptyFunction,
                 /**
-                 * When the calendar appears
+                 * When the calendar appears (textfield receiving focus for instance)
                  * @event onShowEvent
                  */
                 onShowEvent: Prototype.emptyFunction,
+                /**
+                 * When the calendar disappears (textfield losing focus, new date selected for instance)
+                 * @event onHideEvent
+                 */
                 onHideEvent: Prototype.emptyFunction,
+                /**
+                 * Called each time the position of the calendar is re-computed
+                 * @event onPositionChangeEvent
+                 * @param {Object} position The computed position (position.top and position.left)
+                 * @param {Object} dimensions Dimensions of the calendar container (width and height) 
+                 */
                 onPositionChangeEvent: Prototype.emptyFunction
             }
 
@@ -115,8 +147,8 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
 
         var oCurrentDate = this.cfg('date');
 
-        this.eSrc = $(this.cfg("src"));
-        this.eDest = $(this.cfg("dest"));
+        this.eSrc = $(this.cfg("source"));
+        this.eDest = $(this.cfg("textField"));
 
         this.component.setAttribute("id", this.sID + '-calendar');
         this.ID = this.component.getAttribute('id');
@@ -220,7 +252,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
     /**
      * Explicitly selects the oDate'th cell in the calendar
      * @param {Integer} oDate Index of the cell to select (0 to oItems.length)
-     * @see Calendar.Item#select
+     * @see Calendar.CalendarItem#select
      */
     select: function(oDate) {
         this.oItems[oDate].select();
@@ -258,7 +290,7 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
                 eTR = new Element('tr');
                 this._getTbody().appendChild(eTR);
             }
-            var oDayItem = new Calendar.Item(this, oDay, i),
+            var oDayItem = new jplex.components.calendar.CalendarItem(this, oDay, i),
                     eDay = oDayItem.getCell();
             var diff = this.oCurrent._oDate.getTime() - oDay.getTime();
             if (diff >= 0 && diff < 86400000) {
@@ -335,7 +367,6 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
 
         var newIndex = this._fdom.getDay() + Math.min(this._ldom.getDate() - 1, n - fd);
         this.oItems[newIndex].focus();
-        //this.oItems[newIndex].select(null, false);
         if (this.eSrc)
             this.eSrc.activate();
 
@@ -584,9 +615,19 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
     _fixPosition: function() {
         if (!this.eSrc) return;
         var aOffsets = this.eSrc.cumulativeOffset();
+        var newPos = {
+            left: aOffsets.left,
+            top: aOffsets.top + this.eSrc.getHeight()
+        };
+        
         this.component.setStyle({
-            left: aOffsets.left + "px",
-            top: (aOffsets.top + this.eSrc.getHeight()) + "px"
+            left: newPos.left + "px",
+            top: newPos.top + "px"
+        });
+
+        this.fireEvent("onPositionChangeEvent", {
+            position: newPos,
+            dimensions: this.component.getDimensions()
         });
     },
 
@@ -605,132 +646,5 @@ jPlex.provide('jplex.components.Calendar', 'jplex.common.Component', {
     setFocused: function(oItem) {
         this.oFocus = oItem;
     }
-});
-
-/**
- * Item representing one cell of the calendar (i.e. one day)
- * Store the corresponding HTML element and date and handle focus and select events.
- *
- * @param {Calendar} oCalendar reference to the calendar it belongs to
- * @param {Date} oDate date of the item
- * @param {Integer} nIndex Index of the item in the calendar table
- * @class Calendar.Item
- * @constructor
- */
-jPlex.extend('jplex.components.Calendar', {
-    Item: Class.create({
-        initialize: function(oCalendar, oDate, nIndex) {
-            this._oCalendar = oCalendar;
-            this._oDate = new Date();
-            this._oDate.setTime(oDate.getTime());
-            this._nIndex = nIndex;
-            this._eCell = new Element('td', {
-                id: this._oCalendar.ID + '_DAY_' + nIndex
-            }).update(oDate.getDate().toString());
-
-            if (Prototype.Browser.IE6) {
-                this._eCell.observe("mouseover", function() {
-                    this._eCell.addClassName("ie6-hover");
-                }.bind(this));
-                this._eCell.observe("mouseout", function() {
-                    this._eCell.removeClassName("ie6-hover");
-                }.bind(this));
-            }
-
-            if (this.check()) {
-                this._eCell.observe('click', this.select.bindAsEventListener(this, true));
-            } else {
-                this._eCell.addClassName('disabled');
-            }
-        },
-
-        /**
-         * Selects the date corresponding to the item
-         * @param {Event} eEvent
-         * @param {boolean} bIsClick true if the selection results from a click on the cell
-         */
-        select: function(eEvent, bIsClick) {
-            if (!this.check()) return;
-
-            if (this._oCalendar.oCurrent.getCell)
-                this._oCalendar.oCurrent._unselect();
-            if (!this.getCell().hasClassName('selected')) {
-                this.getCell().addClassName('selected');
-            }
-            this.focus();
-            this._oCalendar.setSelected(this);
-            this._oCalendar.setValue(this.getDate().format(this._oCalendar.cfg("dateFormat")));
-            if (bIsClick && this._oCalendar.eDest) {
-                this._oCalendar.hide();
-            }
-            this._oCalendar.fireEvent("onSelectEvent", {date:this._oDate});
-        },
-
-        /**
-         * Unselects the item
-         * @private
-         */
-        _unselect: function() {
-            this.getCell().removeClassName('selected');
-        },
-
-        /**
-         * Set the focus on the item
-         */
-        focus: function() {
-            if (!this.check()) return;
-
-            if (this._oCalendar.oFocus.getCell)
-                this._oCalendar.oFocus._blur();
-            if (!this.getCell().hasClassName('focused')) {
-                this.getCell().addClassName('focused');
-            }
-            this._oCalendar.setFocused(this);
-        },
-
-        /**
-         * Removes the focus on the item
-         * @private
-         */
-        _blur: function() {
-            this.getCell().removeClassName('focused');
-        },
-
-        /**
-         * Check whether the date of the item match a valid date
-         * (regarding to the valid range set in the calendar configuration)
-         */
-        check: function() {
-            var minDate = this._oCalendar.cfg('minDate'),
-                    maxDate = this._oCalendar.cfg('maxDate');
-
-            return (!minDate || this.getDate().compareTo(minDate) >= -86400000) &&
-                   (!maxDate || this.getDate().compareTo(maxDate) <= 0);
-        },
-
-        /**
-         * Get the cell (td) element representing the item
-         * @return {Element} the td element for the item
-         */
-        getCell: function() {
-            return this._eCell;
-        },
-
-        /**
-         * Get the index of the item in the table
-         * @return {Integer} index of the item in the calendar table
-         */
-        getIndex: function() {
-            return this._nIndex;
-        },
-
-        /**
-         * Get the date of the item
-         * @return {Date} date corresponding to the item
-         */
-        getDate: function() {
-            return this._oDate;
-        }
-    })
 });
 
