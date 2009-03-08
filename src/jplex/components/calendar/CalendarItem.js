@@ -5,69 +5,61 @@
  * @param {Calendar} oCalendar reference to the calendar it belongs to
  * @param {Date} oDate date of the item
  * @param {Integer} nIndex Index of the item in the calendar table
- * @class Calendar.CalendarItem
+ * @class calendar.CalendarItem
  * @static
  * @constructor
  */
-jPlex.provide('jplex.components.calendar.CalendarItem', {
+jPlex.provide("jplex.components.calendar.CalendarItem", {
 
     initialize: function(oCalendar, oDate, nIndex) {
-        this._oCalendar = oCalendar;
-        this._oDate = new Date();
-        this._oDate.setTime(oDate.getTime());
-        this._nIndex = nIndex;
-        this._eCell = new Element('td', {
-            id: this._oCalendar.ID + '_DAY_' + nIndex
+        this._calendar = oCalendar;
+        this._date = new Date();
+        this._date.setTime(oDate.getTime());
+        this._index = nIndex;
+        this._cell = new Element("td", {
+            id: this._calendar.ID + "_DAY_" + nIndex
         }).update(oDate.getDate().toString());
 
         if (Prototype.Browser.IE6) {
-            this._eCell.observe("mouseover", function() {
-                this._eCell.addClassName("ie6-hover");
+            this._cell.observe("mouseover", function() {
+                this._cell.addClassName("ie6-hover");
             }.bind(this));
-            this._eCell.observe("mouseout", function() {
-                this._eCell.removeClassName("ie6-hover");
+            this._cell.observe("mouseout", function() {
+                this._cell.removeClassName("ie6-hover");
             }.bind(this));
         }
 
         if (this.check()) {
-            this._eCell.observe('click', this.select.bindAsEventListener(this, true));
+            this._cell.observe("click", this.select.bindAsEventListener(this, true));
         } else {
-            this._eCell.addClassName('disabled');
+            this._cell.addClassName("disabled");
         }
     },
 
     /**
      * Selects the date corresponding to the item
-     * @param {Event} eEvent
-     * @param {boolean} bIsClick true if the selection results from a click on the cell
+     * @param {Event} e
+     * @param {bool} click true if the selection results from a click on the cell
      */
-    select: function(eEvent, bIsClick) {
+    select: function(e, click) {
         if (!this.check()) return;
 
-        if (this._oCalendar.oCurrent.getCell) {
-            this._oCalendar.oCurrent._unselect();
+        if (this._calendar.getSelectedItem()._unselect) {
+            this._calendar.getSelectedItem()._unselect();
         }
-        if (!this.getCell().hasClassName('selected')) {
-            this.getCell().addClassName('selected');
+        if (!this._cell.hasClassName("selected")) {
+            this._cell.addClassName("selected");
         }
 
         this.focus();
-        this._oCalendar.setSelected(this);
-        this._oCalendar.setValue(this.getDate().format(this._oCalendar.cfg("dateFormat")));
-        if (bIsClick && this._oCalendar.eDest) {
-            this._oCalendar.hide();
-        }
-        this._oCalendar.fireEvent("onSelectEvent", {
-            date: this._oDate
-        });
-    },
+        this._calendar.setSelectedItem(this);
 
-    /**
-     * Unselects the item
-     * @private
-     */
-    _unselect: function() {
-        this.getCell().removeClassName('selected');
+        if (click && this._calendar.getTextField()) {
+            this._calendar.hide();
+        }
+        this._calendar.fireEvent("onSelectEvent", {
+            date: this._date
+        });
     },
 
     /**
@@ -76,32 +68,26 @@ jPlex.provide('jplex.components.calendar.CalendarItem', {
     focus: function() {
         if (!this.check()) return;
 
-        if (this._oCalendar.oFocus.getCell)
-            this._oCalendar.oFocus._blur();
-        if (!this.getCell().hasClassName('focused')) {
-            this.getCell().addClassName('focused');
+        if (this._calendar.getFocusedItem()._blur) {
+            this._calendar.getFocusedItem()._blur();
         }
-        this._oCalendar.setFocused(this);
+        if (!this._cell.hasClassName("focused")) {
+            this._cell.addClassName("focused");
+        }
+        this._calendar.setFocusedItem(this);
     },
 
     /**
-     * Removes the focus on the item
-     * @private
-     */
-    _blur: function() {
-        this.getCell().removeClassName('focused');
-    },
-
-    /**
-     * Check whether the date of the item match a valid date
+     * Check whether the date of the item match a valid date or not
      * (regarding to the valid range set in the calendar configuration)
+     * @return {bool} <code>true</code> if the date is valid
      */
     check: function() {
-        var minDate = this._oCalendar.cfg('minDate'),
-                maxDate = this._oCalendar.cfg('maxDate');
+        var minDate = this._calendar.cfg("minDate"),
+                maxDate = this._calendar.cfg("maxDate");
 
-        return (!minDate || this.getDate().compareTo(minDate) >= -86400000) &&
-               (!maxDate || this.getDate().compareTo(maxDate) <= 0);
+        return (!minDate || this._date.compareTo(minDate) >= -86400000) &&
+               (!maxDate || this._date.compareTo(maxDate) <= 0);
     },
 
     /**
@@ -109,7 +95,7 @@ jPlex.provide('jplex.components.calendar.CalendarItem', {
      * @return {Element} the td element for the item
      */
     getCell: function() {
-        return this._eCell;
+        return this._cell;
     },
 
     /**
@@ -117,7 +103,7 @@ jPlex.provide('jplex.components.calendar.CalendarItem', {
      * @return {Integer} index of the item in the calendar table
      */
     getIndex: function() {
-        return this._nIndex;
+        return this._index;
     },
 
     /**
@@ -125,6 +111,54 @@ jPlex.provide('jplex.components.calendar.CalendarItem', {
      * @return {Date} date corresponding to the item
      */
     getDate: function() {
-        return this._oDate;
+        return this._date;
+    },
+
+    //********** Private methods **********/
+
+    /**
+     * Unselects the item
+     * @private
+     */
+    _unselect: function() {
+        this._cell.removeClassName("selected");
+    },
+
+    /**
+     * Removes the focus from the item
+     * @private
+     */
+    _blur: function() {
+        this._cell.removeClassName("focused");
     }
+
+    //********** Private properties **********/
+
+    /**
+     * The parent calendar of the item (jplex component)
+     * @property _calendar
+     * @type Calendar
+     * @private
+     */
+
+    /**
+     * The "TD" extended element of the item
+     * @property _cell
+     * @type Element
+     * @private
+     */
+
+    /**
+     * The date represented by the item
+     * @property _date
+     * @type Date
+     * @private
+     */
+
+    /**
+     * The index of the item in its parent's items collection
+     * @property _index
+     * @type Integer
+     * @private
+     */
 });

@@ -38,7 +38,6 @@ jPlex.include('jplex.components.menubar.MenuBarItem', false);
  * </ul>
  * Notice that this class is a singleton. Therefore it can't be instantiated twice.
  * @param {Element|String} eSrc Container of the menubar
- * @param {Array|String} oData Raw data representing the menu items or path to a file returning XML or JSON data
  * @param {Object} oConfig Configuration of the menu bar
  * @class MenuBar 
  * @extends jplex.common.Component

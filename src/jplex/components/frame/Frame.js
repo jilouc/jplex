@@ -2,7 +2,7 @@ jPlex.include('jplex.components.Overlay', true);
 /**
  * Window component.
  * Blablabla
- * @class Window
+ * @class Frame
  * @extends jplex.common.Component
  * @requires Overlay
  * @param {Element|String} eElement HTML Element or ID of the container
