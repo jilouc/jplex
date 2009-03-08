@@ -24,7 +24,12 @@
     <textarea name="code" class="js">
 var date = new Date();
 date.setDate(date.getDate()+10);
-new Calendar('myCalendar-fr', {minDate: new Date(), maxDate: date, src:"demo-fr"});</textarea>
+
+new Calendar("myCalendar-fr", {
+    minDate: new Date(),
+    maxDate: date,
+    source: "demo-fr"
+});</textarea>
 
     <h3>Result</h3>
     <input type="text" id="demo-fr"/><br /><br />
@@ -42,7 +47,13 @@ new Calendar('myCalendar-fr', {minDate: new Date(), maxDate: date, src:"demo-fr"
 	<h3>JS Code</h3>
 
 	<textarea name="code" class="js">
-new Calendar('myCalendar-en', {lang:'en', fade:0, dest:"demo-en-value", src:"demo-en", dateFormat:"Y/m/d"});</textarea>
+new Calendar("myCalendar-en", {
+    lang: "en",
+    fade: false,
+    textField: "demo-en-value",
+    source: "demo-en",
+    dateFormat: "Y/m/d"
+});</textarea>
 
 	<h3>Result</h3>
 
@@ -70,14 +81,20 @@ new Calendar('myCalendar-en', {lang:'en', fade:0, dest:"demo-en-value", src:"dem
     <h3>JS Code</h3>
 
 	<textarea name="code" class="js">
-new Calendar('myButtonCalendar', {src:"demo-only-button"});
-
-$C("myButtonCalendar").setEvent("onSelectEvent", function(o) {
+var customSelect = function(o) {
+    console.log(o);
     $("day").value = o.date.format('d');
     $("month").value = o.date.format('m');
     $("year").value = o.date.format('Y');
 
-})</textarea>
+};
+
+new Calendar("myButtonCalendar", {
+    source: "demo-only-button",
+    events: {
+        onSelectEvent: customSelect
+    }
+});</textarea>
 
     <h3>Result</h3>
 
@@ -143,7 +160,7 @@ $C("myButtonCalendar").setEvent("onSelectEvent", function(o) {
     <h3>JS Code</h3>
 
     <textarea name="code" class="js">
-new Calendar('mySimpleCalendar');</textarea>
+new Calendar("mySimpleCalendar");</textarea>
 
     <h3>Result</h3>
 
@@ -174,20 +191,38 @@ new Calendar('mySimpleCalendar');</textarea>
 
 	var date = new Date();
 	date.setDate(date.getDate()+10);
-    new Calendar('myCalendar-fr', {minDate: new Date(), maxDate: date, src:"demo-fr"});
 
-	new Calendar('myCalendar-en', {lang:'en', fade:0, dest:"demo-en-value", src:"demo-en", dateFormat:"Y/m/d"});
+    new Calendar("myCalendar-fr", {
+        minDate: new Date(),
+        maxDate: date,
+        source:"demo-fr"
+    });
 
-	new Calendar('myButtonCalendar', {src:"demo-only-button"});
+	new Calendar("myCalendar-en", {
+	    lang: "en",
+	    fade: false,
+	    textField: "demo-en-value",
+	    source: "demo-en",
+	    dateFormat: "Y/m/d"
+    });
 
-	new Calendar('mySimpleCalendar');
-
-	$C("myButtonCalendar").setEvent("onSelectEvent", function(o) {
+    var customSelect = function(o) {
+        console.log(o);
         $("day").value = o.date.format('d');
         $("month").value = o.date.format('m');
         $("year").value = o.date.format('Y');
 
-    })
+    };
+
+    new Calendar("myButtonCalendar", {
+        source: "demo-only-button",
+        events: {
+            onSelectEvent: customSelect
+        }
+    });
+
+	new Calendar("mySimpleCalendar");
+
     -->
 </script>
 </body>
