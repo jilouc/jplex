@@ -1,16 +1,16 @@
-jPlex.include('jplex.components.menubar.Submenu', true);
+jPlex.include('jplex.components.menubar.MenuBarSubmenu', false);
 /**
  * @description MenuBar Item
- * @class menubar.Item
- * @param {MenuBar|MenuBar.Submenu} oParent parent menu of the item (i.e. the menu containing the item)
+ * @class menubar.MenuBarItem
+ * @param {MenuBar|MenuBar.MenuBarSubmenu} oParent parent menu of the item (i.e. the menu containing the item)
  * @param {Object} oItem the item
  * @param {Integer} nLevel depth of the item (equal to its parent menu depth)
  * @constructor
- * @requires jplex.components.menubar.Submenu
+ * @requires jplex.components.menubar.MenuBarSubmenu
  * @static
  * @private
  */
-jPlex.provide('jplex.components.menubar.Item', {
+jPlex.provide('jplex.components.menubar.MenuBarItem', {
 
     /**
      * Depth of the item
@@ -23,7 +23,7 @@ jPlex.provide('jplex.components.menubar.Item', {
     /**
      * Reference to the item's parent submenu (or the menu root)
      * @property oParent
-     * @type MenuBar.Submenu|MenuBar
+     * @type MenuBar.MenuBarSubmenu|MenuBar
      * @private
      */
 
@@ -44,7 +44,7 @@ jPlex.provide('jplex.components.menubar.Item', {
         this.nLevel = nLevel;
         this.oParent = oParent;
         this.sLabel = oItem.name;
-        this.fHandler = oItem.click ? oItem.click.bind(this) : Prototype.emptyFunction
+        this.fHandler = oItem.click ? oItem.click.bind(this) : Prototype.emptyFunction;
 
         this.render(oItem.items, oItem.keySC, oItem.icon, oItem.link);
 
@@ -103,7 +103,7 @@ jPlex.provide('jplex.components.menubar.Item', {
 
         }
 
-        this.oSubmenu = new jplex.components.menubar.Submenu(this, oItems, this.nLevel);
+        this.oSubmenu = new jplex.components.menubar.MenuBarSubmenu(this, oItems, this.nLevel);
 
         this.eElement.appendChild(this.getSubmenu().get());
         this.eElement.appendChild(this.oSubmenu.eShade);

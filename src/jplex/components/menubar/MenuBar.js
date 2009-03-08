@@ -1,4 +1,4 @@
-jPlex.include('jplex.components.menubar.Item', true);
+jPlex.include('jplex.components.menubar.MenuBarItem', false);
 /**
  * @description MenuBar component
  * Place a nice menu bar on your page. It's designed as 
@@ -181,7 +181,7 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component',  {
      * @return {MenuBar} the modified MenuBar (allows chained items adds)
      */
     addItem: function(oItem, nBefore) {
-        var item = new jplex.components.menubar.Item(this, oItem, 0);
+        var item = new jplex.components.menubar.MenuBarItem(this, oItem, 0);
         if (nBefore) {
             this.eElement.insertBefore(item.get(), this.oItems[nBefore].get());
             var tmp = $A([]);
