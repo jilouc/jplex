@@ -4,8 +4,8 @@
 <head>
     <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
 	<link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>  
-    <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/tooltip/assets/bubble.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar.css" type="text/css"/>
 	<!--[if IE 6]><link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar-ie6.css" type="text/css"/><![endif]-->  
     <script src="../src/jPlex.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8"></script> 
@@ -215,6 +215,8 @@ new Calendar("mySimpleCalendar");</textarea>
 
     new Calendar("myButtonCalendar", {
         source: "demo-only-button",
+        lang:"jp",
+        titleFormat:"{Y}\u5E74{m}\u6708",
         events: {
             onSelectEvent: customSelect
         }
