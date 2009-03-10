@@ -62,6 +62,15 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
              */
             dateFormat: "d-m-Y",
             /**
+             * Template for the title of the calendar. You can use 3 tokens:
+             * <ul><li>{M} the month full name</li>
+             * <li>{m} month number</li>
+             * <li>{Y} year with 4 digits</li></ul>
+             * @config titleFormat
+             * @default "{M} {Y}"
+             */
+            titleFormat: "{M} {Y}", 
+            /**
              * Time in seconds to show/hide the popup calendar.
              * Set to 0 or <code>false</code> to disable fade in/out.
              * @config fade
@@ -152,6 +161,12 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                 SELECT_MONTH: 'Month',
                 SELECT_YEAR: 'Year',
                 SELECT_END: 'Finish'
+            },
+            jp: {
+                CLOSE: 'Close',
+                SELECT_MONTH: "\u65E5",
+                SELECT_YEAR: "\u5E74",
+                SELECT_END: "Finish"
             }
         }
     },
@@ -163,9 +178,11 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         this.ID = this.component.getAttribute('id');
 
         var oCurrentDate = this.cfg('date');
-        this._selectedItem = this._focusedItem = { getDate: function() {
-            return oCurrentDate;
-        } };
+        this._selectedItem = this._focusedItem = { 
+            getDate: function() {
+                return oCurrentDate;
+            }
+        };
         this._currentMonth = oCurrentDate;
 
         this._source = $(this.cfg("source"));
@@ -179,7 +196,9 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         this.render();
 
         if (this._textField && this._source) {
-            this.component.setStyle({position: 'absolute'});
+            this.component.setStyle({
+                position: 'absolute'
+            });
 
             // Who knows why IE uses an uppercase 'o'...
             if (Prototype.Browser.IE) {
@@ -190,16 +209,18 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
             var focusHandler = (function() {
                 // Avoid double fire (click+focus) in Mozilla & IE
-                if (this.component.visible()) return;
+                if (this.component.visible()) {
+                    return;
+                }
                 this.show();
                 this._source.select();
             }).bindAsEventListener(this);
 
-            this._source.observe('focus', focusHandler);
+            this._source.observe("focus", focusHandler);
             // Webkit-based browser don't fire focus event on click on a button (in case of the calendar button)
-            this._source.observe('click', focusHandler);
+            this._source.observe("click", focusHandler);
 
-            document.observe('click', function(e) {
+            document.observe("click", function(e) {
                 var x = e.pointerX(),
                         y = e.pointerY();
                 if (!this._source.isWithin(x, y)
@@ -318,15 +339,16 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
             eTR.appendChild(eDay);
 
-            if (oFirstDayOfMonth.compareTo(oDay) > 0 ||
-                oLastDayOfMonth.compareTo(oDay) < 0)
-                eDay.addClassName('outofmonth');
+            if (oFirstDayOfMonth.compareTo(oDay) > 0
+                || oLastDayOfMonth.compareTo(oDay) < 0) {
+                eDay.addClassName("outofmonth");
+            }
 
             oDay.setNextDay();
         }
 
-        this._setTitle("&nbsp;" + this.locale('Date', 'MONTHS')[this._currentMonth.getMonth()] + ' ' +
-                       + this._currentMonth.getFullYear() + "&nbsp;");
+        this._setTitle(this._currentMonth.getMonth(),
+                       this._currentMonth.getFullYear());
 
         if (this._fastBrowseOverlay && this._fastBrowseOverlay.visible()) {
             this._fastBrowseOverlay.clonePosition(this.component);
@@ -477,13 +499,13 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @private
      */
     _initialRender: function() {
-        this.component.addClassName("calendar");
+        this.component.addClassName("jplex-calendar");
 
         if (this._source) {
-            this._source.addClassName("calendar");
+            this._source.addClassName("jplex-calendar");
             this.component.setStyle({display:"none"});
             if (this._source.getAttribute("type") == "button" && Prototype.Browser.IE6) {
-                this._source.addClassName("calendar-button");
+                this._source.addClassName("jplex-calendar-button");
             }
         }
 
@@ -549,7 +571,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             });
 
             var tooltipBody = this._fastBrowseTooltip.oBubble.component.down("div.body");
-            tooltipBody.addClassName("jplex-fb-tooltip");
+            this._fastBrowseTooltip.oBubble.component.addClassName("jplex-calendar-tooltip");
 
 
             var divSelectMonth = new Element("div").update(this.lang("SELECT_MONTH") + "<br/>");
@@ -575,7 +597,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                         zIndex: this.component.getStyle("zIndex") + 1,
                         position: "absolute"
                     });
-                    overlay.addClassName("jplex-fb-overlay");
+                    overlay.addClassName("jplex-calendar-overlay");
                     overlay.setOpacity(0);
                     overlay.clonePosition(this.component);
 
@@ -654,11 +676,16 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
     /**
      * Sets the title of the calendar (typically the current month-year
-     * @param {String} sTitle The new title
+     * @param {Integer} month Number of the month
+     * @param {Integer} year Year
      * @private
      */
-    _setTitle: function(sTitle) {
-        this._getTitle().update(sTitle);
+    _setTitle: function(month, year) {
+        var title = this.cfg("titleFormat")
+                .gsub("{M}", this.locale("Date", "MONTHS")[month])
+                .gsub("{Y}", year)
+                .gsub("{m}", (month+1).toString());
+        this._getTitle().update("&nbsp;" + title + "&nbsp;");
     },
 
     /**

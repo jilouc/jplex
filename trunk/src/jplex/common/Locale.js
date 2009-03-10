@@ -43,7 +43,7 @@ jPlex.extend('jplex.common.Locale', {
     /**
      * Initialize a component into the Locale storage 
      * @param {String} component The component
-     * @param {String} hashSet Its definition, first indexed by the language, then by the fields
+     * @param {String} hashSet Its definition, first indexed by the ISO code of the language, then by the fields
      */
     init: function(component, hashSet) {
         return this._components.set(component, $H(hashSet));
@@ -73,5 +73,12 @@ jplex.common.Locale.init('Date', {
         MONTHS_SHORT: $A(['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June',
             'July', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.']),
         FORMAT: 'm-d-Y'
+    },
+    jp: {
+        DAYS_SHORT: $A(["\u65E5", "\u6708", "\u706B", "\u6C34", "\u6728", "\u91D1", "\u571F"]),
+        DAYS: $A(["\u65E5", "\u6708", "\u706B", "\u6C34", "\u6728", "\u91D1", "\u571F"]),
+        MONTHS: $A(["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"]),
+        MONTHS_SHORT: $A(["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"]),
+        FORMAT: "Y\u5E74m\u65E5"
     }
 });

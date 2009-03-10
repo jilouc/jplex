@@ -108,7 +108,7 @@ Object.extend(Event, {
         GRAVE_ACCENT: 192,
         OPEN_BRACKET: 219,
         BACKSLASH: 220,
-        CLOSE_BRAKET: 221,
+        CLOSE_BRACKET: 221,
         SINGLE_QUOTE: 222
     },
     
@@ -119,7 +119,7 @@ Object.extend(Event, {
      * If not found after Event._ready_POLL_LIMIT tries, we simply
      * give up.
      * By default this limit is set to 800 tries, with a 5 ms delay
-     * between each of them (40s max.)
+     * between them (40s max.)
      *
      * Note that 'this' refers to the Element (i.e. $(element))
      * itself in the callback function.
@@ -132,7 +132,7 @@ Object.extend(Event, {
         Event._readyStack.push({
             element: element,
             handler: handler,
-            tries:Event._ready_POLL_LIMIT
+            tries: Event._ready_POLL_LIMIT
         });
         if(!Event._readyObserver) {
             Event._readyObserver = new PeriodicalExecuter(
