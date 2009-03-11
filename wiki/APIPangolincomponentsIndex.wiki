@@ -1,0 +1,22 @@
+#summary Module API for module Components
+#labels Module-Components,Release-Pangolin,API-Module
+#sidebar APIPangolinIndex
+ * [APIPangolin jPlex Pangolin Release]
+ * [APIPangolincommon Common] 
+ * [APIPangolincomponents Components] 
+   * [APIPangolincomponentsCalendar Calendar]
+   * [APIPangolincomponentscalendarCalendarItem CalendarItem]
+   * [APIPangolincomponentsFrame Frame]
+   * [APIPangolincomponentsframeDialog Dialog]
+   * [APIPangolincomponentsframeModal Modal]
+   * [APIPangolincomponentsframeWindowsGroup WindowsGroup]
+   * [APIPangolincomponentsMenuBar MenuBar]
+   * [APIPangolincomponentsmenubarMenuBarItem MenuBarItem]
+   * [APIPangolincomponentsmenubarMenuBarSubmenu MenuBarSubmenu]
+   * [APIPangolincomponentsMouseOverImage MouseOverImage]
+   * [APIPangolincomponentsOverlay Overlay]
+   * [APIPangolincomponentsTabs Tabs]
+   * [APIPangolincomponentsTooltip Tooltip]
+   * [APIPangolincomponentstooltipBubble Bubble]
+ * [APIPangolinjplex jPlex] 
+ * [APIPangolinxprototype XPrototype] 

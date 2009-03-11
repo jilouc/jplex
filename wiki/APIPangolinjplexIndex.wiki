@@ -1,0 +1,9 @@
+#summary Module API for module jPlex
+#labels Module-jPlex,Release-Pangolin,API-Module
+#sidebar APIPangolinIndex
+ * [APIPangolin jPlex Pangolin Release]
+ * [APIPangolincommon Common] 
+ * [APIPangolincomponents Components] 
+ * [APIPangolinjplex jPlex] 
+   * [APIPangolinjPlex jPlex]
+ * [APIPangolinxprototype XPrototype] 

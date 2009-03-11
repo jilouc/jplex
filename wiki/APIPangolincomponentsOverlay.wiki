@@ -1,0 +1,27 @@
+#summary Class API for Overlay from module Components
+#labels Class-jplex.components.Overlay,Release-Pangolin,Module-Components,API-Class
+#sidebar APIPangolincomponentsIndex
+
+= Class *jplex.components.Overlay*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
+
+== Description ==
+Overlay component.
+Place a semi transparent layer which covers its parent on the page.
+
+
+== Event Table ==
+|| *Name* || *Description* || *Parameters* ||
+|| _afterRenderElement_ ||  Fired after the rendering of the overlay ||  ||
+|| _beforeRenderEvent_ ||  Fired before the rendering of the overlay ||  ||
+|| _onHideEvent_ ||  Fired after the overlay is hidden ||  ||
+|| _onShowEvent_ ||  Fired after the overlay is shown ||  ||
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `hide()` || `void` || Hide the overlay<br /> ||
+|| `render()` || `void` || Renders the overlay<br /> ||
+|| `show()` || `void` || Show the overlay<br /> ||
+
+=== Inherited Configs ===
+
+ * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

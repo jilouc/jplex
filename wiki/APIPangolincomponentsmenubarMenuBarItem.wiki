@@ -1,0 +1,25 @@
+#summary Class API for MenuBarItem from module Components
+#labels Class-jplex.components.menubar.MenuBarItem,Release-Pangolin,Module-Components,API-Class
+#sidebar APIPangolincomponentsIndex
+
+= `private` `static` Class *jplex.components.menubar.MenuBarItem*  =
+
+== Description ==
+MenuBar Item
+
+
+== Event Table ==
+|| *Name* || *Description* || *Parameters* ||
+|| __onClick_ ||  Fires on item activation by click
+Call the user custom function
+If the item is a root element, just shows the submenu ||   - `e <Event>`  <br/>  ||
+|| __onMouseOver_ ||  Fires when the mouse enters the item
+The handlers are identical to those of the menu root ||   - `e <Event>`  <br/>  ||
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `get()` || `Element` || Get the <code>&lt;li&gt;</code> HTMLElement of the item, extended by Prototype's Element.extend<br /> ||
+|| `getSubmenu()` || `MenuBar.Submenu` || Get the submenu of the item (not its containing submenu)<br /> ||
+|| `initialize()` || `void` || Custom function called when the menu item is activated (on click or keyboard shortcut)<br /> ||
+|| `render(oItems, oShortcut)` || `void` || Renders the menu item (and creates all submenus)<br />  - `oItems <Array>` The sub-items of the item, defining its submenu - `oShortcut <Object>` Keyboard Shortcut information||
+

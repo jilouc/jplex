@@ -1,0 +1,20 @@
+#summary Class API for Element from module XPrototype
+#labels Class-jplex.xprototype.Element,Release-Pangolin,Module-XPrototype,API-Class
+#sidebar APIPangolinxprototypeIndex
+
+= Class *jplex.xprototype.Element*  =
+
+== Description ==
+jPlex's XPrototype extended DOM Element
+
+
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `appendChildren(Elements)` || `Element` || Appends all elements listed as arguments to the DOM element<br />  - `Elements <List<&lt;Element&gt;>` to add||
+|| `bindKey(key, handler, config)` || `void` || <br />  - `key <object>` - `handler <object>` - `config <object>`||
+|| `IEFixCombobox()` || `void` || <br /> ||
+|| `isWithin(x, y)` || `Boolean` || Determines wheter the point of coordinates (x,y) on the page is within the element or not<br />  - `x <Integer>` Horizontal coordinate - `y <Integer>` Vertical coordinate||
+|| `removeChildren()` || `Element` || Removes all children of the element<br /> ||
+|| `unbindKey(key, modifiers)` || `void` || <br />  - `key <object>` - `modifiers <object>`||
+

@@ -1,0 +1,21 @@
+#summary Class API for CalendarItem from module Components
+#labels Class-jplex.components.calendar.CalendarItem,Release-Pangolin,Module-Components,API-Class
+#sidebar APIPangolincomponentsIndex
+
+= `static` Class *jplex.components.calendar.CalendarItem*  =
+
+== Description ==
+Item representing one cell of the calendar (i.e. one day)
+Store the corresponding HTML element and date and handle focus and select events.
+
+
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `check()` || `bool` || Check whether the date of the item match a valid date or not<br/>(regarding to the valid range set in the calendar configuration)<br /> ||
+|| `focus()` || `void` || Set the focus on the item<br /> ||
+|| `getCell()` || `Element` || Get the cell (td) element representing the item<br /> ||
+|| `getDate()` || `Date` || Get the date of the item<br /> ||
+|| `getIndex()` || `Integer` || Get the index of the item in the table<br /> ||
+|| `select(e, click)` || `void` || Selects the date corresponding to the item<br />  - `e <Event>` - `click <bool>` true if the selection results from a click on the cell||
+

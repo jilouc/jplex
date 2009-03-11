@@ -1,0 +1,12 @@
+#summary Class API for Frame from module Components
+#labels Class-jplex.components.Frame,Release-Pangolin,Module-Components,API-Class
+#sidebar APIPangolincomponentsIndex
+
+= Class *jplex.components.Frame*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
+
+== Description ==
+Window component.
+Blablabla
+
+
+

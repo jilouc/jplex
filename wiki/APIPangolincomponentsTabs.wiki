@@ -1,0 +1,37 @@
+#summary Class API for Tabs from module Components
+#labels Class-jplex.components.Tabs,Release-Pangolin,Module-Components,API-Class
+#sidebar APIPangolincomponentsIndex
+
+= Class *jplex.components.Tabs*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
+
+== Description ==
+Tabs component, creates a neat tab bar in a <em>ul</em> container. This bar controls the display of
+<em>div</em>s. There is two methods, a classical one with many <em>div</em>s that are managed by show/hide methods. 
+Or another one by getting the content via Ajax and display it on a single <em>div</em>. 
+<table class='config'>
+<tr><td>data</td><td>null</td>
+<td><strong>Mandatory.</strong> Describes the tab structure. It is a array of objects that have only two 
+fields, <em>title</em>: which is the title to put in the tab bar and <em>content</em> which is a div 
+id if the method is the div one, or a url if it's the other.</td></tr>
+<tr><td>style</td><td>pui-tabs</td>
+<td>Default style to apply to the <em>ul</em> markup</td></tr>
+<tr><td>method</td><td>div</td>
+<td>'div' indicates the classical method, 'ajax' indicates the other (see bellow)</td></tr>
+<tr><td>ajaxDiv</td><td>false</td>
+<td><em>Require 'ajax' method. </em><strong>Mandatory.</strong>  Container to display the content</td></tr>   
+<tr><td>ajaxMethod</td><td>get</td>
+<td><em>Require 'ajax' method.</em> HTTP method to use for Ajax Requests</td></tr>            
+<tr><td>ajaxReload</td><td>false</td>
+<td><em>Require 'ajax' method.</em> If false, the content of each tabs is cached and will not be
+requested again. Else for each tab switch, you will do a request</td></tr>          
+<tr><td>activeTab</td><td>0</td>
+<td>Default active tab index</td></tr>
+</table>
+<table class='events'>
+<tr><td>onSwitchEvent</td><td>When an effective switch has been done</td>
+<td>oldContent: The content field from <em>data</em> that corresponds to the tab the user just quitted<br/>
+newContent: The content field from <em>data</em> that corresponds to the tab the user just selected</td></tr>
+</table>
+
+
+

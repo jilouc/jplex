@@ -1,0 +1,18 @@
+#summary Class API for Locale from module Common
+#labels Class-jplex.common.Locale,Release-Pangolin,Module-Common,API-Class
+#sidebar APIPangolincommonIndex
+
+= `static` Class *jplex.common.Locale*  =
+
+== Description ==
+Global class that manipulates the global language and local settings. We define components on it corresponding to
+some parts of the locales. The defined components are for now: 'Date', ...
+
+
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `current(component, field)` || `String|Array` || Useful default usage of the locale string, corresponds to: <br/><pre>Locale.get(component).get(field)</pre><br/>with undefined error treatment of course<br />  - `component <String>` The locale component - `field <String>` The wanted field||
+|| `get(component, lang)` || `Hash` || Get the complete HashSet corresponding to the following component and lang<br />  - `component <String>` The component - `lang <String>` The lang, Locale.lang if not defined||
+|| `init(component, hashSet)` || `void` || Initialize a component into the Locale storage<br />  - `component <String>` The component - `hashSet <String>` Its definition, first indexed by the ISO code of the language, then by the fields||
+
