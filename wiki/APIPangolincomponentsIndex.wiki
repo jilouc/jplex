@@ -2,8 +2,8 @@
 #labels Module-Components,Release-Pangolin,API-Module
 #sidebar APIPangolinIndex
  * [APIPangolin jPlex Pangolin Release]
- * [APIPangolincommon Common] 
- * [APIPangolincomponents Components] 
+ * [APIPangolincommon Common]Index 
+ * [APIPangolincomponents Components]Index 
    * [APIPangolincomponentsCalendar Calendar]
    * [APIPangolincomponentscalendarCalendarItem CalendarItem]
    * [APIPangolincomponentsFrame Frame]
@@ -18,5 +18,5 @@
    * [APIPangolincomponentsTabs Tabs]
    * [APIPangolincomponentsTooltip Tooltip]
    * [APIPangolincomponentstooltipBubble Bubble]
- * [APIPangolinjplex jPlex] 
- * [APIPangolinxprototype XPrototype] 
+ * [APIPangolinjplex jPlex]Index 
+ * [APIPangolinxprototype XPrototype]Index 

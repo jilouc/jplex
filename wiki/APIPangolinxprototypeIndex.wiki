@@ -2,10 +2,10 @@
 #labels Module-XPrototype,Release-Pangolin,API-Module
 #sidebar APIPangolinIndex
  * [APIPangolin jPlex Pangolin Release]
- * [APIPangolincommon Common] 
- * [APIPangolincomponents Components] 
- * [APIPangolinjplex jPlex] 
- * [APIPangolinxprototype XPrototype] 
+ * [APIPangolincommon Common]Index 
+ * [APIPangolincomponents Components]Index 
+ * [APIPangolinjplex jPlex]Index 
+ * [APIPangolinxprototype XPrototype]Index 
    * [APIPangolinxprototypeDate Date]
    * [APIPangolinxprototypeElement Element]
    * [APIPangolinxprototypeEvent Event]
