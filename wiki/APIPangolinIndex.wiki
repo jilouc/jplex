@@ -1,7 +1,7 @@
 #summary API Index
 #labels Release-Pangolin,API-Index
  * [APIPangolin jPlex Pangolin Release]
- * [APIPangolincommon Common]Index 
- * [APIPangolincomponents Components]Index 
- * [APIPangolinjplex jPlex]Index 
- * [APIPangolinxprototype XPrototype]Index 
+ * [APIPangolincommonIndex Common] 
+ * [APIPangolincomponentsIndex Components] 
+ * [APIPangolinjplexIndex jPlex] 
+ * [APIPangolinxprototypeIndex XPrototype] 

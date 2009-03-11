@@ -24,7 +24,7 @@ template=$yuidoc_home/template
 
 ##############################################################################
 # add -s to the end of the line to show items marked private
-
+rm -rf ${generator_out}
 echo Compiling docs...
 $yuidoc_home/bin/yuidoc.py $parser_in -p $parser_out -o $generator_out -t $template -m $release -s
 
@@ -39,11 +39,12 @@ cd $generator_out
 for i in `ls | grep ^jplex`; do
    name=`echo $i | sed 's/jplex//g' | sed 's/html//g' | sed 's/\.//g'`
    cp $i ../$out/API$release$name.wiki 
-done
+done                               
+cp jPlex.html ../$out/API${release}jPlex.wiki 
 
 for i in `ls | grep ^module`; do
    name=`echo $i | sed 's/^module_//g' | sed 's/.html//g' | sed -E 's/^\([[:alpha:]]\)/\U\0/g'`
-   cp $i ../$out/API$release$name.wiki 
+   cp $i ../$out/API$release${name}Index.wiki 
 done
 
-cp index.html ../$out/API$release.wiki
+cp index.html ../$out/API${release}Index.wiki

@@ -2,10 +2,10 @@
 #labels Module-Common,Release-Pangolin,API-Module
 #sidebar APIPangolinIndex
  * [APIPangolin jPlex Pangolin Release]
- * [APIPangolincommon Common]Index 
+ * [APIPangolincommonIndex Common] 
    * [APIPangolincommonComponent Component]
    * [APIPangolincommonConfig Config]
    * [APIPangolincommonLocale Locale]
- * [APIPangolincomponents Components]Index 
- * [APIPangolinjplex jPlex]Index 
- * [APIPangolinxprototype XPrototype]Index 
+ * [APIPangolincomponentsIndex Components] 
+ * [APIPangolinjplexIndex jPlex] 
+ * [APIPangolinxprototypeIndex XPrototype] 

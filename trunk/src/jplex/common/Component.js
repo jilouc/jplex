@@ -31,7 +31,6 @@ jPlex.include('jplex.xprototype.*');
  * @class Component
  * @namespace jplex.common
  * @constructor
- * @extends Object
  */
 jPlex.provide('jplex.common.Component', {
     /**
