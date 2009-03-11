@@ -68,7 +68,7 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
                  */
                 onOkButtonClickEvent: Prototype.emptyFunction,
                 /**
-                 * When the "CancelButton is clicked
+                 * When the "CancelButton" is clicked
                  * @event onCancelButtonClickEvent
                  */
                 onCancelButtonClickEvent: Prototype.emptyFunction
