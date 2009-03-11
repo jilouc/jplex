@@ -1,0 +1,25 @@
+#summary Class API for Date from module XPrototype
+#labels Class-jplex.xprototype.Date Release-Pangolin Module-XPrototype API-Class
+#sidebar APIPangolinxprototype
+
+= Class *jplex.xprototype.Date*  =
+
+== Description ==
+jPlex's XPrototype extended Date
+
+
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `compareTo(date)` || `Integer` || Compare the date with a given date<br />  - `date <Date>` to compare||
+|| `firstDayOfMonth()` || `void` || Get the first day of the month<br /> ||
+|| `format(pattern)` || `void` || Formats a date to its representing string, given a pattern<br/>using the following symbols map (same syntax as PHP 'date' function)<br />  - `pattern <String>` to format the string :<br/>d : day in month (with padding 0)<br/>D : day in week (3 letters (en))<br/>j : day in month (without padding 0)<br/>l : full day (letters (en))<br/>N : ISO day of the week (1 to 7)<br/>S : ordinal suffix for the day (st, nd, rd or th)<br/>w : day of the week (0 (sun) to 6 (sat))<br/>z : day in year<br/>W : week of the year (1 to 52)<br/>F : full month (letters (en))<br/>m : month number (padded with 0)<br/>M : month (3 letters (en))<br/>n : month number (without 0)<br/>t : number of days during month<br/>L : leap year or not (1 or 0)<br/>o : <br/>Y : full year (4 digits)<br/>y : year (2 digits)<br/>a : am or pm<br/>A : AM or PM<br/>B : Internet time (swatch, 0 to 999)<br/>g : Hour 1-12 (without 0)<br/>G : Hour 0-23 (without 0)<br/>h : Hour 01-12 (padded with 0)<br/>H : Hour 00-23 (padded with 0)<br/>i : Minutes 00-59 (padded with 0)<br/>s : Seconds 00-59 (padded with 0)<br/>u : Microseconds<br/>e :<br/>I :<br/>P :<br/>T :<br/>Z :||
+|| `getMonthLength()` || `Integer` || Get the number of days in the current month<br /> ||
+|| `isLeapYear()` || `Boolean` || Checks whether this is a leap year or not<br /> ||
+|| `lastDayOfMonth()` || `void` || Get the last day of the month<br /> ||
+|| `locale(field)` || `void` || Get a locale field content<br />  - `field <String>` Name of the field||
+|| `setNextDay()` || `void` || Set the current date to the next day<br /> ||
+|| `setPreviousDay()` || `void` || Set the current date to the previous day<br /> ||
+|| `toDayString()` || `void` || <br /> ||
+|| `toMonthString()` || `void` || <br /> ||
+

@@ -1,0 +1,11 @@
+#summary Module API for module Common
+#labels Module-Common Release-Pangolin API-Module
+#sidebar APIPangolin
+ * [APIPangolin jPlex Pangolin Release]
+   * [APIPangolincommon Common] 
+      * [APIPangolincommonComponent jplex.common.Component]
+      * [APIPangolincommonConfig jplex.common.Config]
+      * [APIPangolincommonLocale jplex.common.Locale]
+   * [APIPangolincomponents Components] 
+   * [APIPangolinjplex jPlex] 
+   * [APIPangolinxprototype XPrototype] 

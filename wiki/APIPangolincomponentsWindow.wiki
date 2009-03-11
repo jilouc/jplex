@@ -1,0 +1,11 @@
+#summary Class API for Window from module Components
+#labels Class-jplex.components.Window Release-Pangolin Module-Components API-Class
+#sidebar APIPangolincomponents
+
+= Class *jplex.components.Window*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
+
+== Description ==
+Window component.<br />Blablabla
+
+
+

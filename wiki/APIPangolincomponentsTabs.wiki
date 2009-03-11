@@ -1,0 +1,11 @@
+#summary Class API for Tabs from module Components
+#labels Class-jplex.components.Tabs Release-Pangolin Module-Components API-Class
+#sidebar APIPangolincomponents
+
+= Class *jplex.components.Tabs*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
+
+== Description ==
+Tabs component, creates a neat tab bar in a <em>ul</em> container. This bar controls the display of<br /><em>div</em>s. There is two methods, a classical one with many <em>div</em>s that are managed by show/hide methods. <br />Or another one by getting the content via Ajax and display it on a single <em>div</em>. <br /><table class='config'><br /><tr><td>data</td><td>null</td><br /><td><strong>Mandatory.</strong> Describes the tab structure. It is a array of objects that have only two <br />fields, <em>title</em>: which is the title to put in the tab bar and <em>content</em> which is a div <br />id if the method is the div one, or a url if it's the other.</td></tr><br /><tr><td>style</td><td>pui-tabs</td><br /><td>Default style to apply to the <em>ul</em> markup</td></tr><br /><tr><td>method</td><td>div</td><br /><td>'div' indicates the classical method, 'ajax' indicates the other (see bellow)</td></tr><br /><tr><td>ajaxDiv</td><td>false</td><br /><td><em>Require 'ajax' method. </em><strong>Mandatory.</strong>  Container to display the content</td></tr>   <br /><tr><td>ajaxMethod</td><td>get</td><br /><td><em>Require 'ajax' method.</em> HTTP method to use for Ajax Requests</td></tr>            <br /><tr><td>ajaxReload</td><td>false</td><br /><td><em>Require 'ajax' method.</em> If false, the content of each tabs is cached and will not be<br />requested again. Else for each tab switch, you will do a request</td></tr>          <br /><tr><td>activeTab</td><td>0</td><br /><td>Default active tab index</td></tr><br /></table><br /><table class='events'><br /><tr><td>onSwitchEvent</td><td>When an effective switch has been done</td><br /><td>oldContent: The content field from <em>data</em> that corresponds to the tab the user just quitted<br/><br />newContent: The content field from <em>data</em> that corresponds to the tab the user just selected</td></tr><br /></table>
+
+
+

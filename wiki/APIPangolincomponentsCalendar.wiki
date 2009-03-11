@@ -1,0 +1,43 @@
+#summary Class API for Calendar from module Components
+#labels Class-jplex.components.Calendar Release-Pangolin Module-Components API-Class
+#sidebar APIPangolincomponents
+
+= Class *jplex.components.Calendar*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
+
+== Description ==
+Calendar component class.<br />Create a navigable calendar from a text field or a button.
+
+== Config Table ==
+|| *Name* || *Default Value* || *Description* ||
+|| _date_ || `new Date()` ||  The default date to select ||
+|| _dest_ || `null` ||  The textfield to modify when a new date is selected ||
+|| _fade_ || `0.3` ||  Time in seconds to show/hide the popup calendar ||
+|| _maxDate_ || `false` ||  All dates that are above this one are not allowed ||
+|| _minDate_ || `false` ||  All dates that are bellow this one are not allowed ||
+|| _src_ || `null` ||  The event source, can be a textfield or a button for example ||
+
+== Event Table ==
+|| *Name* || *Description* || *Parameters* ||
+|| _onSelectEvent_ ||  When a new date is selected ||   - `date <Date>`  The selected date <br/>  ||
+|| _onShowEvent_ ||  When the calendar appears ||  ||
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `down()` || `void` || Navigate down in the current month, from the currently focused day.<br /> ||
+|| `getValue()` || `String` || Get the selected date<br /> ||
+|| `hide()` || `void` || Makes the calendar disappear, with a fade out effect if configured so<br /> ||
+|| `left()` || `void` || Navigate to the left in the current month, from the currently focused day.<br /> ||
+|| `next()` || `void` || Go to the next month<br /> ||
+|| `previous()` || `void` || Go to the previous month<br /> ||
+|| `render()` || `void` || Render the calendar for the current month<br /> ||
+|| `right()` || `void` || Navigate to the right in the current month, from the currently focused day.<br /> ||
+|| `select(oDate)` || `void` || Explicitly selects the oDate'th cell in the calendar<br />  - `oDate <Integer>` Index of the cell to select (0 to oItems.length)||
+|| `setFocused(oItem)` || `void` || Sets the current focused item of the calendar (the one that would be selected)<br />  - `oItem <Calendar.Item>` calendar item to be marked as focused||
+|| `setSelected(oItem)` || `void` || Sets the current selected item of the calendar<br />  - `oItem <Calendar.Item>` calendar item to be marked as selected||
+|| `setValue(s)` || `void` || Sets the current value as value of the calendar field<br />  - `s <String>` the new value||
+|| `show()` || `void` || Makes the calendar container appear, with a fade in effect if configured so<br /> ||
+|| `up()` || `void` || Navigate up in the current month, from the currently focused day.<br /> ||
+
+=== Inherited Configs ===
+
+ * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

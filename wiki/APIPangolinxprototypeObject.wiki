@@ -1,0 +1,11 @@
+#summary Class API for Object from module XPrototype
+#labels Class-jplex.xprototype.Object Release-Pangolin Module-XPrototype API-Class
+#sidebar APIPangolinxprototype
+
+= Class *jplex.xprototype.Object*  =
+
+== Description ==
+jPlex's XPrototype extended Object class
+
+
+

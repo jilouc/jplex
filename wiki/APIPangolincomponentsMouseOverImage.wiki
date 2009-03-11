@@ -1,0 +1,18 @@
+#summary Class API for MouseOverImage from module Components
+#labels Class-jplex.components.MouseOverImage Release-Pangolin Module-Components API-Class
+#sidebar APIPangolincomponents
+
+= Class *jplex.components.MouseOverImage*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
+
+== Description ==
+This component is a little utility that adds a simple image in a container that appears only on mouse over.<br />It is useful in cases of optional actions that spams the render if they are all visible.<br/><br />There are two rendering methods for this component. Both have advantages and drawbacks: <ul><br /><li>float:    Use of the css float property to display the image. The component accepts only two positions 'left'<br />and 'right'. </li><br /><li>absolute: Use of the css position absolute property. Can take all position wanted but can not accepts <br />multiples components on one single container</li></ul><br /><table class='config'><br /><tr><td>position</td><td>top-right</td><br /><td>Defines the position of the image. <br />The different positions can be set with bottom, top, center and left, right. <br />You can do combination with a caret '-', like 'bottom-left'.</td></tr><br /><tr><td>style</td><td>false</td><br /><td>Indicates the css style to use (must be defined if img is not)</td></tr><br /><tr><td>img</td><td>false</td><br /><td>Indicates the url of the image to show (must be defined if style is not)</td></tr>   <br /><tr><td>onClick</td><td>false</td><br /><td>Binds the click event on the image.</td></tr>            <br /><tr><td>method</td><td>absolute</td><br /><td>See before...</td></tr>          <br /><tr><td>padding</td><td>4</td><br /><td>Number of pixels to escape from the border</td></tr><br /></table>
+
+
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `setPosition()` || `void` || Sets the right absolute position of the image. <br/>Needs to be called if the top/left/width/height css property is changed<br /> ||
+
+=== Inherited Configs ===
+
+ * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

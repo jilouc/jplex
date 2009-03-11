@@ -1,0 +1,23 @@
+#summary Class API for Component from module Common
+#labels Class-jplex.common.Component Release-Pangolin Module-Common API-Class
+#sidebar APIPangolincommon
+
+= Class *jplex.common.Component*  _extends [APIPangolinObject Object]_  =
+
+== Description ==
+Component class. This class is the mother class of every widget we use<br />in jPlex. It provides us a global management of the configurations and a unified ID allocation.<br />Defining a new component needs a bit more than just extending this class.<br />You'll need to initialize it by calling in the constructor<br /><pre>$super(eSrc, oConfig);</pre><br />And you need to define a private property object <em>_definition</em> containing at least the name of the component.<br />Here is a complete example of a class:<br /><pre>jPlex.provide('jplex.components.A', 'jplex.common.Component', {<br />&nbsp;&nbsp;&nbsp;&nbsp;_definition: {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: 'A', // Name<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defaultConfig: {...} // The default config available in this.cfg('...')<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text: { fr: {...}, en:{...} } // Global labels for this components<br />&nbsp;&nbsp;&nbsp;&nbsp;},<br />&nbsp;&nbsp;&nbsp;&nbsp;initialize: function($super, eSrc, oConfig) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$super(eSrc, oConfig);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;},<br />&nbsp;&nbsp;&nbsp;&nbsp;...<br />}<br /></pre>
+
+
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `$C(c)` || `Component` || The ultimate function to get the component by its ID. This function can also accept an instance of Component too.<br />  - `c <String|Component>` The concerned component ID||
+|| `cfg(sName)` || `String` || Get a configuration parameter<br />  - `sName <String>` Name of the config parameter||
+|| `fireEvent(sEventName, oParameters)` || `void` || Fires the specified custom event with given parameters<br />  - `sEventName <String>` the custom event name - `oParameters <Object>` Optional. Hash of event parameters.||
+|| `getEvent(sEventName)` || `Function` || Get the event handler for the custom event<br />  - `sEventName <String>` the custom event name||
+|| `lang(sName)` || `String|Array|Boolean` || Reads the string or array that corresponds to the right lang<br />  - `sName <String>` name corresponding to the text field||
+|| `locale(component, field)` || `void` || Reads the string or array in the common corresponding to the locale<br />  - `component <String>` - `field <String>`||
+|| `setCfg(sName, mValue)` || `void` || Sets a local configuration parameter<br />  - `sName <String>` Name of the config parameter - `mValue <object>` Value to set||
+|| `setEvent(sEventName, fEventHandler)` || `void` || Set the event handler for the custom event.<br/>The context is bound to the component.<br />  - `sEventName <String>` the custom event name - `fEventHandler <Function>` the custom event handler||
+|| `unregister()` || `void` || Deletes the reference in the component table, usefull when you delete a lot of component, it avoids memory<br/>overflow<br /> ||
+

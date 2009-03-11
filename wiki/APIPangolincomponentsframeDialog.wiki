@@ -1,0 +1,14 @@
+#summary Class API for Dialog from module Components
+#labels Class-jplex.components.frame.Dialog Release-Pangolin Module-Components API-Class
+#sidebar APIPangolincomponents
+
+= Class *jplex.components.frame.Dialog*  _extends [APIPangolincomponentsFrame jplex.components.Frame]_  =
+
+== Description ==
+A preconfigured dialog box frame class
+
+== Config Table ==
+|| *Name* || *Default Value* || *Description* ||
+|| _otherButtons_ || `[]` ||  Array of optional button, each item of the array is an object like the following<br /><pre>{<br />&nbsp;&nbsp;label: "Label of the button",<br />&nbsp;&nbsp;click: function: { Function triggered on click }<br />}</pre><br />Note that in the 'click' function, 'this' will refer to the Window.Dialog object. ||
+
+

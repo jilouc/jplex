@@ -1,0 +1,26 @@
+#summary Class API for Submenu from module Components
+#labels Class-jplex.components.menubar.Submenu Release-Pangolin Module-Components API-Class
+#sidebar APIPangolincomponents
+
+= `private` `static` Class *jplex.components.menubar.Submenu*  =
+
+== Description ==
+MenuBar Submenu
+
+
+== Event Table ==
+|| *Name* || *Description* || *Parameters* ||
+|| _onItemAddEvent_ ||  Event that fires when an item is added to the menu ||   - `item <MenuBar.Item>`  the added item <br/>  ||
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `addItem(oItem, nBefore)` || `MenuBar.Submenu` || Adds the item oItem to the submenu.<br/>If specified, adds it before the nBefore'th item<br />  - `oItem <Object>` Item to add (please refer to MenuBar's description above for item properties) - `nBefore <Integer>` Optional. Position of the item (by default the item is pushed at the end)||
+|| `get()` || `Element` || Get the <code>&lt;ul&gt;</code> element for the submenu<br /> ||
+|| `getItem(nIndex)` || `MenuBar.Submenu|boolean` || Get the submenu of the item at position nIndex<br />  - `nIndex <Integer>` Position of the item to get||
+|| `getParentItem()` || `MenuBar.Item` || Get the parent item of the submenu<br /> ||
+|| `hide()` || `void` || Hides the submenu<br /> ||
+|| `isEmpty()` || `boolean` || Checks whether the submenu is empty or not<br /> ||
+|| `removeItem(nIndex)` || `MenuBar.Submenu|boolean` || Removes the nIndex-th item of the submenu<br />  - `nIndex <Integer>` position of the item to remove||
+|| `render()` || `void` || Renders the submenu, with shade<br /> ||
+|| `show()` || `void` || Makes the submenu visible<br /> ||
+
