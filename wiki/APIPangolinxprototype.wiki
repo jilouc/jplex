@@ -1,15 +1,15 @@
 #summary Module API for module XPrototype
-#labels Module-XPrototype Release-Pangolin API-Module
+#labels Module-XPrototype,Release-Pangolin,API-Module
 #sidebar APIPangolin
  * [APIPangolin jPlex Pangolin Release]
-   * [APIPangolincommon Common] 
-   * [APIPangolincomponents Components] 
-   * [APIPangolinjplex jPlex] 
-   * [APIPangolinxprototype XPrototype] 
-      * [APIPangolinxprototypeDate jplex.xprototype.Date]
-      * [APIPangolinxprototypeElement jplex.xprototype.Element]
-      * [APIPangolinxprototypeEvent jplex.xprototype.Event]
-      * [APIPangolinxprototypeLogger jplex.xprototype.Logger]
-      * [APIPangolinxprototypeObject jplex.xprototype.Object]
-      * [APIPangolinxprototypePrototypeBrowser jplex.xprototype.Prototype.Browser]
-      * [APIPangolinxprototypeString jplex.xprototype.String]
+ * [APIPangolincommon Common] 
+ * [APIPangolincomponents Components] 
+ * [APIPangolinjplex jPlex] 
+ * [APIPangolinxprototype XPrototype] 
+   * [APIPangolinxprototypeDate Date]
+   * [APIPangolinxprototypeElement Element]
+   * [APIPangolinxprototypeEvent Event]
+   * [APIPangolinxprototypeLogger Logger]
+   * [APIPangolinxprototypeObject Object]
+   * [APIPangolinxprototypePrototypeBrowser Browser]
+   * [APIPangolinxprototypeString String]

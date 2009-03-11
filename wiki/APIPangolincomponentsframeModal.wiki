@@ -1,5 +1,5 @@
 #summary Class API for Modal from module Components
-#labels Class-jplex.components.frame.Modal Release-Pangolin Module-Components API-Class
+#labels Class-jplex.components.frame.Modal,Release-Pangolin,Module-Components,API-Class
 #sidebar APIPangolincomponents
 
 = Class *jplex.components.frame.Modal*  _extends [APIPangolincomponentsFrame jplex.components.Frame]_  =

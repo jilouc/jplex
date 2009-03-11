@@ -2,12 +2,6 @@ jPlex.include("jplex.components.Tooltip", false);
 jPlex.include("jplex.components.calendar.CalendarItem", false);
 
 /**
- * Components definition
- * @module Components
- * @namespace jplex.components
- */
-
-/**
  * @description Calendar component class.
  * Create a browsable calendar from a text field, a button or directly on the page.
  * <p>Main features:

@@ -1,5 +1,5 @@
 #summary Class API for Config from module Common
-#labels Class-jplex.common.Config Release-Pangolin Module-Common API-Class
+#labels Class-jplex.common.Config,Release-Pangolin,Module-Common,API-Class
 #sidebar APIPangolincommon
 
 = Class *jplex.common.Config*  =

@@ -1,5 +1,5 @@
 #summary Class API for Submenu from module Components
-#labels Class-jplex.components.menubar.Submenu Release-Pangolin Module-Components API-Class
+#labels Class-jplex.components.menubar.Submenu,Release-Pangolin,Module-Components,API-Class
 #sidebar APIPangolincomponents
 
 = `private` `static` Class *jplex.components.menubar.Submenu*  =

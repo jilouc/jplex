@@ -1,4 +1,7 @@
 #!/bin/sh
+
+release=Pangolin
+
 # The location of your yuidoc install
 yuidoc_home=tools/yuidoc
 
@@ -13,7 +16,7 @@ parser_in="../src"
 parser_out=parse
 
 # The directory to put the html file outputted by the generator
-generator_out=docs
+generator_out=tmpdocs
 
 # The location of the template files.  Any subdirectories here will be copied
 # verbatim to the destination directory.
@@ -22,7 +25,25 @@ template=$yuidoc_home/template
 ##############################################################################
 # add -s to the end of the line to show items marked private
 
-$yuidoc_home/bin/yuidoc.py $parser_in -p $parser_out -o $generator_out -t $template -m jPlex\ Library -s
+echo Compiling docs...
+$yuidoc_home/bin/yuidoc.py $parser_in -p $parser_out -o $generator_out -t $template -m $release -s
 
 rm -rf $parser_out
-rm -rf docs/.svn docs/assets/.svn
+rm -rf ${generator_out}/.svn ${generator_out}/assets/.svn
+
+out=docs
+rm -rf $out
+mkdir $out
+cd $generator_out
+
+for i in `ls | grep ^jplex`; do
+   name=`echo $i | sed 's/jplex//g' | sed 's/html//g' | sed 's/\.//g'`
+   cp $i ../$out/API$release$name.wiki 
+done
+
+for i in `ls | grep ^module`; do
+   name=`echo $i | sed 's/^module_//g' | sed 's/.html//g' | sed -E 's/^\([[:alpha:]]\)/\U\0/g'`
+   cp $i ../$out/API$release$name.wiki 
+done
+
+cp index.html ../$out/API$release.wiki

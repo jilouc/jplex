@@ -1,8 +1,3 @@
-/**
- * Low-level common classes
- * @module Common
- */
-
 jPlex.include('jplex.common.Config');
 jPlex.include('jplex.common.Locale');
 jPlex.include('jplex.xprototype.*');
@@ -13,23 +8,24 @@ jPlex.include('jplex.xprototype.*');
  *
  * Defining a new component needs a bit more than just extending this class.
  * You'll need to initialize it by calling in the constructor
- *      <pre>$super(eSrc, oConfig);</pre>
+ *      <code>$super(eSrc, oConfig);</code>
  * And you need to define a private property object <em>_definition</em> containing at least the name of the component.
  * Here is a complete example of a class:
  *
- * <pre>jPlex.provide('jplex.components.A', 'jplex.common.Component', {
- * &nbsp;&nbsp;&nbsp;&nbsp;_definition: {
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: 'A', // Name
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defaultConfig: {...} // The default config available in this.cfg('...')
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text: { fr: {...}, en:{...} } // Global labels for this components
- * &nbsp;&nbsp;&nbsp;&nbsp;},
- * &nbsp;&nbsp;&nbsp;&nbsp;initialize: function($super, eSrc, oConfig) {
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$super(eSrc, oConfig);
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
- * &nbsp;&nbsp;&nbsp;&nbsp;},
- * &nbsp;&nbsp;&nbsp;&nbsp;...
+ * {{{
+ * jPlex.provide('jplex.components.A', 'jplex.common.Component', {
+ *     _definition: {
+ *         name: 'A', // Name
+ *         defaultConfig: {...} // The default config available in this.cfg('...')
+ *         text: { fr: {...}, en:{...} } // Global labels for this components
+ *     },
+ *     initialize: function($super, eSrc, oConfig) {
+ *         $super(eSrc, oConfig);
+ *         ...
+ *     },
+ *     ...
  * }
- * </pre>
+ * }}}
  * @param {Element} eElement The HTML Element on which the component acts
  * @param {Object} oConfig The configuration object
  * @class Component

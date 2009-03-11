@@ -1,11 +1,12 @@
 #summary Class API for Item from module Components
-#labels Class-jplex.components.Calendar.Item Release-Pangolin Module-Components API-Class
+#labels Class-jplex.components.Calendar.Item,Release-Pangolin,Module-Components,API-Class
 #sidebar APIPangolincomponents
 
 = Class *jplex.components.Calendar.Item*  =
 
 == Description ==
-Item representing one cell of the calendar (i.e. one day)<br />Store the corresponding HTML element and date and handle focus and select events.
+Item representing one cell of the calendar (i.e. one day)
+Store the corresponding HTML element and date and handle focus and select events.
 
 
 

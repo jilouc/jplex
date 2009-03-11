@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
     <link rel="stylesheet" href="demos.css" type="text/css"/>
     <link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>
-    <link rel="stylesheet" href="../src/jplex/components/window/assets/window.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/frame/assets/frame.css" type="text/css"/>
     <script src="../src/jPlex.js" type="text/javascript" charset="utf-8"></script>
     <script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8"></script>
     <style type="text/css">
@@ -21,7 +21,7 @@
     </style>
 </head>
 <body>
-<h1>jPlex Window Demo</h1>
+<h1>jPlex Frame Demo</h1>
 
 <input type="button" id="launcher" value="Create modal"/>
 
@@ -32,10 +32,10 @@
     var lorem = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sollicitudin. Phasellus tempus hendrerit orci. Nulla facilisi. Nulla facilisis lorem sit amet odio. Nulla sit amet pede. Mauris turpis diam, fermentum eget, imperdiet eu, sagittis fringilla, elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce odio. Nullam dapibus ligula sed lectus. Proin vel velit. Maecenas eleifend sollicitudin ipsum. Duis malesuada. Suspendisse velit lectus, pretium ac, imperdiet at, eleifend ut, nisl. Duis vel orci vel odio commodo mattis. Nullam eget massa sit amet massa vulputate aliquet.</p>";
     lorem += "<p>Nunc a enim vitae velit consectetur lobortis. Donec sed magna ut nisl dignissim scelerisque. Etiam a eros at nulla facilisis lobortis. Morbi non est. Praesent pulvinar augue nec turpis. In in pede. Aenean id risus. Mauris dignissim. Suspendisse iaculis pede ut lorem. Ut hendrerit mauris nec risus. Pellentesque lectus. Nam semper, lorem vel dapibus placerat, mauris dolor varius nisi, vel posuere metus purus nec nunc. Etiam et pede. Sed vitae ipsum varius est placerat vulputate. Quisque faucibus neque quis lorem. Fusce tincidunt pharetra augue. Curabitur fringilla. Etiam vulputate congue erat.</p>";
 
-    var Window = jPlex.include("jplex.components.Window");
-    Window.Modal = jPlex.include("jplex.components.window.Modal");
-    Window.Dialog = jPlex.include('jplex.components.window.Dialog');
-    Window.WindowsGroup = jPlex.include('jplex.components.window.WindowsGroup');
+    var Window = jPlex.include("jplex.components.Frame");
+    Window.Modal = jPlex.include("jplex.components.frame.Modal");
+    Window.Dialog = jPlex.include('jplex.components.frame.Dialog');
+    Window.WindowsGroup = jPlex.include('jplex.components.frame.WindowsGroup');
 
     var g = new Window.WindowsGroup('test');
 

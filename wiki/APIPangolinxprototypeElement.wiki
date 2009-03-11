@@ -1,5 +1,5 @@
 #summary Class API for Element from module XPrototype
-#labels Class-jplex.xprototype.Element Release-Pangolin Module-XPrototype API-Class
+#labels Class-jplex.xprototype.Element,Release-Pangolin,Module-XPrototype,API-Class
 #sidebar APIPangolinxprototype
 
 = Class *jplex.xprototype.Element*  =

@@ -1,11 +1,47 @@
 #summary Class API for MenuBar from module Components
-#labels Class-jplex.components.MenuBar Release-Pangolin Module-Components API-Class
+#labels Class-jplex.components.MenuBar,Release-Pangolin,Module-Components,API-Class
 #sidebar APIPangolincomponents
 
 = Class *jplex.components.MenuBar*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
 
 == Description ==
-MenuBar component<br />Place a nice menu bar on your page. It's designed as <br />the classical menu bars in applications.<br />It is possible to link events on terminal items. <br />As an additional feature, you could specify a key shortcut<br />for this event.<br />The source for the menu items could be either:<br /><ul><br /><li>a raw JS array. The definition of an item looks like:<br /><pre>{ <br />name:"Item",<br />click: clickHandler, //Reference to the function to be called at click<br />icon: 'path/to/icon.png', // Path to a 16x16 icon which will be displayed on the left (optional)<br />keySC: {<br />code: Event.Key.Y, // Key code of the shortcut<br />ctrl: true, // The shortcut requires the modifier Ctrl to be pressed<br />text: "Ctrl+Y" // Text displayed at right of the item<br />},<br />items: [{...},{...},...] // Array of subitems<br />}</pre></li><br /><li>XML document, fetched with Ajax.Request, with the following scheme:<br /><xmp><br /><menubar><br /><item name="Item" icon="path/to/icon.png"><br /><click key="Event.Key.Y" ctrl="true" text="Ctrl+Y"><br /><![CDATA[function() { ... }]]><br /></click><br /><items><br /><item>...</item><br />...<br /></items><br /></item><br /></menubar></xmp></li><br /><li>JSON document, fetched with Ajax.Request <br />(exactly similar to the syntax of the JS Array)</li><br /></ul><br />Notice that this class is a singleton. Therefore it can't be instantiated twice.
+MenuBar component
+Place a nice menu bar on your page. It's designed as 
+the classical menu bars in applications.
+It is possible to link events on terminal items. 
+As an additional feature, you could specify a key shortcut
+for this event.
+The source for the menu items could be either:
+<ul>
+<li>a raw JS array. The definition of an item looks like:
+<pre>{ 
+name:"Item",
+click: clickHandler, //Reference to the function to be called at click
+icon: 'path/to/icon.png', // Path to a 16x16 icon which will be displayed on the left (optional)
+keySC: {
+code: Event.Key.Y, // Key code of the shortcut
+ctrl: true, // The shortcut requires the modifier Ctrl to be pressed
+text: "Ctrl+Y" // Text displayed at right of the item
+},
+items: [{...},{...},...] // Array of subitems
+}</pre></li>
+<li>XML document, fetched with Ajax.Request, with the following scheme:
+<xmp>
+<menubar>
+<item name="Item" icon="path/to/icon.png">
+<click key="Event.Key.Y" ctrl="true" text="Ctrl+Y">
+<![CDATA[function() { ... }]]>
+</click>
+<items>
+<item>...</item>
+...
+</items>
+</item>
+</menubar></xmp></li>
+<li>JSON document, fetched with Ajax.Request 
+(exactly similar to the syntax of the JS Array)</li>
+</ul>
+Notice that this class is a singleton. Therefore it can't be instantiated twice.
 
 
 == Event Table ==
@@ -18,7 +54,7 @@ When an item is added, the handler is copied to the event of the same name of it
 
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
-|| `addItem(oItem, nBefore)` || `MenuBar` || Adds the item oItem to the menu root.<br/>If specified, adds it before the nBefore'th item<br />  - `oItem <Object>` Item to add (please refer to the doc above for item properties) - `nBefore <Integer>` Optional. Position of the item (by default the item is pushed at the end)||
+|| `addItem(oItem, nBefore)` || `MenuBar` || Adds the item oItem to the menu root.<br/>If specified, adds it before the nBefore'th item<br />  - `oItem <Object>` Item to add (please refer to the doc above for item properties) - `nBefore <Integer>` Optional. Position of the item (by default the item is pushed at the end)||
 || `getInstance()` || `MenuBar` || Get the instance of the menu bar<br /> ||
 || `getItem(nIndex)` || `MenuBar.Submenu` || Get the submenu of the item at position nIndex<br />  - `nIndex <Integer>` Position of the item to get||
 || `hide()` || `void` || Hides every opened item of the menu<br /> ||

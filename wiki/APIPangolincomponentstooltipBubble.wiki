@@ -1,5 +1,5 @@
 #summary Class API for Bubble from module Components
-#labels Class-jplex.components.tooltip.Bubble Release-Pangolin Module-Components API-Class
+#labels Class-jplex.components.tooltip.Bubble,Release-Pangolin,Module-Components,API-Class
 #sidebar APIPangolincomponents
 
 = Class *jplex.components.tooltip.Bubble*  _extends [APIPangolincommonComponent jplex.common.Component]_  =

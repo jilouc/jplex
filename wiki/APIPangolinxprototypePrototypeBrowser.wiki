@@ -1,5 +1,5 @@
 #summary Class API for Browser from module XPrototype
-#labels Class-jplex.xprototype.Prototype.Browser Release-Pangolin Module-XPrototype API-Class
+#labels Class-jplex.xprototype.Prototype.Browser,Release-Pangolin,Module-XPrototype,API-Class
 #sidebar APIPangolinxprototype
 
 = Class *jplex.xprototype.Prototype.Browser*  =

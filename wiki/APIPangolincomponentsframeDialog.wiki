@@ -1,5 +1,5 @@
 #summary Class API for Dialog from module Components
-#labels Class-jplex.components.frame.Dialog Release-Pangolin Module-Components API-Class
+#labels Class-jplex.components.frame.Dialog,Release-Pangolin,Module-Components,API-Class
 #sidebar APIPangolincomponents
 
 = Class *jplex.components.frame.Dialog*  _extends [APIPangolincomponentsFrame jplex.components.Frame]_  =

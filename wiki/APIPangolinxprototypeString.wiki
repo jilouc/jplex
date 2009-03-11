@@ -1,5 +1,5 @@
 #summary Class API for String from module XPrototype
-#labels Class-jplex.xprototype.String Release-Pangolin Module-XPrototype API-Class
+#labels Class-jplex.xprototype.String,Release-Pangolin,Module-XPrototype,API-Class
 #sidebar APIPangolinxprototype
 
 = Class *jplex.xprototype.String*  =

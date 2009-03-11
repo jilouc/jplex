@@ -1,11 +1,12 @@
 #summary Class API for Overlay from module Components
-#labels Class-jplex.components.Overlay Release-Pangolin Module-Components API-Class
+#labels Class-jplex.components.Overlay,Release-Pangolin,Module-Components,API-Class
 #sidebar APIPangolincomponents
 
 = Class *jplex.components.Overlay*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
 
 == Description ==
-Overlay component.<br />Place a semi transparent layer which covers its parent on the page.
+Overlay component.
+Place a semi transparent layer which covers its parent on the page.
 
 
 == Event Table ==

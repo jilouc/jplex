@@ -1,5 +1,5 @@
 #summary Class API for Tooltip from module Components
-#labels Class-jplex.components.Tooltip Release-Pangolin Module-Components API-Class
+#labels Class-jplex.components.Tooltip,Release-Pangolin,Module-Components,API-Class
 #sidebar APIPangolincomponents
 
 = Class *jplex.components.Tooltip*  _extends [APIPangolincommonComponent jplex.common.Component]_  =

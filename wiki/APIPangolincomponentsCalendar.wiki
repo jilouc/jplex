@@ -1,11 +1,12 @@
 #summary Class API for Calendar from module Components
-#labels Class-jplex.components.Calendar Release-Pangolin Module-Components API-Class
+#labels Class-jplex.components.Calendar,Release-Pangolin,Module-Components,API-Class
 #sidebar APIPangolincomponents
 
 = Class *jplex.components.Calendar*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
 
 == Description ==
-Calendar component class.<br />Create a navigable calendar from a text field or a button.
+Calendar component class.
+Create a navigable calendar from a text field or a button.
 
 == Config Table ==
 || *Name* || *Default Value* || *Description* ||

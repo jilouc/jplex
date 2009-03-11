@@ -1,5 +1,5 @@
 #summary Class API for Logger from module XPrototype
-#labels Class-jplex.xprototype.Logger Release-Pangolin Module-XPrototype API-Class
+#labels Class-jplex.xprototype.Logger,Release-Pangolin,Module-XPrototype,API-Class
 #sidebar APIPangolinxprototype
 
 = `static` Class *jplex.xprototype.Logger*  =

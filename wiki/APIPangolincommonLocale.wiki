@@ -1,11 +1,12 @@
 #summary Class API for Locale from module Common
-#labels Class-jplex.common.Locale Release-Pangolin Module-Common API-Class
+#labels Class-jplex.common.Locale,Release-Pangolin,Module-Common,API-Class
 #sidebar APIPangolincommon
 
 = `static` Class *jplex.common.Locale*  =
 
 == Description ==
-Global class that manipulates the global language and local settings. We define components on it corresponding to<br />some parts of the locales. The defined components are for now: 'Date', ...
+Global class that manipulates the global language and local settings. We define components on it corresponding to
+some parts of the locales. The defined components are for now: 'Date', ...
 
 
 

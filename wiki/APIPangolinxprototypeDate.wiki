@@ -1,5 +1,5 @@
 #summary Class API for Date from module XPrototype
-#labels Class-jplex.xprototype.Date Release-Pangolin Module-XPrototype API-Class
+#labels Class-jplex.xprototype.Date,Release-Pangolin,Module-XPrototype,API-Class
 #sidebar APIPangolinxprototype
 
 = Class *jplex.xprototype.Date*  =
