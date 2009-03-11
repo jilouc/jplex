@@ -2,7 +2,7 @@ jPlex.include('jplex.components.Calendar');
 function createTestCalendarField(opts) {
     var e = new Element('input', {type:'text'});
     document.body.appendChild(e);
-    return new Calendar('test', Object.extend(opts, {src:e, date: new Date(2004, 2, 10)}));
+    return new Calendar('test', Object.extend(opts, {source:e, date: new Date(2004, 2, 10)}));
 }
 var cal = createTestCalendarField({fade:0});
 new Test.Unit.Runner({
@@ -11,7 +11,7 @@ new Test.Unit.Runner({
             this.info('Warning: Unable to test in IE6 - Impossible to throw simulated mouse');
             return;
         }
-        var src = cal.eSrc;      
+        var src = cal.getTextField();      
         cal.hide();
         var offsets = src.cumulativeOffset();
                                                
@@ -53,29 +53,29 @@ new Test.Unit.Runner({
         cal.show();
     },
     testSelectDate: function() {
-        var s = cal.oCurrent;
+        var s = cal.getSelectedItem();
         var d = s.getDate();
-        this.assertEqual(cal.oCurrent, cal.oFocus);
-        this.assertEqual(d.format("d-m-Y"), cal.eSrc.value);
+        this.assertEqual(cal.getSelectedItem(), cal.getFocusedItem());
+        this.assertEqual(d.format("d-m-Y"), cal.getTextField().value);
         cal.next();
         //Do not modify
-        this.assertEqual(d.format("d-m-Y"), cal.oCurrent.getDate().format("d-m-Y"));
-        this.assertEqual(d.format("d-m-Y"), cal.eSrc.value);
-        this.assertNotEqual(cal.oCurrent, cal.oFocus);             
+        this.assertEqual(d.format("d-m-Y"), cal.getFormattedValue("d-m-Y"));
+        this.assertEqual(d.format("d-m-Y"), cal.getTextField().value);
+        this.assertNotEqual(cal.getSelectedItem(), cal.getFocusedItem());
         cal.previous();
         //Do not modify
-        this.assertEqual(d.format("d-m-Y"), cal.oCurrent.getDate().format("d-m-Y"));
-        this.assertEqual(d.format("d-m-Y"), cal.eSrc.value);
-        this.assertEqual(cal.oCurrent.getDate(), cal.oFocus.getDate());
-        cal.oCurrent.select(); // in case of bugs
-        var d = cal.oFocus.getDate();
+        this.assertEqual(d.format("d-m-Y"), cal.getFormattedValue("d-m-Y"));
+        this.assertEqual(d.format("d-m-Y"), cal.getTextField().value);
+        this.assertEqual(cal.getSelectedItem().getDate(), cal.getFocusedItem().getDate());
+        cal.getSelectedItem().select(); // in case of bugs
+        var d = cal.getFocusedItem().getDate();
         var date = new Date(d.getTime());
         cal.up();
-        cal.oFocus.select();
+        cal.getFocusedItem().select();
         date.setDate(date.getDate()-7);
-        this.assertEqual(date.format("d-m-Y"), cal.oFocus.getDate().format("d-m-Y"));
-        this.assertEqual(date.format("d-m-Y"), cal.eSrc.value);
+        this.assertEqual(date.format("d-m-Y"), cal.getFocusedItem().getDate().format("d-m-Y"));
+        this.assertEqual(date.format("d-m-Y"), cal.getTextField().value);
                                 
         
     }
-}, {onFinish: function() { cal.eSrc.remove(); cal.unregister(); }});                                             
+}, {onFinish: function() { cal.getTextField().remove(); cal.unregister(); }});                                             

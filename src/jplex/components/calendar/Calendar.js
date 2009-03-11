@@ -17,8 +17,7 @@ jPlex.include("jplex.components.calendar.CalendarItem", false);
  * </ul>
  *
  * @class Calendar
- * @param {Element|String} eElement The div element (or its id) that will contain the calendar.
- * If the id does not match any element, a "div" element is created with this id
+ * @param {Element|String} eElement The div element (or its id) that will contain the calendar. If the id does not match any element, a "div" element is created with this id
  * @param {Object} oConfig The configuration object
  * @extends jplex.common.Component
  * @requires calendar.CalendarItem
@@ -63,7 +62,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
              * @config titleFormat
              * @default "{M} {Y}"
              */
-            titleFormat: "{M} {Y}", 
+            titleFormat: "{M} {Y}",
             /**
              * Time in seconds to show/hide the popup calendar.
              * Set to 0 or <code>false</code> to disable fade in/out.
@@ -73,7 +72,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             fade: 0.3,
             /**
              * The textfield linked with the calendar (edited when a new date is selected)
-             * (see the source configuration parameter below for more details)
+             * (see the <code>source</code> configuration parameter for more details)
              * @config textField
              * @default null
              */
@@ -172,7 +171,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         this.ID = this.component.getAttribute('id');
 
         var oCurrentDate = this.cfg('date');
-        this._selectedItem = this._focusedItem = { 
+        this._selectedItem = this._focusedItem = {
             getDate: function() {
                 return oCurrentDate;
             }
@@ -442,8 +441,9 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      */
     setSelectedItem: function(oItem) {
         this._selectedItem = oItem;
-        if (!this._textField || this._textField.getAttribute("type") == 'button') return;
-        this._textField.value = oItem.getDate().format(this.cfg("dateFormat"));
+        if (this._textField && this._textField.getAttribute("type") != 'button') {
+            this._textField.value = oItem.getDate().format(this.cfg("dateFormat"));
+        }
     },
 
     /**
