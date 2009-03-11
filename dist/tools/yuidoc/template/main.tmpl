@@ -7,7 +7,7 @@
 #if $classname 
 \#summary Class API for $classtruename from module $modulename
 \#labels Class-$classname,Release-$projectname,Module-$modulename,API-Class
-\#sidebar API${projectname}#echo $modulename.lower()#
+\#sidebar API${projectname}#echo $modulename.lower()#Index
 
 = #if $access#`$access` #end if##if $static#`$static` #end if##if $final#`$final` #end if#Class *$classname* #if $extends# _extends [API$projectname#echo re.sub(r'(jplex)?\.', '', $extends)# $extends]_ #end if# =
     #if $uses
@@ -70,12 +70,12 @@
 #if $modulename
 \#summary Module API for module $modulename
 \#labels Module-$modulename,Release-$projectname,API-Module
-\#sidebar API${projectname}
+\#sidebar API${projectname}Index
 #else    
 \#summary API Index
 \#labels Release-$projectname,API-Index
 #end if
  * [API$projectname jPlex $projectname Release]#for $moduledef in $modulenames
- * [API$projectname#echo $moduledef.lower()# $moduledef] #if $moduledef == $modulename##for $classdef in $classnames
+ * [API$projectname#echo $moduledef.lower()#Index $moduledef] #if $moduledef == $modulename##for $classdef in $classnames
    * [API$projectname#echo re.sub(r'(jplex)?\.', '', $classdef)# #echo re.sub(r'[a-zA-Z]+\.', '', $classdef)#]#end for##end if##end for
 #end if
