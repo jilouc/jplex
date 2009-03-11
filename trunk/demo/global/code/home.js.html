@@ -177,7 +177,7 @@ Event.onElementReady("myElementID", function() {
 
 
 <script type="text/javascript">
-    new Tabs("tabs-code-home", {
+    var t = new Tabs("tabs-code-home", {
         data: [
             { title: "Tips", content: "tab-code-home-5" },
             { title: "Tabs creation", content: "tab-code-home-4" },
@@ -187,4 +187,9 @@ Event.onElementReady("myElementID", function() {
         ],
         activeTab: 4
     });
+
+    t.setEvent("onSwitchEvent", function() {
+        $C('code-home')._constrainToSize();
+    })
+
 </script>

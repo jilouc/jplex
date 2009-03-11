@@ -61,7 +61,9 @@ jPlex.provide('jplex.components.frame.WindowsGroup', 'jplex.common.Component', {
             });
         }
         w._group.windows[w._group.windows.length-1] = w;
-        w.component.setStyle({zIndex: z});
+        if(z) {
+            w.component.setStyle({zIndex: z});
+        }
         w._groupPosition = w._group.windows.length-1;
 
     }

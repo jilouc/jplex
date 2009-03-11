@@ -26,14 +26,22 @@
         if(code) {
             code.show();
             code.toFront.bind(code).defer();
+            if(Prototype.Browser.Opera)
+                code.toFront();
             return $C('code-'+file);
         }
-        code = new Frame("code-"+file, {draggable:true, title:"Code snippet"});
+        code = new Frame("code-"+file, {
+            draggable:true,
+            title:"Code snippet",
+            maxWidth:600,
+            maxHeight:450
+        });
         code.setBody(res);
         code.component.addClassName('code-window');
         CodeHighlighter.init();
         var w = g.add(code);
         w.toFront.bind(w).defer();
+        w.show();
 
         return w;
 
@@ -53,7 +61,8 @@
         ajax: "./global/home.html",
         draggable: true,
         title: "Welcome!",
-        footer: true
+        footer: true,
+        overflow:"auto"
     });
     first.setFooter("<span id='code-snippet'>Click to get some information about the code used in the current page</span> "+
                     "<img src='./global/img/131.png' align='absmiddle' alt='' /> " +
@@ -220,16 +229,24 @@
      * 
      */
     first.setEvent('onAjaxRequestCompleteEvent', function() {
+        $C('what').component.down("div.header").appendChild(new Element("div", {id:"menu"}));
         Event.onElementReady('menu', function() {
             new MenuBar("menu", {data:myData});
         });
 
         Event.onElementReady('tab-why-jplex', function() {
             var myTabsData = [
-                {title: 'What is jPlex ?', content:'tab-what-is-jplex'},
-                {title: 'Why jPlex ?', content:'tab-why-jplex'}];
-            var tabs = new Tabs("home-tabs", {data: myTabsData});
-            tabs.setEvent("onSwitchEvent", first.makeCentered.bind(first));
+                {title: 'Why jPlex ?', content:'tab-why-jplex'},
+                {title: 'What is jPlex ?', content:'tab-what-is-jplex'}
+            ];
+            var tabs = new Tabs("home-tabs", {
+                data: myTabsData,
+                activeTab: 1
+            });
+            tabs.setEvent("onSwitchEvent", function() {
+                first.makeCentered();
+                first._constrainToSize();
+            });
 
         });
         

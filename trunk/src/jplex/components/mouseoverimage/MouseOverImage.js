@@ -104,7 +104,7 @@ jPlex.provide('jplex.components.MouseOverImage', 'jplex.common.Component', {
             point[1] = (containerDim.width - imgDim.width) / 2;
 
         this.eImg.clonePosition(this.component, {setWidth:false, setHeight:false,
-            offsetTop: point[0], offsetLeft: point[1]});
+            offsetTop: point[0], offsetLeft: point[1]}); // TODO Bug sur IE dans demo globale
         if (act) this.component.hide();
     },
     /**

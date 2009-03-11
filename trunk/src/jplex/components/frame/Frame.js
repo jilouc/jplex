@@ -36,19 +36,27 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             overlayOpacity:0.6,
             overlayFade:false,
 
-            width: null,
-            heigth: null,
+            width: null, // TODO in other units than px
+            heigth: null, // TODO same
+            minWidth: null, // TODO same
+            minHeight: null, // TODO same
+            maxWidth: null, // TODO same
+            maxHeight: null, // TODO same
+
+            overflow: "auto", // TODO
+
             top: null,
             left: null,
-            constrainToViewport: true,
+            constrainToViewport: true
 
-            events: {
-                beforeRenderEvent: Prototype.emptyFunction,
-                afterRenderEvent: Prototype.emptyFunction,
-                onAjaxRequestCompleteEvent: Prototype.emptyFunction,
-                onShowEvent: Prototype.emptyFunction,
-                onHideEvent: Prototype.emptyFunction
-            }
+
+        },
+        events: {
+            beforeRenderEvent: Prototype.emptyFunction,
+            afterRenderEvent: Prototype.emptyFunction,
+            onAjaxRequestCompleteEvent: Prototype.emptyFunction,
+            onShowEvent: Prototype.emptyFunction,
+            onHideEvent: Prototype.emptyFunction
         },
         defaultContainer:"div",
         text: {
@@ -84,9 +92,26 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
 
         bd = this._addBody(content);
 
+        bd.setStyle({overflow:this.cfg("overflow")});
+
+
         if (this.cfg('ajax')) {
             this.reload();
         }
+
+        /*if (this.cfg("minWidth")) {
+         this.component.setStyle({minWidth:this.cfg("minWidth")+"px"});
+         }
+         if (this.cfg("minHeight")) { // Does not work on IE6
+         this.component.setStyle({minHeight:this.cfg("minHeight")+"px"});
+         }
+         if (this.cfg("maxWidth")) {
+         this.component.setStyle({maxWidth:this.cfg("maxWidth")+"px"});
+         }
+         if (this.cfg("maxHeight")) { // Does not work on IE6
+         this.component.setStyle({maxHeight:this.cfg("maxHeight")+"px"});
+         }*/
+
 
         if (this.cfg("footer")) {
             ft = this._addFooter();
@@ -120,13 +145,15 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             display: 'none'
         });
 
+        // TODO ça marche pas
+
         this.fireEvent("afterRenderEvent");
     },
 
     setHeader: function(sHead) {
         var hd = this.component.down("div.header");
         if (hd) {
-            hd.down('span.title').update(sHead);
+            hd.down('div.title').update(sHead);
         } else {
             hd = this._addHeader(sHead);
         }
@@ -134,7 +161,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     },
 
     setTitle: function(sTitle) {
-        this.setHeader(sTitle);  
+        this.setHeader(sTitle);
     },
 
     setBody: function(sBody) {
@@ -154,7 +181,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                     var img = $(s);
                     var bak = img.src;
                     loaded[i] = false;
-                    if(Prototype.Browser.Opera) 
+                    if (Prototype.Browser.Opera)
                         img.src = "";
                     img.hide();
                     img.observe('load', function(e, pic, n) {
@@ -163,12 +190,15 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                         if (loaded.all()) {
                             this.setLoading(false);
                             this.makeCentered();
+                            var pos = this.component.cumulativeOffset();
+                            this._constrainToViewport(pos.left, pos.top, this.drag);
+                            this._constrainToSize.bind(this).delay(0);
                         }
-                    }.bindAsEventListener(this, img, i));    
-                    if(Prototype.Browser.Opera) {
+                    }.bindAsEventListener(this, img, i));
+                    if (Prototype.Browser.Opera) {
                         img.src = bak;
-                        if (img.complete) 
-                        img.removeEvents();                                            
+                        if (img.complete)
+                            img.removeEvents();
                     }
                 }, this);
             }
@@ -209,7 +239,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
 
     _addCloseButton: function() {
         var close = new Element('a', {id:this.sID + "-closecross"}),
-                elt = this.component.down('div.header') || this.component.down('div.body');
+                elt = this.component.down('div.header div.title') || this.component.down('div.body');
 
         close.addClassName('close').update('&nbsp;');
         close.observe('click', this.hide.bind(this));
@@ -218,8 +248,8 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
 
     _addHeader: function(content) {
         var hd = new Element('div'),
-                span = new Element('span');
-        hd.appendChild(span.addClassName('title').update(content || ''));
+                title = new Element('div');
+        hd.appendChild(title.addClassName('title').update(content || ''));
         hd.addClassName('header');
         this.component.insert({top:hd});
         return hd;
@@ -310,6 +340,74 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         return[
             w > vpw ? 0 : (x < vpw - w ? (x > 0 ? x : 0 ) : vpw - w),
             h > vph ? 0 : (y < vph - h ? (y > 0 ? y : 0) : vph - h)];
+    },
+
+    _constrainToSize: function() {
+
+        // TODO Foire sur Opera visiblement (cf code-snippet)
+        var bd = this.component.down("div.body");
+
+        var dimensions = {
+            body: bd.getDimensions(),
+            frame: this.component.getDimensions()
+        };
+
+        dimensions.fixed = {
+            width: dimensions.frame.width - dimensions.body.width,
+            height: dimensions.frame.height - dimensions.body.height
+        };
+
+
+        var minW = null, minH = null, maxW = null, maxH = null;
+
+        if (this.cfg("minWidth")) {
+            minW = this.cfg("minWidth") - dimensions.fixed.width;
+            bd.setStyle({
+                minWidth: minW + "px"
+            });
+        }
+        if (this.cfg("minHeight")) {
+            minH = this.cfg("minHeight") - dimensions.fixed.height;
+            bd.setStyle({
+                minHeight: minH + "px"
+            });
+        }
+        if (this.cfg("maxWidth")) {
+            maxW = this.cfg("maxWidth") - dimensions.fixed.width;
+            bd.setStyle({
+                maxWidth: maxW + "px"
+            });
+        }
+        if (this.cfg("maxHeight")) {
+            maxH = this.cfg("maxHeight") - dimensions.fixed.height;
+            bd.setStyle({
+                maxHeight: maxH + "px"
+            });
+        }
+
+        if (Prototype.Browser.IE) {
+
+            if (this.cfg("minWidth") && this.cfg("minWidth") > dimensions.frame.width) {
+                bd.setStyle({
+                    width: (this.cfg("minWidth") - dimensions.fixed.width) + "px"
+                });
+            }
+            if (this.cfg("minHeight") && this.cfg("minHeight") > dimensions.frame.height) {
+                bd.setStyle({
+                    height: (this.cfg("minHeight") - dimensions.fixed.height) + "px"
+                });
+            }
+            if (this.cfg("maxWidth") && this.cfg("maxWidth") < dimensions.frame.width) {
+                bd.setStyle({
+                    width: (this.cfg("maxWidth") - dimensions.fixed.width) + "px"
+                });
+            }
+            if (this.cfg("maxHeight") && this.cfg("maxHeight") < dimensions.frame.height) {
+                bd.setStyle({
+                    height: (this.cfg("maxHeight") - dimensions.fixed.height) + "px"
+                });
+            }
+        }
     },
 
     setLoading: function(mode) {

@@ -114,7 +114,7 @@ jPlex.provide("jplex.components.calendar.CalendarItem", {
         return this._date;
     },
 
-    //********** Private methods **********/
+    //---------- Private methods ----------
 
     /**
      * Unselects the item
@@ -132,7 +132,7 @@ jPlex.provide("jplex.components.calendar.CalendarItem", {
         this._cell.removeClassName("focused");
     }
 
-    //********** Private properties **********/
+    //---------- Private properties ----------
 
     /**
      * The parent calendar of the item (jplex component)

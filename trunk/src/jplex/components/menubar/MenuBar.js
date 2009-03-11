@@ -143,6 +143,7 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component',  {
 
         // IE6 CSS3 Hacks
         // TODO Le faire aussi quand on ajoute des items
+        // TODO Cassé sur IE6 : Le Background apparaît plusieurs fois
         if(Prototype.Browser.IE6) {
             $$("div.menubar ul.with-icon > li.item-with-icon",
                     "div.menubar ul.with-icon > li.item-without-icon").each(function(s) {

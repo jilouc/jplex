@@ -39,20 +39,22 @@ ul.smooth-tabs {
 }
 
 div.menubar {
-    position: relative;
-    margin-bottom: 10px;
     font-size: 1em;
+    color:black;
+    margin:0;
+}
+
+div#what div.header {
+    padding:0;
+}
+div#what div.title {
+    padding:0.2em 0.5em 0.2em 0.5em;
 }
 
 div.menubar li.item {
     height: 22px;
 }
 
-div.code-window div.body {
-    overflow: auto;
-    max-height: 400px;
-    max-width: 500px;
-}
 
 div#what {
     width: 60%;
@@ -61,7 +63,7 @@ div#what {
 
 ul.jplex-tabs.code-tabs {
     float: right;
-    width: 99%;
+    width:100%;
     border-bottom: 2px #79b3ec solid;
     margin-bottom: 1em;
 }
@@ -105,19 +107,6 @@ ul.jplex-tabs.smooth-tabs li:first-child {
 ul.jplex-tabs.smooth-tabs li:hover, ul.jplex-tabs li.jplex-tabs-active:hover {
     background: #79b3ec;
     color: #ffffff;
-}
-
-div.tabs-line {
-    border: 2px #79b3ec solid;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    position: relative;
-    top: -1em;
-    z-index: 0;
-}
-
-div#what div.body {
-    padding: 0;
 }
 
 div#about {
