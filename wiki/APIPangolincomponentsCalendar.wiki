@@ -20,47 +20,73 @@ the previous/next month using PageDown/PageUp</li>
 </ul>
 
 == Config Table ==
-|| *Name* || *Default Value* || *Description* ||
-|| _date_ || `new Date()` ||  The default date to select ||
-|| _dateFormat_ || `"d-m-Y"` ||  Pattern to format the output string of the calendar<br />(e.g. the value of the linked text input field). To know<br />more about pattern tokens, see jPlex.xprototype.Date#format ||
-|| _fade_ || `0.3` ||  Time in seconds to show/hide the popup calendar.<br />Set to 0 or <code>false</code> to disable fade in/out. ||
-|| _fastBrowse_ || `true` ||  If set to <code>true</code>, a click on the title of the calendar (month or year)<br />will pop up a tooltip allowing the user to set a value for the month<br />(or the year) using combo-boxes ||
-|| _fastBrowseYearEnd_ || `The current year + 5` ||  Maximum year in the combobx for fast browse ||
-|| _fastBrowseYearStart_ || `The current year - 5` ||  Minimum year in the combobox for fast browse ||
-|| _maxDate_ || `false` ||  All dates that are above this one are not allowed ||
-|| _minDate_ || `false` ||  All dates that are bellow this one are not allowed ||
-|| _source_ || `null` ||  The event source, can be a textfield or a button for example<br />The source element for the calendar. Use one of the following configuration:<br /><ul><br /><li><code>textField = null, source = a text field</code> : links the calendar to a single text field</li><br /><li><code>textField = a text field, source = a button</code> : links the calendar to a button, the result<br />will be printed in the textfield</li><br /><li><code>textField = null, source = a button</code> : links the calendar to a button, use the custom event<br />onSelectEvent to catch the selected date and do what you want with it</li><br /><li><code>textField = null, source = null</code> : just show a calendar without show/hide things</li><br /></li> ||
-|| _textField_ || `null` ||  The textfield linked with the calendar (edited when a new date is selected)<br />(see the <code>source</code> configuration parameter for more details) ||
-|| _titleFormat_ || `"{M} {Y}"` ||  Template for the title of the calendar. You can use 3 tokens:<br /><ul><li>{M} the month full name</li><br /><li>{m} month number</li><br /><li>{Y} year with 4 digits</li></ul> ||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Default Value* </td><td> *Description* </td></tr>
+<tr><td> _date_ </td><td> `new Date()` </td><td>  The default date to select </td></tr>
+<tr><td> _dateFormat_ </td><td> `"d-m-Y"` </td><td>  Pattern to format the output string of the calendar
+(e.g. the value of the linked text input field). To know
+more about pattern tokens, see jPlex.xprototype.Date#format </td></tr>
+<tr><td> _fade_ </td><td> `0.3` </td><td>  Time in seconds to show/hide the popup calendar.
+Set to 0 or <code>false</code> to disable fade in/out. </td></tr>
+<tr><td> _fastBrowse_ </td><td> `true` </td><td>  If set to <code>true</code>, a click on the title of the calendar (month or year)
+will pop up a tooltip allowing the user to set a value for the month
+(or the year) using combo-boxes </td></tr>
+<tr><td> _fastBrowseYearEnd_ </td><td> `The current year + 5` </td><td>  Maximum year in the combobx for fast browse </td></tr>
+<tr><td> _fastBrowseYearStart_ </td><td> `The current year - 5` </td><td>  Minimum year in the combobox for fast browse </td></tr>
+<tr><td> _maxDate_ </td><td> `false` </td><td>  All dates that are above this one are not allowed </td></tr>
+<tr><td> _minDate_ </td><td> `false` </td><td>  All dates that are bellow this one are not allowed </td></tr>
+<tr><td> _source_ </td><td> `null` </td><td>  The event source, can be a textfield or a button for example
+The source element for the calendar. Use one of the following configuration:
+<ul>
+<li><code>textField = null, source = a text field</code> : links the calendar to a single text field</li>
+<li><code>textField = a text field, source = a button</code> : links the calendar to a button, the result
+will be printed in the textfield</li>
+<li><code>textField = null, source = a button</code> : links the calendar to a button, use the custom event
+onSelectEvent to catch the selected date and do what you want with it</li>
+<li><code>textField = null, source = null</code> : just show a calendar without show/hide things</li>
+</li> </td></tr>
+<tr><td> _textField_ </td><td> `null` </td><td>  The textfield linked with the calendar (edited when a new date is selected)
+(see the <code>source</code> configuration parameter for more details) </td></tr>
+<tr><td> _titleFormat_ </td><td> `"{M} {Y}"` </td><td>  Template for the title of the calendar. You can use 3 tokens:
+<ul><li>{M} the month full name</li>
+<li>{m} month number</li>
+<li>{Y} year with 4 digits</li></ul> </td></tr>
+</table>
 
 == Event Table ==
-|| *Name* || *Description* || *Parameters* ||
-|| _onHideEvent_ ||  When the calendar disappears (textfield losing focus, new date selected for instance) ||  ||
-|| _onPositionChangeEvent_ ||  Called each time the position of the calendar is re-computed ||   - `position <Object>`  The computed position (position.top and position.left) <br/> - `dimensions <Object>`  Dimensions of the calendar container (width and height) <br/>  ||
-|| _onSelectEvent_ ||  When a new date is selected ||   - `date <Date>`  The selected date <br/>  ||
-|| _onShowEvent_ ||  When the calendar appears (textfield receiving focus for instance) ||  ||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
+<tr><td> _onHideEvent_ </td><td>  When the calendar disappears (textfield losing focus, new date selected for instance) </td><td>  </td></tr>
+<tr><td> _onPositionChangeEvent_ </td><td>  Called each time the position of the calendar is re-computed </td><td>   - `position <Object>`  The computed position (position.top and position.left) <br/> - `dimensions <Object>`  Dimensions of the calendar container (width and height) <br/>  </td></tr>
+<tr><td> _onSelectEvent_ </td><td>  When a new date is selected </td><td>   - `date <Date>`  The selected date <br/>  </td></tr>
+<tr><td> _onShowEvent_ </td><td>  When the calendar appears (textfield receiving focus for instance) </td><td>  </td></tr>
+</table>
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `down()` || `void` || Navigate down in the current month, from the currently focused day.<br /> ||
-|| `getFocusedItem()` || `Calendar.CalendarItem` || Get the currently focused item of the calendar<br /> ||
-|| `getFormattedValue(format)` || `void` || Get the current date string representation, formatted with the given<br/>pattern. If no pattern is given, uses the "dateFormat" configuration parameter.<br />  - `format <object>`<br/>||
-|| `getSelectedItem()` || `Calendar.CalendarItem` || Get the currently selected item of the calendar<br /> ||
-|| `getTextField()` || `Element` || Get the targetted text field of the calendar (null if not set)<br /> ||
-|| `goTo(month, year)` || `void` || Change the page of the calendar to the specified month and year<br />  - `month <Integer>` New month (optional)<br/> - `year <Integer>` New year (optional)<br/>||
-|| `hide()` || `void` || Makes the calendar disappear, with a fade out effect if configured so<br /> ||
-|| `left()` || `void` || Navigate to the left in the current month, from the currently focused day.<br /> ||
-|| `next()` || `void` || Go to the next month<br /> ||
-|| `previous()` || `void` || Go to the previous month<br /> ||
-|| `render()` || `void` || Render the calendar for the current month<br /> ||
-|| `right()` || `void` || Navigate to the right in the current month, from the currently focused day.<br /> ||
-|| `select(index)` || `void` || Explicitly selects the index'th cell in the calendar<br />  - `index <Integer>` Index of the cell to select (0 to oItems.length)<br/>||
-|| `setFocusedItem(oItem)` || `void` || Sets the current focused item of the calendar (the one that would be selected)<br />  - `oItem <Calendar.CalendarItem>` calendar item to be marked as focused<br/>||
-|| `setSelectedItem(oItem)` || `void` || Sets the current selected item of the calendar<br />  - `oItem <Calendar.CalendarItem>` calendar item to be marked as selected<br/>||
-|| `show()` || `void` || Makes the calendar container appear, with a fade in effect if configured so<br /> ||
-|| `up()` || `void` || Navigate up in the current month, from the currently focused day.<br /> ||
 
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `down()` </td><td> `void` </td><td> Navigate down in the current month, from the currently focused day.<br /> </td></tr>
+<tr><td> `getFocusedItem()` </td><td> `Calendar.CalendarItem` </td><td> Get the currently focused item of the calendar<br /> </td></tr>
+<tr><td> `getFormattedValue(format)` </td><td> `void` </td><td> Get the current date string representation, formatted with the given
+pattern. If no pattern is given, uses the "dateFormat" configuration parameter.<br />  - `format <object>`<br/></td></tr>
+<tr><td> `getSelectedItem()` </td><td> `Calendar.CalendarItem` </td><td> Get the currently selected item of the calendar<br /> </td></tr>
+<tr><td> `getTextField()` </td><td> `Element` </td><td> Get the targetted text field of the calendar (null if not set)<br /> </td></tr>
+<tr><td> `goTo(month, year)` </td><td> `void` </td><td> Change the page of the calendar to the specified month and year<br />  - `month <Integer>` New month (optional)<br/> - `year <Integer>` New year (optional)<br/></td></tr>
+<tr><td> `hide()` </td><td> `void` </td><td> Makes the calendar disappear, with a fade out effect if configured so<br /> </td></tr>
+<tr><td> `left()` </td><td> `void` </td><td> Navigate to the left in the current month, from the currently focused day.<br /> </td></tr>
+<tr><td> `next()` </td><td> `void` </td><td> Go to the next month<br /> </td></tr>
+<tr><td> `previous()` </td><td> `void` </td><td> Go to the previous month<br /> </td></tr>
+<tr><td> `render()` </td><td> `void` </td><td> Render the calendar for the current month<br /> </td></tr>
+<tr><td> `right()` </td><td> `void` </td><td> Navigate to the right in the current month, from the currently focused day.<br /> </td></tr>
+<tr><td> `select(index)` </td><td> `void` </td><td> Explicitly selects the index'th cell in the calendar<br />  - `index <Integer>` Index of the cell to select (0 to oItems.length)<br/></td></tr>
+<tr><td> `setFocusedItem(oItem)` </td><td> `void` </td><td> Sets the current focused item of the calendar (the one that would be selected)<br />  - `oItem <Calendar.CalendarItem>` calendar item to be marked as focused<br/></td></tr>
+<tr><td> `setSelectedItem(oItem)` </td><td> `void` </td><td> Sets the current selected item of the calendar<br />  - `oItem <Calendar.CalendarItem>` calendar item to be marked as selected<br/></td></tr>
+<tr><td> `show()` </td><td> `void` </td><td> Makes the calendar container appear, with a fade in effect if configured so<br /> </td></tr>
+<tr><td> `up()` </td><td> `void` </td><td> Navigate up in the current month, from the currently focused day.<br /> </td></tr>
+
+</table>
 === Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

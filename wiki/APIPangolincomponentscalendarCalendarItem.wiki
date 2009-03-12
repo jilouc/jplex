@@ -9,17 +9,19 @@ Item representing one cell of the calendar (i.e. one day)
 Store the corresponding HTML element and date and handle focus and select events.
 
 
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `check()` || `bool` || Check whether the date of the item match a valid date or not<br/>(regarding to the valid range set in the calendar configuration)<br /> ||
-|| `focus()` || `void` || Set the focus on the item<br /> ||
-|| `getCell()` || `Element` || Get the cell (td) element representing the item<br /> ||
-|| `getDate()` || `Date` || Get the date of the item<br /> ||
-|| `getIndex()` || `Integer` || Get the index of the item in the table<br /> ||
-|| `select(e, click)` || `void` || Selects the date corresponding to the item<br />  - `e <Event>`<br/> - `click <bool>` true if the selection results from a click on the cell<br/>||
 
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `check()` </td><td> `bool` </td><td> Check whether the date of the item match a valid date or not
+(regarding to the valid range set in the calendar configuration)<br /> </td></tr>
+<tr><td> `focus()` </td><td> `void` </td><td> Set the focus on the item<br /> </td></tr>
+<tr><td> `getCell()` </td><td> `Element` </td><td> Get the cell (td) element representing the item<br /> </td></tr>
+<tr><td> `getDate()` </td><td> `Date` </td><td> Get the date of the item<br /> </td></tr>
+<tr><td> `getIndex()` </td><td> `Integer` </td><td> Get the index of the item in the table<br /> </td></tr>
+<tr><td> `select(e, click)` </td><td> `void` </td><td> Selects the date corresponding to the item<br />  - `e <Event>`<br/> - `click <bool>` true if the selection results from a click on the cell<br/></td></tr>
+
+</table>

@@ -45,30 +45,41 @@ Notice that this class is a singleton. Therefore it can't be instantiated twice.
 
 
 == Event Table ==
-|| *Name* || *Description* || *Parameters* ||
-|| _afterRenderEvent_ ||  Event that fires after the rendering of the menu ||  ||
-|| _beforeRenderEvent_ ||  Event that fires before the rendering of the menu ||  ||
-|| _onClickEvent_ ||  Event that fires when the menu is clicked ||   - `event <Event>`  the DOM Event information <br/>  ||
-|| _onItemAddEvent_ ||  Event that fires when an item is added to the menu
-When an item is added, the handler is copied to the event of the same name of its submenu. ||   - `item <MenuBar.Item>`  the added item <br/>  ||
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-|| _oItems_ || Array || `- `Array containing the root items of the menu bar<br />(initial items AND dynamically added ones)||
-|| _SOURCE_AJAX_JSON_ || Integer || `- static `Configuration constant indicating that menu items comes from a JSON document||
-|| _SOURCE_AJAX_XML_ || Integer || `- static `Configuration constant indicating that menu items comes from a XML document||
-|| _SOURCE_JS_ARRAY_ || Integer || `- static `Configuration constant indicating that menu items comes from a raw JS array||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
+<tr><td> _afterRenderEvent_ </td><td>  Event that fires after the rendering of the menu </td><td>  </td></tr>
+<tr><td> _beforeRenderEvent_ </td><td>  Event that fires before the rendering of the menu </td><td>  </td></tr>
+<tr><td> _onClickEvent_ </td><td>  Event that fires when the menu is clicked </td><td>   - `event <Event>`  the DOM Event information <br/>  </td></tr>
+<tr><td> _onItemAddEvent_ </td><td>  Event that fires when an item is added to the menu
+When an item is added, the handler is copied to the event of the same name of its submenu. </td><td>   - `item <MenuBar.Item>`  the added item <br/>  </td></tr>
+</table>
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _oItems_ </td><td> Array </td><td> `` Array containing the root items of the menu bar
+(initial items AND dynamically added ones)</td></tr>
+<tr><td> _SOURCE_AJAX_JSON_ </td><td> Integer </td><td> `static ` Configuration constant indicating that menu items comes from a JSON document</td></tr>
+<tr><td> _SOURCE_AJAX_XML_ </td><td> Integer </td><td> `static ` Configuration constant indicating that menu items comes from a XML document</td></tr>
+<tr><td> _SOURCE_JS_ARRAY_ </td><td> Integer </td><td> `static ` Configuration constant indicating that menu items comes from a raw JS array</td></tr>
+
+</table>
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `addItem(oItem, nBefore)` || `MenuBar` || Adds the item oItem to the menu root.<br/>If specified, adds it before the nBefore'th item<br />  - `oItem <Object>` Item to add (please refer to the doc above for item properties)<br/> - `nBefore <Integer>` Optional. Position of the item (by default the item is pushed at the end)<br/>||
-|| `getInstance()` || `MenuBar` || Get the instance of the menu bar<br /> ||
-|| `getItem(nIndex)` || `MenuBar.Submenu` || Get the submenu of the item at position nIndex<br />  - `nIndex <Integer>` Position of the item to get<br/>||
-|| `hide()` || `void` || Hides every opened item of the menu<br /> ||
-|| `removeItem(nIndex)` || `void` || Removes the item at position nIndex<br />  - `nIndex <nIndex>` Optional. Position of the item<br/>||
-|| `render()` || `void` || Renders the menu bar root<br /> ||
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `addItem(oItem, nBefore)` </td><td> `MenuBar` </td><td> Adds the item oItem to the menu root.
+If specified, adds it before the nBefore'th item<br />  - `oItem <Object>` Item to add (please refer to the doc above for item properties)<br/> - `nBefore <Integer>` Optional. Position of the item (by default the item is pushed at the end)<br/></td></tr>
+<tr><td> `getInstance()` </td><td> `MenuBar` </td><td> Get the instance of the menu bar<br /> </td></tr>
+<tr><td> `getItem(nIndex)` </td><td> `MenuBar.Submenu` </td><td> Get the submenu of the item at position nIndex<br />  - `nIndex <Integer>` Position of the item to get<br/></td></tr>
+<tr><td> `hide()` </td><td> `void` </td><td> Hides every opened item of the menu<br /> </td></tr>
+<tr><td> `removeItem(nIndex)` </td><td> `void` </td><td> Removes the item at position nIndex<br />  - `nIndex <nIndex>` Optional. Position of the item<br/></td></tr>
+<tr><td> `render()` </td><td> `void` </td><td> Renders the menu bar root<br /> </td></tr>
 
+</table>
 === Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

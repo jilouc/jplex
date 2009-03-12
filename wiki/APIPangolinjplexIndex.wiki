@@ -1,6 +1,6 @@
 #summary Module API for module jPlex
 #labels Module-jPlex,Release-Pangolin,API-Module
-#sidebar APIPangolinIndex
+#sidebar APIPangolinjplexIndex
  * [APIPangolin jPlex Pangolin Release]
  * [APIPangolincommonIndex Common] 
  * [APIPangolincomponentsIndex Components] 

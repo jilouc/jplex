@@ -10,7 +10,10 @@ jPlex's XPrototype extended Object class
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `extendRecursive(destination, source)` || `void` || Object.extend recursive, the current implementation of extend does not apply Object.extend on object-attributes<br />  - `destination <object>`<br/> - `source <object>`<br/>||
 
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `extendRecursive(destination, source)` </td><td> `void` </td><td> Object.extend recursive, the current implementation of extend does not apply Object.extend on object-attributes<br />  - `destination <object>`<br/> - `source <object>`<br/></td></tr>
+
+</table>

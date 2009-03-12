@@ -1,6 +1,6 @@
 #summary Module API for module XPrototype
 #labels Module-XPrototype,Release-Pangolin,API-Module
-#sidebar APIPangolinIndex
+#sidebar APIPangolinxprototypeIndex
  * [APIPangolin jPlex Pangolin Release]
  * [APIPangolincommonIndex Common] 
  * [APIPangolincomponentsIndex Components] 

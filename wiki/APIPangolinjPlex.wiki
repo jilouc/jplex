@@ -10,19 +10,38 @@ It also provides packaging primitives and dependancies loading. This class is th
 include inside your page to use jPlex. It will load the packages you need after.
 
 
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-|| _src_ || Array || `- `Array containing the source code of some (or all) javascript file. Used when the sources are packaged in one file.<br />Of course, this array is indexed by the path from the source folder.||
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _src_ </td><td> Array </td><td> `` Array containing the source code of some (or all) javascript file. Used when the sources are packaged in one file.
+Of course, this array is indexed by the path from the source folder.</td></tr>
+
+</table>
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `extend(clazz, obj)` || `void` || Extends the class by giving static fields. Useful to create inner classes example: Calendar.Item<br />  - `clazz <object>` The full class name<br/> - `obj <object>` The new static field<br/>||
-|| `get(clazz)` || `Class` || Get a provided class by its full name, but does not include it.<br />  - `clazz <object>` The class you want<br/>||
-|| `include(path, dontdefine)` || `Class` || Packaging method. Includes the selected class by resolving its dependancies. When a class is included<br/>its variable is created. For instance, when you want to include 'jplex.components.Frame', then the class Window<br/>will be available in the var <em>jplex.components.Frame</em>. But by default and convention, the global var<br/><em>Window</em> is also defined/overwriten. If you do not want to override your global variable, just use the<br/>optional argument.<br/>In the package name, you can also want to import everything from a subpackage (a typical example will be to<br/>import XPrototype only). We have foreseen this trick by adding the possibility to use the * as a universal<br/>selector.<br />  - `path <String>` The class/package you want<br/> - `dontdefine <object>` Optional - True if you do not want to override the global variable<br/>||
-|| `init()` || `void` || This function initialize jPlex if need. If prototype is already loaded, then it won't to anything.<br /> ||
-|| `load(load, fileName)` || `void` || Loads a javascript file. If the source is embedded, then the source will be <em>eval()</em>, else it will<br/>be loaded via Ajax. That's why you need to run jPlex source tree on a local webserver (for security reasons it's<br/>not allowed to do a request on local disk or distant web service with a different domain).<br />  - `load <object>`<br/> - `fileName <String>` The path of the file from the source folder<br/>||
-|| `loadJS(fileName)` || `void` || Loads a javascript file by writing a <em>&lt;script&gt;</em> on the page.<br/>Currently used to include the dependancies.<br />  - `fileName <String>` The path of the file<br/>||
-|| `provide(clazz, arg1, arg2)` || `void` || Provide to the jPlex package system a new class. This method encapsulates Class.create from prototype.<br/>Any class in the jPlex source code must be declare like this.<br />  - `clazz <String>` The full class name<br/> - `arg1 <String|Object>` The mother class name or directly the object that defines the class<br/> - `arg2 <Object>` The object that defines the class<br/>||
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `extend(clazz, obj)` </td><td> `void` </td><td> Extends the class by giving static fields. Useful to create inner classes example: Calendar.Item<br />  - `clazz <object>` The full class name<br/> - `obj <object>` The new static field<br/></td></tr>
+<tr><td> `get(clazz)` </td><td> `Class` </td><td> Get a provided class by its full name, but does not include it.<br />  - `clazz <object>` The class you want<br/></td></tr>
+<tr><td> `include(path, dontdefine)` </td><td> `Class` </td><td> Packaging method. Includes the selected class by resolving its dependancies. When a class is included
+its variable is created. For instance, when you want to include 'jplex.components.Frame', then the class Window
+will be available in the var <em>jplex.components.Frame</em>. But by default and convention, the global var
+<em>Window</em> is also defined/overwriten. If you do not want to override your global variable, just use the
+optional argument.
+In the package name, you can also want to import everything from a subpackage (a typical example will be to
+import XPrototype only). We have foreseen this trick by adding the possibility to use the * as a universal
+selector.<br />  - `path <String>` The class/package you want<br/> - `dontdefine <object>` Optional - True if you do not want to override the global variable<br/></td></tr>
+<tr><td> `init()` </td><td> `void` </td><td> This function initialize jPlex if need. If prototype is already loaded, then it won't to anything.<br /> </td></tr>
+<tr><td> `load(load, fileName)` </td><td> `void` </td><td> Loads a javascript file. If the source is embedded, then the source will be <em>eval()</em>, else it will
+be loaded via Ajax. That's why you need to run jPlex source tree on a local webserver (for security reasons it's
+not allowed to do a request on local disk or distant web service with a different domain).<br />  - `load <object>`<br/> - `fileName <String>` The path of the file from the source folder<br/></td></tr>
+<tr><td> `loadJS(fileName)` </td><td> `void` </td><td> Loads a javascript file by writing a <em>&lt;script&gt;</em> on the page.
+Currently used to include the dependancies.<br />  - `fileName <String>` The path of the file<br/></td></tr>
+<tr><td> `provide(clazz, arg1, arg2)` </td><td> `void` </td><td> Provide to the jPlex package system a new class. This method encapsulates Class.create from prototype.
+Any class in the jPlex source code must be declare like this.<br />  - `clazz <String>` The full class name<br/> - `arg1 <String|Object>` The mother class name or directly the object that defines the class<br/> - `arg2 <Object>` The object that defines the class<br/></td></tr>
 
+</table>

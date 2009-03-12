@@ -10,9 +10,12 @@ Logger class. Is binded with firebug.
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `error(e)` || `void` || Logs an error inside firebug<br />  - `e <String>` The message<br/>||
-|| `log(e)` || `void` || Logs a message inside firebug<br />  - `e <String>` The message<br/>||
-|| `warning(e)` || `void` || Logs a warning inside firebug<br />  - `e <String>` The message<br/>||
 
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `error(e)` </td><td> `void` </td><td> Logs an error inside firebug<br />  - `e <String>` The message<br/></td></tr>
+<tr><td> `log(e)` </td><td> `void` </td><td> Logs a message inside firebug<br />  - `e <String>` The message<br/></td></tr>
+<tr><td> `warning(e)` </td><td> `void` </td><td> Logs a warning inside firebug<br />  - `e <String>` The message<br/></td></tr>
+
+</table>

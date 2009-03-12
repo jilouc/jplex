@@ -8,18 +8,26 @@
 jPlex's XPrototype extended DOM Element
 
 
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-|| _getOffsetParent_ || object || `- `Bug-fixed getOffsetParent (see Prototype Issue #365)||
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _getOffsetParent_ </td><td> object </td><td> `` Bug-fixed getOffsetParent (see Prototype Issue #365)</td></tr>
+
+</table>
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `appendChildren(Elements)` || `Element` || Appends all elements listed as arguments to the DOM element<br />  - `Elements <List<Element>>` to add<br/>||
-|| `bindKey(key, handler, config)` || `Element` || Bind a key event on an element<br />  - `key <int>` Key-Code (see Event)<br/> - `handler <Function>`<br/> - `config <Object>` This object is a boolean property hash object containing: `ctrl`, `shift`, `alt` and `preventDefault` (enough explicit)<br/>||
-|| `IEFixCombobox()` || `void` || Inserts a hidden iframe behind the element to correct the Combobox bug (an absolute `div` goes under a comboxbox) <br/>that happens only in Internet Explorer 6. The Calendar component exploits this function to fix the bug for instance.<br /> ||
-|| `isWithin(x, y)` || `Boolean` || Determines wheter the point of coordinates (x,y) on the page is within the element or not<br />  - `x <Integer>` Horizontal coordinate<br/> - `y <Integer>` Vertical coordinate<br/>||
-|| `removeChildren()` || `Element` || Removes all children of the element<br /> ||
-|| `unbindKey(key, modifiers)` || `Element` || Unbind a key on the element<br />  - `key <int>` Key-Code (see Event)<br/> - `modifiers <Object>` Same form as `config` in `bindKey`<br/>||
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `appendChildren(Elements)` </td><td> `Element` </td><td> Appends all elements listed as arguments to the DOM element<br />  - `Elements <List<Element>>` to add<br/></td></tr>
+<tr><td> `bindKey(key, handler, config)` </td><td> `Element` </td><td> Bind a key event on an element<br />  - `key <int>` Key-Code (see Event)<br/> - `handler <Function>`<br/> - `config <Object>` This object is a boolean property hash object containing: `ctrl`, `shift`, `alt` and `preventDefault` (enough explicit)<br/></td></tr>
+<tr><td> `IEFixCombobox()` </td><td> `void` </td><td> Inserts a hidden iframe behind the element to correct the Combobox bug (an absolute `div` goes under a comboxbox) 
+that happens only in Internet Explorer 6. The Calendar component exploits this function to fix the bug for instance.<br /> </td></tr>
+<tr><td> `isWithin(x, y)` </td><td> `Boolean` </td><td> Determines wheter the point of coordinates (x,y) on the page is within the element or not<br />  - `x <Integer>` Horizontal coordinate<br/> - `y <Integer>` Vertical coordinate<br/></td></tr>
+<tr><td> `removeChildren()` </td><td> `Element` </td><td> Removes all children of the element<br /> </td></tr>
+<tr><td> `unbindKey(key, modifiers)` </td><td> `Element` </td><td> Unbind a key on the element<br />  - `key <int>` Key-Code (see Event)<br/> - `modifiers <Object>` Same form as `config` in `bindKey`<br/></td></tr>
 
+</table>

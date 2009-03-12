@@ -17,28 +17,29 @@ are overridden to configure the Dialog frame:
 </ul>
 
 == Config Table ==
-|| *Name* || *Default Value* || *Description* ||
-|| _cancelButton_ || `true` ||  Shows the "cancel" button if set to `true`. ||
-|| _cancelButtonLabel_ || `""` ||  Custom label for the 'cancel' button ||
-|| _okButton_ || `true` ||  Shows the "ok" button if set to `true`. ||
-|| _okButtonLabel_ || `""` ||  Custom label for the 'OK' button ||
-|| _otherButtons_ || `[]` ||  Array of optional button, each item of the array is an object like the following<br /><code>{<br />     label: "Label of the button",<br />     click: function: { Function triggered on click }<br />}</code><br />Note that in the 'click' function, `this` will refer to the instance of Dialog. ||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Default Value* </td><td> *Description* </td></tr>
+<tr><td> _cancelButton_ </td><td> `true` </td><td>  Shows the "cancel" button if set to `true`. </td></tr>
+<tr><td> _cancelButtonLabel_ </td><td> `""` </td><td>  Custom label for the 'cancel' button </td></tr>
+<tr><td> _okButton_ </td><td> `true` </td><td>  Shows the "ok" button if set to `true`. </td></tr>
+<tr><td> _okButtonLabel_ </td><td> `""` </td><td>  Custom label for the 'OK' button </td></tr>
+<tr><td> _otherButtons_ </td><td> `[]` </td><td>  Array of optional button, each item of the array is an object like the following
+<code>{
+     label: "Label of the button",
+     click: function: { Function triggered on click }
+}</code>
+Note that in the 'click' function, `this` will refer to the instance of Dialog. </td></tr>
+</table>
 === Inherited Configs ===
  * [APIPangolincomponentsFrame jplex.components.Frame]:  `ajax`,  `ajaxParameters`,  `center`,  `close`,  `constrainToCenter`,  `constrainToViewport`,  `draggable`,  `footer`,  `header`,  `height`,  `maxHeight`,  `maxWidth`,  `minHeight`,  `minWidth`,  `modal`,  `overflow`,  `overlayColor`,  `overlayFade`,  `overlayOpacity`,  `title`,  `width`,  `zBase`, 
 
 == Event Table ==
-|| *Name* || *Description* || *Parameters* ||
-|| _onCancelButtonClickEvent_ ||  When the "CancelButton" is clicked ||  ||
-|| _onOkButtonClickEvent_ ||  When the "OK" button is clicked ||  ||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
+<tr><td> _onCancelButtonClickEvent_ </td><td>  When the "CancelButton" is clicked </td><td>  </td></tr>
+<tr><td> _onOkButtonClickEvent_ </td><td>  When the "OK" button is clicked </td><td>  </td></tr>
+</table>
 === Inherited Events ===
  * [APIPangolincomponentsFrame jplex.components.Frame]:  `afterRenderEvent`,  `beforeRenderEvent`,  `onAjaxRequestCompleteEvent`,  `onHideEvent`,  `onShowEvent`, 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-
-=== Inherited Methods ===
-
- * [APIPangolincomponentsFrame jplex.components.Frame]:  `hide`,  `makeCentered`,  `reload`,  `render`,  `setBody`,  `setFooter`,  `setHeader`,  `setLoading`,  `setTitle`,  `show`, 
-
- * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

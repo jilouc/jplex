@@ -15,20 +15,28 @@ There are two rendering methods for this component. Both have advantages and dra
                multiples components on one single container</li></ul>
 
 == Config Table ==
-|| *Name* || *Default Value* || *Description* ||
-|| _img_ || `false` ||  Indicates the url of the image to show (must be defined if style is not) ||
-|| _method_ || `"absolute"` ||  See before... ||
-|| _onClick_ || `false` ||  Binds the click event on the image. ||
-|| _padding_ || `4` ||  Number of pixels to escape from the border ||
-|| _position_ || `"top-right"` ||  Defines the position of the image. <br />The different positions can be set with bottom, top, center and left, right.<br />You can do combination with a caret '-', like 'bottom-left'. ||
-|| _style_ || `false` ||  Indicates the css style to use (must be defined if img is not) ||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Default Value* </td><td> *Description* </td></tr>
+<tr><td> _img_ </td><td> `false` </td><td>  Indicates the url of the image to show (must be defined if style is not) </td></tr>
+<tr><td> _method_ </td><td> `"absolute"` </td><td>  See before... </td></tr>
+<tr><td> _onClick_ </td><td> `false` </td><td>  Binds the click event on the image. </td></tr>
+<tr><td> _padding_ </td><td> `4` </td><td>  Number of pixels to escape from the border </td></tr>
+<tr><td> _position_ </td><td> `"top-right"` </td><td>  Defines the position of the image. 
+The different positions can be set with bottom, top, center and left, right.
+You can do combination with a caret '-', like 'bottom-left'. </td></tr>
+<tr><td> _style_ </td><td> `false` </td><td>  Indicates the css style to use (must be defined if img is not) </td></tr>
+</table>
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `setPosition()` || `void` || Sets the right absolute position of the image. <br/>Needs to be called if the top/left/width/height css property is changed<br /> ||
 
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `setPosition()` </td><td> `void` </td><td> Sets the right absolute position of the image. 
+Needs to be called if the top/left/width/height css property is changed<br /> </td></tr>
+
+</table>
 === Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

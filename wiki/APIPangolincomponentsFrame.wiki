@@ -31,59 +31,97 @@ see jplex.components.frame.Dialog</li>
 </p>
 
 == Config Table ==
-|| *Name* || *Default Value* || *Description* ||
-|| _ajax_ || `null` ||  URL of the file to get the content from. If `null`, no content is loaded<br />and you'll have to use the `setBody` method to add some content to your window. ||
-|| _ajaxParameters_ || `{}` ||  HashSet of parameters for the ajax call. E.g. `{ foo: "bar" }` ||
-|| _center_ || `true` ||  Center the window on the screen.<br />Note: it won't stay centered on resize/scroll/content change<br />unless you set `constrainToCenter` to `true`. ||
-|| _close_ || `Frame.CLOSE_BUTTON` ||  Way to close the window:<br /><ul><li>`jplex.components.Frame.CLOSE_BUTTON`:<br />will display a close button on the top-right corner</li><br /><li>`jplex.components.Frame.CLOSE_CLICK_OUT`:<br />the window will be closed when the user clicks outside the window<br />(be sure your users know it), it's designed especially for modal windows.</li><br /><li>`jplex.components.Frame.CLOSE_CUSTOM`:<br />it's your responsability to call the `show()` and `hide()` methods.</li><br /></ul> ||
-|| _constrainToCenter_ || `false` ||  If `true`, the window will stay centered no matter<br />if the viewport is resized, scrolled or if the content changes ||
-|| _constrainToViewport_ || `true` ||  Make sure the window stay inside the viewport bounds (even when dragged) ||
-|| _draggable_ || `false` ||  Indicates whether the window could be dragged in the viewport.<br />Note: if the window has a header (title bar) only this header can be grabbed<br />for drag'n'drop, if it has no header, the entire window can be grabbed.<br />(Use of Script.aculo.us Draggable class) ||
-|| _footer_ || `false` ||  Show a footer (like a status-bar) at the bottom of the window<br />(for Dialog windows, the footer will contain the buttons) ||
-|| _header_ || `true` ||  Show the title bar or not (so you can use `setTitle` and have a close button on top-right corner) ||
-|| _height_ || `null` ||  The initial height of the window (in pixels) ||
-|| _maxHeight_ || `null` ||  Maximum height of the window (constrained) ||
-|| _maxWidth_ || `null` ||  Maximum width of the window (constrained) ||
-|| _minHeight_ || `null` ||  Minimum Height of the window (constrained) ||
-|| _minWidth_ || `null` ||  Minimum width of the window (constrained) ||
-|| _modal_ || `false` ||  Flag indicating you want to add a modal behavior to the window<br />(overlay behind) ||
-|| _overflow_ || `"auto"` ||  CSS "overflow" Property for the body of the window<br />(i.e. the window without header and footer).<br />Use in combination with maxWidth/maxHeight.<br />(`auto` adds scrollbar(s) if needed, `hidden` hides extra content,<br />`scroll` adds scrollbars, `scroll-x` and `scroll-y` add the corresponding scroll bar) ||
-|| _overlayColor_ || `#000000 (black)` ||  Background color of the overlay ||
-|| _overlayFade_ || `false` ||  If set to `true` the overlay will (dis)appear with a fade in/out effect ||
-|| _overlayOpacity_ || `0.6` ||  Opacity of the overlay (from 0 to 1, 1 is opaque and 0 fully transparent) ||
-|| _title_ || `""` ||  Title of the window (pertinent only if there _is_ a header). ||
-|| _width_ || `null` ||  The initial width of the window (in pixels) ||
-|| _zBase_ || `9998` ||  The z-index base for this window. You can adjust it to match your design.<br />(the overlay (if any) will have this z-index and the window the same + 1) ||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Default Value* </td><td> *Description* </td></tr>
+<tr><td> _ajax_ </td><td> `null` </td><td>  URL of the file to get the content from. If `null`, no content is loaded
+and you'll have to use the `setBody` method to add some content to your window. </td></tr>
+<tr><td> _ajaxParameters_ </td><td> `{}` </td><td>  HashSet of parameters for the ajax call. E.g. `{ foo: "bar" }` </td></tr>
+<tr><td> _center_ </td><td> `true` </td><td>  Center the window on the screen.
+Note: it won't stay centered on resize/scroll/content change
+unless you set `constrainToCenter` to `true`. </td></tr>
+<tr><td> _close_ </td><td> `Frame.CLOSE_BUTTON` </td><td>  Way to close the window:
+<ul><li>`jplex.components.Frame.CLOSE_BUTTON`:
+will display a close button on the top-right corner</li>
+<li>`jplex.components.Frame.CLOSE_CLICK_OUT`:
+the window will be closed when the user clicks outside the window
+(be sure your users know it), it's designed especially for modal windows.</li>
+<li>`jplex.components.Frame.CLOSE_CUSTOM`:
+it's your responsability to call the `show()` and `hide()` methods.</li>
+</ul> </td></tr>
+<tr><td> _constrainToCenter_ </td><td> `false` </td><td>  If `true`, the window will stay centered no matter
+if the viewport is resized, scrolled or if the content changes </td></tr>
+<tr><td> _constrainToViewport_ </td><td> `true` </td><td>  Make sure the window stay inside the viewport bounds (even when dragged) </td></tr>
+<tr><td> _draggable_ </td><td> `false` </td><td>  Indicates whether the window could be dragged in the viewport.
+Note: if the window has a header (title bar) only this header can be grabbed
+for drag'n'drop, if it has no header, the entire window can be grabbed.
+(Use of Script.aculo.us Draggable class) </td></tr>
+<tr><td> _footer_ </td><td> `false` </td><td>  Show a footer (like a status-bar) at the bottom of the window
+(for Dialog windows, the footer will contain the buttons) </td></tr>
+<tr><td> _header_ </td><td> `true` </td><td>  Show the title bar or not (so you can use `setTitle` and have a close button on top-right corner) </td></tr>
+<tr><td> _height_ </td><td> `null` </td><td>  The initial height of the window (in pixels) </td></tr>
+<tr><td> _maxHeight_ </td><td> `null` </td><td>  Maximum height of the window (constrained) </td></tr>
+<tr><td> _maxWidth_ </td><td> `null` </td><td>  Maximum width of the window (constrained) </td></tr>
+<tr><td> _minHeight_ </td><td> `null` </td><td>  Minimum Height of the window (constrained) </td></tr>
+<tr><td> _minWidth_ </td><td> `null` </td><td>  Minimum width of the window (constrained) </td></tr>
+<tr><td> _modal_ </td><td> `false` </td><td>  Flag indicating you want to add a modal behavior to the window
+(overlay behind) </td></tr>
+<tr><td> _overflow_ </td><td> `"auto"` </td><td>  CSS "overflow" Property for the body of the window
+(i.e. the window without header and footer).
+Use in combination with maxWidth/maxHeight.
+(`auto` adds scrollbar(s) if needed, `hidden` hides extra content,
+`scroll` adds scrollbars, `scroll-x` and `scroll-y` add the corresponding scroll bar) </td></tr>
+<tr><td> _overlayColor_ </td><td> `#000000 (black)` </td><td>  Background color of the overlay </td></tr>
+<tr><td> _overlayFade_ </td><td> `false` </td><td>  If set to `true` the overlay will (dis)appear with a fade in/out effect </td></tr>
+<tr><td> _overlayOpacity_ </td><td> `0.6` </td><td>  Opacity of the overlay (from 0 to 1, 1 is opaque and 0 fully transparent) </td></tr>
+<tr><td> _title_ </td><td> `""` </td><td>  Title of the window (pertinent only if there _is_ a header). </td></tr>
+<tr><td> _width_ </td><td> `null` </td><td>  The initial width of the window (in pixels) </td></tr>
+<tr><td> _zBase_ </td><td> `9998` </td><td>  The z-index base for this window. You can adjust it to match your design.
+(the overlay (if any) will have this z-index and the window the same + 1) </td></tr>
+</table>
 
 == Event Table ==
-|| *Name* || *Description* || *Parameters* ||
-|| _afterRenderEvent_ ||  After the rendering step (the window is built) ||  ||
-|| _beforeRenderEvent_ ||  Before the window is rendered (before any element is added) ||  ||
-|| _onAjaxRequestCompleteEvent_ ||  When the Ajax Request to retrieve the content of the window is completed ||   - `result <Object>`  the Ajax Request's result (get the text result with `result.responseText` for instance) <br/>  ||
-|| _onHideEvent_ ||  When the window disappears ||  ||
-|| _onShowEvent_ ||  When the window appears ||  ||
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-|| _CLOSE_BUTTON_ || String || `- static `Configuration constant: use a button to close the frame||
-|| _CLOSE_CLICK_OUT_ || String || `- static `Configuration constant: the frame is closed when the user clicks outside||
-|| _CLOSE_CUSTOM_ || String || `- static `Configuration constant: you decide when the frame is shown/hidden||
-|| _list_ || Array || `- static `Array of references to all window components used (useful to set z-indices)||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
+<tr><td> _afterRenderEvent_ </td><td>  After the rendering step (the window is built) </td><td>  </td></tr>
+<tr><td> _beforeRenderEvent_ </td><td>  Before the window is rendered (before any element is added) </td><td>  </td></tr>
+<tr><td> _onAjaxRequestCompleteEvent_ </td><td>  When the Ajax Request to retrieve the content of the window is completed </td><td>   - `result <Object>`  the Ajax Request's result (get the text result with `result.responseText` for instance) <br/>  </td></tr>
+<tr><td> _onHideEvent_ </td><td>  When the window disappears </td><td>  </td></tr>
+<tr><td> _onShowEvent_ </td><td>  When the window appears </td><td>  </td></tr>
+</table>
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _CLOSE_BUTTON_ </td><td> String </td><td> `static ` Configuration constant: use a button to close the frame</td></tr>
+<tr><td> _CLOSE_CLICK_OUT_ </td><td> String </td><td> `static ` Configuration constant: the frame is closed when the user clicks outside</td></tr>
+<tr><td> _CLOSE_CUSTOM_ </td><td> String </td><td> `static ` Configuration constant: you decide when the frame is shown/hidden</td></tr>
+<tr><td> _list_ </td><td> Array </td><td> `static ` Array of references to all window components used (useful to set z-indices)</td></tr>
+
+</table>
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `hide()` || `void` || Hide the frame<br /> ||
-|| `makeCentered()` || `void` || Place the frame at the center of the viewport<br /> ||
-|| `reload()` || `void` || Load or reload the content of the body from the result of the ajax request<br/>(the URL of the content is given by the `ajax` configuration parameter)<br /> ||
-|| `render()` || `void` || Renders the component. Add elements depending on the configuration, apply CSS classes...<br /> ||
-|| `setBody(body)` || `Element` || If the body already exists, update its content, else<br/>create the body element and add the content.<br />  - `body <String>` Content of the body<br/>||
-|| `setFooter(footer)` || `Element` || If the footer already exists, update the footer with the given content,<br/>else create it and update the content.<br />  - `footer <String>`<br/>||
-|| `setHeader(header)` || `Element` || If the header already exists, replace the title with the given string.<br/>If not, create the title bar and set the given string as title.<br />  - `header <String>` the title of the window<br/>||
-|| `setLoading(start)` || `void` || Show the "activity indicator" while the content of the frame is dynamically loaded<br/>or hide it when it's done.<br />  - `start <bool>` `true` to start loading mode, `false` to stop it<br/>||
-|| `setTitle(title)` || `Element` || Alias for setHeader<br />  - `title <String>`<br/>||
-|| `show()` || `void` || Show the frame<br /> ||
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `hide()` </td><td> `void` </td><td> Hide the frame<br /> </td></tr>
+<tr><td> `makeCentered()` </td><td> `void` </td><td> Place the frame at the center of the viewport<br /> </td></tr>
+<tr><td> `reload()` </td><td> `void` </td><td> Load or reload the content of the body from the result of the ajax request
+(the URL of the content is given by the `ajax` configuration parameter)<br /> </td></tr>
+<tr><td> `render()` </td><td> `void` </td><td> Renders the component. Add elements depending on the configuration, apply CSS classes...<br /> </td></tr>
+<tr><td> `setBody(body)` </td><td> `Element` </td><td> If the body already exists, update its content, else
+create the body element and add the content.<br />  - `body <String>` Content of the body<br/></td></tr>
+<tr><td> `setFooter(footer)` </td><td> `Element` </td><td> If the footer already exists, update the footer with the given content,
+else create it and update the content.<br />  - `footer <String>`<br/></td></tr>
+<tr><td> `setHeader(header)` </td><td> `Element` </td><td> If the header already exists, replace the title with the given string.
+If not, create the title bar and set the given string as title.<br />  - `header <String>` the title of the window<br/></td></tr>
+<tr><td> `setLoading(start)` </td><td> `void` </td><td> Show the "activity indicator" while the content of the frame is dynamically loaded
+or hide it when it's done.<br />  - `start <bool>` `true` to start loading mode, `false` to stop it<br/></td></tr>
+<tr><td> `setTitle(title)` </td><td> `Element` </td><td> Alias for setHeader<br />  - `title <String>`<br/></td></tr>
+<tr><td> `show()` </td><td> `void` </td><td> Show the frame<br /> </td></tr>
 
+</table>
 === Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

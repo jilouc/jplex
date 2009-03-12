@@ -10,26 +10,33 @@ Place a semi-transparent layer which covers its parent on the page.
 It's mainly used by the Frame components.
 
 == Config Table ==
-|| *Name* || *Default Value* || *Description* ||
-|| _color_ || `"#000000" (black)` ||  Color of the overlay ||
-|| _fade_ || `false` ||  If `true` the overlay will be shown/hidden using fade in/out ||
-|| _opacity_ || `0.75` ||  Opacity of the overlay ||
-|| _z_ || `1` ||  z-index for the overlay ||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Default Value* </td><td> *Description* </td></tr>
+<tr><td> _color_ </td><td> `"#000000" (black)` </td><td>  Color of the overlay </td></tr>
+<tr><td> _fade_ </td><td> `false` </td><td>  If `true` the overlay will be shown/hidden using fade in/out </td></tr>
+<tr><td> _opacity_ </td><td> `0.75` </td><td>  Opacity of the overlay </td></tr>
+<tr><td> _z_ </td><td> `1` </td><td>  z-index for the overlay </td></tr>
+</table>
 
 == Event Table ==
-|| *Name* || *Description* || *Parameters* ||
-|| _afterRenderElement_ ||  Fired after the rendering of the overlay ||  ||
-|| _beforeRenderEvent_ ||  Fired before the rendering of the overlay ||  ||
-|| _onHideEvent_ ||  Fired after the overlay is hidden ||  ||
-|| _onShowEvent_ ||  Fired after the overlay is shown ||  ||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
+<tr><td> _afterRenderElement_ </td><td>  Fired after the rendering of the overlay </td><td>  </td></tr>
+<tr><td> _beforeRenderEvent_ </td><td>  Fired before the rendering of the overlay </td><td>  </td></tr>
+<tr><td> _onHideEvent_ </td><td>  Fired after the overlay is hidden </td><td>  </td></tr>
+<tr><td> _onShowEvent_ </td><td>  Fired after the overlay is shown </td><td>  </td></tr>
+</table>
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `hide()` || `void` || Hide the overlay<br /> ||
-|| `render()` || `void` || Renders the overlay<br /> ||
-|| `show()` || `void` || Show the overlay<br /> ||
 
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `hide()` </td><td> `void` </td><td> Hide the overlay<br /> </td></tr>
+<tr><td> `render()` </td><td> `void` </td><td> Renders the overlay<br /> </td></tr>
+<tr><td> `show()` </td><td> `void` </td><td> Show the overlay<br /> </td></tr>
+
+</table>
 === Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

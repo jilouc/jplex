@@ -9,15 +9,25 @@ Global class that manipulates the global language and local settings. We define 
 some parts of the locales. The defined components are for now: 'Date' (and that's all)
 
 
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-|| _lang_ || String || `- `The global lang parameter, every default value for lang will be used considering this property. <br /><br/><b>This value has to be changed if you consider writing an application in a different language than the default value</b><br/>Default Value: 'fr'||
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _lang_ </td><td> String </td><td> `` The global lang parameter, every default value for lang will be used considering this property. 
+<br/><b>This value has to be changed if you consider writing an application in a different language than the default value</b><br/>Default Value: 'fr'</td></tr>
+
+</table>
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `current(component, field)` || `String|Array` || Useful default usage of the locale string, corresponds to: <br/><pre>Locale.get(component).get(field)</pre><br/>with undefined error treatment of course<br />  - `component <String>` The locale component<br/> - `field <String>` The wanted field<br/>||
-|| `get(component, lang)` || `Hash` || Get the complete HashSet corresponding to the following component and lang<br />  - `component <String>` The component<br/> - `lang <String>` The lang, Locale.lang if not defined<br/>||
-|| `init(component, hashSet)` || `void` || Initialize a component into the Locale storage<br />  - `component <String>` The component<br/> - `hashSet <String>` Its definition, first indexed by the ISO code of the language, then by the fields<br/>||
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `current(component, field)` </td><td> `String|Array` </td><td> Useful default usage of the locale string, corresponds to: 
+<pre>Locale.get(component).get(field)</pre>
+with undefined error treatment of course<br />  - `component <String>` The locale component<br/> - `field <String>` The wanted field<br/></td></tr>
+<tr><td> `get(component, lang)` </td><td> `Hash` </td><td> Get the complete HashSet corresponding to the following component and lang<br />  - `component <String>` The component<br/> - `lang <String>` The lang, Locale.lang if not defined<br/></td></tr>
+<tr><td> `init(component, hashSet)` </td><td> `void` </td><td> Initialize a component into the Locale storage<br />  - `component <String>` The component<br/> - `hashSet <String>` Its definition, first indexed by the ISO code of the language, then by the fields<br/></td></tr>
 
+</table>

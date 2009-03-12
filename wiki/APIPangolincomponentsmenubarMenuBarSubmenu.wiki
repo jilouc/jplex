@@ -9,25 +9,36 @@ MenuBar Submenu
 
 
 == Event Table ==
-|| *Name* || *Description* || *Parameters* ||
-|| _onItemAddEvent_ ||  Event that fires when an item is added to the menu ||   - `item <MenuBar.MenuBarItem>`  the added item <br/>  ||
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-|| _nLevel_ || Integer || `- private `Depth of the submenu<br />(0 for the immediate children of root elements)||
-|| _oItems_ || Array<MenuBar.MenuBarItem> || `- `Array of submenu items||
-|| _oParent_ || MenuBar.MenuBarItem || `- private `Reference to the submenu's parent item||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
+<tr><td> _onItemAddEvent_ </td><td>  Event that fires when an item is added to the menu </td><td>   - `item <MenuBar.MenuBarItem>`  the added item <br/>  </td></tr>
+</table>
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _nLevel_ </td><td> Integer </td><td> `private ` Depth of the submenu
+(0 for the immediate children of root elements)</td></tr>
+<tr><td> _oItems_ </td><td> Array<MenuBar.MenuBarItem> </td><td> `` Array of submenu items</td></tr>
+<tr><td> _oParent_ </td><td> MenuBar.MenuBarItem </td><td> `private ` Reference to the submenu's parent item</td></tr>
+
+</table>
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `addItem(oItem, nBefore)` || `MenuBar.Submenu` || Adds the item oItem to the submenu.<br/>If specified, adds it before the nBefore'th item<br />  - `oItem <Object>` Item to add (please refer to MenuBar's description above for item properties)<br/> - `nBefore <Integer>` Optional. Position of the item (by default the item is pushed at the end)<br/>||
-|| `get()` || `Element` || Get the <code>&lt;ul&gt;</code> element for the submenu<br /> ||
-|| `getItem(nIndex)` || `MenuBar.Submenu|boolean` || Get the submenu of the item at position nIndex<br />  - `nIndex <Integer>` Position of the item to get<br/>||
-|| `getParentItem()` || `MenuBar.Item` || Get the parent item of the submenu<br /> ||
-|| `hide()` || `void` || Hides the submenu<br /> ||
-|| `isEmpty()` || `boolean` || Checks whether the submenu is empty or not<br /> ||
-|| `removeItem(nIndex)` || `MenuBar.Submenu|boolean` || Removes the nIndex-th item of the submenu<br />  - `nIndex <Integer>` position of the item to remove<br/>||
-|| `render()` || `void` || Renders the submenu, with shade<br /> ||
-|| `show()` || `void` || Makes the submenu visible<br /> ||
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `addItem(oItem, nBefore)` </td><td> `MenuBar.Submenu` </td><td> Adds the item oItem to the submenu.
+If specified, adds it before the nBefore'th item<br />  - `oItem <Object>` Item to add (please refer to MenuBar's description above for item properties)<br/> - `nBefore <Integer>` Optional. Position of the item (by default the item is pushed at the end)<br/></td></tr>
+<tr><td> `get()` </td><td> `Element` </td><td> Get the <code>&lt;ul&gt;</code> element for the submenu<br /> </td></tr>
+<tr><td> `getItem(nIndex)` </td><td> `MenuBar.Submenu|boolean` </td><td> Get the submenu of the item at position nIndex<br />  - `nIndex <Integer>` Position of the item to get<br/></td></tr>
+<tr><td> `getParentItem()` </td><td> `MenuBar.Item` </td><td> Get the parent item of the submenu<br /> </td></tr>
+<tr><td> `hide()` </td><td> `void` </td><td> Hides the submenu<br /> </td></tr>
+<tr><td> `isEmpty()` </td><td> `boolean` </td><td> Checks whether the submenu is empty or not<br /> </td></tr>
+<tr><td> `removeItem(nIndex)` </td><td> `MenuBar.Submenu|boolean` </td><td> Removes the nIndex-th item of the submenu<br />  - `nIndex <Integer>` position of the item to remove<br/></td></tr>
+<tr><td> `render()` </td><td> `void` </td><td> Renders the submenu, with shade<br /> </td></tr>
+<tr><td> `show()` </td><td> `void` </td><td> Makes the submenu visible<br /> </td></tr>
 
+</table>

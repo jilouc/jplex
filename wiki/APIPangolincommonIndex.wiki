@@ -1,6 +1,6 @@
 #summary Module API for module Common
 #labels Module-Common,Release-Pangolin,API-Module
-#sidebar APIPangolinIndex
+#sidebar APIPangolincommonIndex
  * [APIPangolin jPlex Pangolin Release]
  * [APIPangolincommonIndex Common] 
    * [APIPangolincommonComponent Component]

@@ -9,24 +9,34 @@ MenuBar Item
 
 
 == Event Table ==
-|| *Name* || *Description* || *Parameters* ||
-|| __onClick_ ||  Fires on item activation by click
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
+<tr><td> __onClick_ </td><td>  Fires on item activation by click
 Call the user custom function
-If the item is a root element, just shows the submenu ||   - `e <Event>`  <br/>  ||
-|| __onMouseOver_ ||  Fires when the mouse enters the item
-The handlers are identical to those of the menu root ||   - `e <Event>`  <br/>  ||
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-|| _nLevel_ || Integer || `- private `Depth of the item<br />(equal to the depth of the submenu containing the item)||
-|| _oParent_ || MenuBar.MenuBarSubmenu|MenuBar || `- private `Reference to the item's parent submenu (or the menu root)||
-|| _sLabel_ || String || `- private `Label of the menu item||
+If the item is a root element, just shows the submenu </td><td>   - `e <Event>`  <br/>  </td></tr>
+<tr><td> __onMouseOver_ </td><td>  Fires when the mouse enters the item
+The handlers are identical to those of the menu root </td><td>   - `e <Event>`  <br/>  </td></tr>
+</table>
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _nLevel_ </td><td> Integer </td><td> `private ` Depth of the item
+(equal to the depth of the submenu containing the item)</td></tr>
+<tr><td> _oParent_ </td><td> MenuBar.MenuBarSubmenu|MenuBar </td><td> `private ` Reference to the item's parent submenu (or the menu root)</td></tr>
+<tr><td> _sLabel_ </td><td> String </td><td> `private ` Label of the menu item</td></tr>
+
+</table>
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `get()` || `Element` || Get the <code>&lt;li&gt;</code> HTMLElement of the item, extended by Prototype's Element.extend<br /> ||
-|| `getSubmenu()` || `MenuBar.Submenu` || Get the submenu of the item (not its containing submenu)<br /> ||
-|| `initialize()` || `void` || Custom function called when the menu item is activated (on click or keyboard shortcut)<br /> ||
-|| `render(oItems, oShortcut)` || `void` || Renders the menu item (and creates all submenus)<br />  - `oItems <Array>` The sub-items of the item, defining its submenu<br/> - `oShortcut <Object>` Keyboard Shortcut information<br/>||
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `get()` </td><td> `Element` </td><td> Get the <code>&lt;li&gt;</code> HTMLElement of the item, extended by Prototype's Element.extend<br /> </td></tr>
+<tr><td> `getSubmenu()` </td><td> `MenuBar.Submenu` </td><td> Get the submenu of the item (not its containing submenu)<br /> </td></tr>
+<tr><td> `initialize()` </td><td> `void` </td><td> Custom function called when the menu item is activated (on click or keyboard shortcut)<br /> </td></tr>
+<tr><td> `render(oItems, oShortcut)` </td><td> `void` </td><td> Renders the menu item (and creates all submenus)<br />  - `oItems <Array>` The sub-items of the item, defining its submenu<br/> - `oShortcut <Object>` Keyboard Shortcut information<br/></td></tr>
 
+</table>

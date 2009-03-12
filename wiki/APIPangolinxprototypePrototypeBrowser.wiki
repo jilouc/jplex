@@ -8,9 +8,12 @@
 
 
 
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-|| _IE6_ || Boolean || `- `True if the web browser is IE6||
 
 
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _IE6_ </td><td> Boolean </td><td> `` True if the web browser is IE6</td></tr>
+
+</table>
 

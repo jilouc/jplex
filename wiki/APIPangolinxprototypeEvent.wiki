@@ -8,13 +8,28 @@
 jPlex's XPrototype extended Event
 
 
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-|| _Key_ || object || `- static `Map of all key codes, including special characters||
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _Key_ </td><td> object </td><td> `static ` Map of all key codes, including special characters</td></tr>
+
+</table>
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `onElementReady(element, handler)` || `void` || Execute the given handler as soon as the element is detected<br/>in the DOM. It uses Prototype's PeriodicalExecuter to check<br/>the presence every Event._ready_POLL_INTERVAL milliseconds.<br/>If not found after Event._ready_POLL_LIMIT tries, we simply<br/>give up.<br/>By default this limit is set to 800 tries, with a 5 ms delay<br/>between them (40s max.)<br/>Note that 'this' refers to the Element (i.e. $(element))<br/>itself in the callback function.<br />  - `element <String>` ID of the element we are waiting for<br/> - `handler <Function>` Associated callback.<br/>||
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `onElementReady(element, handler)` </td><td> `void` </td><td> Execute the given handler as soon as the element is detected
+in the DOM. It uses Prototype's PeriodicalExecuter to check
+the presence every Event._ready_POLL_INTERVAL milliseconds.
+If not found after Event._ready_POLL_LIMIT tries, we simply
+give up.
+By default this limit is set to 800 tries, with a 5 ms delay
+between them (40s max.)
+Note that 'this' refers to the Element (i.e. $(element))
+itself in the callback function.<br />  - `element <String>` ID of the element we are waiting for<br/> - `handler <Function>` Associated callback.<br/></td></tr>
 
+</table>

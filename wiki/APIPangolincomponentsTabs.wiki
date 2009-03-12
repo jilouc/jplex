@@ -18,33 +18,47 @@ The content has the following form:
 }}}
 
 == Config Table ==
-|| *Name* || *Default Value* || *Description* ||
-|| _activeTab_ || `0` ||  Default active tab index (first = 0) ||
-|| _ajaxDiv_ || `false` ||  <em>Require 'ajax' method. </em><strong>Mandatory.</strong>  Container to display the content ||
-|| _ajaxMethod_ || `"get"` ||  <em>Require 'ajax' method.</em> HTTP method to use for Ajax Requests ||
-|| _ajaxReload_ || `false` ||  <em>Require 'ajax' method.</em> If false, the content of each tabs is cached and will not be<br />requested again. Else for each tab switch, you will do a request ||
-|| _data_ || `null` ||  <strong>Mandatory.</strong> Describes the tab structure. It is a array of objects that have only two <br />fields, `title`: which is the title to put in the tab bar and `content` which is a div <br />id if the method is the div one, or a url if it's the other. ||
-|| _method_ || `"div"` ||  'div' indicates the classical method, 'ajax' indicates the other (see bellow) ||
-|| _style_ || `"jplex-tabs"` ||  Default style to apply to the `ul` markup ||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Default Value* </td><td> *Description* </td></tr>
+<tr><td> _activeTab_ </td><td> `0` </td><td>  Default active tab index (first = 0) </td></tr>
+<tr><td> _ajaxDiv_ </td><td> `false` </td><td>  <em>Require 'ajax' method. </em><strong>Mandatory.</strong>  Container to display the content </td></tr>
+<tr><td> _ajaxMethod_ </td><td> `"get"` </td><td>  <em>Require 'ajax' method.</em> HTTP method to use for Ajax Requests </td></tr>
+<tr><td> _ajaxReload_ </td><td> `false` </td><td>  <em>Require 'ajax' method.</em> If false, the content of each tabs is cached and will not be
+requested again. Else for each tab switch, you will do a request </td></tr>
+<tr><td> _data_ </td><td> `null` </td><td>  <strong>Mandatory.</strong> Describes the tab structure. It is a array of objects that have only two 
+fields, `title`: which is the title to put in the tab bar and `content` which is a div 
+id if the method is the div one, or a url if it's the other. </td></tr>
+<tr><td> _method_ </td><td> `"div"` </td><td>  'div' indicates the classical method, 'ajax' indicates the other (see bellow) </td></tr>
+<tr><td> _style_ </td><td> `"jplex-tabs"` </td><td>  Default style to apply to the `ul` markup </td></tr>
+</table>
 
 == Event Table ==
-|| *Name* || *Description* || *Parameters* ||
-|| _onSwitchEvent_ ||   ||   - `oldContent <Array>`  The content field from <em>data</em> that corresponds to the tab the user just quitted <br/> - `newContent <Array>`  The content field from <em>data</em> that corresponds to the tab the user just selected <br/>  ||
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-|| _{Array} cache_ || object || `- private `The cache stores each tabs's innerHTML when ajaxReload is false||
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
+<tr><td> _onSwitchEvent_ </td><td>   </td><td>   - `oldContent <Array>`  The content field from <em>data</em> that corresponds to the tab the user just quitted <br/> - `newContent <Array>`  The content field from <em>data</em> that corresponds to the tab the user just selected <br/>  </td></tr>
+</table>
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _{Array} cache_ </td><td> object </td><td> `private ` The cache stores each tabs's innerHTML when ajaxReload is false</td></tr>
+
+</table>
 
 
 
-== Methods ==                                
-|| *Signature* || *Return Type* || *Description* ||
-|| `getActiveTab()` || `int` || Returns the current active tab<br /> ||
-|| `handleAjaxMethod(newUrl, oldUrl)` || `void` || Sub handler for Ajax Method. Depending of the config `ajaxReload` an AJAX request should be launched<br />  - `newUrl <String>` `URL` of the new content<br/> - `oldUrl <String>` `URL` of the old content<br/>||
-|| `handleDivMethod(newTab, oldTab)` || `void` || Sub handler for Div Method<br />  - `newTab <String>` `id` of the new tab<br/> - `oldTab <String>` `id` of the old tab<br/>||
-|| `handler(newTab, li)` || `void` || Switch handler<br />  - `newTab <object>` New definition object<br/> - `li <object>` `li` markup where it has been clicked<br/>||
-|| `initAjaxMethod(definition, activeTab)` || `void` || Initialize the Ajax Method: redirect to `handleAjaxMethod`<br />  - `definition <Array>` Same form as `data` from config<br/> - `activeTab <int>` The tab to show<br/>||
-|| `initDivMethod(definition, activeTab)` || `void` || Initialize the Div Method : hide the right divs, and show the `activeTab`th one<br />  - `definition <Array>` Same form as `data` from config<br/> - `activeTab <int>` The tab to show<br/>||
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `getActiveTab()` </td><td> `int` </td><td> Returns the current active tab<br /> </td></tr>
+<tr><td> `handleAjaxMethod(newUrl, oldUrl)` </td><td> `void` </td><td> Sub handler for Ajax Method. Depending of the config `ajaxReload` an AJAX request should be launched<br />  - `newUrl <String>` `URL` of the new content<br/> - `oldUrl <String>` `URL` of the old content<br/></td></tr>
+<tr><td> `handleDivMethod(newTab, oldTab)` </td><td> `void` </td><td> Sub handler for Div Method<br />  - `newTab <String>` `id` of the new tab<br/> - `oldTab <String>` `id` of the old tab<br/></td></tr>
+<tr><td> `handler(newTab, li)` </td><td> `void` </td><td> Switch handler<br />  - `newTab <object>` New definition object<br/> - `li <object>` `li` markup where it has been clicked<br/></td></tr>
+<tr><td> `initAjaxMethod(definition, activeTab)` </td><td> `void` </td><td> Initialize the Ajax Method: redirect to `handleAjaxMethod`<br />  - `definition <Array>` Same form as `data` from config<br/> - `activeTab <int>` The tab to show<br/></td></tr>
+<tr><td> `initDivMethod(definition, activeTab)` </td><td> `void` </td><td> Initialize the Div Method : hide the right divs, and show the `activeTab`th one<br />  - `definition <Array>` Same form as `data` from config<br/> - `activeTab <int>` The tab to show<br/></td></tr>
 
+</table>
 === Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 
