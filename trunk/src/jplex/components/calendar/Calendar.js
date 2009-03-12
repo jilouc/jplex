@@ -169,13 +169,13 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         this.component.setAttribute("id", this.sID + '-calendar');
         this.ID = this.component.getAttribute('id');
 
-        var oCurrentDate = this.cfg('date');
+        var date = this.cfg('date');
         this._selectedItem = this._focusedItem = {
             getDate: function() {
-                return oCurrentDate;
+                return date;
             }
         };
-        this._currentMonth = oCurrentDate;
+        this._currentMonth = date;
 
         this._source = $(this.cfg("source"));
         this._textField = $(this.cfg("textField"));
@@ -295,6 +295,8 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         this.items = $A([]);
         var tb = this._getTbody();
         tb.removeChildren();
+
+        alert(this._currentMonth.firstDayOfMonth);
 
         var oFirstDayOfMonth = this._currentMonth.firstDayOfMonth(),
                 oLastDayOfMonth = this._currentMonth.lastDayOfMonth();

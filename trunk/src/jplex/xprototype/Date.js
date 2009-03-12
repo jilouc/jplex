@@ -13,7 +13,7 @@ Object.extend(Date, {
      * @static
      * @type Integer
      */
-    YEAR_OFFSET: Prototype.Browser.IE || Prototype.Browser.Opera ? 0 : 1900,
+    YEAR_OFFSET: Prototype.Browser.IE || Prototype.Browser.Opera ? 0 : 1900
 });
 
 // Non-static Content
