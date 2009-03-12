@@ -32,29 +32,29 @@
     var lorem = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sollicitudin. Phasellus tempus hendrerit orci. Nulla facilisi. Nulla facilisis lorem sit amet odio. Nulla sit amet pede. Mauris turpis diam, fermentum eget, imperdiet eu, sagittis fringilla, elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce odio. Nullam dapibus ligula sed lectus. Proin vel velit. Maecenas eleifend sollicitudin ipsum. Duis malesuada. Suspendisse velit lectus, pretium ac, imperdiet at, eleifend ut, nisl. Duis vel orci vel odio commodo mattis. Nullam eget massa sit amet massa vulputate aliquet.</p>";
     lorem += "<p>Nunc a enim vitae velit consectetur lobortis. Donec sed magna ut nisl dignissim scelerisque. Etiam a eros at nulla facilisis lobortis. Morbi non est. Praesent pulvinar augue nec turpis. In in pede. Aenean id risus. Mauris dignissim. Suspendisse iaculis pede ut lorem. Ut hendrerit mauris nec risus. Pellentesque lectus. Nam semper, lorem vel dapibus placerat, mauris dolor varius nisi, vel posuere metus purus nec nunc. Etiam et pede. Sed vitae ipsum varius est placerat vulputate. Quisque faucibus neque quis lorem. Fusce tincidunt pharetra augue. Curabitur fringilla. Etiam vulputate congue erat.</p>";
 
-    var Window = jPlex.include("jplex.components.Frame");
-    Window.Modal = jPlex.include("jplex.components.frame.Modal");
-    Window.Dialog = jPlex.include('jplex.components.frame.Dialog');
-    Window.WindowsGroup = jPlex.include('jplex.components.frame.WindowsGroup');
+    jPlex.include("jplex.components.Frame");
+    jPlex.include("jplex.components.frame.Modal");
+    jPlex.include('jplex.components.frame.Dialog');
+    jPlex.include('jplex.components.frame.FrameSet');
 
-    var g = new Window.WindowsGroup('test');
+    var g = new FrameSet('test');
 
     // TODO pourquoi l'evt de 'dialog' est déclenché sur 'first'??
-    var first = new Window('lorem', {draggable: true});
+    var first = new Frame('lorem', {draggable: true});
     first.setBody("<img src='http://www.fredx.fr/logojplexbyfredx.png' width='200' style='float:left' />" + lorem);
     first.setTitle("Remote picture with text");
     g.add(first);
 
-    var w2 = new Window('local-pic', { title:"Local picture", draggable: true });
+    var w2 = new Frame('local-pic', { title:"Local picture", draggable: true });
     g.add(w2);
     w2.setBody("<img src='img/emo_cat.jpg' alt='emoCat' />");
 
 
-    var dialog2 = new Window.Dialog("dialog-group");
+    var dialog2 = new Dialog("dialog-group");
         dialog2.setTitle("But this one is !");
         dialog2.setBody("And therefore can disappear under<br/>the other windows of the group.<br/>(Except maybe on Internet Explorer ;)");
 
-    var dialog = new Window.Dialog('dialog', {
+    var dialog = new Dialog('dialog', {
         title: "Alert"
     });
     dialog.setEvent("onOkButtonClickEvent", function() {
@@ -75,7 +75,7 @@
         "<img id src='http://livepipe.net/stylesheets/sample_images/tabs_example_4_big.jpg' alt='emoCat' />"
     ];
 
-    var w3 = new Window.Modal('remote-pic-modal', {
+    var w3 = new Modal('remote-pic-modal', {
         draggable: true,
         overlayFade:0.5,
         footer:true

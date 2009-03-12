@@ -5,9 +5,9 @@
  * All configuration paraameters from jplex.components.Frame are inherited. The following ones
  * are overridden to configure the Dialog frame:
  * <ul>
- * <li><code>header: true</code></li>
- * <li><code>center: true</code></li>
- * <li><code>draggable: true</code></li>
+ * <li>`header: true`</li>
+ * <li>`center: true`</li>
+ * <li>`draggable: true`</li>
  * </ul>
  *
  *
@@ -92,6 +92,9 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
         }
     },
 
+    /**
+     * Add the default buttons and custom buttons to the footer
+     */
     _addButtons: function() {
         var down = this.component.down('div.footer');
 
@@ -109,7 +112,7 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
             var ok = new Element('input', {
                 type: 'button',
                 id: this.sID + '-ok',
-                value: this.cfg('okButtonLabel').blank() ? this.lang('OK') : this.cfg('okButtonLabel')
+                value: this.cfg('okButtonLabel') || true ? this.lang('OK') : this.cfg('okButtonLabel')
             });
             down.appendChild(ok);
             ok.observe('click', this._okButtonClick.bindAsEventListener(this));
@@ -128,17 +131,19 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
 
     },
 
+    /**
+     * Handle click on the "OK" button
+     */
     _okButtonClick: function() {
         this.fireEvent('onOkButtonClickEvent');
         this.hide();
     },
 
+    /**
+     * Handle click on the "Cancel" Button
+     */
     _cancelButtonClick: function() {
         this.fireEvent('onCancelButtonClickEvent');
         this.hide();
-    },
-
-    hide: function($super) {
-        $super();
     }
 });

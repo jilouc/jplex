@@ -7,7 +7,7 @@
     <code class="javascript">
 jPlex.include("jplex.components.MenuBar");
 jPlex.include("jplex.components.Frame");
-jPlex.include("jplex.components.frame.WindowsGroup");
+jPlex.include("jplex.components.frame.FrameSet");
 jPlex.include("jplex.components.Tabs");
     </code>
     </pre>
@@ -22,12 +22,12 @@ jPlex.include("jplex.components.*");
 <div id="tab-code-home-2" style="display:none">
 
     Create the main windows set using the
-    <strong>WindowsGroup</strong> component. This set will contain every windows
+    <strong>FrameSet</strong> component. This set will contain every windows
     we'll use in this demo (except <strong>Modal</strong>s since they have a totally different behavior).<br/>
     Then we create the main window with custom properties and add it to the windows set.
 <pre>
     <code class="javascript">
-var mainGroup = new WindowsGroup('main-w-group');
+var mainGroup = new FrameSet('main-w-group');
 
 var first = new Frame('what', {
     close: Frame.CLOSE_CUSTOM, // Custom way of closing the window (i.e. no default behavior)

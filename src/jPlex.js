@@ -56,7 +56,7 @@ var jPlex = {
         'jplex.components.Frame',
         'jplex.components.frame.Dialog',
         'jplex.components.frame.Modal',
-        'jplex.components.frame.WindowsGroup'
+        'jplex.components.frame.FrameSet'
     ],
 
     /**
