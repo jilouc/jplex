@@ -214,6 +214,12 @@ jPlex.provide('jplex.common.Component', {
             this.component.remove();
     }
 
+    /**
+     * The container HTML Element of the jplex Component
+     * @property component
+     * @type Element
+     */
+
 });
 jPlex.extend('jplex.common.Component', {_list:$H()});
 

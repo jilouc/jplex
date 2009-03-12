@@ -237,7 +237,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     initialize: function($super, eElement, oConfig) {
         $super(eElement, oConfig);
 
-        this.nLevel = this.cfg('zBase') + 2 * jplex.components.Frame.list.length + 1;
+        this._level = this.cfg('zBase') + 2 * jplex.components.Frame.list.length + 1;
         this.render();
 
         jplex.components.Frame.list.push(this);
@@ -254,32 +254,28 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
 
         this.component.addClassName("jplex-window");
 
-        var hd, bd, ft;
-
-        var content = !hd && !ft && !bd ? this.component.textContent : "";
-
         if (this.cfg("header")) {
-            hd = this._addHeader(this.cfg("title"));
+            this._addHeader(this.cfg("title"));
         }
 
-        bd = this._addBody(content);
 
-        bd.setStyle({
+        
+        this._addBody(this.component.textContent);
+        this._body.setStyle({
             overflow:this.cfg("overflow")
         });
-
 
         if (this.cfg('ajax')) {
             this.reload();
         }
 
-
         if (this.cfg("footer")) {
-            ft = this._addFooter();
+            this._addFooter();
         }
 
         if (this.cfg("close") == jplex.components.Frame.CLOSE_BUTTON) {
-            if (!hd) { /* TODO Error */
+            if (!this._header) {
+                /* TODO Error */
             }
             this._addCloseButton();
         }
@@ -289,20 +285,20 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         }
 
         if (this.cfg("draggable")) {
-            if (hd) {
-                this.drag = new Draggable(this.component, {
-                    handle: hd,
+            if (this._header) {
+                this._drag = new Draggable(this.component, {
+                    handle: this._header,
                     snap: this._constrainToViewport.bind(this)
                 });
             } else {
-                this.drag = new Draggable(this.component, {
+                this._drag = new Draggable(this.component, {
                     snap: this._constrainToViewport.bind(this)
                 });
             }
         }
 
         this.component.setStyle({
-            zIndex: this.nLevel,
+            zIndex: this._level,
             display: 'none'
         });
 
@@ -316,21 +312,21 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * @return {Element} The Header HTML extended Element
      */
     setHeader: function(header) {
-        var hd = this.component.down("div.header");
-        if (hd) {
-            hd.down('div.title').update(header);
+        if (this._header) {
+            this._header.down('div.title').update(header);
         } else {
-            hd = this._addHeader(sHead);
+            this._addHeader(header);
         }
-        return hd;
+        return this._header;
     },
 
     /**
      * Alias for setHeader
      * @param {String} title
+     * @return {Element} The Header HTML extended Element
      */
     setTitle: function(title) {
-        this.setHeader(title);
+        return this.setHeader(title);
     },
 
     /**
@@ -340,14 +336,13 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * @return {Element} The body HTML extended element
      */
     setBody: function(body) {
-        var bd = this.component.down("div.body");
-        if (bd) {
-            bd.update(body);
+        if (this._body) {
+            this._body.update(body);
 
             if (this.cfg('center')) {
                 // If the frame contains images, we have to wait them to be loaded
                 // to get the correct position of the frame
-                var imgs = bd.getElementsByTagName('img');
+                var imgs = this._body.getElementsByTagName('img'); // TODO .collect("img")
                 var loaded = $A([]);
                 if (imgs.length > 0) {
                     this.setLoading(true);
@@ -366,7 +361,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                             this.setLoading(false);
                             this.makeCentered();
                             var pos = this.component.cumulativeOffset();
-                            this._constrainToViewport(pos.left, pos.top, this.drag);
+                            this._constrainToViewport(pos.left, pos.top, this._drag);
                             this._constrainToSize.bind(this).delay(0);
                         }
                     }.bindAsEventListener(this, img, i));
@@ -379,10 +374,11 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             }
             this.makeCentered();
         } else {
-            bd = this._addBody(body);
+            this._addBody(body);
         }
         this.fireEvent("onContentChangeEvent");
-        return bd;
+
+        return this._body;
     },
 
     /**
@@ -392,13 +388,12 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * @return {Element} the footer HTML extended element
      */
     setFooter: function(footer) {
-        var ft = this.component.down("div.footer");
-        if (ft) {
-            ft.update(footer);
+        if (this._footer) {
+            this._footer.update(footer);
         } else {
-            ft = this._addFooter(footer);
+            this._addFooter(footer);
         }
-        return ft;
+        return this._footer;
     },
 
     /**
@@ -406,14 +401,14 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      */
     _addOverlay: function() {
 
-        this.oOverlay = new jplex.components.Overlay(this._sIDPrefix + "-overlay", {
-            color:this.cfg('overlayColor'),
-            z: this.nLevel - 1,
-            fade:this.cfg('overlayFade'),
-            opacity:this.cfg('overlayOpacity')
+        this._overlay = new jplex.components.Overlay(this._sIDPrefix + "-overlay", {
+            color: this.cfg('overlayColor'),
+            z: this._level - 1,
+            fade: this.cfg('overlayFade'),
+            opacity: this.cfg('overlayOpacity')
         });
 
-        this.oOverlay.component.observe("click", function(e) {
+        this._overlay.component.observe("click", function(e) {
             if (this.cfg('close') == jplex.components.Frame.CLOSE_CLICK_OUT) {
                 this.hide();
             }
@@ -425,8 +420,10 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * Add the close button to the title bar
      */
     _addCloseButton: function() {
-        var close = new Element('a', {id:this.sID + "-closecross"}),
-                elt = this.component.down('div.header div.title') || this.component.down('div.body');
+        var close = new Element('a', {
+            id: this.sID + "-closecross"
+        });
+        var elt = this._header.down('div.title') || this._body;
 
         close.addClassName('close').update('&nbsp;');
         close.observe('click', this.hide.bind(this));
@@ -436,37 +433,40 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     /**
      * Create the title bar and returns it
      * @param {String} content title of the window
-     * @return {Element} the header HTML extended Element
      */
     _addHeader: function(content) {
-        var hd = new Element('div'),
-                title = new Element('div');
+        var hd = new Element('div');
+        var title = new Element('div');
         hd.appendChild(title.addClassName('title').update(content || ''));
         hd.addClassName('header');
-        this.component.insert({top:hd});
-        return hd;
+        this.component.insert({
+            top: hd
+        });
+
+        this._header = hd;
     },
 
     /**
      * Create the body and returns it
      * @param {String} content
-     * @return {Element} the body HTML extended Element
      */
     _addBody: function(content) {
-        var bd = new Element("div"),
-                hd = this.component.down("div.header"),
-                ft = this.component.down("div.footer");
+        var bd = new Element("div");
 
         bd.addClassName("body").update(content || "");
-        if (hd) {
-            hd.insert({after:bd});
-        } else if (ft) {
-            ft.insert({before:ft});
+        if (this._header) {
+            this._header.insert({
+                after: bd
+            });
+        } else if (this._footer) {
+            this._footer.insert({
+                before: bd
+            });
         } else {
             this.component.insert(bd);
         }
-        return bd;
 
+        this._body = bd;
     },
 
     /**
@@ -477,8 +477,11 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     _addFooter: function(content) {
         var ft = new Element("div");
         ft.addClassName('footer').update(content || "");
-        this.component.insert({bottom:ft});
-        return ft;
+        this.component.insert({
+            bottom: ft
+        });
+
+        this._footer = ft;
     },
 
     /**
@@ -546,6 +549,31 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     },
 
     /**
+     * Show the "activity indicator" while the content of the frame is dynamically loaded
+     * or hide it when it's done.
+     * @param {bool} start `true` to start loading mode, `false` to stop it
+     */
+    setLoading: function(start) {
+        var ld = this.component.down('div.loading');
+        if (start) {
+            this._body.hide();
+            if (!ld) {
+                var loading = new Element("div").addClassName('loading');
+                this.component.insertBefore(loading, this._body);
+            } else {
+                ld.show();
+            }
+        } else {
+            this._body.show();
+            if (ld) {
+                ld.hide();
+            }
+        }
+    },
+
+    //---------- Private methods ----------
+
+    /**
      * Make sure the frame will be constrained to viewport bounds
      * @param {int} x
      * @param {int} y
@@ -569,10 +597,10 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     _constrainToSize: function() {
 
         // TODO Foire sur Opera visiblement (cf code-snippet)
-        var bd = this.component.down("div.body");
+        var bd = this._body;
 
         var dimensions = {
-            body: bd.getDimensions(),
+            body: this._body.getDimensions(),
             frame: this.component.getDimensions()
         };
 
@@ -632,31 +660,51 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                 });
             }
         }
-    },
+    }
+
+    //---------- Private properties ----------
 
     /**
-     * Show the "activity indicator" while the content of the frame is dynamically loaded
-     * or hide it when it's done.
-     * @param {bool} start `true` to start loading mode, `false` to stop it
+     * Z-Index of the frame
+     * @property _level
+     * @type int
+     * @private
      */
-    setLoading: function(start) {
-        var bd = this.component.down('div.body');
-        var ld = this.component.down('div.loading');
-        if (start) {
-            bd.hide();
-            if (!ld) {
-                var loading = new Element("div").addClassName('loading');
-                this.component.insertBefore(loading, bd);
-            } else {
-                ld.show();
-            }
-        } else {
-            bd.show();
-            if (ld) {
-                ld.hide();
-            }
-        }
-    }
+
+    /**
+     * Overlay component below the frame (if exists)
+     * @property _overlay
+     * @type jplex.components.Overlay
+     * @private
+     */
+
+    /**
+     * The "header" html element (div) of the frame (if exists)
+     * @property _header
+     * @type Element
+     * @private
+     */
+
+    /**
+     * The "body" html element (div) of the frame
+     * @property _body
+     * @type Element
+     * @private
+     */
+
+    /**
+     * The "footer" html element (div) of the frame (if exists)
+     * @property _footer
+     * @type Element
+     * @private 
+     */
+
+    /**
+     * The Draggable object (if the frame is draggable)
+     * @property _drag
+     * @type Draggable
+     * @private
+     */
 
 
 });
