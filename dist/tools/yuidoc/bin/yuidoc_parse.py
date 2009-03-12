@@ -129,12 +129,12 @@ class DocParser(object):
     
     # after extracting the comment, fix it up (remove *s and leading spaces)
     # blockFilter_pat = re.compile('^\s*\*', re.M)
-    blockFilter_pat = re.compile('^[\s|\*|\n]*', re.M)
+    blockFilter_pat = re.compile('^[\s|\n]*\*[\s|\n]?', re.M)
 
     # the pattern used to split a comment block to create our token stream
     # this will currently break if there are ampersands in the comments if there
     # is a space before it
-    tokenize_pat = re.compile('^\s?(@\w\w*)', re.M);
+    tokenize_pat = re.compile('^\s*(@\w\w*)', re.M);
 
     # separates compound descriptions: @param foo {int} a foo -> int, foo a foo
     # also:                            @param {int} foo a foo -> int, foo a foo

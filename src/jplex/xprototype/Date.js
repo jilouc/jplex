@@ -14,8 +14,6 @@ Object.extend(Date, {
      * @type Integer
      */
     YEAR_OFFSET: Prototype.Browser.IE || Prototype.Browser.Opera ? 0 : 1900,
-    STR_LONG: 0,
-    STR_SHORT: 1
 });
 
 // Non-static Content
@@ -62,45 +60,6 @@ Object.extend(Date.prototype, {
      */
     lastDayOfMonth: function() {
         return new Date(Date.YEAR_OFFSET + this.getYear(), this.getMonth() + 1, 0, 0);
-    },
-
-    /**
-     *
-     */
-    toDayString: function(mode) {
-        var src = this,
-                res;
-        if (!mode) {
-            mode = Date.STR_SHORT;
-        }
-        switch (mode) {
-            case Date.STR_SHORT:
-                res = this.locale('DAYS_SHORT')[src.getDay()];
-                break;
-            case Date.STR_LONG:
-                res = this.locale('DAYS')[src.getDay()];
-                break;
-        }
-        return res;
-    },
-
-    /**
-     *
-     */
-    toMonthString: function(mode) {
-        var res;
-        if (mode != Date.STR_LONG) {
-            mode = Date.STR_SHORT;
-        }
-        switch (mode) {
-            case Date.STR_SHORT:
-                res = this.locale('MONTHS_SHORT')[this.getMonth()];
-                break;
-            case Date.STR_LONG:
-                res = this.locale('MONTHS')[this.getMonth()];
-                break;
-        }
-        return res;
     },
 
     /**

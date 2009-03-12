@@ -51,12 +51,18 @@
             #end for
         #end if
     #end for  
-#end if            
+#end if                  
+#if $properties
+== Properties ==         
+|| *Name* || *Type* || *Description* ||
+#for $property in $properties##if not $property.name.startswith('_')#|| _${property.name}_ || $property.type || `- #if $property.access#$property.access #end if##if $property.static#$property.static #end if##if $property.final#$property.final #end if#`#if $property.deprecated#<strong>Deprecated:</strong> $property.deprecated<br/>#end if##echo re.sub('\r?\n', '<br />',$property.description)##if $property.default#<br/>Default Value: $property.default#end if#||#end if##end for#
+#end if
+
 
 #if $methods
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
-#for $method in $methods##if not $method.name.startswith('_')#|| `#echo $method.name#(#if $method.params##set $i=0##set $current = ""##for $param in $method.params##if $current != $param.name##if $i > 0#, #end if##set $i = $i + 1##set $current = $param.name#$param.name#end if##end for##end if#)` || `$method.return.type` || #echo re.sub('\r?\n','<br/>',$method.description)#<br /> #if $method.params##for $param in $method.params# - `$param.name <$param.type>`#echo re.sub('\r?\n','<br/>',$param.description)##end for##end if#||
+#for $method in $methods##if not $method.name.startswith('_')#|| `#echo $method.name#(#if $method.params##set $i=0##set $current = ""##for $param in $method.params##if $current != $param.name##if $i > 0#, #end if##set $i = $i + 1##set $current = $param.name#$param.name#end if##end for##end if#)` || `$method.return.type` || #echo re.sub('\r?\n','<br/>',$method.description)#<br /> #if $method.params##for $param in $method.params# - `$param.name <$param.type>`#echo re.sub('\r?\n','<br/>',$param.description)#<br/>#end for##end if#||
 #end if##end for
 #if $inherited.methods                                   
 === Inherited Configs ===
