@@ -76,8 +76,7 @@ jPlex.provide('jplex.components.frame.FrameSet', 'jplex.common.Component', {
         var w = typeof(frame) == 'string' ?
                 new jplex.components.Frame(frame, {
                     draggable:true
-                }) :
-                frame;
+                }) : frame;
         var length = this.windows.length;
 
         w.show();
@@ -85,7 +84,9 @@ jPlex.provide('jplex.components.frame.FrameSet', 'jplex.common.Component', {
         w.toFront = this._winToFront.methodize();
         w._group = this;
         w._groupPosition = length;
-        w.component.setStyle({zIndex:length});
+        w.component.setStyle({
+            zIndex:length
+        });
         w.component.observe('click', w.toFront.bindAsEventListener(w));
 
         this.fireEvent("onAddFrameEvent", {
@@ -111,7 +112,9 @@ jPlex.provide('jplex.components.frame.FrameSet', 'jplex.common.Component', {
         }
         w._group.windows[w._group.windows.length - 1] = w;
         if (z) {
-            w.component.setStyle({zIndex: z});
+            w.component.setStyle({
+                zIndex: z
+            });
         }
         w._groupPosition = w._group.windows.length - 1;
 
