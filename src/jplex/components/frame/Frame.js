@@ -1,7 +1,32 @@
 jPlex.include('jplex.components.Overlay', true);
 /**
- * Window component.
- * Blablabla
+ * @description Frame component.
+ * The frame/window is a common component in every UI Library and widely used over the web.
+ * Basically, it mimics the behavior of similar UI component in Java Swing, C++ QT...
+ * and easily catches user's attention on a specific content.
+ *
+ * <p>
+ * This class provides the core features for displaying and manipulating windows, such as
+ * <ul>
+ * <li>Title bar and footer bar, with an optional "close" button</li>
+ * <li>Load the content with Ajax Request</li>
+ * <li>Drag and drop the window</li>
+ * <li>Control of the size and position of the window (center, min/max width/height...)</li>
+ * <li>Events on key moments of the life-cycle</li>
+ * <li>Display (or not) a semi-transparent overlay behind the window</li>
+ * </ul>
+ * Have a look to configuration parameters to see how you can set up your window and mix parameters together.
+ * </p>
+ *
+ * <p>
+ * jPlex also provides some preconfigured subclasses of the Frame component for
+ * <ul>
+ * <li>Modal window : Display an overlay behing the window, see jplex.components.frame.Modal</li>
+ * <li>Dialog window : Add two buttons automatically in the footer (typically "OK" and "Cancel"),
+ * see jplex.components.frame.Dialog</li>
+ * </ul>
+ * </p>
+ *
  * @class Frame
  * @extends jplex.common.Component
  * @requires Overlay
@@ -14,48 +39,192 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     _definition: {
         name: "Frame",
         defaultConfig: {
+            /**
+             * Show the title bar or not (so you can use `setTitle` and have a close button on top-right corner)
+             * @config header
+             * @default true
+             */
             header: true,
+            /**
+             * Show a footer (like a status-bar) at the bottom of the window
+             * (for Dialog windows, the footer will contain the buttons)
+             * @config footer
+             * @default false
+             */
             footer: false,
-
+            /**
+             * Center the window on the screen.
+             * Note: it won't stay centered on resize/scroll/content change
+             * unless you set `constrainToCenter` to `true`.
+             * @config center
+             * @default true
+             */
             center: true,
+            /**
+             * If `true`, the window will stay centered no matter
+             * if the viewport is resized, scrolled or if the content changes
+             * @config constrainToCenter
+             * @default false
+             */
             constrainToCenter: false,
-
-            close:'button', // jplex.components.Frame.CLOSE_CLICK_OUT
+            /**
+             * Way to close the window:
+             * <ul><li>`jplex.components.Frame.CLOSE_BUTTON`:
+             * will display a close button on the top-right corner</li>
+             * <li>`jplex.components.Frame.CLOSE_CLICK_OUT`:
+             * the window will be closed when the user clicks outside the window
+             * (be sure your users know it), it's designed especially for modal windows.</li>
+             * <li>`jplex.components.Frame.CLOSE_CUSTOM`:
+             * it's your responsability to call the `show()` and `hide()` methods.</li>
+             * </ul>
+             * @config close
+             * @default Frame.CLOSE_BUTTON
+             */
+            close:'button', // jplex.components.Frame.CLOSE_BUTTON
+            /**
+             * Indicates whether the window could be dragged in the viewport.
+             * Note: if the window has a header (title bar) only this header can be grabbed
+             * for drag'n'drop, if it has no header, the entire window can be grabbed.
+             * (Use of Script.aculo.us Draggable class)
+             * @config draggable
+             * @default false
+             */
             draggable:false,
-
+            /**
+             * Title of the window (pertinent only if there _is_ a header).
+             * @config title
+             * @default ""
+             */
             title: "",
-
+            /**
+             * URL of the file to get the content from. If `null`, no content is loaded
+             * and you'll have to use the `setBody` method to add some content to your window.
+             * @config ajax
+             * @default null
+             */
             ajax: null,
+            /**
+             * HashSet of parameters for the ajax call. E.g. `{ foo: "bar" }`
+             * @config ajaxParameters
+             * @default {}
+             */
             ajaxParameters: {},
-
+            /**
+             * Flag indicating you want to add a modal behavior to the window
+             * (overlay behind)
+             * @config modal
+             * @default false
+             */
             modal: false,
+            /**
+             * The z-index base for this window. You can adjust it to match your design.
+             * (the overlay (if any) will have this z-index and the window the same + 1)
+             * @config zBase
+             * @default 9998
+             */
             zBase: 9998,
-
-            overlay: false,
+            /**
+             * Background color of the overlay
+             * @config overlayColor
+             * @default #000000 (black)
+             */
             overlayColor:'#000000',
+            /**
+             * Opacity of the overlay (from 0 to 1, 1 is opaque and 0 fully transparent)
+             * @config overlayOpacity
+             * @default 0.6
+             */
             overlayOpacity:0.6,
+            /**
+             * If set to `true` the overlay will (dis)appear with a fade in/out effect
+             * @config overlayFade
+             * @default false
+             */
             overlayFade:false,
-
+            /**
+             * The initial width of the window (in pixels)
+             * @config width
+             * @default null
+             */
             width: null, // TODO in other units than px
+            /**
+             * The initial height of the window (in pixels)
+             * @config height
+             * @default null
+             */
             heigth: null, // TODO same
+            /**
+             * Minimum width of the window (constrained)
+             * @config minWidth
+             * @default null
+             */
             minWidth: null, // TODO same
+            /**
+             * Minimum Height of the window (constrained)
+             * @config minHeight
+             * @default null
+             */
             minHeight: null, // TODO same
+            /**
+             * Maximum width of the window (constrained)
+             * @config maxWidth
+             * @default null
+             */
             maxWidth: null, // TODO same
+            /**
+             * Maximum height of the window (constrained)
+             * @config maxHeight
+             * @default null
+             */
             maxHeight: null, // TODO same
-
+            /**
+             * CSS "overflow" Property for the body of the window
+             * (i.e. the window without header and footer).
+             * Use in combination with maxWidth/maxHeight.
+             * (`auto` adds scrollbar(s) if needed, `hidden` hides extra content,
+             * `scroll` adds scrollbars, `scroll-x` and `scroll-y` add the corresponding scroll bar)
+             * @config overflow
+             * @default "auto"
+             */
             overflow: "auto", // TODO
+            /**
+             * Make sure the window stay inside the viewport bounds (even when dragged)
+             * @config constrainToViewport
+             * @default true
+             */
+            constrainToViewport: true,
 
-            top: null,
-            left: null,
-            constrainToViewport: true
+            top: null, // TODO
+            left: null // TODO
 
 
         },
         events: {
+            /**
+             * Before the window is rendered (before any element is added)
+             * @event beforeRenderEvent
+             */
             beforeRenderEvent: Prototype.emptyFunction,
+            /**
+             * After the rendering step (the window is built)
+             * @event afterRenderEvent
+             */
             afterRenderEvent: Prototype.emptyFunction,
+            /**
+             * When the Ajax Request to retrieve the content of the window is completed
+             * @event onAjaxRequestCompleteEvent
+             * @param {Object} result the Ajax Request's result (get the text result with `result.responseText` for instance)
+             */
             onAjaxRequestCompleteEvent: Prototype.emptyFunction,
+            /**
+             * When the window appears
+             * @event onShowEvent
+             */
             onShowEvent: Prototype.emptyFunction,
+            /**
+             * When the window disappears
+             * @event onHideEvent
+             */
             onHideEvent: Prototype.emptyFunction
         },
         defaultContainer:"div",
@@ -76,6 +245,9 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         this._evtMakeCentered = this.makeCentered.bind(this);
     },
 
+    /**
+     * Renders the component. Add elements depending on the configuration, apply CSS classes...
+     */
     render: function() {
 
         this.fireEvent("beforeRenderEvent");
@@ -92,25 +264,14 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
 
         bd = this._addBody(content);
 
-        bd.setStyle({overflow:this.cfg("overflow")});
+        bd.setStyle({
+            overflow:this.cfg("overflow")
+        });
 
 
         if (this.cfg('ajax')) {
             this.reload();
         }
-
-        /*if (this.cfg("minWidth")) {
-         this.component.setStyle({minWidth:this.cfg("minWidth")+"px"});
-         }
-         if (this.cfg("minHeight")) { // Does not work on IE6
-         this.component.setStyle({minHeight:this.cfg("minHeight")+"px"});
-         }
-         if (this.cfg("maxWidth")) {
-         this.component.setStyle({maxWidth:this.cfg("maxWidth")+"px"});
-         }
-         if (this.cfg("maxHeight")) { // Does not work on IE6
-         this.component.setStyle({maxHeight:this.cfg("maxHeight")+"px"});
-         }*/
 
 
         if (this.cfg("footer")) {
@@ -145,29 +306,43 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             display: 'none'
         });
 
-        // TODO ça marche pas
-
         this.fireEvent("afterRenderEvent");
     },
 
-    setHeader: function(sHead) {
+    /**
+     * If the header already exists, replace the title with the given string.
+     * If not, create the title bar and set the given string as title.
+     * @param {String} header the title of the window
+     * @return {Element} The Header HTML extended Element
+     */
+    setHeader: function(header) {
         var hd = this.component.down("div.header");
         if (hd) {
-            hd.down('div.title').update(sHead);
+            hd.down('div.title').update(header);
         } else {
             hd = this._addHeader(sHead);
         }
         return hd;
     },
 
-    setTitle: function(sTitle) {
-        this.setHeader(sTitle);
+    /**
+     * Alias for setHeader
+     * @param {String} title
+     */
+    setTitle: function(title) {
+        this.setHeader(title);
     },
 
-    setBody: function(sBody) {
+    /**
+     * If the body already exists, update its content, else
+     * create the body element and add the content.
+     * @param {String} body Content of the body
+     * @return {Element} The body HTML extended element
+     */
+    setBody: function(body) {
         var bd = this.component.down("div.body");
         if (bd) {
-            bd.update(sBody);
+            bd.update(body);
 
             if (this.cfg('center')) {
                 // If the frame contains images, we have to wait them to be loaded
@@ -204,22 +379,31 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             }
             this.makeCentered();
         } else {
-            bd = this._addBody(sBody);
+            bd = this._addBody(body);
         }
         this.fireEvent("onContentChangeEvent");
         return bd;
     },
 
-    setFooter: function(sFooter) {
+    /**
+     * If the footer already exists, update the footer with the given content,
+     * else create it and update the content.
+     * @param {String} footer
+     * @return {Element} the footer HTML extended element
+     */
+    setFooter: function(footer) {
         var ft = this.component.down("div.footer");
         if (ft) {
-            ft.update(sFooter);
+            ft.update(footer);
         } else {
-            ft = this._addFooter(sFooter);
+            ft = this._addFooter(footer);
         }
         return ft;
     },
 
+    /**
+     * Add an overlay behind the window with configured opacity, color and behavior
+     */
     _addOverlay: function() {
 
         this.oOverlay = new jplex.components.Overlay(this._sIDPrefix + "-overlay", {
@@ -237,6 +421,9 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         }.bind(this));
     },
 
+    /**
+     * Add the close button to the title bar
+     */
     _addCloseButton: function() {
         var close = new Element('a', {id:this.sID + "-closecross"}),
                 elt = this.component.down('div.header div.title') || this.component.down('div.body');
@@ -246,6 +433,11 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         elt.appendChild(close);
     },
 
+    /**
+     * Create the title bar and returns it
+     * @param {String} content title of the window
+     * @return {Element} the header HTML extended Element
+     */
     _addHeader: function(content) {
         var hd = new Element('div'),
                 title = new Element('div');
@@ -255,6 +447,11 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         return hd;
     },
 
+    /**
+     * Create the body and returns it
+     * @param {String} content
+     * @return {Element} the body HTML extended Element
+     */
     _addBody: function(content) {
         var bd = new Element("div"),
                 hd = this.component.down("div.header"),
@@ -272,6 +469,11 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
 
     },
 
+    /**
+     * Create the footer and returns it
+     * @param {String} content
+     * @return {Element} the footer HTML extended Element
+     */
     _addFooter: function(content) {
         var ft = new Element("div");
         ft.addClassName('footer').update(content || "");
@@ -279,6 +481,10 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         return ft;
     },
 
+    /**
+     * Load or reload the content of the body from the result of the ajax request
+     * (the URL of the content is given by the `ajax` configuration parameter)
+     */
     reload: function() {
         new Ajax.Request(this.cfg('ajax'), {
             parameters: this.cfg('ajaxParameters'),
@@ -291,6 +497,9 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         });
     },
 
+    /**
+     * Show the frame
+     */
     show: function() {
         if (this.cfg('modal')) {
             this.oOverlay.show();
@@ -306,6 +515,9 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
 
     },
 
+    /**
+     * Hide the frame
+     */
     hide: function() {
         if (this.cfg('modal'))
             this.oOverlay.hide();
@@ -317,6 +529,9 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
 
     },
 
+    /**
+     * Place the frame at the center of the viewport
+     */
     makeCentered: function(stop) {
 
         var dim = this.component.getDimensions();
@@ -330,6 +545,12 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             this._evtMakeCentered.delay(0.1, true);
     },
 
+    /**
+     * Make sure the frame will be constrained to viewport bounds
+     * @param {int} x
+     * @param {int} y
+     * @param {Element} draggable
+     */
     _constrainToViewport: function(x, y, draggable) {
         if (!this.cfg("constrainToViewport"))
             return [x,y];
@@ -342,6 +563,9 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             h > vph ? 0 : (y < vph - h ? (y > 0 ? y : 0) : vph - h)];
     },
 
+    /**
+     * Make sure the frame size doesn't go off-limits
+     */
     _constrainToSize: function() {
 
         // TODO Foire sur Opera visiblement (cf code-snippet)
@@ -410,10 +634,15 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         }
     },
 
-    setLoading: function(mode) {
+    /**
+     * Show the "activity indicator" while the content of the frame is dynamically loaded
+     * or hide it when it's done.
+     * @param {bool} start `true` to start loading mode, `false` to stop it
+     */
+    setLoading: function(start) {
         var bd = this.component.down('div.body');
         var ld = this.component.down('div.loading');
-        if (mode) {
+        if (start) {
             bd.hide();
             if (!ld) {
                 var loading = new Element("div").addClassName('loading');
@@ -432,17 +661,35 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
 
 });
 
-// Static properties
+//---------- Static properties ----------
 
 jPlex.extend('jplex.components.Frame', {
     /**
-     *
+     * Array of references to all window components used (useful to set z-indices)
      * @property list
      * @type Array
      * @static
      */
     list: $A([]),
+    /**
+     * Configuration constant: use a button to close the frame
+     * @property CLOSE_BUTTON
+     * @type String
+     * @static
+     */
     CLOSE_BUTTON: 'button',
+    /**
+     * Configuration constant: the frame is closed when the user clicks outside
+     * @property CLOSE_CLICK_OUT
+     * @type String
+     * @static
+     */
     CLOSE_CLICK_OUT: 'clickout',
+    /**
+     * Configuration constant: you decide when the frame is shown/hidden
+     * @property CLOSE_CUSTOM
+     * @type String
+     * @static
+     */
     CLOSE_CUSTOM: 'custom'
 });

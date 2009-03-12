@@ -112,34 +112,33 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
              * @default The current year + 5
              */
             fastBrowseYearEnd: (new Date()).getFullYear() + 5,
-            fastBrowseYearStep: 1, // TODO implement
+            fastBrowseYearStep: 1 // TODO implement
 
-            events: {
-                /**
-                 * When a new date is selected
-                 * @event onSelectEvent
-                 * @param {Date} date The selected date
-                 */
-                onSelectEvent: Prototype.emptyFunction,
-                /**
-                 * When the calendar appears (textfield receiving focus for instance)
-                 * @event onShowEvent
-                 */
-                onShowEvent: Prototype.emptyFunction,
-                /**
-                 * When the calendar disappears (textfield losing focus, new date selected for instance)
-                 * @event onHideEvent
-                 */
-                onHideEvent: Prototype.emptyFunction,
-                /**
-                 * Called each time the position of the calendar is re-computed
-                 * @event onPositionChangeEvent
-                 * @param {Object} position The computed position (position.top and position.left)
-                 * @param {Object} dimensions Dimensions of the calendar container (width and height)
-                 */
-                onPositionChangeEvent: Prototype.emptyFunction
-            }
-
+        },
+        events: {
+            /**
+             * When a new date is selected
+             * @event onSelectEvent
+             * @param {Date} date The selected date
+             */
+            onSelectEvent: Prototype.emptyFunction,
+            /**
+             * When the calendar appears (textfield receiving focus for instance)
+             * @event onShowEvent
+             */
+            onShowEvent: Prototype.emptyFunction,
+            /**
+             * When the calendar disappears (textfield losing focus, new date selected for instance)
+             * @event onHideEvent
+             */
+            onHideEvent: Prototype.emptyFunction,
+            /**
+             * Called each time the position of the calendar is re-computed
+             * @event onPositionChangeEvent
+             * @param {Object} position The computed position (position.top and position.left)
+             * @param {Object} dimensions Dimensions of the calendar container (width and height)
+             */
+            onPositionChangeEvent: Prototype.emptyFunction
         },
         defaultContainer: "div",
         text: {
@@ -333,7 +332,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             eTR.appendChild(eDay);
 
             if (oFirstDayOfMonth.compareTo(oDay) > 0
-                || oLastDayOfMonth.compareTo(oDay) < 0) {
+                    || oLastDayOfMonth.compareTo(oDay) < 0) {
                 eDay.addClassName("outofmonth");
             }
 
@@ -341,7 +340,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         }
 
         this._setTitle(this._currentMonth.getMonth(),
-                       this._currentMonth.getFullYear());
+                this._currentMonth.getFullYear());
 
         if (this._fastBrowseOverlay && this._fastBrowseOverlay.visible()) {
             this._fastBrowseOverlay.clonePosition(this.component);
@@ -678,7 +677,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         var title = this.cfg("titleFormat")
                 .gsub("{M}", this.locale("Date", "MONTHS")[month])
                 .gsub("{Y}", year)
-                .gsub("{m}", (month+1).toString());
+                .gsub("{m}", (month + 1).toString());
         this._getTitle().update("&nbsp;" + title + "&nbsp;");
     },
 

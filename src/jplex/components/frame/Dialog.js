@@ -10,14 +10,16 @@
  * <li><code>draggable: true</code></li>
  * </ul>
  *
- * @param {Element|String}
- * @constructor
  *
  * @class frame.Dialog
  * @extends jplex.components.Frame
+ *
+ * @param {Element|String} eElement
+ * @param {Object} oConfig
+ * @constructor
  */
 jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
-    
+
     _extension: {
         name: 'WindowDialog',
         defaultConfig: {
@@ -26,13 +28,13 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
             draggable:true,
 
             /**
-             * Shows the "ok" button if set to <code>true</code>
+             * Shows the "ok" button if set to `true`.
              * @config okButton
              * @default true
              */
             okButton: true,
             /**
-             * Shows the "cancel" button if set to <code>true</code>
+             * Shows the "cancel" button if set to `true`.
              * @config cancelButton
              * @default true
              */
@@ -51,29 +53,27 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
             cancelButtonLabel: '',
             /**
              * Array of optional button, each item of the array is an object like the following
-             * <pre>{
-             * &nbsp;&nbsp;label: "Label of the button",
-             * &nbsp;&nbsp;click: function: { Function triggered on click }
-             * }</pre>
-             * Note that in the 'click' function, 'this' will refer to the instance of Dialog.
+             * <code>{
+             *      label: "Label of the button",
+             *      click: function: { Function triggered on click }
+             * }</code>
+             * Note that in the 'click' function, `this` will refer to the instance of Dialog.
              * @config otherButtons
              * @default []
              */
-            otherButtons: [],
-
-            events: {
-                /**
-                 * When the "OK" button is clicked
-                 * @event onOkButtonClickEvent
-                 */
-                onOkButtonClickEvent: Prototype.emptyFunction,
-                /**
-                 * When the "CancelButton" is clicked
-                 * @event onCancelButtonClickEvent
-                 */
-                onCancelButtonClickEvent: Prototype.emptyFunction
-            }
-
+            otherButtons: []
+        },
+        events: {
+            /**
+             * When the "OK" button is clicked
+             * @event onOkButtonClickEvent
+             */
+            onOkButtonClickEvent: Prototype.emptyFunction,
+            /**
+             * When the "CancelButton" is clicked
+             * @event onCancelButtonClickEvent
+             */
+            onCancelButtonClickEvent: Prototype.emptyFunction
         },
         text: {
             fr: { OK: 'OK', CANCEL: 'Annuler'},
@@ -83,42 +83,42 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
 
 
     initialize: function($super, eElement, oConfig) {
-       $super(eElement, oConfig);
+        $super(eElement, oConfig);
 
-       this._addButtons();
+        this._addButtons();
 
-       if($(this.sID+"-closecross")) {
-           $(this.sID+"-closecross").observe('click', this._cancelButtonClick.bind(this));
-       }
+        if ($(this.sID + "-closecross")) {
+            $(this.sID + "-closecross").observe('click', this._cancelButtonClick.bind(this));
+        }
     },
 
     _addButtons: function() {
-        var down = this.component.down('div.footer');        
+        var down = this.component.down('div.footer');
 
-        $A(this.cfg("otherButtons")).each(function(s,i) {
+        $A(this.cfg("otherButtons")).each(function(s, i) {
             var bt = new Element('input', {
                 type: 'button',
-                id: this.sID+'-bt'+i,
+                id: this.sID + '-bt' + i,
                 value: s.label
             });
             down.appendChild(bt);
             bt.observe('click', s.click.bindAsEventListener(this));
         }.bind(this));
 
-        if(this.cfg('okButton')) {
+        if (this.cfg('okButton')) {
             var ok = new Element('input', {
                 type: 'button',
-                id: this.sID+'-ok',
+                id: this.sID + '-ok',
                 value: this.cfg('okButtonLabel').blank() ? this.lang('OK') : this.cfg('okButtonLabel')
             });
             down.appendChild(ok);
             ok.observe('click', this._okButtonClick.bindAsEventListener(this));
         }
 
-        if(this.cfg('cancelButton')) {
+        if (this.cfg('cancelButton')) {
             var cancel = new Element('input', {
                 type: 'button',
-                id: this.sID+'-cancel',
+                id: this.sID + '-cancel',
                 value: this.cfg('cancelButtonLabel').blank() ? this.lang('CANCEL') : this.cfg('cancelButtonLabel')
             });
             down.appendChild(cancel);
@@ -126,7 +126,6 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
         }
 
 
-        
     },
 
     _okButtonClick: function() {
