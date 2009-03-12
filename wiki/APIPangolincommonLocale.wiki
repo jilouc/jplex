@@ -14,6 +14,7 @@ some parts of the locales. The defined components are for now: 'Date' (and that'
 || _lang_ || String || `- `The global lang parameter, every default value for lang will be used considering this property. <br /><br/><b>This value has to be changed if you consider writing an application in a different language than the default value</b><br/>Default Value: 'fr'||
 
 
+
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
 || `current(component, field)` || `String|Array` || Useful default usage of the locale string, corresponds to: <br/><pre>Locale.get(component).get(field)</pre><br/>with undefined error treatment of course<br />  - `component <String>` The locale component<br/> - `field <String>` The wanted field<br/>||

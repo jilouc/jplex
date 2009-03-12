@@ -6,8 +6,15 @@
 
 == Description ==
 Overlay component.
-Place a semi transparent layer which covers its parent on the page.
+Place a semi-transparent layer which covers its parent on the page.
+It's mainly used by the Frame components.
 
+== Config Table ==
+|| *Name* || *Default Value* || *Description* ||
+|| _color_ || `"#000000" (black)` ||  Color of the overlay ||
+|| _fade_ || `false` ||  If `true` the overlay will be shown/hidden using fade in/out ||
+|| _opacity_ || `0.75` ||  Opacity of the overlay ||
+|| _z_ || `1` ||  z-index for the overlay ||
 
 == Event Table ==
 || *Name* || *Description* || *Parameters* ||
@@ -15,9 +22,6 @@ Place a semi transparent layer which covers its parent on the page.
 || _beforeRenderEvent_ ||  Fired before the rendering of the overlay ||  ||
 || _onHideEvent_ ||  Fired after the overlay is hidden ||  ||
 || _onShowEvent_ ||  Fired after the overlay is shown ||  ||
-== Properties ==         
-|| *Name* || *Type* || *Description* ||
-
 
 
 == Methods ==                                
@@ -26,6 +30,6 @@ Place a semi transparent layer which covers its parent on the page.
 || `render()` || `void` || Renders the overlay<br /> ||
 || `show()` || `void` || Show the overlay<br /> ||
 
-=== Inherited Configs ===
+=== Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

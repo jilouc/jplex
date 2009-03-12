@@ -29,6 +29,6 @@ There are two rendering methods for this component. Both have advantages and dra
 || *Signature* || *Return Type* || *Description* ||
 || `setPosition()` || `void` || Sets the right absolute position of the image. <br/>Needs to be called if the top/left/width/height css property is changed<br /> ||
 
-=== Inherited Configs ===
+=== Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

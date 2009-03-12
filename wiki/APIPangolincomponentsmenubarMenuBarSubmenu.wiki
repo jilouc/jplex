@@ -13,7 +13,10 @@ MenuBar Submenu
 || _onItemAddEvent_ ||  Event that fires when an item is added to the menu ||   - `item <MenuBar.MenuBarItem>`  the added item <br/>  ||
 == Properties ==         
 || *Name* || *Type* || *Description* ||
-|| _nLevel_ || Integer || `- private `Depth of the submenu<br />(0 for the immediate children of root elements)|||| _oItems_ || Array<MenuBar.MenuBarItem> || `- `Array of submenu items|||| _oParent_ || MenuBar.MenuBarItem || `- private `Reference to the submenu's parent item||
+|| _nLevel_ || Integer || `- private `Depth of the submenu<br />(0 for the immediate children of root elements)||
+|| _oItems_ || Array<MenuBar.MenuBarItem> || `- `Array of submenu items||
+|| _oParent_ || MenuBar.MenuBarItem || `- private `Reference to the submenu's parent item||
+
 
 
 == Methods ==                                

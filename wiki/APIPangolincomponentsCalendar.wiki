@@ -61,6 +61,6 @@ the previous/next month using PageDown/PageUp</li>
 || `show()` || `void` || Makes the calendar container appear, with a fade in effect if configured so<br /> ||
 || `up()` || `void` || Navigate up in the current month, from the currently focused day.<br /> ||
 
-=== Inherited Configs ===
+=== Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

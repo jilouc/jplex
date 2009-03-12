@@ -5,14 +5,16 @@
 = Class *jplex.components.frame.Modal*  _extends [APIPangolincomponentsFrame jplex.components.Frame]_  =
 
 == Description ==
-A preconfigured modal frame class
+A preconfigured modal frame class.
+It configures the overlay shown behind the frame,
+overriding the following configuration parameters:
+<ul>
+<li>`header: false`</li>
+<li>`modal: true`</li>
+<li>`close: jplex.components.Frame.CLOSE_CLICK_OUT`
+</ul>
+(Note: the `modal` parameter is forced to `true`).
 
-== Config Table ==
-|| *Name* || *Default Value* || *Description* ||
-|| _close_ || `jplex.components.Frame.CLOSE_CLICK_OUT` ||  Determine the way the user will close the modal frame ||
-|| _header_ || `false` ||  Flag indicating whether the component has a title bar or not ||
-|| _modal_ || `true` ||  Prevent the user to click outside and add an overlay to focus on the modal frame ||
-|| _zBase_ || `9998` ||  z-index base for the frame and its overlay ||
 
 
 

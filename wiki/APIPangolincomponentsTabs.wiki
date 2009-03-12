@@ -35,6 +35,7 @@ The content has the following form:
 || _{Array} cache_ || object || `- private `The cache stores each tabs's innerHTML when ajaxReload is false||
 
 
+
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
 || `getActiveTab()` || `int` || Returns the current active tab<br /> ||
@@ -44,6 +45,6 @@ The content has the following form:
 || `initAjaxMethod(definition, activeTab)` || `void` || Initialize the Ajax Method: redirect to `handleAjaxMethod`<br />  - `definition <Array>` Same form as `data` from config<br/> - `activeTab <int>` The tab to show<br/>||
 || `initDivMethod(definition, activeTab)` || `void` || Initialize the Div Method : hide the right divs, and show the `activeTab`th one<br />  - `definition <Array>` Same form as `data` from config<br/> - `activeTab <int>` The tab to show<br/>||
 
-=== Inherited Configs ===
+=== Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

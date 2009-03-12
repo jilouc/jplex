@@ -13,6 +13,7 @@ jPlex's XPrototype extended DOM Element
 || _getOffsetParent_ || object || `- `Bug-fixed getOffsetParent (see Prototype Issue #365)||
 
 
+
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
 || `appendChildren(Elements)` || `Element` || Appends all elements listed as arguments to the DOM element<br />  - `Elements <List<Element>>` to add<br/>||

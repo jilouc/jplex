@@ -15,6 +15,7 @@ include inside your page to use jPlex. It will load the packages you need after.
 || _src_ || Array || `- `Array containing the source code of some (or all) javascript file. Used when the sources are packaged in one file.<br />Of course, this array is indexed by the path from the source folder.||
 
 
+
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
 || `extend(clazz, obj)` || `void` || Extends the class by giving static fields. Useful to create inner classes example: Calendar.Item<br />  - `clazz <object>` The full class name<br/> - `obj <object>` The new static field<br/>||

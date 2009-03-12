@@ -39,7 +39,9 @@ component. A common example is the Dialog and the Modal components that are exte
 
 == Properties ==         
 || *Name* || *Type* || *Description* ||
-|| _component_ || Element || `- `The component HTML Element|||| _createdComponent_ || Boolean || `- `If true, the component property has been created during the initialization||
+|| _component_ || Element || `- `The component HTML Element||
+|| _createdComponent_ || Boolean || `- `If true, the component property has been created during the initialization||
+
 
 
 == Methods ==                                

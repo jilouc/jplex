@@ -13,6 +13,7 @@ jPlex's XPrototype extended Date
 || _YEAR_OFFSET_ || Integer || `- static `Offset to get real year since IE, Opera and Firefox<br />return different result for Date.getYear||
 
 
+
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
 || `compareTo(date)` || `Integer` || Compare the date with a given date<br />  - `date <Date>` to compare<br/>||

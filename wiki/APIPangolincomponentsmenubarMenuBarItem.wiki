@@ -17,7 +17,10 @@ If the item is a root element, just shows the submenu ||   - `e <Event>`  <br/> 
 The handlers are identical to those of the menu root ||   - `e <Event>`  <br/>  ||
 == Properties ==         
 || *Name* || *Type* || *Description* ||
-|| _nLevel_ || Integer || `- private `Depth of the item<br />(equal to the depth of the submenu containing the item)|||| _oParent_ || MenuBar.MenuBarSubmenu|MenuBar || `- private `Reference to the item's parent submenu (or the menu root)|||| _sLabel_ || String || `- private `Label of the menu item||
+|| _nLevel_ || Integer || `- private `Depth of the item<br />(equal to the depth of the submenu containing the item)||
+|| _oParent_ || MenuBar.MenuBarSubmenu|MenuBar || `- private `Reference to the item's parent submenu (or the menu root)||
+|| _sLabel_ || String || `- private `Label of the menu item||
+
 
 
 == Methods ==                                

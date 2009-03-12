@@ -53,7 +53,11 @@ Notice that this class is a singleton. Therefore it can't be instantiated twice.
 When an item is added, the handler is copied to the event of the same name of its submenu. ||   - `item <MenuBar.Item>`  the added item <br/>  ||
 == Properties ==         
 || *Name* || *Type* || *Description* ||
-|| _oItems_ || Array || `- `Array containing the root items of the menu bar<br />(initial items AND dynamically added ones)|||| _SOURCE_AJAX_JSON_ || Integer || `- static `Configuration constant indicating that menu items comes from a JSON document|||| _SOURCE_AJAX_XML_ || Integer || `- static `Configuration constant indicating that menu items comes from a XML document|||| _SOURCE_JS_ARRAY_ || Integer || `- static `Configuration constant indicating that menu items comes from a raw JS array||
+|| _oItems_ || Array || `- `Array containing the root items of the menu bar<br />(initial items AND dynamically added ones)||
+|| _SOURCE_AJAX_JSON_ || Integer || `- static `Configuration constant indicating that menu items comes from a JSON document||
+|| _SOURCE_AJAX_XML_ || Integer || `- static `Configuration constant indicating that menu items comes from a XML document||
+|| _SOURCE_JS_ARRAY_ || Integer || `- static `Configuration constant indicating that menu items comes from a raw JS array||
+
 
 
 == Methods ==                                
@@ -65,6 +69,6 @@ When an item is added, the handler is copied to the event of the same name of it
 || `removeItem(nIndex)` || `void` || Removes the item at position nIndex<br />  - `nIndex <nIndex>` Optional. Position of the item<br/>||
 || `render()` || `void` || Renders the menu bar root<br /> ||
 
-=== Inherited Configs ===
+=== Inherited Methods ===
 
  * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 
