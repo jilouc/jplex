@@ -8,13 +8,17 @@
 jPlex's XPrototype extended DOM Element
 
 
+== Properties ==         
+|| *Name* || *Type* || *Description* ||
+|| _getOffsetParent_ || object || `- `Bug-fixed getOffsetParent (see Prototype Issue #365)||
+
 
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
-|| `appendChildren(Elements)` || `Element` || Appends all elements listed as arguments to the DOM element<br />  - `Elements <List<&lt;Element&gt;>` to add||
-|| `bindKey(key, handler, config)` || `void` || <br />  - `key <object>` - `handler <object>` - `config <object>`||
-|| `IEFixCombobox()` || `void` || <br /> ||
-|| `isWithin(x, y)` || `Boolean` || Determines wheter the point of coordinates (x,y) on the page is within the element or not<br />  - `x <Integer>` Horizontal coordinate - `y <Integer>` Vertical coordinate||
+|| `appendChildren(Elements)` || `Element` || Appends all elements listed as arguments to the DOM element<br />  - `Elements <List<Element>>` to add<br/>||
+|| `bindKey(key, handler, config)` || `Element` || Bind a key event on an element<br />  - `key <int>` Key-Code (see Event)<br/> - `handler <Function>`<br/> - `config <Object>` This object is a boolean property hash object containing: `ctrl`, `shift`, `alt` and `preventDefault` (enough explicit)<br/>||
+|| `IEFixCombobox()` || `void` || Inserts a hidden iframe behind the element to correct the Combobox bug (an absolute `div` goes under a comboxbox) <br/>that happens only in Internet Explorer 6. The Calendar component exploits this function to fix the bug for instance.<br /> ||
+|| `isWithin(x, y)` || `Boolean` || Determines wheter the point of coordinates (x,y) on the page is within the element or not<br />  - `x <Integer>` Horizontal coordinate<br/> - `y <Integer>` Vertical coordinate<br/>||
 || `removeChildren()` || `Element` || Removes all children of the element<br /> ||
-|| `unbindKey(key, modifiers)` || `void` || <br />  - `key <object>` - `modifiers <object>`||
+|| `unbindKey(key, modifiers)` || `Element` || Unbind a key on the element<br />  - `key <int>` Key-Code (see Event)<br/> - `modifiers <Object>` Same form as `config` in `bindKey`<br/>||
 

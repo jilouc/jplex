@@ -5,7 +5,7 @@
 Element.addMethods({
     /**
      * Appends all elements listed as arguments to the DOM element
-     * @param {List<&lt;Element&gt;} Elements to add
+     * @param {List<Element>} Elements to add
      * @return {Element} the extended DOM Element
      */
     appendChildren: function(element) {
@@ -46,10 +46,11 @@ Element.addMethods({
     },
 
     /**
-     *
-     * @param key
-     * @param handler
-     * @param config
+     * Bind a key event on an element
+     * @param {int} key Key-Code (see Event)
+     * @param {Function} handler
+     * @param {Object} config This object is a boolean property hash object containing: `ctrl`, `shift`, `alt` and `preventDefault` (enough explicit)
+     * @return {Element} The element
      */
     bindKey: function(element, key, handler, config) {
         element = $(element);
@@ -117,9 +118,10 @@ Element.addMethods({
     },
 
     /**
-     *
-     * @param key
-     * @param modifiers
+     * Unbind a key on the element
+     * @param {int} key Key-Code (see Event) 
+     * @param {Object} modifiers Same form as `config` in `bindKey`
+     * @return {Element} The element
      */
     unbindKey: function(element, key, modifiers) {
         element = $(element);
@@ -139,7 +141,8 @@ Element.addMethods({
     },
 
     /**
-     * 
+     * Inserts a hidden iframe behind the element to correct the Combobox bug (an absolute `div` goes under a comboxbox) 
+     * that happens only in Internet Explorer 6. The Calendar component exploits this function to fix the bug for instance. 
      */
     IEFixCombobox: function(element) {
         if(Prototype.Browser.IE6) {
@@ -165,6 +168,9 @@ Object.extend(document, {
 
 if(Prototype.Browser.IE) {
     Element.addMethods({
+        /**
+         * Bug-fixed getOffsetParent (see Prototype Issue #365)
+         */
         getOffsetParent : Element.Methods.getOffsetParent.wrap(
             /* Fixing Prototype Issue #365 Element#getStyle problem with IE 6 & 7
                (IE returns 'html' node as parent for absolutely positioned elements

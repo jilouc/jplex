@@ -9,6 +9,10 @@ Item representing one cell of the calendar (i.e. one day)
 Store the corresponding HTML element and date and handle focus and select events.
 
 
+== Properties ==         
+|| *Name* || *Type* || *Description* ||
+
+
 
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
@@ -17,5 +21,5 @@ Store the corresponding HTML element and date and handle focus and select events
 || `getCell()` || `Element` || Get the cell (td) element representing the item<br /> ||
 || `getDate()` || `Date` || Get the date of the item<br /> ||
 || `getIndex()` || `Integer` || Get the index of the item in the table<br /> ||
-|| `select(e, click)` || `void` || Selects the date corresponding to the item<br />  - `e <Event>` - `click <bool>` true if the selection results from a click on the cell||
+|| `select(e, click)` || `void` || Selects the date corresponding to the item<br />  - `e <Event>`<br/> - `click <bool>` true if the selection results from a click on the cell<br/>||
 

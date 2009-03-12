@@ -9,8 +9,9 @@ jPlex's XPrototype extended String
 
 
 
+
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
-|| `lpad(length, character)` || `void` || Completes a string to a desired length with a character repeted to the left<br />  - `length <Integer>` Desired length of the result string - `character <String>` Optional. Character used to complete the string. Default is a blank space.||
-|| `rpad(length, character)` || `String` || Completes a string to a desired length with a character repeted to the right<br />  - `length <Integer>` Desired length of the result string - `character <String>` Optional. Character used to complete the string. Default is a blank space.||
+|| `lpad(length, character)` || `void` || Completes a string to a desired length with a character repeted to the left<br />  - `length <Integer>` Desired length of the result string<br/> - `character <String>` Optional. Character used to complete the string. Default is a blank space.<br/>||
+|| `rpad(length, character)` || `String` || Completes a string to a desired length with a character repeted to the right<br />  - `length <Integer>` Desired length of the result string<br/> - `character <String>` Optional. Character used to complete the string. Default is a blank space.<br/>||
 

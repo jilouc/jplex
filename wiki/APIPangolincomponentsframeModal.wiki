@@ -15,3 +15,4 @@ A preconfigured modal frame class
 || _zBase_ || `9998` ||  z-index base for the frame and its overlay ||
 
 
+

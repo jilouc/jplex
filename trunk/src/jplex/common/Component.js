@@ -10,14 +10,17 @@ jPlex.include('jplex.xprototype.*');
  * You'll need to initialize it by calling in the constructor
  *      <code>$super(eSrc, oConfig);</code>
  * And you need to define a private property object <em>_definition</em> containing at least the name of the component.
- * Here is a complete example of a class:
+ * Here is a complete example of a component:
  *
  * {{{
  * jPlex.provide('jplex.components.A', 'jplex.common.Component', {
  *     _definition: {
  *         name: 'A', // Name
- *         defaultConfig: {...} // The default config available in this.cfg('...')
- *         text: { fr: {...}, en:{...} } // Global labels for this components
+ *         defaultConfig: { // The default config available in this.cfg('...')
+ *             ...
+ *             events: {...} // Custom Events
+ *         }
+ *         text: { fr: {...}, en: {...} } // Global labels for this components
  *     },
  *     initialize: function($super, eSrc, oConfig) {
  *         $super(eSrc, oConfig);
@@ -26,6 +29,11 @@ jPlex.include('jplex.xprototype.*');
  *     ...
  * }
  * }}}
+ * 
+ * You can also define an *extension* of another component by setting the private property object `_extension` rather
+ * than `_definition`. In this case, the definition will be taken from the mother component and refined by the child
+ * component. A common example is the Dialog and the Modal components that are extensions of the Frame component.
+ * 
  * @param {Element} eElement The HTML Element on which the component acts
  * @param {Object} oConfig The configuration object
  * @class Component

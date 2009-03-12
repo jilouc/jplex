@@ -1,29 +1,13 @@
 /**
  * This component is a little utility that adds a simple image in a container that appears only on mouse over.
- * It is useful in cases of optional actions that spams the render if they are all visible.<br/>
+ * It is useful in cases of optional actions that spams the render if they are all visible.
  * 
  * There are two rendering methods for this component. Both have advantages and drawbacks: <ul>
  *  <li>float:    Use of the css float property to display the image. The component accepts only two positions 'left'
  *                and 'right'. </li>
  *  <li>absolute: Use of the css position absolute property. Can take all position wanted but can not accepts 
  *                multiples components on one single container</li></ul>
- * 
- * <table class='config'>
- *      <tr><td>position</td><td>top-right</td>
- *          <td>Defines the position of the image. 
- *              The different positions can be set with bottom, top, center and left, right. 
- *              You can do combination with a caret '-', like 'bottom-left'.</td></tr>
- *      <tr><td>style</td><td>false</td>
- *          <td>Indicates the css style to use (must be defined if img is not)</td></tr>
- *      <tr><td>img</td><td>false</td>
- *          <td>Indicates the url of the image to show (must be defined if style is not)</td></tr>   
- *      <tr><td>onClick</td><td>false</td>
- *          <td>Binds the click event on the image.</td></tr>            
- *      <tr><td>method</td><td>absolute</td>
- *          <td>See before...</td></tr>          
- *      <tr><td>padding</td><td>4</td>
- *          <td>Number of pixels to escape from the border</td></tr>
- * </table>      
+ *      
  * @param {Element} eElement The container HTML Element 
  * @param {Object} oConfig The configuration object
  * @class MouseOverImage
@@ -34,11 +18,43 @@ jPlex.provide('jplex.components.MouseOverImage', 'jplex.common.Component', {
     _definition: {
         name: 'MouseOverImage',
         defaultConfig: {
+            /**
+             * Defines the position of the image. 
+             * The different positions can be set with bottom, top, center and left, right.
+             * You can do combination with a caret '-', like 'bottom-left'.
+             * @config position
+             * @default "top-right"
+             */
             position:'top-right',
+            /**
+             * Indicates the css style to use (must be defined if img is not)
+             * @config style
+             * @default false
+             */
             style:false,
+            /**
+             * Indicates the url of the image to show (must be defined if style is not)
+             * @config img
+             * @default false
+             */
             img:false,
+            /**
+             * Binds the click event on the image.
+             * @config onClick
+             * @default false
+             */
             onClick: false,
+            /**
+             * See before...
+             * @config method
+             * @default "absolute"
+             */
             method: 'absolute',
+            /**
+             * Number of pixels to escape from the border
+             * @config padding
+             * @default 4
+             */
             padding: 4
         },
         defaultContainer: "div"

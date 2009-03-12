@@ -1,6 +1,6 @@
 /**
  * Global class that manipulates the global language and local settings. We define components on it corresponding to
- * some parts of the locales. The defined components are for now: 'Date', ...
+ * some parts of the locales. The defined components are for now: 'Date' (and that's all)
  * @class Locale
  * @namespace jplex.common
  * @static

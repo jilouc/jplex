@@ -9,9 +9,10 @@ Logger class. Is binded with firebug.
 
 
 
+
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
-|| `error(e)` || `void` || Logs an error inside firebug<br />  - `e <String>` The message||
-|| `log(e)` || `void` || Logs a message inside firebug<br />  - `e <String>` The message||
-|| `warning(e)` || `void` || Logs a warning inside firebug<br />  - `e <String>` The message||
+|| `error(e)` || `void` || Logs an error inside firebug<br />  - `e <String>` The message<br/>||
+|| `log(e)` || `void` || Logs a message inside firebug<br />  - `e <String>` The message<br/>||
+|| `warning(e)` || `void` || Logs a warning inside firebug<br />  - `e <String>` The message<br/>||
 

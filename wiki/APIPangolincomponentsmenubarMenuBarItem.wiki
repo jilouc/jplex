@@ -15,11 +15,15 @@ Call the user custom function
 If the item is a root element, just shows the submenu ||   - `e <Event>`  <br/>  ||
 || __onMouseOver_ ||  Fires when the mouse enters the item
 The handlers are identical to those of the menu root ||   - `e <Event>`  <br/>  ||
+== Properties ==         
+|| *Name* || *Type* || *Description* ||
+|| _nLevel_ || Integer || `- private `Depth of the item<br />(equal to the depth of the submenu containing the item)|||| _oParent_ || MenuBar.MenuBarSubmenu|MenuBar || `- private `Reference to the item's parent submenu (or the menu root)|||| _sLabel_ || String || `- private `Label of the menu item||
+
 
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
 || `get()` || `Element` || Get the <code>&lt;li&gt;</code> HTMLElement of the item, extended by Prototype's Element.extend<br /> ||
 || `getSubmenu()` || `MenuBar.Submenu` || Get the submenu of the item (not its containing submenu)<br /> ||
 || `initialize()` || `void` || Custom function called when the menu item is activated (on click or keyboard shortcut)<br /> ||
-|| `render(oItems, oShortcut)` || `void` || Renders the menu item (and creates all submenus)<br />  - `oItems <Array>` The sub-items of the item, defining its submenu - `oShortcut <Object>` Keyboard Shortcut information||
+|| `render(oItems, oShortcut)` || `void` || Renders the menu item (and creates all submenus)<br />  - `oItems <Array>` The sub-items of the item, defining its submenu<br/> - `oShortcut <Object>` Keyboard Shortcut information<br/>||
 

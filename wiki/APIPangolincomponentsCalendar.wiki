@@ -40,23 +40,24 @@ the previous/next month using PageDown/PageUp</li>
 || _onSelectEvent_ ||  When a new date is selected ||   - `date <Date>`  The selected date <br/>  ||
 || _onShowEvent_ ||  When the calendar appears (textfield receiving focus for instance) ||  ||
 
+
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
 || `down()` || `void` || Navigate down in the current month, from the currently focused day.<br /> ||
 || `getFocusedItem()` || `Calendar.CalendarItem` || Get the currently focused item of the calendar<br /> ||
-|| `getFormattedValue(format)` || `void` || Get the current date string representation, formatted with the given<br/>pattern. If no pattern is given, uses the "dateFormat" configuration parameter.<br />  - `format <object>`||
+|| `getFormattedValue(format)` || `void` || Get the current date string representation, formatted with the given<br/>pattern. If no pattern is given, uses the "dateFormat" configuration parameter.<br />  - `format <object>`<br/>||
 || `getSelectedItem()` || `Calendar.CalendarItem` || Get the currently selected item of the calendar<br /> ||
 || `getTextField()` || `Element` || Get the targetted text field of the calendar (null if not set)<br /> ||
-|| `goTo(month, year)` || `void` || Change the page of the calendar to the specified month and year<br />  - `month <Integer>` New month (optional) - `year <Integer>` New year (optional)||
+|| `goTo(month, year)` || `void` || Change the page of the calendar to the specified month and year<br />  - `month <Integer>` New month (optional)<br/> - `year <Integer>` New year (optional)<br/>||
 || `hide()` || `void` || Makes the calendar disappear, with a fade out effect if configured so<br /> ||
 || `left()` || `void` || Navigate to the left in the current month, from the currently focused day.<br /> ||
 || `next()` || `void` || Go to the next month<br /> ||
 || `previous()` || `void` || Go to the previous month<br /> ||
 || `render()` || `void` || Render the calendar for the current month<br /> ||
 || `right()` || `void` || Navigate to the right in the current month, from the currently focused day.<br /> ||
-|| `select(index)` || `void` || Explicitly selects the index'th cell in the calendar<br />  - `index <Integer>` Index of the cell to select (0 to oItems.length)||
-|| `setFocusedItem(oItem)` || `void` || Sets the current focused item of the calendar (the one that would be selected)<br />  - `oItem <Calendar.CalendarItem>` calendar item to be marked as focused||
-|| `setSelectedItem(oItem)` || `void` || Sets the current selected item of the calendar<br />  - `oItem <Calendar.CalendarItem>` calendar item to be marked as selected||
+|| `select(index)` || `void` || Explicitly selects the index'th cell in the calendar<br />  - `index <Integer>` Index of the cell to select (0 to oItems.length)<br/>||
+|| `setFocusedItem(oItem)` || `void` || Sets the current focused item of the calendar (the one that would be selected)<br />  - `oItem <Calendar.CalendarItem>` calendar item to be marked as focused<br/>||
+|| `setSelectedItem(oItem)` || `void` || Sets the current selected item of the calendar<br />  - `oItem <Calendar.CalendarItem>` calendar item to be marked as selected<br/>||
 || `show()` || `void` || Makes the calendar container appear, with a fade in effect if configured so<br /> ||
 || `up()` || `void` || Navigate up in the current month, from the currently focused day.<br /> ||
 

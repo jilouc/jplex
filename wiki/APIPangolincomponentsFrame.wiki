@@ -9,4 +9,8 @@ Window component.
 Blablabla
 
 
+== Properties ==         
+|| *Name* || *Type* || *Description* ||
+|| _list_ || Array || `- static `||
+
 

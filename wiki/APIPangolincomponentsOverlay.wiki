@@ -15,6 +15,10 @@ Place a semi transparent layer which covers its parent on the page.
 || _beforeRenderEvent_ ||  Fired before the rendering of the overlay ||  ||
 || _onHideEvent_ ||  Fired after the overlay is hidden ||  ||
 || _onShowEvent_ ||  Fired after the overlay is shown ||  ||
+== Properties ==         
+|| *Name* || *Type* || *Description* ||
+
+
 
 == Methods ==                                
 || *Signature* || *Return Type* || *Description* ||
