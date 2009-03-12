@@ -597,6 +597,10 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     _constrainToSize: function() {
 
         // TODO Foire sur Opera visiblement (cf code-snippet)
+        if(Prototype.Browser.Opera) {
+            return;
+        }
+
         var bd = this._body;
 
         var dimensions = {
@@ -637,7 +641,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             });
         }
 
-        if (true || Prototype.Browser.IE) {
+        if (Prototype.Browser.IE) {
 
             if (this.cfg("minWidth") && this.cfg("minWidth") > dimensions.frame.width) {
                 bd.setStyle({
