@@ -1,0 +1,34 @@
+#summary Class API for FrameSet from module Components
+#labels Class-jplex.components.frame.FrameSet,Release-Pangolin,Module-Components,API-Class
+#sidebar APIPangolincomponentsIndex
+
+= Class *jplex.components.frame.FrameSet*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
+
+== Description ==
+Creates a set of Frames.
+This component is a kind of windows manager since it handles the
+interaction between the different frames you've added.
+<p>
+Since Modal windows are `modal` (sic), it makes no sense to add a modal
+frame to the frame set: a modal frame doesn't interact with any other frame, it is modal.
+Even if there is no code-limitation about that, it leads to strange
+behaviors sometimes. Just avoid it.
+
+== Config Table ==
+|| *Name* || *Default Value* || *Description* ||
+|| _overlay_ || `false` ||  Show an overlay behind the whole frame set if `true` ||
+|| _overlayColor_ || `"#000000" (black)` ||  Color of the overlay (only if `overlay` is `true`) ||
+|| _overlayOpacity_ || `0.6` ||  Opacity of the overlay (only if `overlay` is `true`) ||
+
+== Event Table ==
+|| *Name* || *Description* || *Parameters* ||
+|| _onAddFrameEvent_ ||  When a frame is added to the group ||   - `frame <jplex.components.Frame>`  the window that has been added <br/>  ||
+
+
+== Methods ==                                
+|| *Signature* || *Return Type* || *Description* ||
+|| `add(Id)` || `jplex.components.Frame` || Add a new frame to the frame set. You can either supply a string to create<br/>a new component or an existing Frame component.<br/>The 'new' frame is extended and receives a new method (`toFront`) to handle<br/>the relative positioning between the frames of the set.<br />  - `Id <jplex.components.Frame|String>` of the new window to create,<br/>or Frame component to be added to the frame set.<br/>||
+
+=== Inherited Methods ===
+
+ * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 
