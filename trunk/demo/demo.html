@@ -51,11 +51,11 @@
     jPlex.include("jplex.components.MenuBar");
     jPlex.include('jplex.components.Frame');
     jPlex.include('jplex.components.frame.Modal');
-    jPlex.include('jplex.components.frame.WindowsGroup');
+    jPlex.include('jplex.components.frame.FrameSet');
     jPlex.include('jplex.components.Tabs');
     jPlex.include('jplex.components.MouseOverImage');
 
-    var g = new WindowsGroup('test');
+    var g = new FrameSet('test');
     var first = new Frame('what', {
         close: Frame.CLOSE_CUSTOM,
         ajax: "./global/home.html",

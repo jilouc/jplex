@@ -115,6 +115,9 @@ jPlex.provide('jplex.common.Component', {
         cfg = Object.extend(cfg, oConfig);
         cfg.events = null;
 
+        var text = this._extension ? this._extension.text || {} : {};
+        Object.extendRecursive(this._definition.text, text);
+
         this._oConfig = new jplex.common.Config(cfg);
         this._oEvents = $H();
 
