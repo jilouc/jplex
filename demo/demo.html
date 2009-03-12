@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="../src/jplex/components/menubar/assets/menubar.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/frame/assets/frame.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/tabs/assets/tabs.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar.css" type="text/css"/>
+    <!--[if IE 6]><link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar-ie6.css" type="text/css"/><![endif]-->
     <link rel="stylesheet" href="./global/styles.css" type="text/css"/>
     <script src="../src/jPlex.js" type="text/javascript" charset="utf-8">
     </script>
@@ -54,6 +56,7 @@
     jPlex.include('jplex.components.frame.FrameSet');
     jPlex.include('jplex.components.Tabs');
     jPlex.include('jplex.components.MouseOverImage');
+    jPlex.include('jplex.components.Calendar');
 
     var g = new FrameSet('test');
     var first = new Frame('what', {
@@ -62,7 +65,8 @@
         draggable: true,
         title: "Welcome!",
         footer: true,
-        overflow:"auto"
+        overflow: "auto",
+        maxWidth: 800
     });
     first.setFooter("<span id='code-snippet'>Click to get some information about the code used in the current page</span> "+
                     "<img src='./global/img/131.png' align='absmiddle' alt='' /> " +

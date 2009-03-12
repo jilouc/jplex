@@ -362,7 +362,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                             this.makeCentered();
                             var pos = this.component.cumulativeOffset();
                             this._constrainToViewport(pos.left, pos.top, this._drag);
-                            this._constrainToSize.bind(this).delay(0);
+                            this._constrainToSize();
                         }
                     }.bindAsEventListener(this, img, i));
                     if (Prototype.Browser.Opera) {
@@ -626,7 +626,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         }
         if (this.cfg("maxWidth")) {
             maxW = this.cfg("maxWidth") - dimensions.fixed.width;
-            bd.setStyle({
+            this.component.setStyle({
                 maxWidth: maxW + "px"
             });
         }
@@ -637,7 +637,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             });
         }
 
-        if (Prototype.Browser.IE) {
+        if (true || Prototype.Browser.IE) {
 
             if (this.cfg("minWidth") && this.cfg("minWidth") > dimensions.frame.width) {
                 bd.setStyle({
@@ -650,7 +650,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                 });
             }
             if (this.cfg("maxWidth") && this.cfg("maxWidth") < dimensions.frame.width) {
-                bd.setStyle({
+                this.component.setStyle({
                     width: (this.cfg("maxWidth") - dimensions.fixed.width) + "px"
                 });
             }
