@@ -68,6 +68,7 @@ jPlex.provide('jplex.components.Tabs', 'jplex.common.Component', {
             activeTab: 0,
             events: {
                 /**
+                 * Well named event which is triggered after the tab switch
                  * @event onSwitchEvent
                  * @param {Array} oldContent The content field from <em>data</em> that corresponds to the tab the user just quitted  
                  * @param {Array} newContent The content field from <em>data</em> that corresponds to the tab the user just selected
@@ -79,7 +80,8 @@ jPlex.provide('jplex.components.Tabs', 'jplex.common.Component', {
     },
     /**
      * The cache stores each tabs's innerHTML when ajaxReload is false 
-     * @property {Array} cache
+     * @property cache
+     * @type Array<String>
      * @private
      */
     cache: $A(),

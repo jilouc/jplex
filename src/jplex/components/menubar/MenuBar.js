@@ -1,14 +1,14 @@
 jPlex.include('jplex.components.menubar.MenuBarItem', false);
 /**
- * @description MenuBar component
+ * @description !MenuBar component
  * Place a nice menu bar on your page. It's designed as 
  * the classical menu bars in applications.
  * It is possible to link events on terminal items. 
  * As an additional feature, you could specify a key shortcut
  * for this event.
  * The source for the menu items could be either:
- *  <ul>
- *  <li>a raw JS array. The definition of an item looks like:
+ * <ul>
+ * <li>a raw JS array. The definition of an item looks like:
  *  <pre>{ 
  *    name:"Item",
  *    click: clickHandler, //Reference to the function to be called at click
@@ -21,6 +21,7 @@ jPlex.include('jplex.components.menubar.MenuBarItem', false);
  *    items: [{...},{...},...] // Array of subitems
  * }</pre></li>
  * <li>XML document, fetched with Ajax.Request, with the following scheme:
+ * {{{
  * <xmp>
  *     <menubar>
  *        <item name="Item" icon="path/to/icon.png">
@@ -32,7 +33,8 @@ jPlex.include('jplex.components.menubar.MenuBarItem', false);
  *                 ...
  *             </items>
  *         </item>
- *     </menubar></xmp></li>
+ *     </menubar></xmp>
+ * }}}</li>
  * <li>JSON document, fetched with Ajax.Request 
  * (exactly similar to the syntax of the JS Array)</li>
  * </ul>

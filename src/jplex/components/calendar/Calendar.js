@@ -4,7 +4,8 @@ jPlex.include("jplex.components.calendar.CalendarItem", false);
 /**
  * @description Calendar component class.
  * Create a browsable calendar from a text field, a button or directly on the page.
- * <p>Main features:
+ * 
+ * <strong>Main features</strong>:
  * <ul>
  * <li>Link the calendar to a simple text input (appears on focus), to a button (appears on click)
  * and a text field. You could also use whichever control you want and specify the behavior with custom events.</li>
@@ -65,14 +66,14 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             titleFormat: "{M} {Y}",
             /**
              * Time in seconds to show/hide the popup calendar.
-             * Set to 0 or <code>false</code> to disable fade in/out.
+             * Set to 0 or `false` to disable fade in/out.
              * @config fade
              * @default 0.3
              */
             fade: 0.3,
             /**
              * The textfield linked with the calendar (edited when a new date is selected)
-             * (see the <code>source</code> configuration parameter for more details)
+             * (see the `source` configuration parameter for more details)
              * @config textField
              * @default null
              */
@@ -81,19 +82,19 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
              * The event source, can be a textfield or a button for example
              * The source element for the calendar. Use one of the following configuration:
              * <ul>
-             * <li><code>textField = null, source = a text field</code> : links the calendar to a single text field</li>
-             * <li><code>textField = a text field, source = a button</code> : links the calendar to a button, the result
+             * <li>`textField = null, source = a text field`: links the calendar to a single text field</li>
+             * <li>`textField = a text field, source = a button`: links the calendar to a button, the result
              * will be printed in the textfield</li>
-             * <li><code>textField = null, source = a button</code> : links the calendar to a button, use the custom event
+             * <li>`textField = null, source = a button`: links the calendar to a button, use the custom event
              * onSelectEvent to catch the selected date and do what you want with it</li>
-             * <li><code>textField = null, source = null</code> : just show a calendar without show/hide things</li>
-             * </li>
+             * <li>`textField = null, source = null`: just show a calendar without show/hide things</li>
+             * </ul>
              * @config source
              * @default null
              */
             source: null,
             /**
-             * If set to <code>true</code>, a click on the title of the calendar (month or year)
+             * If set to `true`, a click on the title of the calendar (month or year)
              * will pop up a tooltip allowing the user to set a value for the month
              * (or the year) using combo-boxes
              * @config fastBrowse
