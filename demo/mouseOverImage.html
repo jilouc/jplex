@@ -54,9 +54,9 @@
 	new MouseOverImage('test', {img:"img/button.png", position:'left'});
 	new MouseOverImage('test', {img:"img/button.png", position:'top-left'});
 	new MouseOverImage('test', {img:"img/button.png", position:'top'});
-	new MouseOverImage('test', {img:"img/button.png", position:'center', onClick: function() {
-	    alert("Right in the middle!");
-	}});  
+	new MouseOverImage('test', {img:"img/button.png", position:'center', events: {
+	    onClickEvent: function() {alert("Right in the middle!")}} 
+	});
             </textarea>
         </td>
     </tr>
@@ -74,9 +74,9 @@
 	new MouseOverImage('test', {img:"img/button.png", position:'left'});
 	new MouseOverImage('test', {img:"img/button.png", position:'top-left'});
 	new MouseOverImage('test', {img:"img/button.png", position:'top'});
-	new MouseOverImage('test', {img:"img/button.png", position:'center', onClick: function() {
-	    alert("Right in the middle!");
-	}});
+	new MouseOverImage('test', {img:"img/button.png", position:'center', events: {
+	    onClickEvent: function() {alert("Right in the middle!")}} 
+	});
     -->
 </script>
 </body>
