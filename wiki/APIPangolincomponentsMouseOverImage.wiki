@@ -21,7 +21,7 @@ multiples components on one single container</li>
 <tr><td> *Name* </td><td> *Default Value* </td><td> *Description* </td></tr>
 <tr><td> _img_ </td><td> `false` </td><td>  Indicates the url of the image to show (must be defined if style is not) </td></tr>
 <tr><td> _method_ </td><td> `"absolute"` </td><td>  See before... </td></tr>
-<tr><td> _onClick_ </td><td> `false` </td><td>  Binds the click event on the image. </td></tr>
+<tr><td> _onClickEvent_ </td><td> `false` </td><td>  Binds the click event on the image. </td></tr>
 <tr><td> _padding_ </td><td> `4` </td><td>  Number of pixels to escape from the border </td></tr>
 <tr><td> _position_ </td><td> `"top-right"` </td><td>  Defines the position of the image. 
 The different positions can be set with bottom, top, center and left, right.

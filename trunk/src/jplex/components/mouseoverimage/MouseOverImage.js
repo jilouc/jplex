@@ -41,12 +41,6 @@ jPlex.provide('jplex.components.MouseOverImage', 'jplex.common.Component', {
              */
             img:false,
             /**
-             * Binds the click event on the image.
-             * @config onClick
-             * @default false
-             */
-            onClick: false,
-            /**
              * See before...
              * @config method
              * @default "absolute"
@@ -58,6 +52,14 @@ jPlex.provide('jplex.components.MouseOverImage', 'jplex.common.Component', {
              * @default 4
              */
             padding: 4
+        },            
+        events: {
+            /**
+             * Binds the click event on the image.
+             * @config onClickEvent
+             * @default false
+             */
+            onClickEvent: Prototype.emptyFunction
         },
         defaultContainer: "div"
     },
@@ -94,6 +96,7 @@ jPlex.provide('jplex.components.MouseOverImage', 'jplex.common.Component', {
             this.eImg.setStyle({position:'absolute'});
             this.setPosition();
         }
+        return this;
     },
     /**
      * Sets the right absolute position of the image. 
@@ -149,11 +152,10 @@ jPlex.provide('jplex.components.MouseOverImage', 'jplex.common.Component', {
      * @private
      */
     _bindEvents: function() {
-        var e = this.eImg;
-        var onclick;
-        if (onclick = this.cfg('onClick')) {
+        var e = this.eImg;      
+        if (this.getEvent("onClickEvent") !== Prototype.emptyFunction) {  
             e.setStyle({cursor:'pointer'});
-            e.observe('click', onclick);
+            e.observe('click', this.getEvent("onClickEvent"));
         }
         this.component.observe('mouseover', function() {
             this.eImg.show();
