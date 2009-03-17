@@ -13,7 +13,7 @@ jPlex's XPrototype extended Date
 == Properties ==
 <table border="1" cellspacing="0" cellpadding="5">        
 <tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
-<tr><td> _YEAR_OFFSET_ </td><td> Integer </td><td> `static ` Offset to get real year since IE, Opera and Firefox
+<tr><td> _YEAR_OFFSET_ </td><td> `Integer` </td><td> `static  `  Offset to get real year since IE, Opera and Firefox
 return different result for Date.getYear</td></tr>
 
 </table>

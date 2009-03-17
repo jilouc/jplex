@@ -93,10 +93,10 @@ Use in combination with maxWidth/maxHeight.
 == Properties ==
 <table border="1" cellspacing="0" cellpadding="5">        
 <tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
-<tr><td> _CLOSE_BUTTON_ </td><td> String </td><td> `static ` Configuration constant: use a button to close the frame</td></tr>
-<tr><td> _CLOSE_CLICK_OUT_ </td><td> String </td><td> `static ` Configuration constant: the frame is closed when the user clicks outside</td></tr>
-<tr><td> _CLOSE_CUSTOM_ </td><td> String </td><td> `static ` Configuration constant: you decide when the frame is shown/hidden</td></tr>
-<tr><td> _list_ </td><td> Array </td><td> `static ` Array of references to all window components used (useful to set z-indices)</td></tr>
+<tr><td> _CLOSE_BUTTON_ </td><td> `String` </td><td> `static  `  Configuration constant: use a button to close the frame</td></tr>
+<tr><td> _CLOSE_CLICK_OUT_ </td><td> `String` </td><td> `static  `  Configuration constant: the frame is closed when the user clicks outside</td></tr>
+<tr><td> _CLOSE_CUSTOM_ </td><td> `String` </td><td> `static  `  Configuration constant: you decide when the frame is shown/hidden</td></tr>
+<tr><td> _list_ </td><td> `Array` </td><td> `static  `  Array of references to all window components used (useful to set z-indices)</td></tr>
 
 </table>
 

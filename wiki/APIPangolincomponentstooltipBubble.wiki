@@ -5,7 +5,19 @@
 = Class *jplex.components.tooltip.Bubble*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
 
 == Description ==
-Bubble component
+Bubble component, only used by the Tooltip component.
 
+This is a Bubble div that will created to help the user. No event will be taken in charge, it's Tooltip responsibility
+
+== Config Table ==
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Default Value* </td><td> *Description* </td></tr>
+<tr><td> _fade_ </td><td> `0.2` </td><td>  Sets the length of the fade effect in seconds (do not use a too large value, it'll be crap) </td></tr>
+<tr><td> _position_ </td><td> `"top-right"` </td><td>  Sets the position of the bubble relative to the source component. This parameter must be expressed 
+as a join of two strings. The first one is the vertical align (`top` or `bottom`) and the second is 
+the horizontal align (`left` or `right`) </td></tr>
+<tr><td> _shadeWidth_ </td><td> `1` </td><td>  The bubble has a `div` shade, with this little parameter you can configure how to render it </td></tr>
+<tr><td> _zIndex_ </td><td> `99` </td><td>  Sets the zIndex of the bubble </td></tr>
+</table>
 
 

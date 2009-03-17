@@ -5,7 +5,7 @@
  * <ul>
  * <li>`header: false`</li>
  * <li>`modal: true`</li>
- * <li>`close: jplex.components.Frame.CLOSE_CLICK_OUT`
+ * <li>`close: jplex.components.Frame.CLOSE_CLICK_OUT`</li>
  * </ul>
  * (Note: the `modal` parameter is forced to `true`).
  * 
@@ -19,7 +19,7 @@ jPlex.provide("jplex.components.frame.Modal", "jplex.components.Frame", {
         defaultConfig: {
             header:false,
             modal:true,
-            close: jplex.components.Frame.CLOSE_CLICK_OUT,
+            close: jplex.components.Frame.CLOSE_CLICK_OUT
         }
     },
 

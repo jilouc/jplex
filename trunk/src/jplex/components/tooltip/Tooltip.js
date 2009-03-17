@@ -1,6 +1,8 @@
 jPlex.include('jplex.components.tooltip.Bubble', true);
 /**
- * Tooltip component.
+ * Tooltip component
+ * 
+ * This simple component is commonly used to create <em>help</em> tips on a page.  
  * @class Tooltip
  * @extends jplex.common.Component
  * @requires tooltip.Bubble
@@ -10,17 +12,60 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 	_definition: {
 		name: "Tooltip",
 		defaultConfig: {
-			text: "Tooltip",
+            /**
+             * Inner text of the bubble. You can put HTML code if you want
+             * @config text
+             * @default ""
+             */
+			text: "",
+            /**
+             * Sets the position of the bubble relative to the source component. This parameter must be expressed 
+             * as a join of two strings. The first one is the vertical align (`top` or `bottom`) and the second is 
+             * the horizontal align (`left` or `right`)
+             * @config position
+             * @default "top-right"
+             */
 			position: "top-right",
+            /**
+             * The bubble has a `div` shade, with this little parameter you can configure how to render it
+             * @config shadeWidth
+             * @default 1
+             */
             shadeWidth: 1,
+            /**
+             * Sets the trigger type to show/hide the bubble. The three types of triggers are defined in the static
+             * properties
+             * @config trigger
+             * @default Tooltip.TRIGGER_MOUSEOVER
+             */
             trigger: "mouseover", // jplex.components.Tooltip.TRIGGER_MOUSEOVER
-            positionRatio: 0.83
+            /**
+             * Sets the position of the bubble compared to the element. This ratio is the x-position of the pin related 
+             * to the beginning (or end) of the element divided by the width of the element
+             * @config positionRatio
+             * @default 0.83
+             */
+            positionRatio: 0.83,
+            /**
+             * Sets the zIndex of the bubble
+             * @config zIndex
+             * @default 99
+             */
+            zIndex: 99
         },
         events: {
+            /**                   
+             * Fired after showing the component
+             * @event onShowEvent
+             */
             onShowEvent: Prototype.emptyFunction,
+            
+            /**
+             * Fired after hiding the component
+             * @event onHideEvent
+             */
             onHideEvent: Prototype.emptyFunction
         },
-        // TODO Doc
         defaultContainer:"span",
         text: {
 			fr: {}, en: {}
@@ -50,6 +95,9 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
         }
 	},
 
+    /**
+     * Renders the bubble and hide it
+     */
 	render: function() {
 		this.component.addClassName("jplex-bubbler");
         
@@ -58,7 +106,8 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 		this.oBubble = new jplex.components.tooltip.Bubble(div, {
 			pin: this.cfg("position"),
             shadeWidth: this.cfg("shadeWidth"),
-            positionRatio: this.cfg("positionRatio")
+            positionRatio: this.cfg("positionRatio"),
+            zIndex: this.cfg("zIndex")
         });
 		this.oBubble.setBody(this.cfg("text"));
 		this.oBubble.hide();
@@ -92,11 +141,19 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 		this.oBubble.hide();
 	},
 
+    /**
+     * Shows the bubble 
+     * @param e `unused` Click event
+     */
     show: function(e) {
         this._onMouseOver(e);
         this.fireEvent("onShowEvent");
     },
-
+      
+    /**
+     * Hides the bubble 
+     * @param e `unused` Click event
+     */
     hide: function(e) {
         this._onMouseOut(e);
         this.fireEvent("onHideEvent");
@@ -107,8 +164,25 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 // Static properties
 
 jPlex.extend('jplex.components.Tooltip', {
-
+    /**
+     * The bubble will be shown if the element is hovered by the mouse
+     * @property TRIGGER_MOUSEOVER
+     * @static
+     * @type String
+     */
     TRIGGER_MOUSEOVER: "mouseover",
+    /**
+     * The bubble will be shown if the user clicks on the element
+     * @property TRIGGER_CLICK
+     * @static
+     * @type String
+     */
     TRIGGER_CLICK: "click",
+    /**
+     * The bubble will not be shown by an event, the user must directly call `show`/`hide` functions
+     * @property TRIGGER_CUSTOM
+     * @static
+     * @type String
+     */
     TRIGGER_CUSTOM: "custom"
 });

@@ -1,6 +1,6 @@
 /**
  * @requires menubar.MenuBarItem
- * @description MenuBar Submenu
+ * @description !MenuBar Submenu
  * @class menubar.MenuBarSubmenu
  * @param {MenuBar.MenuBarItem} oParent the parent item of the submenu
  * @param {Array} oItems array of sub-items (see the documentation of MenuBar)
@@ -98,8 +98,8 @@ jPlex.provide('jplex.components.menubar.MenuBarSubmenu', {
     },
 
     /**
-     * Get the <code>&lt;ul&gt;</code> element for the submenu
-     * @return {Element} The <code>&lt;ul&gt;</code> container for all <code>&lt;li&gt;</code> items of the submenu
+     * Get the `<ul>` element for the submenu
+     * @return {Element} The `<ul>` container for all `<ul>` items of the submenu
      */
     get: function() {
         return this.eElement;

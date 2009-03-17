@@ -1,8 +1,10 @@
 /**
- * Bubble component
+ * Bubble component, only used by the Tooltip component.
+ * 
+ * This is a Bubble div that will created to help the user. No event will be taken in charge, it's Tooltip responsibility 
  * @class tooltip.Bubble
- * @param {Element|String} eElement Element/ID element of the <code>&lt;div&gt;</code> container
- * @param {Object} oConfig Configuration object of the bubble
+ * @param {Element|String} eElement Element/ID element of the `<div>`container
+ * @param {Object} oConfig Configuration object of the bubble      
  * @extends jplex.common.Component
  * @constructor
  */
@@ -11,9 +13,32 @@ jPlex.provide('jplex.components.tooltip.Bubble', 'jplex.common.Component',  {
 	_definition: {
 		name:"Bubble",
 		defaultConfig: {
-			fade: 0.2,
+            /**
+             * Sets the length of the fade effect in seconds (do not use a too large value, it'll be crap)
+             * @config fade
+             * @default 0.2
+             */
+			fade: 0.2,  
+            /**
+             * The bubble has a `div` shade, with this little parameter you can configure how to render it
+             * @config shadeWidth
+             * @default 1
+             */
 			shadeWidth: 1,
-			pin: "top-right"
+            /**
+             * Sets the position of the bubble relative to the source component. This parameter must be expressed 
+             * as a join of two strings. The first one is the vertical align (`top` or `bottom`) and the second is 
+             * the horizontal align (`left` or `right`)
+             * @config position
+             * @default "top-right"
+             */
+			pin: "top-right",
+            /**
+             * Sets the zIndex of the bubble
+             * @config zIndex
+             * @default 99
+             */
+            zIndex: 99
 		},
         defaultContainer: "div",
         text: {
@@ -56,7 +81,7 @@ jPlex.provide('jplex.components.tooltip.Bubble', 'jplex.common.Component',  {
 		shade.setOpacity(0.3);
 		shade.setStyle({
 			padding: 0,
-			zIndex: 99
+			zIndex: this.cfg('zIndex')
 		});
 		document.body.appendChild(shade);
 		this.eBody = body;

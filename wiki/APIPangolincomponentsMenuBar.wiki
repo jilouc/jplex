@@ -5,15 +5,15 @@
 = Class *jplex.components.MenuBar*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
 
 == Description ==
-MenuBar component
+!MenuBar component
 Place a nice menu bar on your page. It's designed as 
 the classical menu bars in applications.
 It is possible to link events on terminal items. 
 As an additional feature, you could specify a key shortcut
 for this event.
 The source for the menu items could be either:
- <ul>
- <li>a raw JS array. The definition of an item looks like:
+<ul>
+<li>a raw JS array. The definition of an item looks like:
  <pre>{ 
    name:"Item",
    click: clickHandler, //Reference to the function to be called at click
@@ -26,6 +26,7 @@ The source for the menu items could be either:
    items: [{...},{...},...] // Array of subitems
 }</pre></li>
 <li>XML document, fetched with Ajax.Request, with the following scheme:
+{{{
 <xmp>
     <menubar>
        <item name="Item" icon="path/to/icon.png">
@@ -37,7 +38,8 @@ The source for the menu items could be either:
                 ...
             </items>
         </item>
-    </menubar></xmp></li>
+    </menubar></xmp>
+}}}</li>
 <li>JSON document, fetched with Ajax.Request 
 (exactly similar to the syntax of the JS Array)</li>
 </ul>
@@ -58,11 +60,11 @@ When an item is added, the handler is copied to the event of the same name of it
 == Properties ==
 <table border="1" cellspacing="0" cellpadding="5">        
 <tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
-<tr><td> _oItems_ </td><td> Array </td><td> `` Array containing the root items of the menu bar
+<tr><td> _oItems_ </td><td> `Array` </td><td> ` `  Array containing the root items of the menu bar
 (initial items AND dynamically added ones)</td></tr>
-<tr><td> _SOURCE_AJAX_JSON_ </td><td> Integer </td><td> `static ` Configuration constant indicating that menu items comes from a JSON document</td></tr>
-<tr><td> _SOURCE_AJAX_XML_ </td><td> Integer </td><td> `static ` Configuration constant indicating that menu items comes from a XML document</td></tr>
-<tr><td> _SOURCE_JS_ARRAY_ </td><td> Integer </td><td> `static ` Configuration constant indicating that menu items comes from a raw JS array</td></tr>
+<tr><td> _SOURCE_AJAX_JSON_ </td><td> `Integer` </td><td> `static  `  Configuration constant indicating that menu items comes from a JSON document</td></tr>
+<tr><td> _SOURCE_AJAX_XML_ </td><td> `Integer` </td><td> `static  `  Configuration constant indicating that menu items comes from a XML document</td></tr>
+<tr><td> _SOURCE_JS_ARRAY_ </td><td> `Integer` </td><td> `static  `  Configuration constant indicating that menu items comes from a raw JS array</td></tr>
 
 </table>
 

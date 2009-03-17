@@ -75,7 +75,7 @@ class DocHighlighter(object):
             highlighted = highlightString(fileStr)
 			
             out = open(os.path.join(self.outputdir, file + self.newext), "w")
-            out.writelines(html_entity_fixer( highlighted.encode('latin1'), ['<','>','\'','\"']))
+            out.writelines(html_entity_fixer( highlighted , ['<','>','\'','\"']))
             out.close()
 
         def highlightDir(path):

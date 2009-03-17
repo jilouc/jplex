@@ -1,6 +1,6 @@
 jPlex.include('jplex.components.menubar.MenuBarSubmenu', false);
 /**
- * @description MenuBar Item
+ * @description !MenuBar Item subclass
  * @class menubar.MenuBarItem
  * @param {MenuBar|MenuBar.MenuBarSubmenu} oParent parent menu of the item (i.e. the menu containing the item)
  * @param {Object} oItem the item
@@ -131,8 +131,8 @@ jPlex.provide('jplex.components.menubar.MenuBarItem', {
     },
 
     /**
-     * Get the <code>&lt;li&gt;</code> HTMLElement of the item, extended by Prototype's Element.extend
-     * @return {Element} the <code>&lt;li&gt;</code> element of the item
+     * Get the `<li>` HTMLElement of the item, extended by Prototype's Element.extend
+     * @return {Element} the `<li>` element of the item
      */
     get: function() {
         return this.eElement;

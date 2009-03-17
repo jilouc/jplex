@@ -7,7 +7,8 @@
 == Description ==
 Calendar component class.
 Create a browsable calendar from a text field, a button or directly on the page.
-<p>Main features:
+
+<strong>Main features</strong>:
 <ul>
 <li>Link the calendar to a simple text input (appears on focus), to a button (appears on click)
 and a text field. You could also use whichever control you want and specify the behavior with custom events.</li>
@@ -27,8 +28,8 @@ the previous/next month using PageDown/PageUp</li>
 (e.g. the value of the linked text input field). To know
 more about pattern tokens, see jPlex.xprototype.Date#format </td></tr>
 <tr><td> _fade_ </td><td> `0.3` </td><td>  Time in seconds to show/hide the popup calendar.
-Set to 0 or <code>false</code> to disable fade in/out. </td></tr>
-<tr><td> _fastBrowse_ </td><td> `true` </td><td>  If set to <code>true</code>, a click on the title of the calendar (month or year)
+Set to 0 or `false` to disable fade in/out. </td></tr>
+<tr><td> _fastBrowse_ </td><td> `true` </td><td>  If set to `true`, a click on the title of the calendar (month or year)
 will pop up a tooltip allowing the user to set a value for the month
 (or the year) using combo-boxes </td></tr>
 <tr><td> _fastBrowseYearEnd_ </td><td> `The current year + 5` </td><td>  Maximum year in the combobx for fast browse </td></tr>
@@ -38,15 +39,15 @@ will pop up a tooltip allowing the user to set a value for the month
 <tr><td> _source_ </td><td> `null` </td><td>  The event source, can be a textfield or a button for example
 The source element for the calendar. Use one of the following configuration:
 <ul>
-<li><code>textField = null, source = a text field</code> : links the calendar to a single text field</li>
-<li><code>textField = a text field, source = a button</code> : links the calendar to a button, the result
+<li>`textField = null, source = a text field`: links the calendar to a single text field</li>
+<li>`textField = a text field, source = a button`: links the calendar to a button, the result
 will be printed in the textfield</li>
-<li><code>textField = null, source = a button</code> : links the calendar to a button, use the custom event
+<li>`textField = null, source = a button`: links the calendar to a button, use the custom event
 onSelectEvent to catch the selected date and do what you want with it</li>
-<li><code>textField = null, source = null</code> : just show a calendar without show/hide things</li>
-</li> </td></tr>
+<li>`textField = null, source = null`: just show a calendar without show/hide things</li>
+</ul> </td></tr>
 <tr><td> _textField_ </td><td> `null` </td><td>  The textfield linked with the calendar (edited when a new date is selected)
-(see the <code>source</code> configuration parameter for more details) </td></tr>
+(see the `source` configuration parameter for more details) </td></tr>
 <tr><td> _titleFormat_ </td><td> `"{M} {Y}"` </td><td>  Template for the title of the calendar. You can use 3 tokens:
 <ul><li>{M} the month full name</li>
 <li>{m} month number</li>

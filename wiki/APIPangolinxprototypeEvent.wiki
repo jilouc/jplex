@@ -13,7 +13,7 @@ jPlex's XPrototype extended Event
 == Properties ==
 <table border="1" cellspacing="0" cellpadding="5">        
 <tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
-<tr><td> _Key_ </td><td> object </td><td> `static ` Map of all key codes, including special characters</td></tr>
+<tr><td> _Key_ </td><td> `object` </td><td> `static  `  Map of all key codes, including special characters</td></tr>
 
 </table>
 

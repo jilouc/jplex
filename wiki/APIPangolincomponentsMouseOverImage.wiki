@@ -8,11 +8,13 @@
 This component is a little utility that adds a simple image in a container that appears only on mouse over.
 It is useful in cases of optional actions that spams the render if they are all visible.
 
-There are two rendering methods for this component. Both have advantages and drawbacks: <ul>
- <li>float:    Use of the css float property to display the image. The component accepts only two positions 'left'
-               and 'right'. </li>
- <li>absolute: Use of the css position absolute property. Can take all position wanted but can not accepts 
-               multiples components on one single container</li></ul>
+There are two rendering methods for this component. Both have advantages and drawbacks: 
+<ul>
+<li>float:    Use of the css float property to display the image. The component accepts only two positions 'left'
+and 'right'. </li>
+<li>absolute: Use of the css position absolute property. Can take all position wanted but can not accepts 
+multiples components on one single container</li>
+</ul>
 
 == Config Table ==
 <table border="1" cellspacing="0" cellpadding="5">

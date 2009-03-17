@@ -5,7 +5,52 @@
 = Class *jplex.components.Tooltip*  _extends [APIPangolincommonComponent jplex.common.Component]_  =
 
 == Description ==
-Tooltip component.
+Tooltip component
+
+This simple component is commonly used to create <em>help</em> tips on a page.
+
+== Config Table ==
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Default Value* </td><td> *Description* </td></tr>
+<tr><td> _position_ </td><td> `"top-right"` </td><td>  Sets the position of the bubble relative to the source component. This parameter must be expressed 
+as a join of two strings. The first one is the vertical align (`top` or `bottom`) and the second is 
+the horizontal align (`left` or `right`) </td></tr>
+<tr><td> _positionRatio_ </td><td> `0.83` </td><td>  Sets the position of the bubble compared to the element. This ratio is the x-position of the pin related 
+to the beginning (or end) of the element divided by the width of the element </td></tr>
+<tr><td> _shadeWidth_ </td><td> `1` </td><td>  The bubble has a `div` shade, with this little parameter you can configure how to render it </td></tr>
+<tr><td> _text_ </td><td> `""` </td><td>  Inner text of the bubble. You can put HTML code if you want </td></tr>
+<tr><td> _trigger_ </td><td> `Tooltip.TRIGGER_MOUSEOVER` </td><td>  Sets the trigger type to show/hide the bubble. The three types of triggers are defined in the static
+properties </td></tr>
+<tr><td> _zIndex_ </td><td> `99` </td><td>  Sets the zIndex of the bubble </td></tr>
+</table>
+
+== Event Table ==
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
+<tr><td> _onHideEvent_ </td><td>  Fired after hiding the component </td><td>  </td></tr>
+<tr><td> _onShowEvent_ </td><td>  Fired after showing the component </td><td>  </td></tr>
+</table>
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _TRIGGER_CLICK_ </td><td> `String` </td><td> `static  `  The bubble will be shown if the user clicks on the element</td></tr>
+<tr><td> _TRIGGER_CUSTOM_ </td><td> `String` </td><td> `static  `  The bubble will not be shown by an event, the user must directly call `show`/`hide` functions</td></tr>
+<tr><td> _TRIGGER_MOUSEOVER_ </td><td> `String` </td><td> `static  `  The bubble will be shown if the element is hovered by the mouse</td></tr>
+
+</table>
 
 
 
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `hide(e)` </td><td> `void` </td><td> Hides the bubble<br />  - `e <object>` `unused` Click event<br/></td></tr>
+<tr><td> `render()` </td><td> `void` </td><td> Renders the bubble and hide it<br /> </td></tr>
+<tr><td> `show(e)` </td><td> `void` </td><td> Shows the bubble<br />  - `e <object>` `unused` Click event<br/></td></tr>
+
+</table>
+=== Inherited Methods ===
+
+ * [APIPangolincommonComponent jplex.common.Component]:  `$C`,  `cfg`,  `fireEvent`,  `getEvent`,  `lang`,  `locale`,  `setCfg`,  `setEvent`,  `unregister`, 

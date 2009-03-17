@@ -15,7 +15,7 @@ include inside your page to use jPlex. It will load the packages you need after.
 == Properties ==
 <table border="1" cellspacing="0" cellpadding="5">        
 <tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
-<tr><td> _src_ </td><td> Array </td><td> `` Array containing the source code of some (or all) javascript file. Used when the sources are packaged in one file.
+<tr><td> _src_ </td><td> `Array` </td><td> ` `  Array containing the source code of some (or all) javascript file. Used when the sources are packaged in one file.
 Of course, this array is indexed by the path from the source folder.</td></tr>
 
 </table>

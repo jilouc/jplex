@@ -5,7 +5,7 @@
 = `private` `static` Class *jplex.components.menubar.MenuBarSubmenu*  =
 
 == Description ==
-MenuBar Submenu
+!MenuBar Submenu
 
 
 == Event Table ==
@@ -18,10 +18,10 @@ MenuBar Submenu
 == Properties ==
 <table border="1" cellspacing="0" cellpadding="5">        
 <tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
-<tr><td> _nLevel_ </td><td> Integer </td><td> `private ` Depth of the submenu
+<tr><td> _nLevel_ </td><td> `Integer` </td><td> `private  `  Depth of the submenu
 (0 for the immediate children of root elements)</td></tr>
-<tr><td> _oItems_ </td><td> Array<MenuBar.MenuBarItem> </td><td> `` Array of submenu items</td></tr>
-<tr><td> _oParent_ </td><td> MenuBar.MenuBarItem </td><td> `private ` Reference to the submenu's parent item</td></tr>
+<tr><td> _oItems_ </td><td> `Array<MenuBar.MenuBarItem>` </td><td> ` `  Array of submenu items</td></tr>
+<tr><td> _oParent_ </td><td> `MenuBar.MenuBarItem` </td><td> `private  `  Reference to the submenu's parent item</td></tr>
 
 </table>
 
@@ -32,7 +32,7 @@ MenuBar Submenu
 <tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
 <tr><td> `addItem(oItem, nBefore)` </td><td> `MenuBar.Submenu` </td><td> Adds the item oItem to the submenu.
 If specified, adds it before the nBefore'th item<br />  - `oItem <Object>` Item to add (please refer to MenuBar's description above for item properties)<br/> - `nBefore <Integer>` Optional. Position of the item (by default the item is pushed at the end)<br/></td></tr>
-<tr><td> `get()` </td><td> `Element` </td><td> Get the <code>&lt;ul&gt;</code> element for the submenu<br /> </td></tr>
+<tr><td> `get()` </td><td> `Element` </td><td> Get the `<ul>` element for the submenu<br /> </td></tr>
 <tr><td> `getItem(nIndex)` </td><td> `MenuBar.Submenu|boolean` </td><td> Get the submenu of the item at position nIndex<br />  - `nIndex <Integer>` Position of the item to get<br/></td></tr>
 <tr><td> `getParentItem()` </td><td> `MenuBar.Item` </td><td> Get the parent item of the submenu<br /> </td></tr>
 <tr><td> `hide()` </td><td> `void` </td><td> Hides the submenu<br /> </td></tr>

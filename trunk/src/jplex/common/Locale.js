@@ -12,11 +12,11 @@ jPlex.extend('jplex.common.Locale', {
      * <br/><b>This value has to be changed if you consider writing an application in a different language than the default value</b>
      * @property lang
      * @type String
-     * @default 'fr'
+     * @default 'en'
      */
-    lang: 'fr',
+    lang: 'en',
     /**
-     * Get the complete HashSet corresponding to the following component and lang
+     * Get the complete !HashSet corresponding to the following component and lang
      * @param {String} component The component 
      * @param {String} lang The lang, Locale.lang if not defined  
      * @return {Hash} The locale HashSet corresponding
@@ -29,7 +29,7 @@ jPlex.extend('jplex.common.Locale', {
     },
     /**
      * Useful default usage of the locale string, corresponds to: 
-     * <pre>Locale.get(component).get(field)</pre>
+     * <source>Locale.get(component).get(field)</code>
      * with undefined error treatment of course
      * @param {String} component The locale component
      * @param {String} field The wanted field

@@ -10,7 +10,7 @@ in jPlex. It provides us a global management of the configurations and a unified
 
 Defining a new component needs a bit more than just extending this class.
 You'll need to initialize it by calling in the constructor
-     <code>$super(eSrc, oConfig);</code>
+<code>$super(eSrc, oConfig);</code>
 And you need to define a private property object <em>_definition</em> containing at least the name of the component.
 Here is a complete example of a component:
 
@@ -34,7 +34,8 @@ jPlex.provide('jplex.components.A', 'jplex.common.Component', {
 
 You can also define an *extension* of another component by setting the private property object `_extension` rather
 than `_definition`. In this case, the definition will be taken from the mother component and refined by the child
-component. A common example is the Dialog and the Modal components that are extensions of the Frame component.
+component. A common example is the Dialog and the Modal components that are extensions of the Frame component. You
+are welcome to browse the source of our components to see how to define yours.
 
 
 
@@ -42,8 +43,8 @@ component. A common example is the Dialog and the Modal components that are exte
 == Properties ==
 <table border="1" cellspacing="0" cellpadding="5">        
 <tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
-<tr><td> _component_ </td><td> Element </td><td> `` The component HTML Element</td></tr>
-<tr><td> _createdComponent_ </td><td> Boolean </td><td> `` If true, the component property has been created during the initialization</td></tr>
+<tr><td> _component_ </td><td> `Element` </td><td> ` `  The component HTML Element</td></tr>
+<tr><td> _createdComponent_ </td><td> `Boolean` </td><td> ` `  If true, the component property has been created during the initialization</td></tr>
 
 </table>
 

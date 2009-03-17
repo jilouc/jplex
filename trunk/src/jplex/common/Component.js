@@ -8,7 +8,7 @@ jPlex.include('jplex.xprototype.*');
  *
  * Defining a new component needs a bit more than just extending this class.
  * You'll need to initialize it by calling in the constructor
- *      <code>$super(eSrc, oConfig);</code>
+ * <code>$super(eSrc, oConfig);</code>
  * And you need to define a private property object <em>_definition</em> containing at least the name of the component.
  * Here is a complete example of a component:
  *
@@ -32,7 +32,8 @@ jPlex.include('jplex.xprototype.*');
  * 
  * You can also define an *extension* of another component by setting the private property object `_extension` rather
  * than `_definition`. In this case, the definition will be taken from the mother component and refined by the child
- * component. A common example is the Dialog and the Modal components that are extensions of the Frame component.
+ * component. A common example is the Dialog and the Modal components that are extensions of the Frame component. You
+ * are welcome to browse the source of our components to see how to define yours.
  * 
  * @param {Element} eElement The HTML Element on which the component acts
  * @param {Object} oConfig The configuration object
@@ -91,7 +92,7 @@ jPlex.provide('jplex.common.Component', {
             this.component = new Element(this._definition.defaultContainer, {id:eElement});
             document.body.appendChild(this.component);
         }
-
+        /*
         // Set the component unique ID
         this._sIDPrefix = "jplex-" + this._definition.name.toLowerCase() + "-";
 
@@ -101,6 +102,7 @@ jPlex.provide('jplex.common.Component', {
                 throw $break;
             }
         }.bind(this));
+        */
 
         // Build the configuration object with the default properties and those
         // set by the user
