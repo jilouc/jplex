@@ -15,9 +15,9 @@ A = Class.create(Component, {
 new Test.Unit.Runner({
     testID: function() { 
         var a = new A('asd');
-        this.assertEqual(a.sID, 'jplex-a-0');
+        this.assertEqual(a.UID, 'jplex-a-0');
         a = new A('asd');
-        this.assertEqual(a.sID, 'jplex-a-1');
+        this.assertEqual(a.UID, 'jplex-a-1');
     },
     testLocale: function() {
         Locale.lang = 'fr';

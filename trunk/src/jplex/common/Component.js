@@ -209,7 +209,7 @@ jPlex.provide('jplex.common.Component', {
      * overflow
      */
     unregister: function() {
-        jplex.common.Component._list.set(this.id, undefined);
+        jplex.common.Component._list.set(this.ID, undefined);
         if(this.createdComponent)
             this.component.remove();
     }
