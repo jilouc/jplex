@@ -92,17 +92,15 @@ jPlex.provide('jplex.common.Component', {
             this.component = new Element(this._definition.defaultContainer, {id:eElement});
             document.body.appendChild(this.component);
         }
-        /*
-        // Set the component unique ID
-        this._sIDPrefix = "jplex-" + this._definition.name.toLowerCase() + "-";
 
+        // Set the component unique ID
+        this.UID = "jplex-" + this._definition.name.toLowerCase() + "-";
         jplex.common.Component.subclasses.each(function(clazz) {
             if (this instanceof clazz) {
-                this.sID = this._sIDPrefix + clazz.prototype._instanceCount++;
+                this.UID = this.UID + clazz.prototype._instanceCount++;
                 throw $break;
             }
         }.bind(this));
-        */
 
         // Build the configuration object with the default properties and those
         // set by the user
@@ -127,8 +125,8 @@ jPlex.provide('jplex.common.Component', {
             this.setEvent(evt.key, evt.value);
         }, this);
 
-        this.id = this.component.getAttribute("id");
-        jplex.common.Component._list.set(this.id, this);
+        this.ID = this.component.getAttribute("id");
+        jplex.common.Component._list.set(this.ID, this);
 
     },
 

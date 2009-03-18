@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
 	<link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>  
-    <link rel="stylesheet" href="../src/jplex/components/tooltip/assets/bubble.css" type="text/css"/>  
+    <link rel="stylesheet" href="../src/jplex/components/tooltip/assets/tooltip.css" type="text/css"/>
     <script src="../src/jPlex.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8"></script> 
 	<style type="text/css">
@@ -13,28 +13,8 @@
 	</style>
 </head>
 <body>
-<h1>jPlex Bubble &amp; Tooltip Demo</h1>
-<h2>Bubbles</h2>
-<div style="height:70px;">
-	<div id="bubble">Bubble !</div>
-	
-</div>
-<input type="button" onclick="b.hide()" value="Hide the bubble"/> 
-<input type="button" onclick="b.show()" value="Show the bubble"/>
-<input type="button" onclick="b.setBody('Bubble changed !')" value="Change text"/><br /><br />
+<h1>jPlex Tooltip Demo</h1>
 
-<textarea name="code" class="xml">
-<div id="bubble">Bubble !</div>	
-
-<input type="button" onclick="b.hide()" value="Hide the bubble"/> 
-<input type="button" onclick="b.show()" value="Show the bubble"/>
-<input type="button" onclick="b.setBody('Bubble changed !')" value="Change text"/></textarea>
-
-<textarea name="code" class="js">
-    jPlex.include('jplex.components.Tooltip');
-var b = new Bubble("bubble");</textarea>
-
-<h2>InfoBubbles</h2>
 <ul>
 <li>The bubble appears at <span id="info-tr">top-right</span> when hovering the highlighted element.</li>
 <li>The bubble appears at top-left when clicking on the highlighted <span id="info-tl">element</span>.</li>
@@ -51,38 +31,59 @@ var b = new Bubble("bubble");</textarea>
 </ul>
 </textarea>
 <textarea name="code" class="js">
-var infotext = "<br />You can put <a href='bubble.html'>HTML</a> too";
+var infotext = "<br />You can put <a href='tooltip.html'>HTML</a> too";
 
-new Tooltip("info-tr", {
-    text:"Top-right corner"+infotext
+new Tooltip("top-right-bubble", {
+    source:"info-tr",
+    content:"Top-right corner"+infotext,
+    shadowWidth:3
 });
-new Tooltip("info-tl", {
+new Tooltip("top-left-bubble", {
+    source:"info-tl",
     position:"top-left",
-    text:"Top-left corner"+infotext,
+    content:"Top-left corner"+infotext,
     trigger:Tooltip.TRIGGER_CLICK
 });
-new Tooltip("info-br", {
+new Tooltip("bottom-right-bubble", {
+    source:"info-br",
     position:"bottom-right",
-    text:"Bottom-right corner"+infotext
+    content:"Bottom-right corner"+infotext
 });
-new Tooltip("info-bl", {
+new Tooltip("bottom-left-bubble", {
+    source:"info-bl",
     position:"bottom-left",
-    text:"Bottom-left corner"+infotext,
+    content:"Bottom-left corner"+infotext,
     trigger:Tooltip.TRIGGER_CLICK
 });</textarea>
 <br /><br /><br /><br /><br /><br />
 <script type="text/javascript">
     <!--
     jPlex.include('jplex.components.Tooltip');
-    jPlex.include('jplex.components.tooltip.Bubble');
-    var b = new Bubble("bubble");
 	
 	var infotext = "<br />You can put <a href='bubble.html'>HTML</a> too";
 					
-	var c = new Tooltip("info-tr", {text:"Top-right corner"+infotext, shadeWidth:3});
-	new Tooltip("info-tl", {position:"top-left", text:"Top-left corner"+infotext, trigger:Tooltip.TRIGGER_CLICK});
-	new Tooltip("info-br", {position:"bottom-right", text:"Bottom-right corner"+infotext});
-	new Tooltip("info-bl", {position:"bottom-left", text:"Bottom-left corner"+infotext, trigger:Tooltip.TRIGGER_CLICK});
+	new Tooltip("top-right-bubble", {
+        source:"info-tr",
+        content:"Top-right corner"+infotext,
+        shadowWidth:3
+    });
+	new Tooltip("top-left-bubble", {
+        source:"info-tl",
+        position:"top-left",
+        content:"Top-left corner"+infotext,
+        trigger:Tooltip.TRIGGER_CLICK
+    });
+	new Tooltip("bottom-right-bubble", {
+        source:"info-br",
+        position:"bottom-right",
+        content:"Bottom-right corner"+infotext
+    });
+	new Tooltip("bottom-left-bubble", {
+        source:"info-bl",
+        position:"bottom-left",
+        content:"Bottom-left corner"+infotext,
+        trigger:Tooltip.TRIGGER_CLICK
+    });
 
     //-->
 </script>
