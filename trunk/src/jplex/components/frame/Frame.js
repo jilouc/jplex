@@ -259,7 +259,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         }
 
 
-        this._addBody(this.component.textContent);
+        this.setBody(this.component.textContent);
         this._body.setStyle({
             overflow:this.cfg("overflow")
         });
@@ -335,12 +335,14 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * @return {Element} The body HTML extended element
      */
     setBody: function(body) {
-        this.makeCentered();
 
         if (this._body) {
+            this.makeCentered();
 
             var _ghost = new Element("div");
-            _ghost.update(body);
+            _ghost.update(body.stripScripts());
+
+            
 
             // If the frame contains images, we have to wait them to be loaded
             // to get the correct position of the frame
@@ -360,6 +362,12 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                         pic.show();
                         if (loaded.all()) {
                             this._body.update(_ghost.innerHTML);
+                            if(this._request) {
+                                this._request.transport.responseText.evalScripts();
+                                this.fireEvent('onAjaxRequestCompleteEvent', {
+                                    result:body
+                                });
+                            }
                             this.setLoading(false);
                         }
                     }.bindAsEventListener(this, img, i));
@@ -371,6 +379,10 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                 }, this);
             } else {
                 this._body.update(_ghost.innerHTML);
+                if(this._request) {
+                    this._request.transport.responseText.evalScripts();
+                    this.fireEvent('onAjaxRequestCompleteEvent', {result:transport});
+                }
                 this.constrain();
             }
         } else {
@@ -455,7 +467,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     _addBody: function(content) {
         var bd = new Element("div");
 
-        bd.addClassName("body").update(content || "");
+        bd.addClassName("body");
         if (this._header) {
             this._header.insert({
                 after: bd
@@ -469,6 +481,8 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         }
 
         this._body = bd;
+
+        this.setBody(content);
     },
 
     /**
@@ -491,13 +505,15 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * (the URL of the content is given by the `ajax` configuration parameter)
      */
     reload: function() {
-        new Ajax.Request(this.cfg('ajax'), {
+        this._request = new Ajax.Request(this.cfg('ajax'), {
             parameters: this.cfg('ajaxParameters'),
-
+            evalJS: false,
+            
+            onLoading: function() {
+                this.setLoading(true);
+            }.bind(this),
             onSuccess: function(transport) {
                 this.setBody(transport.responseText);
-                this.setLoading(false);
-                this.fireEvent('onAjaxRequestCompleteEvent', {result:transport});
             }.bind(this)
         });
     },
@@ -545,7 +561,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             top: Math.max(0, vdim.height / 2 - dim.height / 2 + scroll.top) + "px",
             left: Math.max(0, vdim.width / 2 - dim.width / 2 + scroll.left) + "px"
         });
-        if (!stop)
+        if (!stop && this._evtMakeCentered)
             this._evtMakeCentered.delay(0.1, true);
     },
 

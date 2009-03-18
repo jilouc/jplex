@@ -145,7 +145,8 @@
                     Demo.view.slideshow = new Modal("slideshow", {
                         footer:true,
                         constrainToCenter:true,
-                        overlayFade:0.5
+                        overlayFade:0.5,
+                        draggable:true
                     });
                     Demo.view.slideshow.pics = [
                         "<img id src='global/img/demo_slideshow01.jpg' alt='slideshow' />",
@@ -223,7 +224,7 @@
     f.component.down("div.header").appendChild(new Element("div", {id:"menu"}));
         
     Event.onElementReady('menu', function() {
-        new MenuBar("menu", {
+        Demo.menu = new MenuBar("menu", {
             data: myData
         });
     });
