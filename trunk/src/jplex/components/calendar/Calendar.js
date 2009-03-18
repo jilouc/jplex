@@ -167,9 +167,6 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
     initialize: function($super, eElement, oConfig) {
         $super(eElement, oConfig);
 
-        this.component.setAttribute("id", this.sID + '-calendar');
-        this.ID = this.component.getAttribute('id');
-
         var date = this.cfg('date');
         this._selectedItem = this._focusedItem = {
             getDate: function() {
@@ -218,7 +215,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                         y = e.pointerY();
                 if (!this._source.isWithin(x, y)
                         && !this.component.isWithin(x, y)
-                        && !this._fastBrowseTooltip.oBubble.component.isWithin(x, y)) {
+                        && !this._fastBrowseTooltip.component.isWithin(x, y)) {
                     this.hide();
                 }
             }.bind(this));
@@ -296,8 +293,6 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         this.items = $A([]);
         var tb = this._getTbody();
         tb.removeChildren();
-
-        alert(this._currentMonth.firstDayOfMonth);
 
         var oFirstDayOfMonth = this._currentMonth.firstDayOfMonth(),
                 oLastDayOfMonth = this._currentMonth.lastDayOfMonth();
@@ -499,7 +494,9 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
         if (this._source) {
             this._source.addClassName("jplex-calendar");
-            this.component.setStyle({display:"none"});
+            this.component.setStyle({
+                display:"none"
+            });
             if (this._source.getAttribute("type") == "button" && Prototype.Browser.IE6) {
                 this._source.addClassName("jplex-calendar-button");
             }
@@ -507,18 +504,18 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
         var eTop = new Element("div").addClassName("top"),
                 eTitle = new Element("span", {
-                    id: this.ID + "_TITLE"
+                    id: this.UID + "_TITLE"
                 }).addClassName("title"),
                 ePrevious = new Element("span").addClassName("previous").update("&nbsp;&laquo;&nbsp"),
                 eNext = new Element("span").addClassName("next").update("&nbsp;&raquo;&nbsp"),
                 eTable = new Element("table", {
-                    id: this.ID + "_TABLE"
+                    id: this.UID + "_TABLE"
                 }).addClassName("calendar"),
                 eTBody = new Element("tbody").update("&nbsp;"),
                 eTHead = new Element("thead"),
                 eTR = new Element("tr"),
                 eClose = new Element("div", {
-                    id: this.ID + "_CLOSE"
+                    id: this.UID + "_CLOSE"
                 }).addClassName("close").update("&nbsp;" + this.lang("CLOSE") + "&nbsp;");
 
         eTHead.appendChild(eTR);
@@ -559,15 +556,16 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             });
             selectEnd.addClassName("end");
 
-            this._fastBrowseTooltip = new jplex.components.Tooltip(this._getTitle(), {
-                trigger:jplex.components.Tooltip.TRIGGER_CLICK,
-                position:"bottom-right",
-                text:"",
-                positionRatio:0.35
+            this._fastBrowseTooltip = new jplex.components.Tooltip(this.UID+"-fbtooltip", {
+                source: this._getTitle(),
+                trigger: jplex.components.Tooltip.TRIGGER_CLICK,
+                position: "bottom-right",
+                positionRatio: 0.35,
+                zIndex: this.component.getStyle("zIndex") + 2
             });
 
-            var tooltipBody = this._fastBrowseTooltip.oBubble.component.down("div.body");
-            this._fastBrowseTooltip.oBubble.component.addClassName("jplex-calendar-tooltip");
+            var tooltipBody = this._fastBrowseTooltip.getBody();
+            this._fastBrowseTooltip.component.addClassName("jplex-calendar-tooltip");
 
 
             var divSelectMonth = new Element("div").update(this.lang("SELECT_MONTH") + "<br/>");
@@ -576,7 +574,6 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             var divSelectYear = new Element("div").update(this.lang("SELECT_YEAR") + "<br/>");
             divSelectYear.appendChild(selectYear);
             divSelectYear.addClassName("select");
-
 
             tooltipBody.appendChildren(
                     divSelectMonth,
@@ -640,7 +637,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @private
      */
     _getTbody: function() {
-        return $(this.ID + "_TABLE").childNodes[1];
+        return $(this.UID + "_TABLE").childNodes[1];
     },
 
     /**
@@ -649,7 +646,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @private
      */
     _getThead: function() {
-        return $(this.ID + "_TABLE").childNodes[0];
+        return $(this.UID + "_TABLE").childNodes[0];
     },
 
     /**
@@ -658,7 +655,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @private
      */
     _getTable: function() {
-        return $(this.ID + "_TABLE");
+        return $(this.UID + "_TABLE");
     },
 
     /**
@@ -667,7 +664,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @private
      */
     _getTitle: function() {
-        return $(this.ID + '_TITLE');
+        return $(this.UID + '_TITLE');
     },
 
     /**

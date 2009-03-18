@@ -1,4 +1,4 @@
-div.jplex-bubble {
+div.jplex-tooltip {
 	-moz-border-radius:7px;
 	-webkit-border-radius:7px;
 	border-radius:7px;
@@ -10,28 +10,28 @@ div.jplex-bubble {
 	display:inline-block;
 }
 
-div.jplex-bubble div.bubble-pin {
+div.jplex-tooltip div.bubble-pin {
 	position:absolute;
 	height:20px;
 }
 
-div.jplex-bubble div.bubble-pin-bl {
+div.jplex-tooltip div.bubble-pin-bl {
 	background:url("bubble-pin-bl.png") right bottom no-repeat;
 }
 
-div.jplex-bubble div.bubble-pin-br {
+div.jplex-tooltip div.bubble-pin-br {
 	background:url("bubble-pin-br.png") left bottom no-repeat;
 }
 
-div.jplex-bubble div.bubble-pin-tl {
+div.jplex-tooltip div.bubble-pin-tl {
 	background:url("bubble-pin-tl.png") right top no-repeat;
 }
 
-div.jplex-bubble div.bubble-pin-tr {
+div.jplex-tooltip div.bubble-pin-tr {
 	background:url("bubble-pin-tr.png") left top no-repeat;
 }
 
-div.jplex-shade {
+div.jplex-tooltip-shadow {
 	position:absolute;
 	width:auto;
 	background:#000000;
@@ -41,4 +41,4 @@ div.jplex-shade {
 	cursor:help;
 }
 
-div.jplex-bubble div.body {}
+div.jplex-tooltip div.body {}
