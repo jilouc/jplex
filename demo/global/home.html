@@ -7,8 +7,8 @@
 
         <p>
             jPlex is a javascript library that provides a set of usual user-interface components and some
-            functions to help the everyday's life of a webdevelopper. It focuses on components that you can
-            find on each web-application like calendar, menubar or windows.<br/>
+            functions to help the everyday's life of a web-developer. It focuses on components that you can
+            find on every web-application like calendar, menubar or windows.<br/>
             This library is based on the powerful combination <em>Prototype/Scriptaculous</em>.
         </p>
 
@@ -38,10 +38,8 @@
 
         <ul>
             <li> When you develop, you need to redo each component by yourself. The calendar is the ultimate example:
-                look
-                around some website. Each one is specific and if you need to ensure compatibility you can do a lot of
-                boring
-                work.
+                look around some website. Each one is specific and if you need to ensure compatibility you can do a lot of
+                boring work.
             </li>
         </ul>
 
@@ -78,3 +76,174 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+
+    var f = $C("f-home");
+    f.setTitle("Welcome!");
+    f.setFooter("<span id='code-snippet'>Click to get some information about the code used in the current page</span> "+
+                    "<img src='./global/img/131.png' align='absmiddle' alt='' /> " +
+                    "<input type='button' id='home-code' value='View code snippets' />");
+    $('home-code').observe('click', Demo.viewSource.curry("home"));
+
+    var myData = [{
+        name: "File",
+        items: [{
+            name: "New...",
+            icon: "img/001.png",
+            items: [{
+                name: "Frame...",
+                icon: "./global/img/sheet2.png",
+                items: [{
+                    name: "Modal",
+                    click: Prototype.emptyFunction,
+                    keySC: {
+                        key: Event.Key.M,
+                        ctrl: true,
+                        text: "Ctrl + M"
+                    }
+                }, {
+                    name: "Dialog",
+                    click: Prototype.emptyFunction,
+                    keySC: {
+                        key: Event.Key.D,
+                        ctrl: true,
+                        text: "Ctrl + D"
+                    }
+                }]
+            }]
+        }, {
+            name: "Download jPlex",
+            items: [{
+                name: "Pangolin Compressed"
+            }, {name: "Pangolin Source"}]
+        }, {
+            name: "Close",
+            keySC: {
+                key: Event.Key.W,
+                ctrl: true,
+                text: "Ctrl + W"
+            }
+        }]
+    }, {
+        name: "jPlex",
+        items:[{
+            name:"Homepage",
+            icon:"img/031.png",
+            link:"http://www.google.fr"
+        }, {
+            name:"Documentation"
+        }, {
+            name:"Example"
+        }]
+    }, {
+        name: "View",
+        items: [{
+            name: "Frame demo : Slideshow",
+            click: function() {
+                if(!Demo.view.slideshow) {
+                    Demo.view.slideshow = new Modal("slideshow", {
+                        footer:true,
+                        constrainToCenter:true,
+                        overlayFade:0.5
+                    });
+                    Demo.view.slideshow.pics = [
+                        "<img id src='global/img/demo_slideshow01.jpg' alt='slideshow' />",
+                        "<img id src='global/img/demo_slideshow02.jpg' alt='slideshow' />",
+                        "<img id src='global/img/demo_slideshow03.jpg' alt='slideshow' />",
+                        "<img id src='global/img/demo_slideshow04.jpg' alt='slideshow' />"
+                    ];
+                    Demo.view.slideshow.current = 0;
+                    Demo.view.slideshow.setBody(Demo.view.slideshow.pics[0]);
+                    Demo.view.slideshow.setFooter('<span id="tooltip-snippyhollow-source">[Pictures credits]</span> &mdash; '+
+                            '<a href="javascript:Demo.view.slideshow.previous()">Previous</a> '+
+                            '&minus; <a href="javascript:Demo.view.slideshow.next()">Next</a>');
+
+                    Demo.view.slideshow.previous = function() {
+                        var sl = Demo.view.slideshow;
+                        sl.current = (sl.pics.length + sl.current - 1) % sl.pics.length;
+                        sl.setBody(sl.pics[sl.current]);
+                    };
+                    Demo.view.slideshow.next = function() {
+                        var sl = Demo.view.slideshow;
+                        sl.current = (sl.current + 1) % sl.pics.length;
+                        sl.setBody(sl.pics[sl.current]);
+                    };
+
+                    var t = new Tooltip("tooltip-snippyhollow", {
+                        zIndex:Demo.view.slideshow._level+2,
+                        position:"bottom-right",
+                        positionRation:0.4
+                    });
+                    t.setContent("<img src='./global/img/somerights20.gif' alt='CC' />" +
+                                "<img src='./global/img/cc_icon_attribution.gif' alt='BY' />" +
+                                "<img src='./global/img/cc_icon_sharealike.gif' alt='SA' /><br/>" +
+                                "<a href='http://www.flickr.com/photos/snippyhollow/' target='_blank'>Snippy Hollow</a>");
+
+                    Demo.view.slideshow.setEvent("onShowEvent", function() {
+                        document.bindKey(Event.Key.LEFT_ARROW, Demo.view.slideshow.previous);
+                        document.bindKey(Event.Key.RIGHT_ARROW, Demo.view.slideshow.next);
+                    });
+
+                    Demo.view.slideshow.setEvent("onHideEvent", function() {
+                        document.unbindKey(Event.Key.LEFT_ARROW);
+                        document.unbindKey(Event.Key.RIGHT_ARROW);
+                    });
+
+
+                }
+                Demo.view.slideshow.show();
+            }
+        }]
+
+    }, {
+        name: "Help",
+        items:[{
+            name:"What do I see ?",
+            icon: "./global/img/misc.png"
+        }, {
+            name:"About",
+            icon: "./global/img/help.png",
+            click: function() {
+                if (!(about = $C("about"))) {
+                    var about = new Modal('about', {
+                        draggable: true,
+                        ajax: "./global/about.html",
+                        overlayFade: 0.5
+                    });
+                    about.setTitle("About");
+                }
+                about.show();
+            }
+        }]
+    }];
+
+
+
+    f.component.down("div.header").appendChild(new Element("div", {id:"menu"}));
+        
+    Event.onElementReady('menu', function() {
+        new MenuBar("menu", {
+            data: myData
+        });
+    });
+
+    Event.onElementReady('tab-why-jplex', function() {
+        var myTabsData = [
+            {title: 'Why jPlex ?', content:'tab-why-jplex'},
+            {title: 'What is jPlex ?', content:'tab-what-is-jplex'}
+        ];
+        var tabs = new Tabs("home-tabs", {
+            data: myTabsData,
+            activeTab: 1
+        });
+        tabs.setEvent("onSwitchEvent", function() {
+            f.constrain();
+        });
+
+    });
+
+    //new MouseOverImage('code-snippet', {img:'./global/img/lifebuoy.png', position:'middle'});
+    
+</script>
+        

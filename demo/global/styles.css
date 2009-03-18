@@ -44,10 +44,10 @@ div.menubar {
     margin:0;
 }
 
-div#what div.header {
+div#f-home div.header {
     padding:0;
 }
-div#what div.title {
+div#f-home div.title {
     padding:0.2em 0.5em 0.2em 0.5em;
 }
 
@@ -56,7 +56,7 @@ div.menubar li.item {
 }
 
 
-div#what {
+div#f-home {
     width: 60%;
     text-align: justify;
 }
@@ -131,4 +131,11 @@ a.top {
     position: absolute;
     bottom: 1em;
     right: 2em;
+}
+
+div#slideshow div.body {
+    padding:0;
+}
+div#slideshow {
+    border-color:#222222;
 }
