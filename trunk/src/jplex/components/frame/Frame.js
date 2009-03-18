@@ -259,7 +259,6 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         }
 
 
-        
         this._addBody(this.component.textContent);
         this._body.setStyle({
             overflow:this.cfg("overflow")
@@ -336,33 +335,32 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * @return {Element} The body HTML extended element
      */
     setBody: function(body) {
-        if (this._body) {
-            this._body.update(body);
+        this.makeCentered();
 
-            if (this.cfg('center')) {
-                // If the frame contains images, we have to wait them to be loaded
-                // to get the correct position of the frame
-                var imgs = this._body.getElementsByTagName('img'); // TODO .collect("img")
-                var loaded = $A([]);
-                if (imgs.length > 0) {
-                    this.setLoading(true);
-                }
+        if (this._body) {
+
+            var _ghost = new Element("div");
+            _ghost.update(body);
+
+            // If the frame contains images, we have to wait them to be loaded
+            // to get the correct position of the frame
+            var imgs = _ghost.getElementsByTagName('img'); // TODO .collect("img")
+            var loaded = $A([]);
+            if (imgs.length > 0) {
+                this.setLoading(true);
+
                 $A(imgs).each(function(s, i) {
                     var img = $(s);
                     var bak = img.src;
                     loaded[i] = false;
                     if (Prototype.Browser.Opera)
                         img.src = "";
-                    img.hide();
                     img.observe('load', function(e, pic, n) {
                         loaded[n] = true;
                         pic.show();
                         if (loaded.all()) {
+                            this._body.update(_ghost.innerHTML);
                             this.setLoading(false);
-                            this.makeCentered();
-                            var pos = this.component.cumulativeOffset();
-                            this._constrainToViewport(pos.left, pos.top, this._drag);
-                            this._constrainToSize();
                         }
                     }.bindAsEventListener(this, img, i));
                     if (Prototype.Browser.Opera) {
@@ -371,11 +369,15 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                             img.removeEvents();
                     }
                 }, this);
+            } else {
+                this._body.update(_ghost.innerHTML);
+                this.constrain();
             }
-            this.makeCentered();
         } else {
             this._addBody(body);
         }
+
+        this.constrain();
         this.fireEvent("onContentChangeEvent");
 
         return this._body;
@@ -505,7 +507,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      */
     show: function() {
         if (this.cfg('modal')) {
-            this.oOverlay.show();
+            this._overlay.show();
         }
         if (this.cfg('constrainToCenter')) {
             this.makeCentered();
@@ -523,7 +525,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      */
     hide: function() {
         if (this.cfg('modal'))
-            this.oOverlay.hide();
+            this._overlay.hide();
         this.component.hide();
         Event.stopObserving(window, 'scroll', this._evtMakeCentered);
         Event.stopObserving(window, 'resize', this._evtMakeCentered);
@@ -536,7 +538,6 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * Place the frame at the center of the viewport
      */
     makeCentered: function(stop) {
-
         var dim = this.component.getDimensions();
         var vdim = document.viewport.getDimensions();
         var scroll = document.viewport.getScrollOffsets();
@@ -556,18 +557,34 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     setLoading: function(start) {
         var ld = this.component.down('div.loading');
         if (start) {
-            this._body.hide();
             if (!ld) {
-                var loading = new Element("div").addClassName('loading');
-                this.component.insertBefore(loading, this._body);
-            } else {
-                ld.show();
+                var ld = new Element("div").addClassName('loading');
+                ld.setStyle({
+                    zIndex:this._level + 2
+                });
+                ld.setOpacity(0.7);
+                this.component.appendChild(ld);
             }
+            ld.show();
         } else {
-            this._body.show();
             if (ld) {
                 ld.hide();
             }
+        }
+        this.constrain();
+    },
+
+
+    /**
+     * Apply all positioning constraints to the window
+     */
+    constrain: function() {
+        this._constrainToSize();
+        if(this.cfg("center") && this.cfg("constrainToCenter")) {
+            this.makeCentered();
+        }
+        if(this.cfg("constrainToViewport")) {
+            this._constrainToViewport();
         }
     },
 
@@ -577,15 +594,20 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * Make sure the frame will be constrained to viewport bounds
      * @param {int} x
      * @param {int} y
-     * @param {Element} draggable
      */
-    _constrainToViewport: function(x, y, draggable) {
+    _constrainToViewport: function(x, y) {
         if (!this.cfg("constrainToViewport"))
             return [x,y];
+        
+        if(typeof(x) == "undefined" || typeof(y) == "undefined") {
+            var pos = this.component.cumulativeOffset();
+            x = pos.left;
+            y = pos.top;
+        }
         var vpw = document.viewport.getWidth(),
                 vph = document.viewport.getHeight(),
-                w = draggable.element.getWidth(),
-                h = draggable.element.getHeight();
+                w = this.component.getWidth(),
+                h = this.component.getHeight();
         return[
             w > vpw ? 0 : (x < vpw - w ? (x > 0 ? x : 0 ) : vpw - w),
             h > vph ? 0 : (y < vph - h ? (y > 0 ? y : 0) : vph - h)];
@@ -597,7 +619,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     _constrainToSize: function() {
 
         // TODO Foire sur Opera visiblement (cf code-snippet)
-        if(Prototype.Browser.Opera) {
+        if (Prototype.Browser.Opera) {
             return;
         }
 
@@ -700,7 +722,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * The "footer" html element (div) of the frame (if exists)
      * @property _footer
      * @type Element
-     * @private 
+     * @private
      */
 
     /**

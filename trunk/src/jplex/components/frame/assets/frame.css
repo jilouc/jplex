@@ -39,9 +39,12 @@ div.jplex-window a.close:hover {
 }
 
 div.loading {
-    background:url( 'loading.gif' ) center center no-repeat;
-    padding:4em;
-    background-color:#ffffff;
+    background: url( 'ajax-loader.gif' ) center center no-repeat;
+    position:absolute;
+    left:2px;
+    bottom:2px;
+    width:16px;
+    height:16px;
 }
 
 div.jplex-window .draggable:hover {

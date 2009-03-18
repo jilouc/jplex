@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../src/jplex/components/frame/assets/frame.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/tabs/assets/tabs.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/tooltip/assets/tooltip.css" type="text/css"/>
     <!--[if IE 6]><link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar-ie6.css" type="text/css"/><![endif]-->
     <link rel="stylesheet" href="./global/styles.css" type="text/css"/>
     <script src="../src/jPlex.js" type="text/javascript" charset="utf-8">
@@ -18,7 +19,11 @@
 
 <script type="text/javascript">
     <!--
-    function viewSource(file) {
+    var Demo = {
+        view: {}
+    };
+
+    Demo.viewSource = function(file) {
         var res;
         new Ajax.Request("./global/code/"+file+".js.html", {
             asynchronous:false,
@@ -41,13 +46,13 @@
         code.setBody(res);
         code.component.addClassName('code-window');
         CodeHighlighter.init();
-        var w = g.add(code);
+        var w = Demo.frameSet.add(code);
         w.toFront.bind(w).defer();
         w.show();
 
         return w;
 
-    }
+    };
 
 
     jPlex.include("jplex.components.MenuBar");
@@ -57,25 +62,24 @@
     jPlex.include('jplex.components.Tabs');
     jPlex.include('jplex.components.MouseOverImage');
     jPlex.include('jplex.components.Calendar');
+    jPlex.include('jplex.components.Tooltip');
 
-    var g = new FrameSet('test');
-    var first = new Frame('what', {
-        close: Frame.CLOSE_CUSTOM,
-        ajax: "./global/home.html",
-        draggable: true,
-        title: "Welcome!",
-        footer: true,
-        overflow: "auto",
-        maxWidth: 800
-    });
-    first.setFooter("<span id='code-snippet'>Click to get some information about the code used in the current page</span> "+
-                    "<img src='./global/img/131.png' align='absmiddle' alt='' /> " +
-                    "<input type='button' id='code' value='View code snippets' />");
-    $('code').observe('click', viewSource.curry("home"));
-    g.add(first);
+    Demo.frameSet = new FrameSet('test');
+    Demo.init = function() {
+        var f = new Frame('f-home', {
+            close: Frame.CLOSE_CUSTOM,
+            ajax: "./global/home.html",
+            draggable: true,
+            constrainToCenter: true,
+            title: "Welcome!",
+            footer: true,
+            overflow: "auto",
+            maxWidth: 800
+        });
 
-    first.setTitle("Welcome!");
-
+        Demo.frameSet.add(f);
+    };
+    
 
     Effect.Desktop = Class.create(Effect.Base, {
         initialize: function(winGroup) {
@@ -149,113 +153,7 @@
         }
     },{preventDefault:true, ctrl:true});
 
-    var myData = [{
-        name: "File",
-        items: [{
-            name: "New...",
-            icon: "img/001.png",
-            items: [{
-                name: "Frame...",
-                icon: "./global/img/sheet2.png",
-                items: [{
-                    name: "Modal",
-                    click: Prototype.emptyFunction,
-                    keySC: {
-                        key: Event.Key.M,
-                        ctrl: true,
-                        text: "Ctrl + M"
-                    }
-                }, {
-                    name: "Dialog",
-                    click: Prototype.emptyFunction,
-                    keySC: {
-                        key: Event.Key.D,
-                        ctrl: true,
-                        text: "Ctrl + D"
-                    }
-                }]
-            }, {
-                name: ""
-            }, ]
-        }, {
-            name: "Download jPlex",
-            items: [{
-                name: "Pangolin Compressed"
-            }, {name: "Pangolin Source"}]
-        }, {
-            name: "Close",
-            keySC: {
-                key: Event.Key.W,
-                ctrl: true,
-                text: "Ctrl + W"
-            }
-        }]
-    }, {
-        name: "jPlex",
-        items:[{
-            name:"Homepage",
-            icon:"img/031.png",
-            link:"http://www.google.fr"
-        }, {
-            name:"Documentation"
-        }, {
-            name:"Example"
-        }]
-    },
-        {
-            name: "Help",
-            items:[{
-                name:"What do I see ?",
-                icon: "./global/img/misc.png"
-            }, {
-                name:"About",
-
-                icon: "./global/img/help.png",
-                click: function() {
-
-                    if (!(about = $C("about"))) {
-                        var about = new Modal('about', {
-                            draggable: true,
-                            ajax: "./global/about.html",
-                            overlayFade: 0.5
-                        });
-
-                        about.setTitle("About");
-                        
-                    }
-                    about.show();
-
-                }
-            }]
-        }];
-
-    /**
-     * 
-     */
-    first.setEvent('onAjaxRequestCompleteEvent', function() {
-        $C('what').component.down("div.header").appendChild(new Element("div", {id:"menu"}));
-        Event.onElementReady('menu', function() {
-            new MenuBar("menu", {data:myData});
-        });
-
-        Event.onElementReady('tab-why-jplex', function() {
-            var myTabsData = [
-                {title: 'Why jPlex ?', content:'tab-why-jplex'},
-                {title: 'What is jPlex ?', content:'tab-what-is-jplex'}
-            ];
-            var tabs = new Tabs("home-tabs", {
-                data: myTabsData,
-                activeTab: 1
-            });
-            tabs.setEvent("onSwitchEvent", function() {
-                first.makeCentered();
-                first._constrainToSize();
-            });
-
-        });
-        
-        new MouseOverImage('code-snippet', {img:'./global/img/lifebuoy.png', position:'middle'});
-    });
+    Demo.init();
 
         //-->
 </script>
