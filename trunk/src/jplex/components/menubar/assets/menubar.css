@@ -1,4 +1,4 @@
-div.menubar {
+div.jplex-menubar {
     width: 100%;
     height: 1.7em;
     background-image: url("bgs.png");
@@ -7,18 +7,18 @@ div.menubar {
     font-size: 0.9em;
 }
 
-div.menubar * {
+div.jplex-menubar * {
     cursor: default;
 }
 
-div.menubar ul {
+div.jplex-menubar ul {
     list-style: none;
     padding: 0;
     margin: 0;
     width: auto;
 }
 
-div.menubar li.first {
+div.jplex-menubar li.first {
     padding: 0 0.8em 0 0.7em;
     border-left: 1px #c0c0c0 solid;
     display: inline;
@@ -27,7 +27,7 @@ div.menubar li.first {
     vertical-align: middle;
 }
 
-div.menubar li.item {
+div.jplex-menubar li.item {
     padding: 0 4.5em 0 0.7em;
     height: 1.9em;
     line-height: 1.7em;
@@ -37,35 +37,35 @@ div.menubar li.item {
     border: 1px transparent solid;
 }
 
-div.menubar li.item:hover,
-div.menubar li.item.icon:hover {
+div.jplex-menubar li.item:hover,
+div.jplex-menubar li.item.icon:hover {
     background: #d6f4fe no-repeat 4px 4px;
     border: 1px #c0c0c0 dotted;
 }
 
-div.menubar li.first:hover,
-div.menubar li.first-selected {
+div.jplex-menubar li.first:hover,
+div.jplex-menubar li.first-selected {
     background: url("bgs.png") 0 -1300px;
 }
 
-div.menubar li a {
+div.jplex-menubar li a {
     text-decoration: none;
     color: inherit;
 }
 
-div.menubar ul.submenu {
+div.jplex-menubar ul.submenu {
     position: absolute;
     background: #fefefe;
     border: 1px #999999 solid;
 }
 
-div.menubar span.shortcut {
+div.jplex-menubar span.shortcut {
     color: #999999;
     position: absolute;
     right: 0.5em;
 }
 
-div.menubar span.parent {
+div.jplex-menubar span.parent {
     position: absolute;
     right: 0;
     width: 1em;
@@ -73,17 +73,17 @@ div.menubar span.parent {
     background: url("submenu.png") no-repeat right 0.5em;
 }
 
-div.menubar li.item.icon {
+div.jplex-menubar li.item.icon {
     background: no-repeat 4px 4px;
 }
 
-div.menubar li.first.icon,
+div.jplex-menubar li.first.icon,
     div.menubar li.first.icon:hover {
     background: no-repeat 4px 1px;
 
 }
 
-div.menubar ul.with-icon > li.item.icon,
+div.jplex-menubar ul.with-icon > li.item.icon,
     div.menubar ul.with-icon > li.first.icon,
     div.menubar ul.with-icon > li.item.no-icon {
     padding-left: 26px;

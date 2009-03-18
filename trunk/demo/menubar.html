@@ -16,7 +16,7 @@
             font-size:0.9em;
         }
 
-        div.menubar {
+        div#menubar {
             top: 0;
             left: 0;
             position: absolute;
@@ -46,7 +46,7 @@ clickHandler = function() {
         padding: "3px",
         margin: "3px",
         border: "1px #c0efc0 solid"
-    }).update("Trigger Handler for " + this.sLabel);
+    }).update("Trigger Handler for " + this.getDetails().label);
     $("events").appendChild(div);
 };
                 
@@ -60,7 +60,7 @@ var myData = [{
             items: [{
                 name: "Item 1.1.1.1",
                 click: clickHandler,
-                keySC: {
+                shortcut: {
                     key: Event.Key.P,
                     ctrl: true,
                     text: "Ctrl + P"
@@ -68,7 +68,7 @@ var myData = [{
             }, {
                 name: "Item 1.1.1.2",
                 click: clickHandler,
-                keySC: {
+                shortcut: {
                     key: Event.Key.H,
                     ctrl: true,
                     text: "Ctrl + H"
@@ -103,7 +103,7 @@ clickHandler = function() {
         padding: "3px",
         margin: "3px",
         border: "1px #c0efc0 solid"
-    }).update("Trigger Handler for "+this.sLabel);
+    }).update("Trigger Handler for "+this.getDetails().label);
     $("events").appendChild(div);
 };
 
@@ -115,14 +115,15 @@ m.addItem({name:"Menu #1"})
     .addItem({name:"Item 1.2"}).getItem(0)
     .addItem({name:"Item 1.1.1"})
     .addItem({name:"Item 1.1.2"}).getItem(0)
-    .addItem({name:"Item 1.1.1.1", click:clickHandler, keySC:{key:Event.Key.P, ctrl:true, text:"Ctrl+P"}})
-    .addItem({name:"Item 1.1.1.2", click:clickHandler, keySC:{key:Event.Key.H, ctrl:true, text:"Ctrl+H"}});
+    .addItem({name:"Item 1.1.1.1", click:clickHandler, shortcut:{key:Event.Key.P, ctrl:true, text:"Ctrl+P"}})
+    .addItem({name:"Item 1.1.1.2", click:clickHandler, shortcut:{key:Event.Key.H, ctrl:true, text:"Ctrl+H"}});
 m.getItem(1)
     .addItem({name:"Item 2.1", icon:"img/031.png", link:"http://www.google.fr"})
     .addItem({name:"Item 2.2"});</textarea>
         </td>
     </tr>
 </table>
+
 <script type="text/javascript">
 
 var t = new Date().getTime();
@@ -134,7 +135,7 @@ clickHandler = function() {
         padding: "3px",
         margin: "3px",
         border: "1px #c0efc0 solid"
-    }).update("Trigger Handler for " + this.sLabel);
+    }).update("Trigger Handler for " + this.getDetails().label);
     $("events").appendChild(div);
 }
 
@@ -148,7 +149,7 @@ var myData = [{
             items: [{
                 name: "Item 1.1.1.1",
                 click: clickHandler,
-                keySC: {
+                shortcut: {
                     key: Event.Key.P,
                     ctrl: true,
                     text: "Ctrl + P"
@@ -156,7 +157,7 @@ var myData = [{
             }, {
                 name: "Item 1.1.1.2",
                 click: clickHandler,
-                keySC: {
+                shortcut: {
                     key: Event.Key.H,
                     ctrl: true,
                     text: "Ctrl + H"
