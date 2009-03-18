@@ -1,19 +1,19 @@
 jPlex.include('jplex.components.menubar.MenuBarItem', false);
 /**
  * @description !MenuBar component
- * Place a nice menu bar on your page. It's designed as 
+ * Place a nice menu bar on your page. It's designed as
  * the classical menu bars in applications.
- * It is possible to link events on terminal items. 
+ * It is possible to link events on terminal items.
  * As an additional feature, you could specify a key shortcut
  * for this event.
  * The source for the menu items could be either:
  * <ul>
  * <li>a raw JS array. The definition of an item looks like:
- *  <pre>{ 
+ *  <pre>{
  *    name:"Item",
  *    click: clickHandler, //Reference to the function to be called at click
  *    icon: 'path/to/icon.png', // Path to a 16x16 icon which will be displayed on the left (optional)
- *    keySC: {
+ *    shortcut: {
  *        code: Event.Key.Y, // Key code of the shortcut
  *        ctrl: true, // The shortcut requires the modifier Ctrl to be pressed
  *        text: "Ctrl+Y" // Text displayed at right of the item
@@ -35,100 +35,64 @@ jPlex.include('jplex.components.menubar.MenuBarItem', false);
  *         </item>
  *     </menubar></xmp>
  * }}}</li>
- * <li>JSON document, fetched with Ajax.Request 
+ * <li>JSON document, fetched with Ajax.Request
  * (exactly similar to the syntax of the JS Array)</li>
  * </ul>
  * Notice that this class is a singleton. Therefore it can't be instantiated twice.
  * @param {Element|String} eSrc Container of the menubar
  * @param {Object} oConfig Configuration of the menu bar
- * @class MenuBar 
+ * @class MenuBar
  * @extends jplex.common.Component
  * @requires menubar.Item
  * @constructor
  */
-jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component',  {
+jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
 
-    /**
-     * Definitions for the Menubar 
-     * (includes <code>_definition.defaultConfig</code> storing the default configuration)
-     * @property _definition
-     * @private
-     * @type Object
-     */ 
     _definition: {
         name: "MenuBar",
         defaultConfig: {
             data: [],
-            source: 0, // MenuBar.Type.JS_ARRAY
+            source: 0 // MenuBar.Type.JS_ARRAY
 
-            events: {
-                beforeRenderEvent: Prototype.emptyFunction,
-                afterRenderEvent: Prototype.emptyFunction,
-                onClickEvent: Prototype.emptyFunction,
-                onItemAddEvent: Prototype.emptyFunction
-            }
+
         },
-        defaultContainer: "div",
-        text: {
-            fr: {},
-            en: {}
-        }
+        events: {
+            /**
+             * Event that fires before the rendering of the menu
+             * @event beforeRenderEvent
+             */
+            beforeRenderEvent: Prototype.emptyFunction,
+            /**
+             * Event that fires after the rendering of the menu
+             * @event afterRenderEvent
+             */
+            afterRenderEvent: Prototype.emptyFunction,
+            /**
+             * Event that fires when the menu is clicked
+             * @event onClickEvent
+             * @param {Event} event the DOM Event information
+             */
+            onClickEvent: Prototype.emptyFunction,
+            /**
+             * Event that fires when an item is added to the menu
+             * When an item is added, the handler is copied to the event of the same name of its submenu.
+             * @event onItemAddEvent
+             * @param {menubar.MenuBarItem} item the added item
+             */
+            onItemAddEvent: Prototype.emptyFunction
+        },
+        defaultContainer: "div"
     },
-    
-    /**
-     * Array containing the root items of the menu bar
-     * (initial items AND dynamically added ones)
-     * @property oItems
-     * @type Array
-     * @see MenuBar.Item
-     */
-
-    /**
-     * Event that fires before the rendering of the menu
-     * @event beforeRenderEvent
-     */
-
-    /**
-     * Event that fires after the rendering of the menu
-     * @event afterRenderEvent
-     */
-
-    /**
-     * Event that fires when the menu is clicked
-     * @event onClickEvent
-     * @param {Event} event the DOM Event information
-     */
-
-    /**
-     * Event that fires when an item is added to the menu
-     * When an item is added, the handler is copied to the event of the same name of its submenu.
-     * @event onItemAddEvent
-     * @param {MenuBar.Item} item the added item
-     */
 
     
-    initialize: function($super, eSrc, oConfig) {
-        try {
-            if (jplex.components.MenuBar.getInstance()) {
-                throw {
-                    name: "MenuBarSingleInstance",
-                    message: "Only one instance of the menubar is allowed per page"
-                }
-            } else {
-                jplex.components.MenuBar._instance = this;
-            }
-        } catch(e) {
-            Logger.error(e);
-            return;
-        }
-        
-        $super(eSrc, oConfig);
+    initialize: function($super, eElement, oConfig) {
+        $super(eElement, oConfig);
 
         // Call the renderer of the component
         this.render();
 
         // Fill the menu with data items from the specified source
-        this.oItems = $A([]);
+        this._items = $A([]);
         this._getData().each(function(s) {
             this.addItem(s);
         }.bind(this));
@@ -137,115 +101,186 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component',  {
         document.observe("click", function(e) {
             e = Event.extend(window.event ? window.event : e);
             if (!$(Event.element(e)).up("li.item")) {
-                jplex.components.MenuBar._clicked = false;
+                this.setActive(false);
                 this.hide();
             }
-            this.fireEvent("onClickEvent");
+            this.fireEvent("onClickEvent", {
+                event: e
+            });
         }.bind(this));
 
         // IE6 CSS3 Hacks
         // TODO Le faire aussi quand on ajoute des items
         // TODO Cassé sur IE6 : Le Background apparaît plusieurs fois
-        if(Prototype.Browser.IE6) {
-            $$("div.menubar ul.with-icon > li.item-with-icon",
-                    "div.menubar ul.with-icon > li.item-without-icon").each(function(s) {
-                $(s).setStyle({paddingLeft: "26px"});
+        if (Prototype.Browser.IE6) {
+            $$("div.jplex-menubar ul.with-icon > li.item-with-icon",
+                    "div.jplex-menubar ul.with-icon > li.item-without-icon").each(function(s) {
+                $(s).setStyle({
+                    paddingLeft: "26px"
+                });
             });
         }
 
     },
-    
+
     /**
      * Renders the menu bar root
      */
     render: function() {
         this.fireEvent("beforeRenderEvent");
-        this.component.addClassName("menubar");
-        this.eElement = new Element("ul");
-        this.component.appendChild(this.eElement);
+        this.component.addClassName("jplex-menubar");
+        this.me = new Element("ul");
+        
+        this.component.appendChild(this.getHTMLElement());
         this.fireEvent("afterRenderEvent");
     },
-    
+
     /**
      * Hides every opened item of the menu
      */
     hide: function() {
-        this.oItems.each(function(s) {
-            s.oSubmenu.hide();
+        this._items.each(function(s) {
+            s.getSubmenu().hide();
         });
     },
-    
+
     /**
      * Adds the item oItem to the menu root.
      * If specified, adds it before the nBefore'th item
-     * @param {Object} oItem Item to add (please refer to the doc above for item properties)
-     * @param {Integer} nBefore Optional. Position of the item (by default the item is pushed at the end)
+     * @param {Object} newItem Item to add (please refer to the doc above for item properties)
+     * @param {int} before Optional. Position of the item (by default the item is pushed at the end)
      * @return {MenuBar} the modified MenuBar (allows chained items adds)
      */
-    addItem: function(oItem, nBefore) {
-        var item = new jplex.components.menubar.MenuBarItem(this, oItem, 0);
-        if (nBefore) {
-            this.eElement.insertBefore(item.get(), this.oItems[nBefore].get());
+    addItem: function(newItem, before) {
+        var item = new jplex.components.menubar.MenuBarItem(this, newItem, 0);
+        if (before) {
+            this.getHTMLElement().insertBefore(item.getHTMLElement(), this._items[before].getHTMLElement());
             var tmp = $A([]);
-            for (var i = 0; i < this.oItems.length; i++) {
-                if(i == nBefore) {
-                    tmp.push(item);    
+            for (var i = 0; i < this._items.length; i++) {
+                if (i == before) {
+                    tmp.push(item);
                 }
-                tmp.push(this.oItems[i]);
+                tmp.push(this._items[i]);
             }
-            this.oItems = tmp.compact();
+            this._items = tmp.compact();
         } else {
-            this.eElement.appendChild(item.get());
-            this.oItems.push(item);
+            this.getHTMLElement().appendChild(item.getHTMLElement());
+            this._items.push(item);
         }
-        this.fireEvent("onItemAddEvent", {item: item});
+        this.fireEvent("onItemAddEvent", {
+            item: item
+        });
         return this;
     },
-    
+
     /**
-     * Removes the item at position nIndex
-     * @param {nIndex} nIndex Optional. Position of the item
+     * Removes the item at position index
+     * @param {int} index Optional. Position of the item
      */
-    removeItem: function(nIndex) {
-        this.eElement.removeChild(this.getItem(nIndex).oParent.get());
-        delete this.oItems[nIndex];
-        this.oItems = this.oItems.compact();
+    removeItem: function(index) {
+        this.getHTMLElement().removeChild(this.getItem(index).getMenu().getHTMLElement());
+        delete this._items[index];
+        this._items = this._items.compact();
     },
-    
+
     /**
      * Get the submenu of the item at position nIndex
-     * @param {Integer} nIndex Position of the item to get
+     * @param {int} index Position of the item to get
      * @return {MenuBar.Submenu} the submenu of the specified item
      */
-    getItem: function(nIndex) {
-        return this.oItems[nIndex].getSubmenu();
+    getItem: function(index) {
+        return this._items[index].getSubmenu();
     },
+
+    /**
+     * Get the `<ul>` element containing the root menu items
+     * @return {Element} 
+     */
+    getHTMLElement: function() {
+        return this.me;
+    },
+
+    /**
+     * Return the instance of MenuBar (convenience method for "polymorphism")
+     * @return {menubar.MenuBar}
+     */
+    getRootMenuBar: function() {
+        return this;
+    },
+
+    /**
+     * Indicated the status of the menubar
+     * @return {bool} `true` if the user has currently clicked on the menubar and is navigating through its items
+     */
+    isActive: function() {
+        return this._activate;
+    },
+
+    /**
+     * Set the status of the menubar
+     * @param {bool} active `true` for "Active" (when the user is using the menubar)
+     */
+    setActive: function(active) {
+        this._activate = active;
+    },
+
+    /**
+     * Returns the direct items of the menubar in an array.
+     * @return {Array} an array of the items (menubar.MenuBarItem)
+     */
+    getItems: function() {
+        return this._items;
+    },
+    
+
+    //---------- Private methods ----------
 
     /**
      * Get the JS Array containing the description of the menu items
-     * depending on the data source  
+     * depending on the data source
      * @private
-     * @return {Array} the items of the menu 
+     * @return {Array} the items of the menu
      */
     _getData: function() {
-        var aData;
+        var data;
         if (jplex.components.MenuBar.SOURCE_JS_ARRAY == this.cfg("source")) {
-            aData = this.cfg("data");
+            data = this.cfg("data");
         } else if (jplex.components.MenuBar.SOURCE_AJAX_XML == this.cfg("source")) {
-            //@TODO XML Source
+            // TODO XML Source
         } else if (jplex.components.MenuBar.SOURCE_AJAX_JSON == this.cfg("source")) {
-            //@TODO JSON Source
+            // TODO JSON Source
         }
-        return $A(aData);
-    },
-
-    get: function() {
-        return this.eElement;
+        return $A(data);
     }
-    
+
+
+    //---------- Private properties ----------
+
+    /**
+     * Array containing the root items of the menu bar
+     * (initial items AND dynamically added ones)
+     * @property _items
+     * @type Array
+     * @private
+     * @see menubar.MenuBarItem
+     */
+
+    /**
+     * The `<ul>` HTML Element of the menubar
+     * @property me
+     * @type Element
+     * @private
+     */
+
+    /**
+     * Flag indicating whether the menubar is currently in use or not
+     * @property _active
+     * @type bool
+     * @private
+     */
 });
 
-jPlex.extend('jplex.components.MenuBar',  {    
+jPlex.extend('jplex.components.MenuBar', {
     /**
      * Configuration constant indicating that menu items comes from a raw JS array
      * @property SOURCE_JS_ARRAY
@@ -266,29 +301,5 @@ jPlex.extend('jplex.components.MenuBar',  {
      * @type Integer
      * @static
      */
-    SOURCE_AJAX_JSON: 2,
-    
-    /**
-     * Stores the single allowed instance of the menu bar
-     * @property _instance
-     * @private
-     * @static
-     */
-    
-    /**
-     * MenuBar state (activated or not)
-     * @property _clicked
-     * @private
-     * @static
-     */
-    
-    /**
-     * Get the instance of the menu bar
-     * @method getInstance
-     * @return {MenuBar} the unique instance of MenuBar
-     * @static
-     */
-    getInstance: function() {
-        return jplex.components.MenuBar._instance;
-    }
+    SOURCE_AJAX_JSON: 2
 });

@@ -97,7 +97,7 @@
                 items: [{
                     name: "Modal",
                     click: Prototype.emptyFunction,
-                    keySC: {
+                    shortcut: {
                         key: Event.Key.M,
                         ctrl: true,
                         text: "Ctrl + M"
@@ -105,7 +105,7 @@
                 }, {
                     name: "Dialog",
                     click: Prototype.emptyFunction,
-                    keySC: {
+                    shortcut: {
                         key: Event.Key.D,
                         ctrl: true,
                         text: "Ctrl + D"
@@ -119,7 +119,7 @@
             }, {name: "Pangolin Source"}]
         }, {
             name: "Close",
-            keySC: {
+            shortcut: {
                 key: Event.Key.W,
                 ctrl: true,
                 text: "Ctrl + W"
@@ -149,6 +149,7 @@
                         draggable:true
                     });
                     Demo.view.slideshow.pics = [
+                            "<img id src='http://livepipe.net/stylesheets/sample_images/tabs_example_3_big.jpg' alt='emoCat' />",
                         "<img id src='global/img/demo_slideshow01.jpg' alt='slideshow' />",
                         "<img id src='global/img/demo_slideshow02.jpg' alt='slideshow' />",
                         "<img id src='global/img/demo_slideshow03.jpg' alt='slideshow' />",
@@ -210,7 +211,8 @@
                     var about = new Modal('about', {
                         draggable: true,
                         ajax: "./global/about.html",
-                        overlayFade: 0.5
+                        overlayFade: 0.5,
+                        constrainToCenter:true
                     });
                     about.setTitle("About");
                 }

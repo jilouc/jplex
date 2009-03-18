@@ -415,7 +415,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      */
     _addOverlay: function() {
 
-        this._overlay = new jplex.components.Overlay(this._sIDPrefix + "-overlay", {
+        this._overlay = new jplex.components.Overlay(this.UID + "-overlay", {
             color: this.cfg('overlayColor'),
             z: this._level - 1,
             fade: this.cfg('overlayFade'),
@@ -576,7 +576,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             if (!ld) {
                 var ld = new Element("div").addClassName('loading');
                 ld.setStyle({
-                    zIndex:this._level + 2
+                    zIndex:this._level + 1
                 });
                 ld.setOpacity(0.7);
                 this.component.appendChild(ld);

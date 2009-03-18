@@ -1,13 +1,13 @@
-div.menubar li.item {
+div.jplex-menubar li.item {
     border: 0;
 }
 
-div.menubar ul {
+div.jplex-menubar ul {
     position:absolute;
     width:200px;
 }
 
-div.menubar li.item-with-icon {
+div.jplex-menubar li.item-with-icon {
     padding: 0 4.5em 0 0.7em;
     height: 1.5em;
     vertical-align: middle;
@@ -18,7 +18,7 @@ div.menubar li.item-with-icon {
 }
 
 
-div.menubar li.item-without-icon {
+div.jplex-menubar li.item-without-icon {
     padding: 0 4.5em 0 0.7em;
     vertical-align: middle;
     white-space: nowrap !important;
@@ -26,16 +26,16 @@ div.menubar li.item-without-icon {
     border: 0;
 }
 
-div.menubar span.shortcut {
+div.jplex-menubar span.shortcut {
     line-height:1.2em;
 }
 
-div.menubar li.ie6-item-hover {
+div.jplex-menubar li.ie6-item-hover {
     background: #d6f4fe no-repeat 4px 4px;
     border: 1px #c0c0c0 dotted;
 }
 
-div.menubar li.ie6-first-hover {
+div.jplex-menubar li.ie6-first-hover {
     background: url("bgs.png") 0 -1300px;
 }
 
