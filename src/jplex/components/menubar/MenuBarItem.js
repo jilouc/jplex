@@ -87,10 +87,10 @@ jPlex.provide('jplex.components.menubar.MenuBarItem', {
         this._submenu = new jplex.components.menubar.MenuBarSubmenu(this, items, this._level);
 
         this.me.appendChild(this.getSubmenu().getHTMLElement());
-        this.me.appendChild(this._submenu.eShade);
+        this.me.appendChild(this._submenu._shadow);
+        
         if (!this.getSubmenu().isEmpty() && this._level != 0) {
-            span = new Element("span");
-            this.me.appendChild(span.addClassName("parent"));
+            this._addSubmenuIndicator();
         }
 
         if (Prototype.Browser.IE6) {
@@ -163,6 +163,17 @@ jPlex.provide('jplex.components.menubar.MenuBarItem', {
     },
 
     //---------- Private methods ----------
+
+    /**
+     * Add an small indicator for the items that have a non-empty submenu
+     * @private
+     */
+    _addSubmenuIndicator: function() {
+        if(this._level != 0) {
+            var span = new Element("span");
+            this.me.appendChild(span.addClassName("parent"));
+        }
+    },
 
     /**
      * Operations when the mouse enters a menu item

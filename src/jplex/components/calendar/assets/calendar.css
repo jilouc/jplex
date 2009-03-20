@@ -7,10 +7,8 @@ input.jplex-calendar[type=text] {
 	width:7em;
 }
 input.jplex-calendar[type=button] {
-	background-image: url( 'icon-calendar.gif' );
-    background-repeat: no-repeat;
-	background-position: center center;
-	border:1px #909090 solid;
+    background: url('icon-calendar.gif') no-repeat center center;
+    border:1px #909090 solid;
 	padding:0.1em 1em 0.1em 0.1em;
 	margin-left:0.2em;
 	width:30px;
@@ -133,6 +131,4 @@ div.jplex-calendar-tooltip div.select {
 
 div.jplex-calendar-tooltip input.end {
     margin:0.5em 0 0.5em 0;
-}
-div.jplex-calendar-tooltip select {
 }

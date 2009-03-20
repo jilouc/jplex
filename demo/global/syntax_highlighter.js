@@ -227,3 +227,31 @@ CodeHighlighter.addStyle("html", {
 		exp: /&lt;!DOCTYPE([^&]|&[^g]|&g[^t])*&gt;/
 	}
 });
+
+CodeHighlighter.addStyle("css", {
+	comment : {
+		exp  : /\/\*[^*]*\*+([^\/][^*]*\*+)*\//
+	},
+	keywords : {
+		exp  : /@\w[\w\s]*/
+	},
+	selectors : {
+		exp  : "([\\w-:\\[.#>][^{};]*)(?={)"
+	},
+	properties : {
+		exp  : "([\\w-]+)(?=\\s*:)"
+	},
+	units : {
+		exp  : /([0-9.]+)(em|en|px|%|pt)\b/,
+		replacement : "<span class=\"numbers\">$1</span><span class=\"$0\">$2</span>"
+	},
+    colors: {
+        exp : /#[0-9a-fA-F]{3,6}/ 
+    },
+	urls : {
+		exp  : /url\([^\)]*\)/
+	},
+    classes: {
+        exp: /\.[a-zA-Z0-9\-_]+/
+    }
+ });

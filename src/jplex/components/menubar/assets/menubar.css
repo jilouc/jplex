@@ -78,13 +78,12 @@ div.jplex-menubar li.item.icon {
 }
 
 div.jplex-menubar li.first.icon,
-    div.menubar li.first.icon:hover {
+div.jplex-menubar li.first.icon:hover {
     background: no-repeat 4px 1px;
-
 }
 
 div.jplex-menubar ul.with-icon > li.item.icon,
-    div.menubar ul.with-icon > li.first.icon,
-    div.menubar ul.with-icon > li.item.no-icon {
+div.jplex-menubar ul.with-icon > li.first.icon,
+div.jplex-menubar ul.with-icon > li.item.no-icon {
     padding-left: 26px;
 }
