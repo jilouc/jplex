@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Calendar CSS rules</title>
+    <link id="component-css" media="screen" type="text/css" rel="stylesheet"
+          href="">
+    <link media="screen" rel="stylesheet" href="../global/syntax_highlighter.css" type="text/css"/>
+    <link media="screen" type="text/css" rel="stylesheet" href="./styles.css">
+    <script type="text/javascript" src="../../src/jPlex.js"></script>
+    <script src="../global/syntax_highlighter.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./CSSRulesHighlighter.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+
+<div class="rules-highlighter">
+    <div class="styles-header">
+        <div class="component-switcher" style="margin-bottom:1em;">
+            <select id="component-switcher" onchange="go()" style="width:98%;">
+                <option value="_empty_">--- Please select a jPlex component ---</option>
+                <option value="Calendar">Calendar</option>
+                <option value="Frame">Frame</option>
+                <option value="MenuBar">MenuBar</option>
+                <option value="Tabs">Tabs</option>
+            </select>
+        </div>
+        <u>CSS Rules used by the component</u><br/>
+        Roll over any CSS Rule to highlight the matching element(s) on the component. &rarr;<br/>
+        Click on a rule to see its properties.
+    </div>
+    <div id="rules"> </div>
+    <div id="help" style="text-align:center; color:#999999"><em>Please select a component in the menu above.</em></div>
+</div>
+<div id="highlight-zone" style="display:none;">
+    <div id="highlight-zone-component" style="clear:both; float:left;"> </div>
+    <div class="info"><em>This is a CSS Rule demo component. <br/>Some features may be unavailable.</em></div>
+</div>
+<script type="text/javascript">
+    function go() {
+        var value = $F("component-switcher");
+        if (value != "_empty_") {
+            $("highlight-zone").show();
+            $("help").hide();
+            CSSRulesExplorerFactory.forComponent(value);
+        } else {
+            $("highlight-zone").hide();
+            $("rules").removeChildren();
+            $("help").show();
+        }
+    }
+</script>
+</body>
+</html>

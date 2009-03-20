@@ -32,8 +32,8 @@ jPlex.provide('jplex.components.menubar.MenuBarSubmenu', {
      */
     render: function() {
         this.me = $(new Element("ul"));
-        this.eShade = $(new Element("div"));
-        this.eShade.setStyle({
+        this._shadow = $(new Element("div"));
+        this._shadow.setStyle({
             background: "#000000",
             zIndex: 2 * this._level,
             position: "absolute"
@@ -51,7 +51,7 @@ jPlex.provide('jplex.components.menubar.MenuBarSubmenu', {
     show: function() {
         if (!this.isEmpty() && !this.me.visible()) {
             this.me.show();
-            this.eShade.show();
+            this._shadow.show();
             this._fixPosition();
         }
     },
@@ -66,7 +66,7 @@ jPlex.provide('jplex.components.menubar.MenuBarSubmenu', {
             });
 
             this.me.hide();
-            this.eShade.hide();
+            this._shadow.hide();
         }
     },
 
@@ -109,6 +109,8 @@ jPlex.provide('jplex.components.menubar.MenuBarSubmenu', {
             this.me.appendChild(item.getHTMLElement());
             this._items.push(item);
         }
+        item.getMenu().getParentItem()._addSubmenuIndicator();
+        
         this.getRootMenuBar().fireEvent("onItemAddEvent", {
             item: item
         });
@@ -201,7 +203,7 @@ jPlex.provide('jplex.components.menubar.MenuBarSubmenu', {
             top: top + "px",
             left: left + "px"
         });
-        this.eShade.setStyle({
+        this._shadow.setStyle({
             top: top + "px",
             left: (left - 2) + "px",
             width: (this.me.getWidth() + 4) + "px",

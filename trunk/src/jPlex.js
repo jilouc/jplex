@@ -238,6 +238,24 @@ var jPlex = {
      */
     extend: function(clazz, obj) {
         Object.extend(this.get(clazz), obj);
+    },
+
+    /**
+     * Set the global skin theme for jPlex components
+     * A "fake" CSS class is applied to the `<body>` element of the page. Override some css rules using
+     * the following example:
+     * <code>.custom-skin div.jplex-calendar { custom properties }
+     * ...
+     * .custom-skin div.menubar { custom properties }
+     * ...</code>
+     *  
+     * @param {string} skin Name of a "fake" CSS class that will be added to the body of the page.
+     */
+    useSkin: function(skin) {
+        var root = $(document.body);
+        root.removeClassName(this._skin || "");
+        root.addClassName(skin);
+        this._skin = skin;
     }
 };
 

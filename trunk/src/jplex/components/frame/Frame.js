@@ -234,6 +234,8 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         }
     },
 
+    //TODO le settitle/setHeader empeche le close button
+
     initialize: function($super, eElement, oConfig) {
         $super(eElement, oConfig);
 
@@ -574,9 +576,9 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         var ld = this.component.down('div.loading');
         if (start) {
             if (!ld) {
-                var ld = new Element("div").addClassName('loading');
+                ld = new Element("div").addClassName('loading');
                 ld.setStyle({
-                    zIndex:this._level + 1
+                    zIndex:this._level+1
                 });
                 ld.setOpacity(0.7);
                 this.component.appendChild(ld);

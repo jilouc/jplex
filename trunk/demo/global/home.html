@@ -149,7 +149,6 @@
                         draggable:true
                     });
                     Demo.view.slideshow.pics = [
-                            "<img id src='http://livepipe.net/stylesheets/sample_images/tabs_example_3_big.jpg' alt='emoCat' />",
                         "<img id src='global/img/demo_slideshow01.jpg' alt='slideshow' />",
                         "<img id src='global/img/demo_slideshow02.jpg' alt='slideshow' />",
                         "<img id src='global/img/demo_slideshow03.jpg' alt='slideshow' />",
@@ -157,9 +156,10 @@
                     ];
                     Demo.view.slideshow.current = 0;
                     Demo.view.slideshow.setBody(Demo.view.slideshow.pics[0]);
-                    Demo.view.slideshow.setFooter('<span id="tooltip-snippyhollow-source">[Pictures credits]</span> &mdash; '+
-                            '<a href="javascript:Demo.view.slideshow.previous()">Previous</a> '+
-                            '&minus; <a href="javascript:Demo.view.slideshow.next()">Next</a>');
+                    Demo.view.slideshow.setFooter('<em>Click on the semi-transparent overlay to exit slideshow.</em> &mdash; ' +
+                            '<span id="tooltip-snippyhollow-source">[Pictures credits]</span> ' +
+                            '<span>&larr; <a href="javascript:Demo.view.slideshow.previous()">Previous</a> '+
+                            '&minus; <a href="javascript:Demo.view.slideshow.next()">Next</a> &rarr;</span>');
 
                     Demo.view.slideshow.previous = function() {
                         var sl = Demo.view.slideshow;

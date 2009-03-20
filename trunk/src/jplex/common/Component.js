@@ -18,9 +18,10 @@ jPlex.include('jplex.xprototype.*');
  *         name: 'A', // Name
  *         defaultConfig: { // The default config available in this.cfg('...')
  *             ...
- *             events: {...} // Custom Events
- *         }
- *         text: { fr: {...}, en: {...} } // Global labels for this components
+ *         },
+ *         events: {...}, // Custom Events
+ *         text: { fr: {...}, en: {...}, ... } // Global labels for this components
+ *         text: { fr: {...}, en: {...}, ... } // Global labels for this components
  *     },
  *     initialize: function($super, eSrc, oConfig) {
  *         $super(eSrc, oConfig);
@@ -42,34 +43,8 @@ jPlex.include('jplex.xprototype.*');
  * @constructor
  */
 jPlex.provide('jplex.common.Component', {
-    /**
-     * Internal counter that will be unique for each subclass
-     * @property _instanceCount
-     * @type int
-     * @default 0
-     * @private
-     */
-    _instanceCount:0,
 
-    /**
-     * Prefix that will be used to generate the component's
-     * @property _sIDPrefix
-     * @type String
-     * @private
-     */
-    _sIDPrefix:"",
 
-    /**
-     * If true, the component property has been created during the initialization 
-     * @property createdComponent
-     * @type Boolean
-     */
-    createdComponent: false,
-    /**
-     * The component HTML Element
-     * @property component
-     * @type Element
-     */
     initialize: function(eElement, oConfig) {
         // If the component's container doesn't exist, we have to create it
         // using the component default container. It's added to the body of the document
@@ -212,7 +187,36 @@ jPlex.provide('jplex.common.Component', {
         jplex.common.Component._list.set(this.ID, undefined);
         if(this.createdComponent)
             this.component.remove();
-    }
+    },
+
+
+    /**
+     * Internal counter that will be unique for each subclass
+     * @property _instanceCount
+     * @type int
+     * @default 0
+     * @private
+     */
+    _instanceCount: 0
+
+    /**
+     * Computed Unique ID of the component
+     * @property UID
+     * @type String
+     */
+
+    /**
+     * ID of the main HTML Element of the component
+     * @property ID
+     * @type String
+     */
+
+    /**
+     * If true, the component property has been created during the initialization
+     * @property createdComponent
+     * @type bool
+     * @private
+     */
 
     /**
      * The container HTML Element of the jplex Component
@@ -221,7 +225,13 @@ jPlex.provide('jplex.common.Component', {
      */
 
 });
-jPlex.extend('jplex.common.Component', {_list:$H()});
+
+
+//---------- Static properties ----------
+
+jPlex.extend('jplex.common.Component', {
+    _list:$H()
+});
 
 
 /**
