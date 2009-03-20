@@ -1,0 +1,80 @@
+<ul id="tabs-code-slideshow" class="code-tabs"></ul>
+
+<div id="tab-code-slideshow-1">
+    Creating a modal frame is dreadfully easy, and actually a bit depressing isn't it ? You just have to call the 
+    jplex.components.frame.Modal constructor with some options for our case and that's it. 
+    <pre>
+    <code class="javascript">
+Demo.slideshow = new Modal("slideshow", {
+    footer:true,            // To display Snippy's CC license 
+    constrainToCenter:true, // This frame must be in the centre
+    overlayFade:0.5         // Time of the overlay
+});
+    </code>
+    </pre>
+    
+    Of course you have to include the Modal class with jPlex.include as seen in the home page.
+    
+    The content of this frame will set later with :      
+    <pre><code class="javascript">
+Demo.slideshow.setBody(Demo.slideshow.pics[0]);
+Demo.slideshow.setFooter('...');
+     </code></pre>
+    You can see that the slideshow is still centered even after an asynchronous load of the images.
+       
+</div>
+<div id="tab-code-slideshow-2">
+    To display the Creative Common Licence of Snippy, we can use a wonderfull jplex.components.Tooltip !  
+<pre>
+    <code class="javascript">
+var t = new Tooltip("tooltip-snippyhollow", {
+    zIndex:Demo.slideshow._level + 2,
+    positionRation:0.4,
+    position:"bottom-right",
+});
+t.setContent("&lt;img src='./global/img/somerights20.gif' alt='CC' /&gt;" +
+             "&lt;img src='./global/img/cc_icon_attribution.gif' alt='BY' /&gt;" +
+             "&lt;img src='./global/img/cc_icon_sharealike.gif' alt='SA' /&gt;&lt;br/&gt;" +
+             "&lt;a href='http://www.flickr.com/photos/snippyhollow/' target='_blank'&gt;Snippy Hollow&lt;/a&gt;");
+    </code>
+</pre>
+</div>
+
+<div id="tab-code-slideshow-3">
+    Our extension of Event for an easier usage of the keyboard gives us the possibility to control the slideshow. Enjoy
+    this model with this really simple example.
+    <pre>
+        <code class="javascript">
+Demo.slideshow.setEvent("onShowEvent", function() {
+    document.bindKey(Event.Key.LEFT_ARROW, Demo.slideshow.previous);
+    document.bindKey(Event.Key.RIGHT_ARROW, Demo.slideshow.next);
+});
+
+Demo.slideshow.setEvent("onHideEvent", function() { 
+    //Don't forget to unbind your events to skip useless handling
+    document.unbindKey(Event.Key.LEFT_ARROW);
+    document.unbindKey(Event.Key.RIGHT_ARROW);
+});
+        </code>
+    </pre>
+</div>
+
+
+<a onclick="$('code-slideshow').down('div.body').scrollTop = 0;" class="top"><img src="./global/img/arrow_stop_090.png" width="14"></a><br/>        
+
+
+<script type="text/javascript">
+    var t = new Tabs("tabs-code-slideshow", {
+        data: [
+            { title: "Tips", content: "tab-code-slideshow-3" },
+            { title: "Tooltip", content: "tab-code-slideshow-2" },
+            { title: "Modal", content:"tab-code-slideshow-1"}
+        ],
+        activeTab: 2
+    });
+
+    t.setEvent("onSwitchEvent", function() {
+        $C('code-slideshow').constrain();
+    });
+
+</script>
