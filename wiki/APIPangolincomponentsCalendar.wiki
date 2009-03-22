@@ -52,6 +52,7 @@ onSelectEvent to catch the selected date and do what you want with it</li>
 <ul><li>{M} the month full name</li>
 <li>{m} month number</li>
 <li>{Y} year with 4 digits</li></ul> </td></tr>
+<tr><td> _zBase_ </td><td> `11000` </td><td>  zIndex base </td></tr>
 </table>
 
 == Event Table ==

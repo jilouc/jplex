@@ -10,7 +10,7 @@ in jPlex. It provides us a global management of the configurations and a unified
 
 Defining a new component needs a bit more than just extending this class.
 You'll need to initialize it by calling in the constructor
-<code>$super(eSrc, oConfig);</code>
+<code>$super(element, config);</code>
 And you need to define a private property object <em>_definition</em> containing at least the name of the component.
 Here is a complete example of a component:
 
@@ -20,12 +20,13 @@ jPlex.provide('jplex.components.A', 'jplex.common.Component', {
         name: 'A', // Name
         defaultConfig: { // The default config available in this.cfg('...')
             ...
-            events: {...} // Custom Events
-        }
-        text: { fr: {...}, en: {...} } // Global labels for this components
+        },
+        events: {...}, // Custom Events
+        text: { fr: {...}, en: {...}, ... } // Global labels for this components
+        text: { fr: {...}, en: {...}, ... } // Global labels for this components
     },
-    initialize: function($super, eSrc, oConfig) {
-        $super(eSrc, oConfig);
+    initialize: function($super, element, config) {
+        $super(element, config);
         ...
     },
     ...
@@ -43,8 +44,10 @@ are welcome to browse the source of our components to see how to define yours.
 == Properties ==
 <table border="1" cellspacing="0" cellpadding="5">        
 <tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
-<tr><td> _component_ </td><td> `Element` </td><td> ` `  The component HTML Element</td></tr>
-<tr><td> _createdComponent_ </td><td> `Boolean` </td><td> ` `  If true, the component property has been created during the initialization</td></tr>
+<tr><td> _component_ </td><td> `Element` </td><td> ` `  The container HTML Element of the jplex Component</td></tr>
+<tr><td> _createdComponent_ </td><td> `bool` </td><td> `private  `  If true, the component property has been created during the initialization</td></tr>
+<tr><td> _ID_ </td><td> `String` </td><td> ` `  ID of the main HTML Element of the component</td></tr>
+<tr><td> _UID_ </td><td> `String` </td><td> ` `  Computed Unique ID of the component</td></tr>
 
 </table>
 
@@ -54,14 +57,14 @@ are welcome to browse the source of our components to see how to define yours.
 <table border="1" cellspacing="0" cellpadding="5">                                
 <tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
 <tr><td> `$C(c)` </td><td> `Component` </td><td> The ultimate function to get the component by its ID. This function can also accept an instance of Component too.<br />  - `c <String|Component>` The concerned component ID<br/></td></tr>
-<tr><td> `cfg(sName)` </td><td> `String` </td><td> Get a configuration parameter<br />  - `sName <String>` Name of the config parameter<br/></td></tr>
-<tr><td> `fireEvent(sEventName, oParameters)` </td><td> `void` </td><td> Fires the specified custom event with given parameters<br />  - `sEventName <String>` the custom event name<br/> - `oParameters <Object>` Optional. Hash of event parameters.<br/></td></tr>
-<tr><td> `getEvent(sEventName)` </td><td> `Function` </td><td> Get the event handler for the custom event<br />  - `sEventName <String>` the custom event name<br/></td></tr>
-<tr><td> `lang(sName)` </td><td> `String|Array|Boolean` </td><td> Reads the string or array that corresponds to the right lang<br />  - `sName <String>` name corresponding to the text field<br/></td></tr>
+<tr><td> `cfg(name)` </td><td> `String` </td><td> Get a configuration parameter<br />  - `name <String>` Name of the config parameter<br/></td></tr>
+<tr><td> `fireEvent(eventName, parameters)` </td><td> `void` </td><td> Fires the specified custom event with given parameters<br />  - `eventName <String>` the custom event name<br/> - `parameters <Object>` Optional. Hash of event parameters.<br/></td></tr>
+<tr><td> `getEvent(eventName)` </td><td> `Function` </td><td> Get the event handler for the custom event<br />  - `eventName <String>` the custom event name<br/></td></tr>
+<tr><td> `lang(name)` </td><td> `String|Array|Boolean` </td><td> Reads the string or array that corresponds to the right lang<br />  - `name <String>` name corresponding to the text field<br/></td></tr>
 <tr><td> `locale(component, field)` </td><td> `void` </td><td> Reads the string or array in the common corresponding to the locale<br />  - `component <String>`<br/> - `field <String>`<br/></td></tr>
-<tr><td> `setCfg(sName, mValue)` </td><td> `void` </td><td> Sets a local configuration parameter<br />  - `sName <String>` Name of the config parameter<br/> - `mValue <object>` Value to set<br/></td></tr>
-<tr><td> `setEvent(sEventName, fEventHandler)` </td><td> `void` </td><td> Set the event handler for the custom event.
-The context is bound to the component.<br />  - `sEventName <String>` the custom event name<br/> - `fEventHandler <Function>` the custom event handler<br/></td></tr>
+<tr><td> `setCfg(name, value)` </td><td> `void` </td><td> Sets a local configuration parameter<br />  - `name <String>` Name of the config parameter<br/> - `value <mixed>` Value to set<br/></td></tr>
+<tr><td> `setEvent(eventName, handler)` </td><td> `void` </td><td> Set the event handler for the custom event.
+The context is bound to the component.<br />  - `eventName <String>` the custom event name<br/> - `handler <Function>` the custom event handler<br/></td></tr>
 <tr><td> `unregister()` </td><td> `void` </td><td> Deletes the reference in the component table, usefull when you delete a lot of component, it avoids memory
 overflow<br /> </td></tr>
 

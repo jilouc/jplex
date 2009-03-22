@@ -1,0 +1,19 @@
+#summary Class API for Base from module XPrototype
+#labels Class-jplex.xprototype.Ajax.Base,Release-Pangolin,Module-XPrototype,API-Class
+#sidebar APIPangolinxprototypeIndex
+
+= Class *jplex.xprototype.Ajax.Base*  =
+
+== Description ==
+
+
+
+
+
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+<tr><td> _defaultMethod_ </td><td> `object` </td><td> `static  `  Default Method applied to Ajax.Request</td></tr>
+
+</table>
+

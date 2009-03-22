@@ -17,6 +17,5 @@
    * [APIPangolincomponentsOverlay Overlay]
    * [APIPangolincomponentsTabs Tabs]
    * [APIPangolincomponentsTooltip Tooltip]
-   * [APIPangolincomponentstooltipBubble Bubble]
  * [APIPangolinjplexIndex jPlex] 
  * [APIPangolinxprototypeIndex XPrototype] 

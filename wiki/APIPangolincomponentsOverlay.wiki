@@ -6,8 +6,9 @@
 
 == Description ==
 Overlay component.
-Place a semi-transparent layer which covers its parent on the page.
-It's mainly used by the Frame components.
+Place a semi-transparent layer which covers the source element on the page.
+If no source is given, the overlay covers the entire body of the page.
+It's mainly used by the Modal Frame component.
 
 == Config Table ==
 <table border="1" cellspacing="0" cellpadding="5">
@@ -15,6 +16,7 @@ It's mainly used by the Frame components.
 <tr><td> _color_ </td><td> `"#000000" (black)` </td><td>  Color of the overlay </td></tr>
 <tr><td> _fade_ </td><td> `false` </td><td>  If `true` the overlay will be shown/hidden using fade in/out </td></tr>
 <tr><td> _opacity_ </td><td> `0.75` </td><td>  Opacity of the overlay </td></tr>
+<tr><td> _source_ </td><td> `document.body` </td><td>  Element which will be covered by the overlay </td></tr>
 <tr><td> _z_ </td><td> `1` </td><td>  z-index for the overlay </td></tr>
 </table>
 

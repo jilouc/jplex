@@ -43,5 +43,12 @@ not allowed to do a request on local disk or distant web service with a differen
 Currently used to include the dependancies.<br />  - `fileName <String>` The path of the file<br/></td></tr>
 <tr><td> `provide(clazz, arg1, arg2)` </td><td> `void` </td><td> Provide to the jPlex package system a new class. This method encapsulates Class.create from prototype.
 Any class in the jPlex source code must be declare like this.<br />  - `clazz <String>` The full class name<br/> - `arg1 <String|Object>` The mother class name or directly the object that defines the class<br/> - `arg2 <Object>` The object that defines the class<br/></td></tr>
+<tr><td> `useSkin(skin)` </td><td> `void` </td><td> Set the global skin theme for jPlex components
+A "fake" CSS class is applied to the `<body>` element of the page. Override some css rules using
+the following example:
+<code>.custom-skin div.jplex-calendar { custom properties }
+...
+.custom-skin div.menubar { custom properties }
+...</code><br />  - `skin <string>` Name of a "fake" CSS class that will be added to the body of the page.<br/></td></tr>
 
 </table>

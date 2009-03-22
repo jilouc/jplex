@@ -8,24 +8,12 @@
 !MenuBar Item subclass
 
 
-== Event Table ==
-<table border="1" cellspacing="0" cellpadding="5">
-<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
-<tr><td> __onClick_ </td><td>  Fires on item activation by click
-Call the user custom function
-If the item is a root element, just shows the submenu </td><td>   - `e <Event>`  <br/>  </td></tr>
-<tr><td> __onMouseOver_ </td><td>  Fires when the mouse enters the item
-The handlers are identical to those of the menu root </td><td>   - `e <Event>`  <br/>  </td></tr>
-</table>
 
 
 == Properties ==
 <table border="1" cellspacing="0" cellpadding="5">        
 <tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
-<tr><td> _nLevel_ </td><td> `Integer` </td><td> `private  `  Depth of the item
-(equal to the depth of the submenu containing the item)</td></tr>
-<tr><td> _oParent_ </td><td> `MenuBar.MenuBarSubmenu|MenuBar` </td><td> `private  `  Reference to the item's parent submenu (or the menu root)</td></tr>
-<tr><td> _sLabel_ </td><td> `String` </td><td> `private  `  Label of the menu item</td></tr>
+<tr><td> _me_ </td><td> `Element` </td><td> `private  `  The `<li>` HTML Element of the item</td></tr>
 
 </table>
 
@@ -34,9 +22,22 @@ The handlers are identical to those of the menu root </td><td>   - `e <Event>`  
 == Methods ==
 <table border="1" cellspacing="0" cellpadding="5">                                
 <tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
-<tr><td> `get()` </td><td> `Element` </td><td> Get the `<li>` HTMLElement of the item, extended by Prototype's Element.extend<br /> </td></tr>
-<tr><td> `getSubmenu()` </td><td> `MenuBar.Submenu` </td><td> Get the submenu of the item (not its containing submenu)<br /> </td></tr>
-<tr><td> `initialize()` </td><td> `void` </td><td> Custom function called when the menu item is activated (on click or keyboard shortcut)<br /> </td></tr>
-<tr><td> `render(oItems, oShortcut)` </td><td> `void` </td><td> Renders the menu item (and creates all submenus)<br />  - `oItems <Array>` The sub-items of the item, defining its submenu<br/> - `oShortcut <Object>` Keyboard Shortcut information<br/></td></tr>
+<tr><td> `getDetails()` </td><td> `Object` </td><td> Get details about the item. The method returns an object following this model:
+<code>{
+     label: the label of the item,
+     icon: the path to the 16x16 icon,
+     shortcut: {
+         key: Key shortcut (Event.Key.<a key>),
+         ctrl: Requires the ctrl key to be pressed or not,
+         text: label of the helper text for the shortcut
+     },
+     link: link for the item,
+     event: custom event on item activation (click or shortcut)
+}</code>
+Each field of the object is boolean equivalent to `false` if undefined.<br /> </td></tr>
+<tr><td> `getHTMLElement()` </td><td> `Element` </td><td> Get the `<li>` HTMLElement of the item, extended by Prototype's Element.extend<br /> </td></tr>
+<tr><td> `getMenu()` </td><td> `menubar.MenuBarSubmenu|menubar.MenuBar` </td><td> Get the menu that contains the item<br /> </td></tr>
+<tr><td> `getSubmenu()` </td><td> `menubar.MenuBarSubmenu` </td><td> Get the submenu of the item (not its containing submenu)<br /> </td></tr>
+<tr><td> `render(items)` </td><td> `void` </td><td> Renders the menu item (and creates all submenus)<br />  - `items <Array>` The sub-items of the item, defining its submenu<br/></td></tr>
 
 </table>

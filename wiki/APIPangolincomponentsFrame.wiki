@@ -105,6 +105,8 @@ Use in combination with maxWidth/maxHeight.
 == Methods ==
 <table border="1" cellspacing="0" cellpadding="5">                                
 <tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+<tr><td> `constrain()` </td><td> `void` </td><td> Apply all positioning constraints to the window<br /> </td></tr>
+<tr><td> `getZIndex()` </td><td> `void` </td><td> Get used ZI<br /> </td></tr>
 <tr><td> `hide()` </td><td> `void` </td><td> Hide the frame<br /> </td></tr>
 <tr><td> `makeCentered()` </td><td> `void` </td><td> Place the frame at the center of the viewport<br /> </td></tr>
 <tr><td> `reload()` </td><td> `void` </td><td> Load or reload the content of the body from the result of the ajax request

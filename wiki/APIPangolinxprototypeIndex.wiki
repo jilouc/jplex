@@ -6,6 +6,7 @@
  * [APIPangolincomponentsIndex Components] 
  * [APIPangolinjplexIndex jPlex] 
  * [APIPangolinxprototypeIndex XPrototype] 
+   * [APIPangolinxprototypeAjaxBase Base]
    * [APIPangolinxprototypeDate Date]
    * [APIPangolinxprototypeElement Element]
    * [APIPangolinxprototypeEvent Event]
