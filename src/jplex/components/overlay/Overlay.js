@@ -1,11 +1,12 @@
 /**
  * @description Overlay component.
- * Place a semi-transparent layer which covers its parent on the page.
- * It's mainly used by the Frame components.
+ * Place a semi-transparent layer which covers the source element on the page.
+ * If no source is given, the overlay covers the entire body of the page.
+ * It's mainly used by the Modal Frame component.
  * @class Overlay
  * @extends jplex.common.Component
- * @param {Element|String} eElement the component element (div) or ID. If it doesn't exist in the DOM, create it
- * @param {Object} oConfig Configuration properties of the component
+ * @param {Element|String} element the component element (div) or ID. If it doesn't exist in the DOM, create it
+ * @param {Object} config Configuration properties of the component
  * @constructor
  */
 jPlex.provide('jplex.components.Overlay', 'jplex.common.Component', {
@@ -36,7 +37,14 @@ jPlex.provide('jplex.components.Overlay', 'jplex.common.Component', {
              * @config color
              * @default "#000000" (black)
              */
-            color:"#000000"
+            color:"#000000",
+            /**
+             * Element which will be covered by the overlay
+             * @config source
+             * @default document.body
+             */
+            source: document.body
+
         },
         events: {
             /**
@@ -65,8 +73,8 @@ jPlex.provide('jplex.components.Overlay', 'jplex.common.Component', {
         defaultContainer: "div"
     },
 
-    initialize: function($super, eElement, oConfig) {
-        $super(eElement, oConfig);
+    initialize: function($super, element, config) {
+        $super(element, config);
 
         // Call to the renderer
         this.render();
@@ -77,45 +85,56 @@ jPlex.provide('jplex.components.Overlay', 'jplex.common.Component', {
      */
     render: function() {
         this.fireEvent("beforeRenderEvent");
+        
+        if (!$(this.cfg("source")) || this.cfg("source") == document.body) {
 
-        if (Prototype.Browser.IE) {
-            this.component.setStyle({
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                zIndex: this.cfg("z"),
-                background: this.cfg("color")
-            });
-            var resize = function() {
-                var dim = document.viewport.getDimensions();
-                var offsets = document.viewport.getScrollOffsets();
-
+            if (Prototype.Browser.IE) {
                 this.component.setStyle({
-                    width: dim.width + "px",
-                    height: dim.height + "px",
-                    top: offsets.top + "px",
-                    left: offsets.left + "px"
-                })
-            }.bind(this);
-            Event.observe(window, 'resize', resize);
-            Event.observe(window, 'scroll', resize);
-            this.setEvent("IEonShowEvent", resize);
+                    top: 0,
+                    left: 0
+
+                });
+                var resize = function() {
+                    var dim = document.viewport.getDimensions();
+                    var offsets = document.viewport.getScrollOffsets();
+
+                    this.component.setStyle({
+                        width: dim.width + "px",
+                        height: dim.height + "px",
+                        top: offsets.top + "px",
+                        left: offsets.left + "px"
+                    })
+                }.bind(this);
+                Event.observe(window, 'resize', resize);
+                Event.observe(window, 'scroll', resize);
+                this.setEvent("IEonShowEvent", resize);
+            } else {
+                this.component.setStyle({
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    zIndex: this.cfg("z"),
+                    background: this.cfg("color")
+                });
+            }
         } else {
+            this.component.clonePosition(this.cfg("source"));
             this.component.setStyle({
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                zIndex: this.cfg("z"),
-                background: this.cfg("color")
+                position:"absolute"
             });
         }
 
-        this.component.setOpacity(this.cfg("opacity"));
         this.component.setStyle({
-            display:'none'
+            zIndex: this.cfg("z"),
+            background: this.cfg("color"),
+            display: "none"
+
         });
+
+        this.component.setOpacity(this.cfg("opacity"));
+        
         this.fireEvent("afterRenderEvent");
     },
 

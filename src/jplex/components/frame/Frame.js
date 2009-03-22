@@ -319,7 +319,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      */
     setHeader: function(header) {
         if (this._header) {
-            this._header.down('div.title').update(header);
+            this._title.update(header);
         } else {
             this._addHeader(header);
         }
@@ -332,7 +332,8 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * @return {Element} The Header HTML extended Element
      */
     setTitle: function(title) {
-        return this.setHeader(title);
+        this.setHeader(title);
+
     },
 
     /**
@@ -441,13 +442,11 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      */
     _addCloseButton: function() {
         var close = new Element('a', {
-            id: this.sID + "-closecross"
+            id: this.ID + "-closecross"
         });
-        var elt = this._header.down('div.title') || this._body;
-
         close.addClassName('close').update('&nbsp;');
         close.observe('click', this.hide.bind(this));
-        elt.appendChild(close);
+        (this._header || this._body).appendChild(close);
     },
 
     /**
@@ -456,8 +455,8 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      */
     _addHeader: function(content) {
         var hd = new Element('div');
-        var title = new Element('div');
-        hd.appendChild(title.addClassName('title').update(content || ''));
+        this._title = new Element('div');
+        hd.appendChild(this._title.addClassName('title').update(content || ''));
         hd.addClassName('header');
         this.component.insert({
             top: hd
