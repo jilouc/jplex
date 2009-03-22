@@ -211,7 +211,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                     return;
                 }
                 this.show();
-                this._source.select();
+                this._source.activate();
             }).bindAsEventListener(this);
 
             this._source.observe("focus", focusHandler);
@@ -219,6 +219,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             this._source.observe("click", focusHandler);
 
             document.observe("click", function(e) {
+                e = Event.extend(window.event || e);
                 var x = e.pointerX(),
                         y = e.pointerY();
                 if (!this._source.isWithin(x, y)
@@ -226,7 +227,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                         && !this._fastBrowseTooltip.component.isWithin(x, y)) {
                     this.hide();
                 }
-            }.bind(this));
+            }.bindAsEventListener(this));
 
             var selectHandler = function() {
                 if (this.component.visible())
@@ -348,8 +349,8 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         this._setTitle(this._currentMonth.getMonth(),
                 this._currentMonth.getFullYear());
 
-        if (this._fastBrowseOverlay && this._fastBrowseOverlay.visible()) {
-            this._fastBrowseOverlay.clonePosition(this.component);
+        if (this._fastBrowseOverlay && this._fastBrowseOverlay.component.visible()) {
+            this._fastBrowseOverlay.component.clonePosition(this.component);
         }
 
 
@@ -505,8 +506,12 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             this.component.setStyle({
                 display:"none"
             });
-            if (this._source.getAttribute("type") == "button" && Prototype.Browser.IE6) {
-                this._source.addClassName("jplex-calendar-button");
+            if(Prototype.Browser.IE6) {
+                if (this._source.getAttribute("type") == "button") {
+                    this._source.addClassName("jplex-calendar-button");
+                } else if (this._source.getAttribute("type") == "text") {
+                    this._source.addClassName("jplex-calendar-text");
+                }
             }
         }
 
@@ -588,27 +593,30 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                     divSelectYear,
                     selectEnd
                     );
-            this._fastBrowseTooltip.setEvent("onShowEvent", function() {
-                if (!this._fastBrowseOverlay) {
 
-                    this._fastBrowseOverlay = new jplex.components.Overlay(this.UID+"-overlay", {
-                        z: this.cfg("zBase") + 1,
-                        source: this.component,
-                        opacity: 0.3,
-                        fade: 0.5
-                    });
-                    this._fastBrowseOverlay.component.addClassName("jplex-calendar-overlay");
+            if(!Prototype.Browser.IE6) {
+                this._fastBrowseTooltip.setEvent("onShowEvent", function() {
+                    if (!this._fastBrowseOverlay) {
 
-                }
-                this._fastBrowseOverlay.show();
+                        this._fastBrowseOverlay = new jplex.components.Overlay(this.UID+"-overlay", {
+                            z: this.cfg("zBase") + 1,
+                            source: this.component,
+                            opacity: 0.3,
+                            fade: 0.5
+                        });
+                        this._fastBrowseOverlay.component.addClassName("jplex-calendar-overlay");
 
-            }.bind(this));
+                    }
+                    this._fastBrowseOverlay.show();
 
-            this._fastBrowseTooltip.setEvent("onHideEvent", function() {
-                if (this._fastBrowseOverlay)
-                    this._fastBrowseOverlay.hide();
-            }.bind(this));
+                }.bind(this));
 
+                this._fastBrowseTooltip.setEvent("onHideEvent", function() {
+                    if (this._fastBrowseOverlay)
+                        this._fastBrowseOverlay.hide();
+                }.bind(this));
+            }
+            
             var preventClick = function(e) {
                 e = Event.extend(window.event ? window.event : e);
                 e.cancelBubble = true;
@@ -702,11 +710,12 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             top: newPos.top + "px"
         });
 
-        if(this._fastBrowseOverlay)
+        if(this._fastBrowseOverlay) {
             this._fastBrowseOverlay.component.setStyle({
                 left: newPos.left + "px",
                 top: newPos.top + "px"
             });
+        }
         
         this.fireEvent("onPositionChangeEvent", {
             position: newPos,

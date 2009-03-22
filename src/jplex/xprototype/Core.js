@@ -13,10 +13,10 @@ Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(function(pr
         options.method = Ajax.Base.defaultMethod;
     proceed(options);
 });
+
 /**
  * @class Prototype.Browser
  */
-
 Object.extend(Prototype.Browser, {
     /**
      * True if the web browser is IE6
@@ -24,7 +24,15 @@ Object.extend(Prototype.Browser, {
      * @type Boolean
      */
     IE6: Prototype.Browser.IE &&
-         navigator.userAgent.indexOf("MSIE 6.0") != -1
+         navigator.userAgent.indexOf("MSIE 6.0") != -1,
+
+    IE7: Prototype.Browser.IE &&
+         navigator.userAgent.indexOf("MSIE 7.0") != -1,
+
+    IE8: Prototype.Browser.IE &&
+         navigator.userAgent.indexOf("MSIE 8.0") != -1,
+
+    IElt8: Prototype.Browser.IE6 || Prototype.Browser.IE7
 });
 var console;
 
