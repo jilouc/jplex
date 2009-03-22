@@ -48,7 +48,7 @@ jPlex.provide('jplex.common.Component', {
     initialize: function(element, config) {
         // If the component's container doesn't exist, we have to create it
         // using the component default container. It's added to the body of the document
-        this.component = $(element);
+        this.component = $(element);     
 
         if (!this._definition ||
             !this._definition.name ||
@@ -96,7 +96,7 @@ jPlex.provide('jplex.common.Component', {
         this._config = new jplex.common.Config(cfg);
         this._events = new Hash();
 
-        $H(config.events).each(function(evt) {
+        $H(config.events).each(function(evt) {       
             if(Object.isArray(evt.value)) {
                 evt.value.each(function(s) {
                     this.setEvent(evt.key, s || Prototype.emptyFunction);

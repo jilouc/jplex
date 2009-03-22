@@ -85,13 +85,14 @@ jPlex.provide('jplex.components.Overlay', 'jplex.common.Component', {
      */
     render: function() {
         this.fireEvent("beforeRenderEvent");
-        
+
         if (!$(this.cfg("source")) || this.cfg("source") == document.body) {
 
-            if (Prototype.Browser.IE) {
+            if (Prototype.Browser.IE6) {
                 this.component.setStyle({
                     top: 0,
-                    left: 0
+                    left: 0,                
+                    position: "absolute"
 
                 });
                 var resize = function() {
@@ -103,7 +104,7 @@ jPlex.provide('jplex.components.Overlay', 'jplex.common.Component', {
                         height: dim.height + "px",
                         top: offsets.top + "px",
                         left: offsets.left + "px"
-                    })
+                    });
                 }.bind(this);
                 Event.observe(window, 'resize', resize);
                 Event.observe(window, 'scroll', resize);
@@ -122,8 +123,17 @@ jPlex.provide('jplex.components.Overlay', 'jplex.common.Component', {
         } else {
             this.component.clonePosition(this.cfg("source"));
             this.component.setStyle({
-                position:"absolute"
+                position:"absolute",
+                zIndex: this.cfg("z")
             });
+            if(Prototype.Browser.IE) {
+                var offsets = document.viewport.getScrollOffsets();
+                var pos = this.component.cumulativeOffset();
+                this.component.setStyle({
+                    top: (pos.top+offsets.top)+"px",
+                    left: (pos.left+offsets.left)+"px"
+                });
+            }
         }
 
         this.component.setStyle({
@@ -134,7 +144,7 @@ jPlex.provide('jplex.components.Overlay', 'jplex.common.Component', {
         });
 
         this.component.setOpacity(this.cfg("opacity"));
-        
+
         this.fireEvent("afterRenderEvent");
     },
 

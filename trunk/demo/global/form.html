@@ -22,7 +22,6 @@
 
 </form>
 <script type="text/javascript">
-    <!--
     Demo.formItemValid = function(id) {
         if (!$F(id))
             $(id).setStyle({backgroundColor: '#FF8888'});
@@ -36,7 +35,7 @@
         elt.setValue('');
         elt.setStyle({backgroundColor: '#FF8888'});
     });
-    $('name').observe('keyup', Demo.formItemValid.curry('name'));  
+    $('name').observe('keyup', Demo.formItemValid.curry('name'));
     Demo.formValidate = function() {
         if (!$F('name') || !$F('arrival') || !$F('departure')) {
             var d = $C('form-error');
@@ -54,5 +53,4 @@
             $C('formdemo').hide();
         }
     };
-        //-->
 </script>

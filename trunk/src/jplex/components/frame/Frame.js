@@ -260,7 +260,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         }
 
 
-        this.setBody(this.component.textContent);
+        this.setBody(this.component.textContent || "");
         this._body.setStyle({
             overflow:this.cfg("overflow")
         });
@@ -658,50 +658,50 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         var minW = null, minH = null, maxW = null, maxH = null;
 
         if (this.cfg("minWidth")) {
-            minW = this.cfg("minWidth") - dimensions.fixed.width;
+            minW = Math.max(0, this.cfg("minWidth") - dimensions.fixed.width);
             bd.setStyle({
                 minWidth: minW + "px"
             });
         }
         if (this.cfg("minHeight")) {
-            minH = this.cfg("minHeight") - dimensions.fixed.height;
+            minH = Math.max(0, this.cfg("minHeight") - dimensions.fixed.height);
             bd.setStyle({
                 minHeight: minH + "px"
             });
         }
         if (this.cfg("maxWidth")) {
-            maxW = this.cfg("maxWidth") - dimensions.fixed.width;
+            maxW = Math.max(0, this.cfg("maxWidth") - dimensions.fixed.width);
             this.component.setStyle({
                 maxWidth: maxW + "px"
             });
         }
         if (this.cfg("maxHeight")) {
-            maxH = this.cfg("maxHeight") - dimensions.fixed.height;
+            maxH = Math.max(this.cfg("maxHeight") - dimensions.fixed.height);
             bd.setStyle({
                 maxHeight: maxH + "px"
             });
         }
 
-        if (Prototype.Browser.IE) {
+        if (Prototype.Browser.IElt8) {
 
             if (this.cfg("minWidth") && this.cfg("minWidth") > dimensions.frame.width) {
                 bd.setStyle({
-                    width: (this.cfg("minWidth") - dimensions.fixed.width) + "px"
+                    width: minW + "px"
                 });
             }
             if (this.cfg("minHeight") && this.cfg("minHeight") > dimensions.frame.height) {
                 bd.setStyle({
-                    height: (this.cfg("minHeight") - dimensions.fixed.height) + "px"
+                    height: minH + "px"
                 });
             }
             if (this.cfg("maxWidth") && this.cfg("maxWidth") < dimensions.frame.width) {
                 this.component.setStyle({
-                    width: (this.cfg("maxWidth") - dimensions.fixed.width) + "px"
+                    width: maxW + "px"
                 });
             }
             if (this.cfg("maxHeight") && this.cfg("maxHeight") < dimensions.frame.height) {
                 bd.setStyle({
-                    height: (this.cfg("maxHeight") - dimensions.fixed.height) + "px"
+                    height: maxH + "px"
                 });
             }
         }

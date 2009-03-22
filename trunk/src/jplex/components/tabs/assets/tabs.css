@@ -4,10 +4,11 @@ ul.jplex-tabs  {
 }
 
 ul.jplex-tabs li {
-    display: inline-block;
+    display: inline;
     cursor: pointer;
     padding: 0 10px;
     margin: 0 0 -1px -1px;
+    list-style:none;
 
     border: 1px solid black;
     -moz-border-radius-topleft: 5px;

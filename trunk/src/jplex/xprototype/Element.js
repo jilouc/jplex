@@ -166,7 +166,7 @@ Object.extend(document, {
     unbindKey: Element.Methods.unbindKey.methodize() 
 });
 
-if(Prototype.Browser.IE) {
+if(Prototype.Browser.IElt8) {
     Element.addMethods({
         /**
          * Bug-fixed getOffsetParent (see Prototype Issue #365)
