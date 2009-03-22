@@ -41,6 +41,6 @@ for i in `find $FINALFILE/demo | grep '\.svn$'`; do
     rm -rf $i;
 done;
 for i in `find $FINALFILE/demo | grep '\.html$'`; do
-    cat $i | sed -e 's/src\/jPlex\.js/jplex\.js/g' | sed -e 's/src\/.*ie6\.css/assets\/jplex-ie6\.css/g' | sed -e 's/src\/.*\.css/assets\/jplex\.css/g'  > $i.tmp
+    cat $i | sed -e 's/src\/jPlex\.js/jplex\.js/g' | sed -e 's/src\/.*ie7\.css/assets\/jplex-ie7\.css/g' | sed -e 's/src\/.*ie6\.css/assets\/jplex-ie6\.css/g' | sed -e 's/src\/.*\.css/assets\/jplex\.css/g'  > $i.tmp
     mv $i.tmp $i
 done;

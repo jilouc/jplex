@@ -42,6 +42,7 @@ public class Main {
 
     private static String jsFile = "";
     private static String cssFileIE6 = "";
+    private static String cssFileIE7 = "";
     private static String cssFile = "";
 
     public static void scanSourceTree(File source, boolean toString, String path) throws IOException {
@@ -51,7 +52,9 @@ public class Main {
             if (source.getName().endsWith(".js"))
                 jsFile += getJS(toString, path, fr);
             else if (source.getName().endsWith("ie6.css"))
-                cssFileIE6 += getCSS(path, fr);
+                cssFileIE6 += getCSS(path, fr);      
+            else if (source.getName().endsWith("ie7.css"))
+                cssFileIE7 += getCSS(path, fr);
             else if (source.getName().endsWith(".css"))
                 cssFile += getCSS(path, fr);
             else
@@ -112,15 +115,16 @@ public class Main {
                 System.err.println("Wrong source dir");
                 System.exit(2);
             }
-
+                            
             scanSource(args[0]+"libs/" + prototype + ".js");
             for (String s : scriptaculous)
                 scanSource(args[0]+"libs/" + s + ".js");
-
+                              
             scanSource(args[0] + "src/jPlex.js");
             scanSourceTree(source, true, "jplex");
             writeFile(path + "jplex.js", jsFile);
-            writeFile(assets + "jplex-ie6.css", cssFileIE6);
+            writeFile(assets + "jplex-ie6.css", cssFileIE6);  
+            writeFile(assets + "jplex-ie7.css", cssFileIE6);
             writeFile(assets + "jplex.css", cssFile);
         } catch (IOException e) {
             e.printStackTrace();

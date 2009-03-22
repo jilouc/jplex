@@ -1,3 +1,10 @@
+/*! jPlex User Interface Framework
+ *  (c) 2009 Loic Petit - Jean-Luc Dagon
+ *
+ *  jPlex is freely distributable under the terms of an MIT-style license.
+ *  For details, see the jPlex web site: http://jplex.googlecode.com/
+ *
+ *--------------------------------------------------------------------------*/
 /**
  * The main class of the jPlex Library
  * @module jPlex
@@ -10,7 +17,7 @@
  * @class jPlex
  */
 var jPlex = {
-    version: '0.1',
+    version: '1.0',
 
     /**
      * Array of the javascript to include in order to resolve the different dependancies
