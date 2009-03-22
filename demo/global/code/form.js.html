@@ -1,0 +1,76 @@
+<ul id="tabs-code-form" class="code-tabs"></ul>
+
+<div id="tab-code-form-1">
+    Firstly, creates the formular that we have modelized by a Dialog. The <em>Ok</em> button will be binded with the
+    validation of the formular. The creation of the dialog is an extension of the frame components so the configs are 
+    herited.
+<pre>
+    <code class="javascript">
+new Dialog('formdemo', {
+    ajax: "global/form.html",
+    draggable: true,
+    constrainToCenter: true,
+    title: "Book my Hotel",    // The title
+    otherButtons: [{           // Add another button
+        label:'View code snippets',
+        click: Demo.viewSource.curry("form")  // Show the source frame
+    }],
+    events: {
+        onAjaxRequestCompleteEvent: function() {
+            var w = Demo.frameSet.add(this); // Add to frameset
+            w.toFront.bind(w).defer();
+            w.show();   
+        },
+        onOkButtonClickEvent: function() {
+            Demo.formValidate();             // Validate the formular
+        }
+    }
+});
+    </code>
+</pre>
+    
+    The alert frame box is annoying, the dialog is made for that. The creation is fairly easy and can be easily factored
+    in a common function to replace alert.
+    <pre>
+        <code class="javascript">
+d = new Dialog('form-error', {
+    modal: true,             // Focus the user
+    okButton: false,         // Remove the OK button
+    cancelButtonLabel: 'OK', // Use the cancel as OK (closes the frame)
+    title: 'Error!'
+});
+d.setBody("The form is inconsistent!");
+d.show();
+        </code>
+    </pre>
+        
+</div>
+<div id="tab-code-form-2">  
+    The very first component we made. Creates a calendar that is triggered by an input textfield.
+<pre>
+    <code class="javascript">
+new Calendar('arrival-cal', {  // Instanciate the calendar
+    source: 'arrival',         // The input source that triggers it
+    events: {
+        onSelectEvent: Demo.formItemValid.curry('arrival') // When selected change the background color
+    }
+});         
+    </code>
+</pre>
+</div>
+
+<script type="text/javascript">
+    var t = new Tabs("tabs-code-form", {
+        data: [
+            { title: "Calendar", content: "tab-code-form-2" },
+            { title: "Dialog", content: "tab-code-form-1" }
+        ],
+        activeTab: 1
+    });
+
+    t.setEvent("onSwitchEvent", function() {
+        $C('code-form').constrain();
+    });
+
+</script>
+        

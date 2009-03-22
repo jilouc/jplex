@@ -136,11 +136,10 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
      */
     _okButtonClick: function() {
         this.fireEvent('onOkButtonClickEvent');
-        this.hide();
     },
 
     /**
-     * Handle click on the "Cancel" Button
+     * Handle click on the "Cancel" Button, hide the dialog box
      */
     _cancelButtonClick: function() {
         this.fireEvent('onCancelButtonClickEvent');

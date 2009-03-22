@@ -38,7 +38,8 @@
 
         <ul>
             <li> When you develop, you need to redo each component by yourself. The calendar is the ultimate example:
-                look around some website. Each one is specific and if you need to ensure compatibility you can do a lot of
+                look around some website. Each one is specific and if you need to ensure compatibility you can do a lot
+                of
                 boring work.
             </li>
         </ul>
@@ -102,12 +103,15 @@
             ];
             Demo.slideshow.current = 0;
             Demo.slideshow.setBody(Demo.slideshow.pics[0]);
-            Demo.slideshow.setFooter('<span style="float:left;">'+
-                                     '<input type="button" id="slideshow-snippet" value="View code snippets" /></span>'+
+            Demo.slideshow.setFooter('<span style="float:left;">' +
+                                     '<input type="button" id="slideshow-snippet" value="View code snippets" /></span>' +
                                      '<span id="tooltip-snippyhollow-source">[Pictures credits]</span> &mdash; ' +
-                                          '<a href="javascript:Demo.slideshow.previous()">Previous</a> ' +
-                                          '&minus; <a href="javascript:Demo.slideshow.next()">Next</a>');
-            $('slideshow-snippet').observe('click', function() { Demo.slideshow.hide(); Demo.viewSource("slideshow"); });
+                                     '<a href="javascript:Demo.slideshow.previous()">Previous</a> ' +
+                                     '&minus; <a href="javascript:Demo.slideshow.next()">Next</a>');
+            $('slideshow-snippet').observe('click', function() {
+                Demo.slideshow.hide();
+                Demo.viewSource("slideshow");
+            });
             Demo.slideshow.previous = function() {
                 var sl = Demo.slideshow;
                 sl.current = (sl.pics.length + sl.current - 1) % sl.pics.length;
@@ -144,32 +148,53 @@
         Demo.slideshow.show();
     };
 
+    Demo.initForm = function() {
+        var form = $C("formdemo");
+        if (!form) {
+            form = new Dialog('formdemo', {
+                ajax: "global/form.html",
+                draggable: true,
+                constrainToCenter: true,
+                title: "Book my Hotel",
+                otherButtons: [{
+                    label:'View code snippets',
+                    click: Demo.viewSource.curry("form")
+                }],
+                events: {
+                    onAjaxRequestCompleteEvent: function() {
+                        var w = Demo.frameSet.add(this);
+                        w.toFront.bind(w).defer();
+                        w.show();   
+                    },
+                    onOkButtonClickEvent: function() {
+                        Demo.formValidate();
+                    }
+                }
+            });
+        } else {
+            form.toFront.bind(form).defer();
+            form.show();
+        }
+    };
+
     var myData = [{
         name: "Demo",
         items: [{
-            name: "New...",
-            icon: "img/001.png",
-            items: [{
-                name: "Frame...",
-                icon: "./global/img/sheet2.png",
-                items: [{
-                    name: "Slideshow",
-                    click: Demo.initSlideshow,
-                    shortcut: {
-                        key: Event.Key.M,
-                        ctrl: true,
-                        text: "Ctrl + M"
-                    }
-                }, {
-                    name: "Dialog",
-                    click: Prototype.emptyFunction,
-                    shortcut: {
-                        key: Event.Key.D,
-                        ctrl: true,
-                        text: "Ctrl + D"
-                    }
-                }]
-            }]
+            name: "Slideshow",
+            icon: "./global/img/sheet2.png",
+            click: Demo.initSlideshow,
+            shortcut: {
+                key: Event.Key.M,
+                ctrl: true,
+                text: "Ctrl + M"
+            }}, {
+            name: "Form",
+            click: Demo.initForm,
+            shortcut: {
+                key: Event.Key.D,
+                ctrl: true,
+                text: "Ctrl + D"
+            }
         }, {
             name: "Download jPlex",
             items: [{
@@ -190,10 +215,8 @@
             icon:"img/031.png",
             link:"http://jplex.googlecode.com"
         }, {
-            name:"Documentation", 
+            name:"Documentation",
             link:"http://code.google.com/p/jplex/wiki/APIPangolin"
-        }, {
-            name:"Example"
         }]
     }, {
         name: "Help",
@@ -219,9 +242,8 @@
     }];
 
 
-
     f.component.down("div.header").appendChild(new Element("div", {id:"menu"}));
-        
+
     Event.onElementReady('menu', function() {
         Demo.menu = new MenuBar("menu", {
             data: myData

@@ -55,17 +55,10 @@
     };
 
 
-    jPlex.include("jplex.components.MenuBar");
-    jPlex.include('jplex.components.Frame');
-    jPlex.include('jplex.components.frame.Modal');
-    jPlex.include('jplex.components.frame.FrameSet');
-    jPlex.include('jplex.components.Tabs');
-    jPlex.include('jplex.components.MouseOverImage');
-    jPlex.include('jplex.components.Calendar');
-    jPlex.include('jplex.components.Tooltip');
-
+    jPlex.include("jplex.components.*");
     jPlex.useSkin('custom');
-
+    Ajax.Base.defaultMethod = 'get';
+    
     Demo.frameSet = new FrameSet('test');
     Demo.init = function() {
         var f = new Frame('f-home', {

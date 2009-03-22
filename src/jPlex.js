@@ -151,7 +151,7 @@ var jPlex = {
         var clazz = jPlex.get(path);
 
         if (clazz) {
-            if (!window[pack[pack.length - 1]] && !dontdefine)
+            if (!window[pack[pack.length - 1]] && !dontdefine && pack[1] != 'xprototype')
                 window[pack[pack.length - 1]] = clazz;
             return clazz;
         }
@@ -159,7 +159,7 @@ var jPlex = {
         if (pack[pack.length - 1] == '*') {
             $A(this._classes).each(function(item) {
                 if (item.startsWith(path.replace('*', '')))
-                    this.include(item, true);
+                    this.include(item, dontdefine);
             }, this);
             return null;
         }
@@ -174,7 +174,7 @@ var jPlex = {
         jPlex.load(acc);
         var res = jPlex.get(path);
         var className = pack[pack.length - 1];
-        if (!window[className] && !dontdefine) {
+        if (!window[className] && !dontdefine && pack[1] != 'xprototype') {
             window[className] = res;
         }
         return res;
