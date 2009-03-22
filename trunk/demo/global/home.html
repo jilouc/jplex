@@ -103,11 +103,11 @@
             ];
             Demo.slideshow.current = 0;
             Demo.slideshow.setBody(Demo.slideshow.pics[0]);
-            Demo.slideshow.setFooter('<span style="float:left;">' +
-                                     '<input type="button" id="slideshow-snippet" value="View code snippets" /></span>' +
-                                     '<span id="tooltip-snippyhollow-source">[Pictures credits]</span> &mdash; ' +
-                                     '<a href="javascript:Demo.slideshow.previous()">Previous</a> ' +
-                                     '&minus; <a href="javascript:Demo.slideshow.next()">Next</a>');
+            Demo.slideshow.setFooter('<input type="button" id="slideshow-snippet" value="View code snippets" /> &mdash; ' +
+                                     'Use the left and right arrow to browse the pictures &mdash; ' +
+                                     '<span id="tooltip-snippyhollow-source">[Pictures credits]</span> ' +
+                                     '&larr; <a href="javascript:Demo.slideshow.previous()">Previous</a> ' +
+                                     '&minus; <a href="javascript:Demo.slideshow.next()">Next</a> &rarr;');
             $('slideshow-snippet').observe('click', function() {
                 Demo.slideshow.hide();
                 Demo.viewSource("slideshow");

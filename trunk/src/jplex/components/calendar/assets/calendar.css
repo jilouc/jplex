@@ -112,8 +112,6 @@ div.jplex-calendar div.close:hover {
 }
 
 div.jplex-calendar-overlay {
-    background:#000000;
-    position:absolute;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
 }

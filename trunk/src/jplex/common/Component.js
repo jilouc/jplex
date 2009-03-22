@@ -94,10 +94,16 @@ jPlex.provide('jplex.common.Component', {
         Object.extendRecursive(this._definition.text, text);
 
         this._config = new jplex.common.Config(cfg);
-        this._events = $H();
+        this._events = new Hash();
 
-        $H(Object.extend(Object.clone(this._definition.events), config.events)).each(function(evt) {
-            this.setEvent(evt.key, evt.value);
+        $H(config.events).each(function(evt) {
+            if(Object.isArray(evt.value)) {
+                evt.value.each(function(s) {
+                    this.setEvent(evt.key, s || Prototype.emptyFunction);
+                }, this);
+            } else {
+                this.setEvent(evt.key, evt.value || Prototype.emptyFunction);
+            }
         }, this);
 
         this.ID = this.component.getAttribute("id");
@@ -130,7 +136,10 @@ jPlex.provide('jplex.common.Component', {
      * @param {Function} handler the custom event handler
      */
     setEvent: function(eventName, handler) {
-        this._events.set(eventName, handler.bind(this));
+        if(!this._events.get(eventName)) {
+            this._events.set(eventName, $A([]));
+        }
+        this.getEvent(eventName).push(handler.bind(this));
     },
 
     /**
@@ -139,8 +148,8 @@ jPlex.provide('jplex.common.Component', {
      * @return {Function} the event handler if exists, else Prototype.emptyFunction
      */
     getEvent: function(eventName) {
-        var handler = this._events.get(eventName);
-        return handler ? handler : Prototype.emptyFunction;
+        var handlers = this._events.get(eventName);
+        return handlers ? handlers : $A([]);
     },
 
     /**
@@ -149,7 +158,9 @@ jPlex.provide('jplex.common.Component', {
      * @param {Object} parameters Optional. Hash of event parameters.
      */
     fireEvent: function(eventName, parameters) {
-        this.getEvent(eventName)(parameters);
+        if(this.getEvent(eventName)) {
+            this.getEvent(eventName).invoke("call", this, parameters);
+        }
     },
 
     /**

@@ -25,8 +25,8 @@ var CSSRulesExplorer = Class.create({
 
                 this.rules = this.rules.map(function(item) {
                     return {
-                        selector:item.selector.strip(),
-                        body:item.body
+                        selector: item.selector.strip(),
+                        body: item.body
                     };
                 }.bind(this)).uniq();
 
@@ -167,6 +167,14 @@ var CSSRulesExplorerFactory = {
     Calendar: {
         init: function() {
 
+            var link = new Element("link", {
+                href: "../../src/jplex/components/tooltip/assets/tooltip.css",
+                media: "screen",
+                rel: "stylesheet",
+                type: "text/css"
+            });
+            document.getElementsByTagName("head")[0].appendChild(link);
+
             var f = new Calendar("calendarExample", {
                 events: {
                     onSelectEvent: function(o) {
@@ -233,6 +241,7 @@ var CSSRulesExplorerFactory = {
                 f.getItem(0).getItem(1).show();
                 f.getItem(0)._fixPosition();
             }).delay(1);
+            
         },
 
         html: '<div id="myMenuBarExample" style="margin:1em 0 10em 0; min-width:350px;"></div>'

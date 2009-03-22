@@ -1,5 +1,6 @@
 jPlex.include("jplex.components.Tooltip", false);
 jPlex.include("jplex.components.calendar.CalendarItem", false);
+jPlex.include("jplex.components.Overlay", false);
 
 /**
  * @description Calendar component class.
@@ -589,23 +590,17 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                     );
             this._fastBrowseTooltip.setEvent("onShowEvent", function() {
                 if (!this._fastBrowseOverlay) {
-                    var overlay = new Element("div");
 
-                    document.body.appendChild(overlay);
-
-                    overlay.setStyle({
-                        zIndex: this.component.getStyle("zIndex") + 1,
-                        position: "absolute"
+                    this._fastBrowseOverlay = new jplex.components.Overlay(this.UID+"-overlay", {
+                        source: this.component,
+                        opacity: 0.3,
+                        fade: 0.5
                     });
-                    overlay.addClassName("jplex-calendar-overlay");
-                    overlay.setOpacity(0);
-                    overlay.clonePosition(this.component);
-
-                    this._fastBrowseOverlay = overlay;
+                    this._fastBrowseOverlay.component.addClassName("jplex-calendar-overlay");
 
                 }
-                //this._fastBrowseOverlay.show();
-                new Effect.Appear(this._fastBrowseOverlay, {to:0.3});
+                this._fastBrowseOverlay.show();
+
             }.bind(this));
 
             this._fastBrowseTooltip.setEvent("onHideEvent", function() {
