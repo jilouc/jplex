@@ -8,7 +8,7 @@ jPlex.include('jplex.xprototype.*');
  *
  * Defining a new component needs a bit more than just extending this class.
  * You'll need to initialize it by calling in the constructor
- * <code>$super(eSrc, oConfig);</code>
+ * <code>$super(element, config);</code>
  * And you need to define a private property object <em>_definition</em> containing at least the name of the component.
  * Here is a complete example of a component:
  *
@@ -23,8 +23,8 @@ jPlex.include('jplex.xprototype.*');
  *         text: { fr: {...}, en: {...}, ... } // Global labels for this components
  *         text: { fr: {...}, en: {...}, ... } // Global labels for this components
  *     },
- *     initialize: function($super, eSrc, oConfig) {
- *         $super(eSrc, oConfig);
+ *     initialize: function($super, element, config) {
+ *         $super(element, config);
  *         ...
  *     },
  *     ...
@@ -36,8 +36,8 @@ jPlex.include('jplex.xprototype.*');
  * component. A common example is the Dialog and the Modal components that are extensions of the Frame component. You
  * are welcome to browse the source of our components to see how to define yours.
  * 
- * @param {Element} eElement The HTML Element on which the component acts
- * @param {Object} oConfig The configuration object
+ * @param {Element} element The HTML Element (or ID of the element) on which the component will be built
+ * @param {Object} config The configuration object
  * @class Component
  * @namespace jplex.common
  * @constructor
@@ -45,26 +45,26 @@ jPlex.include('jplex.xprototype.*');
 jPlex.provide('jplex.common.Component', {
 
 
-    initialize: function(eElement, oConfig) {
+    initialize: function(element, config) {
         // If the component's container doesn't exist, we have to create it
         // using the component default container. It's added to the body of the document
-        this.component = $(eElement);
+        this.component = $(element);
 
         if (!this._definition ||
             !this._definition.name ||
             (!this._definition.defaultContainer && !this.component))
-            throw {name:"DefinitionError", message:'Mandatory definition or field not present'};
+            throw "DefinitionError: Mandatory definition or field not present (Component#initialize)";
 
 
         if (!Object.isElement(this.component)) {
-            if (typeof(eElement) != "string") {
-                throw {
-                    name:"WrongParameterType",
-                    message:"The first parameters has to be a string in case of a non-existing DOM element"
-                };
+            if (typeof(element) != "string") {
+                throw "WrongParameterType: The first parameters has to be a string in case of " +
+                      "a non-existing DOM element (Component#initialize)";
             }
             this.createdComponent = true;
-            this.component = new Element(this._definition.defaultContainer, {id:eElement});
+            this.component = new Element(this._definition.defaultContainer, {
+                id: element
+            });
             document.body.appendChild(this.component);
         }
 
@@ -82,21 +82,21 @@ jPlex.provide('jplex.common.Component', {
         this._definition.defaultConfig = this._definition.defaultConfig || {};
         this._definition.events = this._definition.events || {};
 
-        oConfig = oConfig || {};
-        oConfig.events = oConfig.events || {};
+        config = config || {};
+        config.events = config.events || {};
 
         var ext = this._extension ? this._extension.defaultConfig || {} : {};
         var cfg = Object.extendRecursive(Object.clone(this._definition.defaultConfig), ext);
-        cfg = Object.extend(cfg, oConfig);
+        cfg = Object.extend(cfg, config);
         cfg.events = null;
 
         var text = this._extension ? this._extension.text || {} : {};
         Object.extendRecursive(this._definition.text, text);
 
-        this._oConfig = new jplex.common.Config(cfg);
-        this._oEvents = $H();
+        this._config = new jplex.common.Config(cfg);
+        this._events = $H();
 
-        $H(Object.extend(Object.clone(this._definition.events), oConfig.events)).each(function(evt) {
+        $H(Object.extend(Object.clone(this._definition.events), config.events)).each(function(evt) {
             this.setEvent(evt.key, evt.value);
         }, this);
 
@@ -107,63 +107,62 @@ jPlex.provide('jplex.common.Component', {
 
     /**
      * Get a configuration parameter
-     * @param {String} sName Name of the config parameter
+     * @param {String} name Name of the config parameter
      * @return {String} The configuration value
-     * @see Config.get
      */
-    cfg: function(sName) {
-        return this._oConfig.get(sName);
+    cfg: function(name) {
+        return this._config.get(name);
     },
 
     /**
      * Sets a local configuration parameter
-     * @param {String} sName Name of the config parameter
-     * @param mValue Value to set
+     * @param {String} name Name of the config parameter
+     * @param {mixed} value Value to set
      */
-    setCfg: function(sName, mValue) {
-        this._oConfig.set(sName, mValue);
+    setCfg: function(name, value) {
+        this._config.set(name, value);
     },
 
     /**
      * Set the event handler for the custom event.
      * The context is bound to the component.
-     * @param {String} sEventName the custom event name
-     * @param {Function} fEventHandler the custom event handler
+     * @param {String} eventName the custom event name
+     * @param {Function} handler the custom event handler
      */
-    setEvent: function(sEventName, fEventHandler) {
-        this._oEvents.set(sEventName, fEventHandler.bind(this));
+    setEvent: function(eventName, handler) {
+        this._events.set(eventName, handler.bind(this));
     },
 
     /**
      * Get the event handler for the custom event
-     * @param {String} sEventName the custom event name
+     * @param {String} eventName the custom event name
      * @return {Function} the event handler if exists, else Prototype.emptyFunction
      */
-    getEvent: function(sEventName) {
-        var handler = this._oEvents.get(sEventName);
+    getEvent: function(eventName) {
+        var handler = this._events.get(eventName);
         return handler ? handler : Prototype.emptyFunction;
     },
 
     /**
      * Fires the specified custom event with given parameters
-     * @param {String} sEventName the custom event name
-     * @param {Object} oParameters Optional. Hash of event parameters.
+     * @param {String} eventName the custom event name
+     * @param {Object} parameters Optional. Hash of event parameters.
      */
-    fireEvent: function(sEventName, oParameters) {
-        this.getEvent(sEventName)(oParameters);
+    fireEvent: function(eventName, parameters) {
+        this.getEvent(eventName)(parameters);
     },
 
     /**
      * Reads the string or array that corresponds to the right lang
-     * @param {String} sName name corresponding to the text field
+     * @param {String} name name corresponding to the text field
      * @return {String|Array|Boolean} Returns the right text field in the right lang, false if not found
      */
-    lang: function(sName) {
+    lang: function(name) {
         var txt = $H(this._definition.text);
         if (!txt) return false;
         var l = this.cfg('lang');
         if (!l) l = jplex.common.Locale.lang;
-        return $H(txt.get(l)).get(sName);
+        return $H(txt.get(l)).get(name);
     },
 
     /**
@@ -215,6 +214,20 @@ jPlex.provide('jplex.common.Component', {
      * If true, the component property has been created during the initialization
      * @property createdComponent
      * @type bool
+     * @private
+     */
+
+    /**
+     * Hash of custom events for the component
+     * @property _events
+     * @type {Hash}
+     * @private
+     */
+
+    /**
+     * Hash of configurations parameters for the component
+     * @property _config
+     * @type {Hash}
      * @private
      */
 
