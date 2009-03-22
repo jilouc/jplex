@@ -20,7 +20,7 @@ After including this piece of code, you can call the calendar directly via the c
 You can stil call the calendar but via the global variable `jplex.components.Calendar` and not by `Calendar` directly. Alternatively you can also put it on another more manipulable variable like that :
 <code>var CalComponent = jPlex.include("jplex.components.Calendar", true);</code>
 
-If you want to include many classes you can also use the special item `*` that will includes all classes inside the package _AND_ all the subpackages. Of course, no global variable like `Calendar` will be set. It is typically useful if you need to use our `XPrototype` extension by:
+If you want to include many classes you can also use the special item `*` that will includes all classes inside the package _AND_ all the subpackages. Of course, the second parameter will be transmitted on recursive calls. It is typically useful if you need to use our `XPrototype` extension by:
 <code>jPlex.include("jplex.xprototype.*");</code>
 
 If you like the packager (you should :)): you can also use the packager *for your own good* via the jPlex.provide method! Consult the API of the static class [APIPangolinjPlex jPlex] for more detail.

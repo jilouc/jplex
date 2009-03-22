@@ -569,7 +569,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                 trigger: jplex.components.Tooltip.TRIGGER_CLICK,
                 position: "bottom-right",
                 positionRatio: 0.35,
-                zIndex: this.component.getStyle("zIndex") + 2
+                zIndex: this.cfg("zBase") + 2
             });
 
             var tooltipBody = this._fastBrowseTooltip.getBody();
@@ -592,6 +592,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                 if (!this._fastBrowseOverlay) {
 
                     this._fastBrowseOverlay = new jplex.components.Overlay(this.UID+"-overlay", {
+                        z: this.cfg("zBase") + 1,
                         source: this.component,
                         opacity: 0.3,
                         fade: 0.5
@@ -690,6 +691,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
     _fixPosition: function() {
         if (!this._source) return;
         var aOffsets = this._source.cumulativeOffset();
+        
         var newPos = {
             left: aOffsets.left,
             top: aOffsets.top + this._source.getHeight()
@@ -700,6 +702,12 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             top: newPos.top + "px"
         });
 
+        if(this._fastBrowseOverlay)
+            this._fastBrowseOverlay.component.setStyle({
+                left: newPos.left + "px",
+                top: newPos.top + "px"
+            });
+        
         this.fireEvent("onPositionChangeEvent", {
             position: newPos,
             dimensions: this.component.getDimensions()
