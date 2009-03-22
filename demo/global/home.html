@@ -120,7 +120,7 @@
             };
 
             var t = new Tooltip("tooltip-snippyhollow", {
-                zIndex:Demo.slideshow._level + 2,
+                zIndex:Demo.slideshow.getZIndex() + 2,
                 position:"bottom-right",
                 positionRation:0.4
             });
@@ -188,9 +188,10 @@
         items:[{
             name:"Homepage",
             icon:"img/031.png",
-            link:"http://www.google.fr"
+            link:"http://jplex.googlecode.com"
         }, {
-            name:"Documentation"
+            name:"Documentation", 
+            link:"http://code.google.com/p/jplex/wiki/APIPangolin"
         }, {
             name:"Example"
         }]

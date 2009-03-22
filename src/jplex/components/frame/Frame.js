@@ -307,6 +307,13 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     },
 
     /**
+     * Get used ZI
+     */
+    getZIndex: function() {
+        return this._level;
+    },
+
+    /**
      * If the header already exists, replace the title with the given string.
      * If not, create the title bar and set the given string as title.
      * @param {String} header the title of the window

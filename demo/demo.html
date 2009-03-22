@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="../src/jplex/components/tabs/assets/tabs.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar.css" type="text/css"/>
     <link rel="stylesheet" href="../src/jplex/components/tooltip/assets/tooltip.css" type="text/css"/>
-    <!--[if IE 6]><link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar-ie6.css" type="text/css"/><![endif]-->
+    <!--[if IE 6]>
+        <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar-ie6.css" type="text/css"/>
+        <link rel="stylesheet" href="../src/jplex/components/frame/assets/frame-ie6.css" type="text/css"/>
+    <![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" href="../src/jplex/components/frame/assets/frame-ie7.css" type="text/css"/><![endif]-->
     <link rel="stylesheet" href="./global/styles.css" type="text/css"/>
     <script src="../src/jPlex.js" type="text/javascript" charset="utf-8">
     </script>
@@ -24,14 +28,15 @@
     };
 
     Demo.viewSource = function(file) {
-        var code = $C("code-"+file);
-        if(!code) {
-            new Frame("code-"+file, {
+        var code = $C("code-" + file);
+        if (!code) {
+            new Frame("code-" + file, {
                 draggable: true,
                 title: "Code snippet",
+                constrainToCenter: true,
                 maxWidth: 600,
                 maxHeight: 450,
-                ajax: "./global/code/"+file+".js.html",
+                ajax: "./global/code/" + file + ".js.html",
                 events: {
                     onAjaxRequestCompleteEvent: function(o) {
                         CodeHighlighter.init();
@@ -65,7 +70,7 @@
     Demo.init = function() {
         var f = new Frame('f-home', {
             close: Frame.CLOSE_CUSTOM,
-            ajax: "./global/home.html",
+            ajax: "global/home.html",
             draggable: true,
             constrainToCenter: true,
             title: "Welcome!",
@@ -76,7 +81,7 @@
 
         Demo.frameSet.add(f);
     };
-    
+
 
     Effect.Desktop = Class.create(Effect.Base, {
         initialize: function(winGroup) {
@@ -85,8 +90,8 @@
 
             var dirs = ["right", "bottom", "left", "top"];
 
-            this.group.windows.each(function(s,i) {
-                this.explode(s, dirs[i%4]);
+            this.group.windows.each(function(s, i) {
+                this.explode(s, dirs[i % 4]);
 
             }.bind(this));
         },
@@ -99,7 +104,7 @@
                     y: s._oldXY.get("y"),
                     mode: "absolute"
                 });
-                s.component.stopObserving("click", this._implode); 
+                s.component.stopObserving("click", this._implode);
             }.bind(this));
         },
 
@@ -114,13 +119,13 @@
 
             var x,y;
 
-            if(dir == 'right') {
+            if (dir == 'right') {
                 x = vpDim.width - 100;
                 y = pos.top;
-            } else if(dir == 'left') {
+            } else if (dir == 'left') {
                 x = - dim.width + 100;
                 y = pos.top;
-            } else if(dir == 'top') {
+            } else if (dir == 'top') {
                 x = pos.left;
                 y = vpDim - 50;
             } else {
@@ -142,17 +147,17 @@
 
     var e = null;
     document.bindKey(Event.Key.F11, function() {
-        if(!e) {
+        if (!e) {
             e = new Effect.Desktop("test");
         } else {
             e.implode();
             e = null;
         }
-    },{preventDefault:true, ctrl:true});
+    }, {preventDefault:true, ctrl:true});
 
     Demo.init();
 
-        //-->
+    //-->
 </script>
 </body>
 </html>
