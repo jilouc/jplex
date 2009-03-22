@@ -139,11 +139,17 @@ var CSSRulesExplorer = Class.create({
 CSSRulesExplorer._time = 0;
 
 
-CSSRulesExplorerFactory = {
+var CSSRulesExplorerFactory = {
+
+    _current: null,
 
     forComponent: function(component) {
+        if(CSSRulesExplorerFactory._current) {
+            (CSSRulesExplorerFactory[CSSRulesExplorerFactory._current].destroy || Prototype.emptyFunction)();
+        }
         var c = CSSRulesExplorerFactory[component];
         if(!c) return;
+        CSSRulesExplorerFactory._current = component;
         
         var name = component.toLowerCase();
         var css = "../../src/jplex/components/"+name+"/assets/"+name+".css";
@@ -226,7 +232,7 @@ CSSRulesExplorerFactory = {
                 f.getItem(0).show();
                 f.getItem(0).getItem(1).show();
                 f.getItem(0)._fixPosition();
-            }).delay(2);
+            }).delay(1);
         },
 
         html: '<div id="myMenuBarExample" style="margin:1em 0 10em 0; min-width:350px;"></div>'
@@ -246,5 +252,50 @@ CSSRulesExplorerFactory = {
         html: '<ul id="myTabsExample"></ul>' +
             '<div id="tab1" style="clear:both;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut purus. Curabitur eleifend aliquam nibh. Aliquam erat volutpat. Morbi commodo, sem vitae auctor tempor, felis leo pulvinar odio, id lacinia massa velit nec libero.</div>' +
             '<div id="tab2" style="clear:both;">Morbi nibh. Aliquam hendrerit, ipsum et interdum ullamcorper, ipsum risus suscipit est, a scelerisque eros elit eget sapien. Nunc gravida est quis justo. Etiam cursus semper augue.</div>'
+    },
+
+    Tooltip: {
+        init: function() {
+            var f1 = new Tooltip("tooltip1", {
+                source:"myTooltip",
+                position:"bottom-right",
+                positionRatio:0.6,
+                content:"Tooltip 1 (B-R)",
+                trigger:Tooltip.TRIGGER_CUSTOM
+            });
+            var f2 = new Tooltip("tooltip2", {
+                source:"myTooltip",
+                position:"bottom-left",
+                positionRatio:0.6,
+                content:"Tooltip 2 (B-R)",
+                trigger:Tooltip.TRIGGER_CUSTOM
+            });
+            var f3 = new Tooltip("tooltip3", {
+                source:"myTooltip",
+                position:"top-right",
+                positionRatio:0.6,
+                content:"Tooltip 3 (T-R)",
+                trigger:Tooltip.TRIGGER_CUSTOM
+            });
+            var f4 = new Tooltip("tooltip4", {
+                source:"myTooltip",
+                position:"top-left",
+                positionRatio:0.6,
+                content:"Tooltip 4 (T-L)",
+                trigger:Tooltip.TRIGGER_CUSTOM
+            });
+
+
+            f1.show.bind(f1).delay(1);
+            f2.show.bind(f2).delay(1);
+            f3.show.bind(f3).delay(1);
+            f4.show.bind(f4).delay(1);
+
+        },
+        html: '<div id="myTooltip" style="margin:5em 1em 5em 1em; background:pink;">[I\'m the source element for the tooltip]</div>',
+
+        destroy: function() {
+            $R(1,4).each(function(e) { $C("tooltip"+e).component.remove(); });
+        }
     }
 };

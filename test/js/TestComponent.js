@@ -41,21 +41,21 @@ new Test.Unit.Runner({
         this.assertNull($C('tester'));
     },
     testWrongArgument: function() {                             
-        this.assertRaise('WrongParameterType', function() { new A(); });
+        this.assertRaise(null, function() { new A(); });
         // a number as id is not alright... because an object will be created
-        this.assertRaise('WrongParameterType', function() { new A(2); });
+        this.assertRaise(null, function() { new A(2); });
     },
     testWrongDefinition: function() {
         var B = Class.create(Component, {});
-        this.assertRaise('DefinitionError', function() {new B('t'); });
+        this.assertRaise(null, function() {new B('t'); });
         B = Class.create(Component, {
            _definition: {}
         });
-        this.assertRaise('DefinitionError', function() {new B('t'); });  
+        this.assertRaise(null, function() {new B('t'); });
         B = Class.create(Component, {
            _definition: {name: 'B'}
         });
-        this.assertRaise('DefinitionError', function() {new B('t'); });
+        this.assertRaise(null, function() {new B('t'); });
         // This test is a bit tricky, if you give a container that exists, you do not need defaultContainer
         this.assert(new B('results'));
     },
