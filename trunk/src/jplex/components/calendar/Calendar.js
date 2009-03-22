@@ -102,6 +102,12 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
              */
             fastBrowse: true,
             /**
+             * zIndex base
+             * @config zBase
+             * @default 11000
+             */
+            zBase: 11000,
+            /**
              * Minimum year in the combobox for fast browse
              * @config fastBrowseYearStart
              * @default The current year - 5
@@ -187,7 +193,8 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
         if (this._textField && this._source) {
             this.component.setStyle({
-                position: 'absolute'
+                position: 'absolute',
+                zIndex: this.cfg('zBase')
             });
 
             // Who knows why IE uses an uppercase 'o'...

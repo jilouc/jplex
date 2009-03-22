@@ -7,7 +7,7 @@
  * @static
  * @property defaultMethod
  */
-Ajax.Base.defaultMethod = 'get';
+Ajax.Base.defaultMethod = 'post';
 Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(function(proceed, options) {
     if (!options.method)
         options.method = Ajax.Base.defaultMethod;

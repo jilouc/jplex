@@ -109,11 +109,10 @@ jPlex.provide('jplex.components.Tabs', 'jplex.common.Component', {
             this.component.appendChild(li);
         }.bind(this));
 
-        // TODO Event.onElementReady
         if (this.cfg('method') == 'div')
-            Event.observe(window, 'load', this.initDivMethod.curry(this.aDefinition, activeTab).bind(this));
+            this.initDivMethod(this.aDefinition, activeTab);
         else
-            Event.observe(window, 'load', this.initAjaxMethod.curry(this.aDefinition, activeTab).bind(this));
+            this.initAjaxMethod(this.aDefinition, activeTab);
         var ajaxDiv = this.cfg('ajaxDiv');
         if (ajaxDiv)
             this.ajaxDiv = ajaxDiv;

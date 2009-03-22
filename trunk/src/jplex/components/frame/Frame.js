@@ -255,7 +255,6 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         this.fireEvent("beforeRenderEvent");
 
         this.component.addClassName("jplex-window");
-
         if (this.cfg("header")) {
             this._addHeader(this.cfg("title"));
         }
@@ -299,8 +298,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
         }
 
         this.component.setStyle({
-            zIndex: this._level,
-            display: 'none'
+            zIndex: this._level
         });
 
         this.fireEvent("afterRenderEvent");
@@ -346,20 +344,18 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     setBody: function(body) {
 
         if (this._body) {
+            this.setLoading(true);
             this.makeCentered();
 
             var _ghost = new Element("div");
             _ghost.update(body.stripScripts());
 
-            
 
             // If the frame contains images, we have to wait them to be loaded
             // to get the correct position of the frame
             var imgs = _ghost.getElementsByTagName('img'); // TODO .collect("img")
             var loaded = $A([]);
             if (imgs.length > 0) {
-                this.setLoading(true);
-
                 $A(imgs).each(function(s, i) {
                     var img = $(s);
                     var bak = img.src;
@@ -371,7 +367,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                         pic.show();
                         if (loaded.all()) {
                             this._body.update(_ghost.innerHTML);
-                            if(this._request) {
+                            if (this._request) {
                                 this._request.transport.responseText.evalScripts();
                                 this.fireEvent('onAjaxRequestCompleteEvent', {
                                     result:body
@@ -386,13 +382,14 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
                             img.removeEvents();
                     }
                 }, this);
-            } else {
+            } else {                    
                 this._body.update(_ghost.innerHTML);
-                if(this._request) {
+                if (this._request) {
                     this._request.transport.responseText.evalScripts();
-                    this.fireEvent('onAjaxRequestCompleteEvent', {result:transport});
+                    this.fireEvent('onAjaxRequestCompleteEvent', {result:this._request.transport});
                 }
-                this.constrain();
+                this.constrain();  
+                this.setLoading(false);
             }
         } else {
             this._addBody(body);
@@ -514,13 +511,11 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      * (the URL of the content is given by the `ajax` configuration parameter)
      */
     reload: function() {
+        this.setLoading(true);
         this._request = new Ajax.Request(this.cfg('ajax'), {
             parameters: this.cfg('ajaxParameters'),
             evalJS: false,
-            
-            onLoading: function() {
-                this.setLoading(true);
-            }.bind(this),
+
             onSuccess: function(transport) {
                 this.setBody(transport.responseText);
             }.bind(this)
@@ -585,7 +580,7 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
             if (!ld) {
                 ld = new Element("div").addClassName('loading');
                 ld.setStyle({
-                    zIndex:this._level+1
+                    zIndex:this._level + 1
                 });
                 ld.setOpacity(0.7);
                 this.component.appendChild(ld);
@@ -605,10 +600,10 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
      */
     constrain: function() {
         this._constrainToSize();
-        if(this.cfg("center") && this.cfg("constrainToCenter")) {
+        if (this.cfg("center") && this.cfg("constrainToCenter")) {
             this.makeCentered();
         }
-        if(this.cfg("constrainToViewport")) {
+        if (this.cfg("constrainToViewport")) {
             this._constrainToViewport();
         }
     },
@@ -623,8 +618,8 @@ jPlex.provide('jplex.components.Frame', 'jplex.common.Component', {
     _constrainToViewport: function(x, y) {
         if (!this.cfg("constrainToViewport"))
             return [x,y];
-        
-        if(typeof(x) == "undefined" || typeof(y) == "undefined") {
+
+        if (typeof(x) == "undefined" || typeof(y) == "undefined") {
             var pos = this.component.cumulativeOffset();
             x = pos.left;
             y = pos.top;
