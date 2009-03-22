@@ -57,5 +57,14 @@ new Test.Unit.Runner({
         Event.simulateKey(document, 'keydown', {keyCode: testKey});
         this.assertEqual(this.tester, 2);
         delete this.tester;
+    },
+    testExtendRecursive: function() {
+        var obj1 = { A: {A: 2, B:4}, B: 5};
+        var obj2 = { A: {C: 42} };
+        var obj1 = Object.extendRecursive(obj1, obj2);
+        this.assert(obj1.A);
+        this.assertEqual(obj1.A.C, 42);
+        this.assertEqual(obj1.A.B, 4); 
+        this.assertEqual(obj1.B, 5);
     }
 });
