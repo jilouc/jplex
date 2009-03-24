@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
+    <link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>
+    <script src="../src/jPlex.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8"></script>
+    <style type="text/css">
+        * {
+            font-family: sans-serif;
+        }
+
+        div#test-header {
+            background-color: #777;
+            width: 200px;
+            border: #000 1px solid;
+            color: #fff;
+            height: 22px;
+        }
+
+        div#test {
+            text-align: center;
+            width: 200px;
+            height: 100px;
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+<h1>jPlex MouseOverImage Demo</h1>
+
+<table border="0">
+    <tr valign="top">
+        <td>
+            <h2>Render</h2>
+            <div id="test-header">Module</div>
+            <div id="test">
+                <br/>Lorem ipsum
+            </div>
+        </td>
+        <td>
+            <h2>Code</h2>
+            <textarea name="code" class="js">
+                new MouseOverImage('test-header', {img:"img/button.png", method:'float', padding:1});
+            </textarea>
+            <textarea name="code" class="js">              
+    jPlex.include('jplex.components.MouseOverImage');
+    new MouseOverImage('test', {img:"img/button.png"});
+	new MouseOverImage('test', {img:"img/button.png", position:'right'});  
+	new MouseOverImage('test', {img:"img/button.png", position:'bottom-right'});
+	new MouseOverImage('test', {img:"img/button.png", position:'bottom'});
+	new MouseOverImage('test', {img:"img/button.png", position:'bottom-left'});
+	new MouseOverImage('test', {img:"img/button.png", position:'left'});
+	new MouseOverImage('test', {img:"img/button.png", position:'top-left'});
+	new MouseOverImage('test', {img:"img/button.png", position:'top'});
+	new MouseOverImage('test', {img:"img/button.png", position:'center', events: {
+	    onClickEvent: function() {alert("Right in the middle!")}} 
+	});
+            </textarea>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    <!--
+    jPlex.include('jplex.components.MouseOverImage');
+    new MouseOverImage('test-header', {img:"img/button.png", method:'float', padding:1});
+     
+    new MouseOverImage('test', {img:"img/button.png"});
+	new MouseOverImage('test', {img:"img/button.png", position:'right'});
+	new MouseOverImage('test', {img:"img/button.png", position:'bottom-right'});
+	new MouseOverImage('test', {img:"img/button.png", position:'bottom'});
+	new MouseOverImage('test', {img:"img/button.png", position:'bottom-left'});
+	new MouseOverImage('test', {img:"img/button.png", position:'left'});
+	new MouseOverImage('test', {img:"img/button.png", position:'top-left'});
+	new MouseOverImage('test', {img:"img/button.png", position:'top'});
+	new MouseOverImage('test', {img:"img/button.png", position:'center', events: {
+	    onClickEvent: function() {alert("Right in the middle!")}} 
+	});
+    -->
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
+    <link rel="stylesheet" href="demos.css" type="text/css"/>
+    <link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/frame/assets/frame.css" type="text/css"/>
+    <script src="../src/jPlex.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8"></script>
+    <style type="text/css">
+        div#remote-pic-modal div.body,
+            div#local-pic div.body {
+            padding: 0
+        }
+
+        div#lorem {
+            width: 40%;
+        }
+
+    </style>
+</head>
+<body>
+<h1>jPlex Frame Demo</h1>
+
+
+<script type="text/javascript">
+    <!--
+
+    var lorem = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sollicitudin. Phasellus tempus hendrerit orci. Nulla facilisi. Nulla facilisis lorem sit amet odio. Nulla sit amet pede. Mauris turpis diam, fermentum eget, imperdiet eu, sagittis fringilla, elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce odio. Nullam dapibus ligula sed lectus. Proin vel velit. Maecenas eleifend sollicitudin ipsum. Duis malesuada. Suspendisse velit lectus, pretium ac, imperdiet at, eleifend ut, nisl. Duis vel orci vel odio commodo mattis. Nullam eget massa sit amet massa vulputate aliquet.</p>";
+    lorem += "<p>Nunc a enim vitae velit consectetur lobortis. Donec sed magna ut nisl dignissim scelerisque. Etiam a eros at nulla facilisis lobortis. Morbi non est. Praesent pulvinar augue nec turpis. In in pede. Aenean id risus. Mauris dignissim. Suspendisse iaculis pede ut lorem. Ut hendrerit mauris nec risus. Pellentesque lectus. Nam semper, lorem vel dapibus placerat, mauris dolor varius nisi, vel posuere metus purus nec nunc. Etiam et pede. Sed vitae ipsum varius est placerat vulputate. Quisque faucibus neque quis lorem. Fusce tincidunt pharetra augue. Curabitur fringilla. Etiam vulputate congue erat.</p>";
+
+    jPlex.include("jplex.components.Frame");
+    jPlex.include("jplex.components.frame.Modal");
+    jPlex.include('jplex.components.frame.Dialog');
+    jPlex.include('jplex.components.frame.FrameSet');
+
+    var g = new FrameSet('test');
+
+    // TODO pourquoi l'evt de 'dialog' est déclenché sur 'first'??
+    var first = new Frame('lorem', {draggable: true});
+    first.setBody("<img src='http://www.fredx.fr/logojplexbyfredx.png' width='200' style='float:left' />" + lorem);
+    first.setTitle("Remote picture with text");
+    g.add(first);
+
+    var w2 = new Frame('local-pic', { title:"Local picture", draggable: true });
+    g.add(w2);
+    w2.setBody("<img src='img/emo_cat.jpg' alt='emoCat' />");
+
+
+    var dialog2 = new Dialog("dialog-group");
+        dialog2.setTitle("But this one is !");
+        dialog2.setBody("And therefore can disappear under<br/>the other windows of the group.<br/>(Except maybe on Internet Explorer ;)");
+
+    var dialog = new Dialog('dialog', {
+        title: "Alert"
+    });
+    dialog.setEvent("onOkButtonClickEvent", function() {
+        g.add(dialog2);
+    });
+    dialog.setEvent("onCancelButtonClickEvent", function() {
+        alert('cancel')
+    });
+
+    dialog.setBody('You exited the slideshow !<br />This dialog box isn\'t part of the windows group, <br />so it can\'t interact with its windows.');
+    dialog.hide();
+
+    var i = 0;
+    var pics = [
+        "<img id src='http://livepipe.net/stylesheets/sample_images/tabs_example_1_big.jpg' alt='emoCat' />",
+        "<img id src='http://livepipe.net/stylesheets/sample_images/tabs_example_2_big.jpg' alt='emoCat' />",
+        "<img id src='http://livepipe.net/stylesheets/sample_images/tabs_example_3_big.jpg' alt='emoCat' />",
+        "<img id src='http://livepipe.net/stylesheets/sample_images/tabs_example_4_big.jpg' alt='emoCat' />"
+    ];
+
+    var w3 = new Modal('remote-pic-modal', {
+        draggable: true,
+        overlayFade:0.5,
+        footer:true
+    });
+    w3.setBody(pics[i]);
+    w3.setFooter('<a href="javascript:previous()">Préc.</a> &minus; <a href="javascript:next()">Suiv.</a>');
+    w3.show();
+
+    var previous = function() {
+        i = (4 + i - 1) % 4;
+        $C('remote-pic-modal').setBody(pics[i]);
+    };
+    var next = function() {
+        i = (i + 1) % 4;
+        $C('remote-pic-modal').setBody(pics[i]);
+    };
+
+    document.bindKey(Event.Key.LEFT_ARROW, previous);
+    document.bindKey(Event.Key.RIGHT_ARROW, next);
+
+    w3.setEvent("onHideEvent", dialog.show.bind(dialog));
+    //-->
+</script>
+</body>
+</html>

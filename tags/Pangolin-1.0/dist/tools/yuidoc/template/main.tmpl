@@ -1,0 +1,95 @@
+#import re
+#if $classname
+    #set $classtruename = re.sub(r'[a-zA-Z]+\.', '', $classname)
+#else
+    #set $classtruename = "Coin"
+#end if
+#if $classname 
+\#summary Class API for $classtruename from module $modulename
+\#labels Class-$classname,Release-$projectname,Module-$modulename,API-Class
+\#sidebar API${projectname}#echo $modulename.lower()#Index
+
+= #if $access#`$access` #end if##if $static#`$static` #end if##if $final#`$final` #end if#Class *$classname* #if $extends# _extends [API$projectname#echo re.sub(r'(jplex)?\.', '', $extends)# $extends]_ #end if# =
+    #if $uses
+        - uses 
+        #set $i=0
+        #for $provider in $uses##if $i > 0#, #end if#
+            $provider #set $i=$i+1##end for#
+    #end if
+
+== Description ==
+#echo $description
+
+
+#if $configs
+== Config Table ==
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Default Value* </td><td> *Description* </td></tr>
+    #for $config in $configs
+<tr><td> _${config.name}_ </td><td> `$config.default` </td><td> #if $config.deprecated#*Deprecated* $config.deprecated #end if# $config.description </td></tr>
+    #end for  
+</table>
+        #if $inherited.configs                      
+=== Inherited Configs ===
+            #for $superclassname in $inherited.configs 
+ * [API$projectname#echo re.sub(r'(jplex)?\.', '', $superclassname)# $superclassname]: #for $config in $inherited.configs[$superclassname]# `#echo $config.name#`, #end for#
+            #end for
+        #end if
+#end if   
+
+#if $events
+== Event Table ==
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><td> *Name* </td><td> *Description* </td><td> *Parameters* </td></tr>
+    #for $event in $events
+<tr><td> _${event.name}_ </td><td> #if $event.deprecated#*Deprecated* $event.deprecated #end if# $event.description </td><td> #if $event.params# #for $param in $event.params# - `$param.name <$param.type>` $param.description <br/>#end for# #end if# </td></tr>
+    #end for  
+</table>
+        #if $inherited.events                      
+=== Inherited Events ===
+            #for $superclassname in $inherited.events 
+ * [API$projectname#echo re.sub(r'(jplex)?\.', '', $superclassname)# $superclassname]: #for $event in $inherited.events[$superclassname]# `#echo $event.name#`, #end for#
+            #end for
+        #end if
+#end if          
+#if $properties
+#set $hasProps = 0##for $property in $properties##if not $property.name.startswith('_')##set $hasProps = 1##end if##end for#
+#end if##if $properties and $hasProps > 0 
+== Properties ==
+<table border="1" cellspacing="0" cellpadding="5">        
+<tr><td> *Name* </td><td> *Type* </td><td> *Description* </td></tr>
+#for $property in $properties##if not $property.name.startswith('_')#<tr><td> _${property.name}_ </td><td> `$property.type` </td><td> `#if $property.access#$property.access #end if##if $property.static#$property.static #end if##if $property.final#$property.final #end if# ` #if $property.deprecated#<strong>Deprecated:</strong> $property.deprecated<br/>#end if# $property.description#if $property.default#<br/>Default Value: $property.default#end if#</td></tr>
+#end if##end for#
+</table>
+#end if
+
+#if $methods
+#set $hasMethods = 0##for $method in $methods##if not $method.name.startswith('_')##set $hasMethods = 1##end if##end for#
+#end if##if $methods and $hasMethods > 0 
+== Methods ==
+<table border="1" cellspacing="0" cellpadding="5">                                
+<tr><td> *Signature* </td><td> *Return Type* </td><td> *Description* </td></tr>
+#for $method in $methods##if not $method.name.startswith('_')#<tr><td> `#echo $method.name#(#if $method.params##set $i=0##set $current = ""##for $param in $method.params##if $current != $param.name##if $i > 0#, #end if##set $i = $i + 1##set $current = $param.name#$param.name#end if##end for##end if#)` </td><td> `$method.return.type` </td><td> $method.description<br /> #if $method.params##for $param in $method.params# - `$param.name <$param.type>`#echo re.sub('\r?\n','<br/>',$param.description)#<br/>#end for##end if#</td></tr>
+#end if##end for
+</table>
+#if $inherited.methods                                   
+=== Inherited Methods ===
+#for $superclassname in $inherited.methods##set i=0##set l=len($inherited.methods[$superclassname])-1
+ * [API$projectname#echo re.sub(r'(jplex)?\.', '', $superclassname)# $superclassname]: #for $method in $inherited.methods[$superclassname]##if not $method.name.startswith('_')# `#echo $method.name#`, #end if##end for#
+#end for
+#end if
+#end if
+#end if
+#if $modulenames and not $classname
+#if $modulename
+\#summary Module API for module $modulename
+\#labels Module-$modulename,Release-$projectname,API-Module
+\#sidebar API${projectname}#echo $modulename.lower()#Index
+#else    
+\#summary API Index
+\#labels Release-$projectname,API-Index
+#end if
+ * [API$projectname jPlex $projectname Release]#for $moduledef in $modulenames
+ * [API$projectname#echo $moduledef.lower()#Index $moduledef] #if $moduledef == $modulename##for $classdef in $classnames
+   * [API$projectname#echo re.sub(r'(jplex)?\.', '', $classdef)# #echo re.sub(r'[a-zA-Z]+\.', '', $classdef)#]#end for##end if##end for
+#end if

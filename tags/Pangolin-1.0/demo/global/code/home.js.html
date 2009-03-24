@@ -1,0 +1,194 @@
+<ul id="tabs-code-home" class="code-tabs"></ul>
+
+<div id="tab-code-home-1">
+    We use our packaging function to enable the use of specific components on the page. They are loaded 'on-the-fly' to
+    avoid memory overloading.
+    <pre>
+    <code class="javascript">
+jPlex.include("jplex.components.MenuBar");
+jPlex.include("jplex.components.Frame");
+jPlex.include("jplex.components.frame.FrameSet");
+jPlex.include("jplex.components.Tabs");
+    </code>
+    </pre>
+    Note that, as we use -almost- all components in this demonstration, we could have prefered the shorter way :
+    <pre>
+        <code class="javascript">
+jPlex.include("jplex.components.*");
+        </code>
+    </pre>
+</div>
+<div id="tab-code-home-2" style="display:none">
+
+    Create the main windows set using the
+    <strong>FrameSet</strong> component. This set will contain every windows
+    we'll use in this demo (except <strong>Modal</strong>s since they have a totally different behavior).<br/>
+    Then we create the main window with custom properties and add it to the windows set.
+<pre>
+    <code class="javascript">
+var mainGroup = new FrameSet('main-w-group');
+
+var first = new Frame('what', {
+    close: Frame.CLOSE_CUSTOM, // Custom way of closing the window (i.e. no default behavior)
+    ajax: "./global/home.html", // The content of the window is in another file
+    draggable: true, // This will be a draggable window (try it)
+    footer: true, // with a footer
+    title: "Welcome" // and an original title!
+});
+
+first.setFooter("&lt;input type='button' id='code' value='View source code'/&gt;");
+
+mainGroup.add(first);
+    </code>
+</pre>
+</div>
+
+<div id="tab-code-home-3" style="display:none">
+    Creating a menu bar has never been so easy! To set up the menu bar you see on the home window, we just provided
+    an array of menu bar items, each of them might define an array of sub-items and so on. Just like that
+    (see <code>jplex.components.MenuBar</code> documentation for more information about menu items):
+    <pre>
+        <code class="javascript">
+var myData = [{
+    name: "File",
+    items: [{
+        name: "New...",
+        icon: "img/001.png",
+        items: [{
+            name: "Window...",
+            icon: "./global/img/sheet2.png",
+            items: [{
+                name: "Modal"
+            },
+            ...
+            ]
+        }]
+    }, {
+        name: "Download jPlex",
+        items: [
+            {name: "Pangolin Compressed"},
+            {name: "Pangolin Source"}
+        ]
+    }, {
+        name: "Close",
+        keySC: {
+            key: Event.Key.W,
+            ctrl: true,
+            text: "Ctrl + W"
+        }
+    }]
+}, {
+    ...
+}, {
+    name: "Help",
+    items:[{
+        name:"What do I see ?",
+        icon: "./global/img/misc.png"
+    }, {
+        name:"About",
+        icon: "./global/img/help.png",
+        click: function() {
+            ...
+        }
+    }]
+}];
+        </code>
+    </pre>
+    Most of the work is done, the menu bar now needs an single line to be created (assuming we have <code class="html">
+&lt;div id="main-menu"&gt;&lt;/div&gt;</code> on the page):
+    <pre>
+        <code class="javascript">
+new MenuBar("main-menu", {
+    data: myData    
+})
+        </code>
+    </pre>
+</div>
+
+<div id="tab-code-home-4" style="display:none">
+
+    We'll now see how to set up the tabs that divide the home window into two parts : "What is jPlex?" and "Why jPlex?".
+    First thing, include the component's class :
+    <pre>
+    <code class="javascript">
+jPlex.include("jplex.components.Tabs");
+    </code>
+    </pre>
+
+    <pre>
+    <code class="html">
+&lt;ul id="home-tabs"&gt;&lt;/ul&gt;
+&lt;div id="tab-what-is-jplex"&gt;...&lt;/div&gt;
+&lt;div id="tab-why-jplex"&gt;...&lt;/div&gt;
+    </code>
+        </pre>
+    <pre>
+    <code class="javascript">
+var myTabsData = [
+    {title: 'What is jPlex ?', content:'tab-what-is-jplex'},
+    {title: 'Why jPlex ?', content:'tab-why-jplex'}
+];
+
+var tabs = new Tabs("home-tabs", {data: myTabsData});
+    </code>
+</pre>
+    One more thing... we attach a custom event fired when the user switch between two tabs so that the window stay
+    centered.
+    This is easily done thanks to the custom event system available on every component.
+    <pre>
+        <code class="javascript">
+            tabs.setEvent("onSwitchEvent", first.makeCentered.bind(first));
+        </code>
+    </pre>
+</div>
+
+<div id="tab-code-home-5" style="display:none">
+    In the tab "Window creation", you see that the content of the window is fetched from another file named "home.html".
+    In fact, we want the tabs to be created when the <code class="javascript">Ajax.Request</code> is complete (to work
+    on DOM elements). <br/>
+    That's why we use the custom event <code class="javascript">onAjaxRequestCompleteEvent</code> to perform instructions
+    when the request is completed! See <code class="javascript">jplex.component.Frame</code> documentation for more
+    details about available custom events.
+          <pre>
+          <code class="javascript">
+first.setEvent('onAjaxRequestCompleteEvent', function() {
+    // Tabs creation code is here
+});
+          </code>
+      </pre>
+
+    Sometimes when you dynamically add elements to the DOM, you can't really know when these elements are ready
+    (i.e. present in the tree). <br/>
+    Instead of relying on the <code class="javascript">window.onload</code> or Prototype's
+    <code class="javascript">dom:loaded</code>, we've added <code class="javascript">Event.onElementReady</code>.
+    Here's an example:
+    <pre>
+        <code class="javascript">
+Event.onElementReady("myElementID", function() {
+    alert(this.tagName);
+    // In the function, 'this' keyword refers to $("myElementID")
+});
+        </code>
+    </pre>
+</div>
+
+<a onclick="$('code-home').down('div.body').scrollTop = 0;" class="top"><img src="./global/img/arrow_stop_090.png" width="14"></a><br/>        
+
+
+<script type="text/javascript">
+    var t = new Tabs("tabs-code-home", {
+        data: [
+            { title: "Tips", content: "tab-code-home-5" },
+            { title: "Tabs creation", content: "tab-code-home-4" },
+            { title: "Menu bar", content:"tab-code-home-3"},
+            { title: "Window creation", content: "tab-code-home-2" },
+            { title: "Packaging functions", content: "tab-code-home-1" }
+        ],
+        activeTab: 4
+    });
+
+    t.setEvent("onSwitchEvent", function() {
+        $C('code-home').constrain();
+    });
+
+</script>

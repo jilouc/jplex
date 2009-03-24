@@ -1,0 +1,133 @@
+input.jplex-calendar[type=text] {
+	background-image: url( 'icon-calendar.gif' );
+    background-repeat: no-repeat;
+	background-position: 6.7em center;
+	border: 1px #c0c0c0 solid;
+	padding:0.1em 1em 0.1em 0.1em;
+	width:7em;
+}
+input.jplex-calendar[type=button] {
+    background: url('icon-calendar.gif') no-repeat center center;
+    border:1px #909090 solid;
+	padding:0.1em 1em 0.1em 0.1em;
+	margin-left:0.2em;
+	width:30px;
+    height:20px;
+	border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+	overflow:visible;
+}
+div.jplex-calendar {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background: #c3d9ff;
+    padding: 5px;
+    border: 1px #999999 solid;
+    font: 13px / 18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+}
+
+div.jplex-calendar table {
+    border: 1px #999999 solid;
+    background: white;
+	position:static;
+}
+
+div.jplex-calendar th {
+    border-bottom: 1px #999999 solid;
+}
+
+div.jplex-calendar td {
+    text-align: center;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 1px transparent solid;
+    line-height:1em;
+}
+
+div.jplex-calendar td:hover, div.calendar td.ie6-hover {
+    background: #bfe2f6;
+    cursor: pointer;
+}
+
+div.jplex-calendar td.outofmonth {
+    color: #aaaaaa;
+}
+
+div.jplex-calendar td.selected {
+    background: #557799;
+    color: white;
+    font-weight: bold;
+}
+
+div.jplex-calendar td.focused {
+	border: 1px #557799 dashed;
+}
+
+div.jplex-calendar td.disabled {
+	background:#ededed;
+	font-style:italic;
+	color:#bbbbbb;
+}
+
+div.jplex-calendar span.previous {
+    font-size: 14px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+div.jplex-calendar span.next {
+    font-size: 14px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+div.jplex-calendar span.next:hover,
+div.jplex-calendar span.previous:hover {
+    background: white;
+    color: blue;
+    cursor: pointer;
+}
+
+div.jplex-calendar span.title {
+    font-weight: bold;
+}
+
+div.jplex-calendar div.top {
+    text-align: center;
+}
+
+div.jplex-calendar div.close {
+    text-align: center;
+    clear: both;
+    font-size: 12px;
+}
+
+div.jplex-calendar div.close:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+div.jplex-calendar-overlay {
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+}
+
+div.jplex-calendar-tooltip {
+    font: 13px / 18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+}
+
+div.jplex-calendar-tooltip div.select {
+    color:#666666;
+    font-size:0.8em;
+    margin-top:0.5em;
+    
+}
+
+div.jplex-calendar-tooltip input.end {
+    margin:0.5em 0 0.5em 0;
+}

@@ -1,0 +1,56 @@
+<h2>Book my hotel</h2>
+<form id="book-form" action="javascript: return false;">
+    <table style="margin: 0 auto;">
+
+        <tr>
+            <td>*Name:</td>
+            <td><input type="text" id="name" size="10"/></td>
+        </tr>
+        <tr>
+            <td>*Arrival:</td>
+            <td><input type="text" id="arrival"/></td>
+        </tr>
+        <tr>
+            <td>*Departure:</td>
+            <td><input type="text" id="departure"/></td>
+        </tr>
+        <tr>
+            <td>Phone:</td>
+            <td><input type="text" id="phone" size="10"/></td>
+        </tr>
+    </table>
+
+</form>
+<script type="text/javascript">
+    Demo.formItemValid = function(id) {
+        if (!$F(id))
+            $(id).setStyle({backgroundColor: '#FF8888'});
+        else
+            $(id).setStyle({backgroundColor: '#88FF88'});
+    };
+    new Calendar('arrival-cal', {source: 'arrival', events: {onSelectEvent: Demo.formItemValid.curry('arrival')}});
+    new Calendar('departure-cal', {source: 'departure', events: {onSelectEvent: Demo.formItemValid.curry('departure')}});
+    $A(['name', 'arrival', 'departure']).each(function(elt) {
+        elt = $(elt);
+        elt.setValue('');
+        elt.setStyle({backgroundColor: '#FF8888'});
+    });
+    $('name').observe('keyup', Demo.formItemValid.curry('name'));
+    Demo.formValidate = function() {
+        if (!$F('name') || !$F('arrival') || !$F('departure')) {
+            var d = $C('form-error');
+            if (!d) {
+                d = new Dialog('form-error', {
+                    modal: true,
+                    okButton: false,
+                    cancelButtonLabel: 'OK',
+                    title: 'Error!'
+                });
+                d.setBody("The form is inconsistent!");
+            }
+            d.show();
+        } else {
+            $C('formdemo').hide();
+        }
+    };
+</script>

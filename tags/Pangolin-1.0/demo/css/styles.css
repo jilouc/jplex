@@ -1,0 +1,102 @@
+body {
+    font: 13px / 18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+}
+
+.classes {
+    color: purple;
+}
+
+.properties {
+    color: darkgreen;
+}
+
+pre, code {
+    margin: 0 0 0.5em 0;
+    padding: 0;
+}
+
+pre {
+    padding: 0 1em 0 1em;
+}
+
+code.rule:hover, code.rule:hover * {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
+
+.units {
+    color: gray;
+}
+
+.numbers, .colors {
+    color: darkred;
+}
+
+pre.selected, pre.selected * {
+    color: white;
+}
+
+pre.selected {
+    background: #557799;
+    border: #bfe2f6 dotted;
+    border-width: 1px 0 1px 0;
+}
+
+pre.selected:hover, pre.selected:hover * {
+    color: white;
+}
+
+pre.body {
+    background: white;
+}
+
+div.rules-highlighter {
+    float: left;
+    max-width: 350px;
+    width: 350px;
+    height: 100%;
+    border: #557799 solid;
+    border-width: 0 2px 2px 0;
+    overflow: auto;
+    -webkit-border-bottom-right-radius: 20px;
+    -webkit-box-shadow: 5px 5px 10px #bfe2f6;
+    -moz-box-shadow: #bfe2f6 2px 2px 10px;
+    -moz-border-radius-bottomright: 20px;
+    padding: 0 0 2em 0;
+}
+
+div.styles-header {
+    font: 13px / 18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+    color: white;
+    background: #557799;
+    padding: 1em;
+    margin-bottom: 2em;
+    text-shadow: 0px 0px 3px black;
+}
+
+div.rules-highlighter-overlay {
+    background: yellow;
+    border: 2px orange solid;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+
+div#highlight-zone {
+    float: left;
+    padding: 0 1em 1em 1em;
+    margin: 3em 0 0 2em;
+    border: 2px #557799 solid;
+    -webkit-border-radius: 10px;
+    -webkit-box-shadow: 5px 5px 10px #bfe2f6;
+    -moz-box-shadow: #bfe2f6 2px 2px 10px;
+    -moz-border-radius: 10px;
+}
+
+div.info {
+    color: #999999;
+    font-size: 0.8em;
+    clear: both;
+    text-align: center;
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
+    <link rel="stylesheet" href="./global/syntax_highlighter.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/menubar/assets/menubar.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/frame/assets/frame.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/tabs/assets/tabs.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/tooltip/assets/tooltip.css" type="text/css"/>
+    <!--[if IE 6]>
+        <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar-ie6.css" type="text/css"/>
+        <link rel="stylesheet" href="../src/jplex/components/frame/assets/frame-ie6.css" type="text/css"/>
+        <link rel="stylesheet" href="../src/jplex/components/frame/assets/menubar-ie6.css" type="text/css"/>
+    <![endif]-->
+    <!--[if IE 7]>
+        <link rel="stylesheet" href="../src/jplex/components/frame/assets/frame-ie7.css" type="text/css"/>
+        <link rel="stylesheet" href="../src/jplex/components/frame/assets/menubar-ie7.css" type="text/css"/>
+    <![endif]-->
+
+    <link rel="stylesheet" href="./global/styles.css" type="text/css"/>
+    <script src="../src/jPlex.js" type="text/javascript" charset="utf-8">
+    </script>
+    <script src="./global/syntax_highlighter.js" type="text/javascript" charset="utf-8">
+    </script>
+</head>
+<body>
+
+<script type="text/javascript">
+    <!--
+    var Demo = {
+        view: {}
+    };
+
+    Demo.viewSource = function(file) {
+        var code = $C("code-" + file);
+        if (!code) {
+            new Frame("code-" + file, {
+                draggable: true,
+                title: "Code snippet",
+                constrainToCenter: true,
+                maxWidth: 600,
+                maxHeight: 450,
+                ajax: "./global/code/" + file + ".js.html",
+                events: {
+                    onAjaxRequestCompleteEvent: function(o) {
+                        CodeHighlighter.init();
+                        this.component.addClassName("code-window");
+
+                        var w = Demo.frameSet.add(this);
+                        w.toFront.bind(w).defer();
+                        w.show();
+                    }
+                }
+            });
+        } else {
+            code.show();
+            code.toFront.bind(code).defer();
+        }
+    };
+
+
+    jPlex.include("jplex.components.*");
+    jPlex.useSkin('custom');
+    Ajax.Base.defaultMethod = 'get';
+    
+    Demo.frameSet = new FrameSet('test');
+    Demo.init = function() {
+        var f = new Frame('f-home', {
+            close: Frame.CLOSE_CUSTOM,
+            ajax: "global/home.html",
+            draggable: true,
+            constrainToCenter: true,
+            title: "Welcome!",
+            footer: true,
+            overflow: "auto",
+            maxWidth: 800
+        });
+
+        Demo.frameSet.add(f);
+    };
+
+
+    Effect.Desktop = Class.create(Effect.Base, {
+        initialize: function(winGroup) {
+            this.group = $C(winGroup);
+            this._implode = this.implode.bind(this);
+
+            var dirs = ["right", "bottom", "left", "top"];
+
+            this.group.windows.each(function(s, i) {
+                this.explode(s, dirs[i % 4]);
+
+            }.bind(this));
+        },
+
+        implode: function() {
+
+            this.group.windows.each(function(s) {
+                new Effect.Move(s.component, {
+                    x: s._oldXY.get("x"),
+                    y: s._oldXY.get("y"),
+                    mode: "absolute"
+                });
+                s.component.stopObserving("click", this._implode);
+            }.bind(this));
+        },
+
+        explode: function(win, dir) {
+            var vpDim = document.viewport.getDimensions();
+            var dim = win.component.getDimensions();
+            var pos = win.component.cumulativeOffset();
+            win._oldXY = $H({
+                x: pos.left,
+                y: pos.top
+            });
+
+            var x,y;
+
+            if (dir == 'right') {
+                x = vpDim.width - 100;
+                y = pos.top;
+            } else if (dir == 'left') {
+                x = - dim.width + 100;
+                y = pos.top;
+            } else if (dir == 'top') {
+                x = pos.left;
+                y = vpDim - 50;
+            } else {
+                x = pos.left;
+                y = - dim.height + 50;
+            }
+
+            new Effect.Move(win.component, {
+                x: x,
+                y: y,
+                mode: 'absolute'
+            });
+
+            win.component.observe("click", this._implode);
+        },
+
+        update: Prototype.emptyFunction
+    });
+
+    var e = null;
+    document.bindKey(Event.Key.F11, function() {
+        if (!e) {
+            e = new Effect.Desktop("test");
+        } else {
+            e.implode();
+            e = null;
+        }
+    }, {preventDefault:true, ctrl:true});
+
+    Demo.init();
+
+    //-->
+</script>
+</body>
+</html>

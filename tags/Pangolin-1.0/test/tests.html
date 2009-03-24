@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
+    <link rel="stylesheet" href="../styles/test.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar.css" type="text/css"/>
+    <script src="../src/jPlex.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../libs/unittest-old.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/Tests.js"></script>
+    <title>All jPlex tests</title>
+</head>
+<body>
+<div id='results'>Loading...</div>
+<h1>jPlex Massive Unit Tester</h1>
+
+<script type="text/javascript">
+    generateTests("Low level: MUST pass", ['XPrototype', 'Component', 'Config', 'Packager']);
+    generateTests("Components", ['Calendar']);
+</script>
+</body>
+</html>

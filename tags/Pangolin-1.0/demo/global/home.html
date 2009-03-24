@@ -1,0 +1,272 @@
+<div style="padding:1em 3em 3em 3em;">
+
+    <ul id="home-tabs" class="code-tabs"></ul>
+
+    <div id="tab-what-is-jplex">
+        <h2>What is jPlex ?</h2>
+
+        <p>
+            jPlex is a javascript library that provides a set of usual user-interface components and some
+            functions to help the everyday's life of a web-developer. It focuses on components that you can
+            find on every web-application like calendar, menubar or windows.<br/>
+            This library is based on the powerful combination <em>Prototype/Scriptaculous</em>.
+        </p>
+
+        <p>
+            You are currently on the provided <em>window system</em>
+            <br/>Look at the top of the window, you can see the menubar for further demo. Enjoy!"
+        </p>
+
+        <p>
+            jPlex clashes around 3 keywords :
+
+        <ul>
+            <li>Simple: Invoke complex components in one line</li>
+            <li>Compatible: Each feature has been tested on <img src="./global/img/ie.png" alt="ie" align="absmiddle"/>6.0+,
+                <img src="./global/img/firefox.png" alt="firefox" align="absmiddle"/> 2.0,
+                <img src="./global/img/safari.png" alt="safari" align="absmiddle"/> Win/Mac 3.0+,
+                <img src="./global/img/chrome.png" alt="chrome" align="absmiddle"/> ,
+                <img src="./global/img/opera.png" alt="opera" align="absmiddle"/> 9+
+            </li>
+            <li>Customizable: Adapt the components to your design just by overriding the css rules</li>
+        </ul>
+        </p>
+    </div>
+    <div id="tab-why-jplex" style="display:none;">
+
+        <h2>Why jPlex ?</h2>
+
+        <ul>
+            <li> When you develop, you need to redo each component by yourself. The calendar is the ultimate example:
+                look around some website. Each one is specific and if you need to ensure compatibility you can do a lot
+                of
+                boring work.
+            </li>
+        </ul>
+
+        There is a lot of library like this one: <a href="http://developer.yahoo.com/yui/">Yahoo! UI</a>, <a
+            href="http://livepipe.net/">LivePipe</a>? or monolithic components. So why choose jPlex ?
+
+        <ul>
+            <li>We rely on the framework Prototype, which is a really simple and compatible one. A lot of web developer
+                agrees
+                on that but does use YUI instead for example because it is too low level. Scriptaculous provides
+                graphical
+                effects and some very useful tools like drag'n'drop, but does not give calendar or tabs. We provide the
+                last
+                piece of the puzzle to form a full framework.
+            </li>
+            <li>jPlex has been designed with a complete software design in order to have a great code quality. We rely
+                on the
+                Class creation of Prototype in order to have an object-oriented library. By this mean it is really easy
+                to add
+                components or customize them.
+            </li>
+            <li>You can create your own component for yourself via our API</li>
+            <li>jPlex provides XPrototype: A complete prototype extension in order to give to the developer a lot of
+                functions
+                that each developer has coded into a "util.js". Example: Date.format or Number.format,
+                Date.previousMonth
+            </li>
+            <li>jPlex is delivered in a single compressed file in order to have great performance. Of course if you
+                prefer
+                debugging you can use the source tree that works as well.
+            </li>
+            <li>It's an open-source project: You can modify everything (as long as you respect the MIT Licence)</li>
+        </ul>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    var f = $C("f-home");
+    f.setTitle("Welcome!");
+    f.setFooter("<span id='code-snippet'>Click to get some information about the code used in the current page</span> " +
+                "<img src='./global/img/131.png' align='absmiddle' alt='' /> " +
+                "<input type='button' id='home-code' value='View code snippets' />");
+    $('home-code').observe('click', Demo.viewSource.curry("home"));
+
+    Demo.initSlideshow = function() {
+        if (!Demo.slideshow) {
+            Demo.slideshow = new Modal("slideshow", {
+                footer:true,
+                constrainToCenter:true,
+                overlayFade:0.5,
+                draggable:true
+            });
+            Demo.slideshow.pics = [
+                "<img id src='global/img/demo_slideshow01.jpg' alt='slideshow' />",
+                "<img id src='global/img/demo_slideshow02.jpg' alt='slideshow' />",
+                "<img id src='global/img/demo_slideshow03.jpg' alt='slideshow' />",
+                "<img id src='global/img/demo_slideshow04.jpg' alt='slideshow' />"
+            ];
+            Demo.slideshow.current = 0;
+            Demo.slideshow.setBody(Demo.slideshow.pics[0]);
+            Demo.slideshow.setFooter('<input type="button" id="slideshow-snippet" value="View code snippets" /> &mdash; ' +
+                                     'Use the left and right arrow to browse the pictures &mdash; ' +
+                                     '<span id="tooltip-snippyhollow-source">[Pictures credits]</span> ' +
+                                     '&larr; <a href="javascript:Demo.slideshow.previous()">Previous</a> ' +
+                                     '&minus; <a href="javascript:Demo.slideshow.next()">Next</a> &rarr;');
+            $('slideshow-snippet').observe('click', function() {
+                Demo.slideshow.hide();
+                Demo.viewSource("slideshow");
+            });
+            Demo.slideshow.previous = function() {
+                var sl = Demo.slideshow;
+                sl.current = (sl.pics.length + sl.current - 1) % sl.pics.length;
+                sl.setBody(sl.pics[sl.current]);
+            };
+            Demo.slideshow.next = function() {
+                var sl = Demo.slideshow;
+                sl.current = (sl.current + 1) % sl.pics.length;
+                sl.setBody(sl.pics[sl.current]);
+            };
+
+            var t = new Tooltip("tooltip-snippyhollow", {
+                zIndex:Demo.slideshow.getZIndex() + 2,
+                position:"bottom-right",
+                positionRation:0.4
+            });
+            t.setContent("<img src='./global/img/somerights20.gif' alt='CC' />" +
+                         "<img src='./global/img/cc_icon_attribution.gif' alt='BY' />" +
+                         "<img src='./global/img/cc_icon_sharealike.gif' alt='SA' /><br/>" +
+                         "<a href='http://www.flickr.com/photos/snippyhollow/' target='_blank'>Snippy Hollow</a>");
+
+            Demo.slideshow.setEvent("onShowEvent", function() {
+                document.bindKey(Event.Key.LEFT_ARROW, Demo.slideshow.previous);
+                document.bindKey(Event.Key.RIGHT_ARROW, Demo.slideshow.next);
+            });
+
+            Demo.slideshow.setEvent("onHideEvent", function() {
+                document.unbindKey(Event.Key.LEFT_ARROW);
+                document.unbindKey(Event.Key.RIGHT_ARROW);
+            });
+
+
+        }
+        Demo.slideshow.show();
+    };
+
+    Demo.initForm = function() {
+        var form = $C("formdemo");
+        if (!form) {
+            form = new Dialog('formdemo', {
+                ajax: "global/form.html",
+                draggable: true,
+                constrainToCenter: true,
+                title: "Book my Hotel",
+                minWidth:300,
+                otherButtons: [{
+                    label:'View code snippets',
+                    click: Demo.viewSource.curry("form")
+                }],
+                events: {
+                    onAjaxRequestCompleteEvent: function() {
+                        var w = Demo.frameSet.add(this);
+                        w.toFront.bind(w).defer();
+                        w.show();   
+                    },
+                    onOkButtonClickEvent: function() {
+                        Demo.formValidate();
+                    }
+                }
+            });
+        } else {
+            form.toFront.bind(form).defer();
+            form.show();
+        }
+    };
+
+    var myData = [{
+        name: "Demo",
+        items: [{
+            name: "Slideshow",
+            icon: "./global/img/sheet2.png",
+            click: Demo.initSlideshow,
+            shortcut: {
+                key: Event.Key.M,
+                ctrl: true,
+                text: "Ctrl + M"
+            }}, {
+            name: "Form",
+            click: Demo.initForm,
+            shortcut: {
+                key: Event.Key.D,
+                ctrl: true,
+                text: "Ctrl + D"
+            }
+        }, {
+            name: "Download jPlex",
+            items: [{
+                name: "Pangolin Compressed"
+            }, {name: "Pangolin Source"}]
+        }, {
+            name: "Close",
+            shortcut: {
+                key: Event.Key.W,
+                ctrl: true,
+                text: "Ctrl + W"
+            }
+        }]
+    }, {
+        name: "jPlex",
+        items:[{
+            name:"Homepage",
+            icon:"img/031.png",
+            link:"http://jplex.googlecode.com"
+        }, {
+            name:"Documentation",
+            link:"http://code.google.com/p/jplex/wiki/APIPangolin"
+        }]
+    }, {
+        name: "Help",
+        items:[{
+            name:"What do I see ?",
+            icon: "./global/img/misc.png"
+        }, {
+            name:"About",
+            icon: "./global/img/help.png",
+            click: function() {
+                if (!(about = $C("about"))) {
+                    var about = new Modal('about', {
+                        draggable: true,
+                        ajax: "./global/about.html",
+                        overlayFade: 0.5,
+                        constrainToCenter:true
+                    });
+                    about.setTitle("About");
+                }
+                about.show();
+            }
+        }]
+    }];
+
+
+    f.component.down("div.header").appendChild(new Element("div", {id:"menu"}));
+
+    Event.onElementReady('menu', function() {
+        Demo.menu = new MenuBar("menu", {
+            data: myData
+        });
+    });
+
+    Event.onElementReady('tab-why-jplex', function() {
+        var myTabsData = [
+            {title: 'Why jPlex ?', content:'tab-why-jplex'},
+            {title: 'What is jPlex ?', content:'tab-what-is-jplex'}
+        ];
+        var tabs = new Tabs("home-tabs", {
+            data: myTabsData,
+            activeTab: 1
+        });
+        tabs.setEvent("onSwitchEvent", function() {
+            f.constrain();
+        });
+
+    });
+
+    //new MouseOverImage('code-snippet', {img:'./global/img/lifebuoy.png', position:'middle'});
+
+</script>
+        
