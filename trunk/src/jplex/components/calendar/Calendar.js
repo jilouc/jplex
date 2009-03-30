@@ -5,7 +5,7 @@ jPlex.include("jplex.components.Overlay", false);
 /**
  * @description Calendar component class.
  * Create a browsable calendar from a text field, a button or directly on the page.
- * 
+ *
  * <strong>Main features</strong>:
  * <ul>
  * <li>Link the calendar to a simple text input (appears on focus), to a button (appears on click)
@@ -120,7 +120,15 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
              * @default The current year + 5
              */
             fastBrowseYearEnd: (new Date()).getFullYear() + 5,
-            fastBrowseYearStep: 1 // TODO implement
+            fastBrowseYearStep: 1, // TODO implement
+            /**
+             * Allow multiple selections within the calendar
+             * If set to true, the associated form control is not automatically updated
+             * when a date is selected. You have to use the `onSelectEvent` to do what you want.
+             * @config multiselect
+             * @default false
+             */
+            multiselect: false
 
         },
         events: {
@@ -128,6 +136,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
              * When a new date is selected
              * @event onSelectEvent
              * @param {Date} date The selected date
+             * @param {Array} selected Array of currently selected dates in the calendar
              */
             onSelectEvent: Prototype.emptyFunction,
             /**
@@ -175,11 +184,14 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         $super(eElement, oConfig);
 
         var date = this.cfg('date');
-        this._selectedItem = this._focusedItem = {
+        this._selectedItems = $H();
+        this._focusedItem = {
             getDate: function() {
                 return date;
             }
         };
+        this._selectedItems.set(date.format("Ymd"), this._focusedItem);
+
         this._currentMonth = date;
 
         this._source = $(this.cfg("source"));
@@ -189,6 +201,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             this._textField = this._source;
         }
 
+        this._cache = new Hash();
         this._initialRender();
         this.render();
 
@@ -299,14 +312,17 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @see Calendar.CalendarItem
      */
     render: function() {
-        this.items = $A([]);
-        var tb = this._getTbody();
-        tb.removeChildren();
 
         var oFirstDayOfMonth = this._currentMonth.firstDayOfMonth(),
                 oLastDayOfMonth = this._currentMonth.lastDayOfMonth();
         this.__fdom = oFirstDayOfMonth;
         this.__ldom = oLastDayOfMonth;
+
+
+        this.items = $A([]);
+        var tb = this._getTbody();
+        tb.removeChildren();
+
 
         var oFirstDay = new Date(
                 oFirstDayOfMonth.getFullYear(),
@@ -328,8 +344,8 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             }
             var oDayItem = new jplex.components.calendar.CalendarItem(this, oDay, i),
                     eDay = oDayItem.getCell();
-            var diff = this._selectedItem.getDate().getTime() - oDay.getTime();
-            if (diff >= 0 && diff < 86400000) {
+              
+            if (this._selectedItems.get(oDay.format("Ymd"))) {
                 oDayItem.select();
                 oDayItem.focus();
             }
@@ -345,6 +361,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
             oDay.setNextDay();
         }
+
 
         this._setTitle(this._currentMonth.getMonth(),
                 this._currentMonth.getFullYear());
@@ -391,6 +408,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         var n = this._focusedItem.getIndex();
         var fd = this.__fdom.getDay();
         var date = new Date();
+        date.setDate(1);
 
         if (!Object.isUndefined(month)) {
             date.setMonth(month);
@@ -399,10 +417,11 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             date.setYear(year);
         }
         this._currentMonth = date.firstDayOfMonth();
-
+        
         this.render();
 
         var newIndex = this.__fdom.getDay() + Math.min(this.__ldom.getDate() - 1, n - fd);
+
         this.items[newIndex].focus();
         if (this._source)
             this._source.activate();
@@ -442,11 +461,30 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
     },
 
     /**
+     * Add a new date to the currently selected elements
+     * @param {calendar.CalendarItem} oItem the date to be added
+     */
+    addSelectedItem: function(oItem) {
+        this._selectedItems.set(oItem.getDate().format("Ymd"), oItem);
+    },
+
+    /**
+     * Removes an item from the selection list
+     * @param {calendar.CalendarItem} oItem the date to be removed
+     */
+    removeSelectedItem: function(oItem) {
+        this._selectedItems.unset(oItem.getDate().format("Ymd"));
+    },
+
+
+    /**
      * Sets the current selected item of the calendar
      * @param {Calendar.CalendarItem} oItem calendar item to be marked as selected
      */
     setSelectedItem: function(oItem) {
-        this._selectedItem = oItem;
+        this._selectedItems = $H();
+        this._selectedItems.set(oItem.getDate().format("Ymd"), oItem);
+        
         if (this._textField && this._textField.getAttribute("type") != 'button') {
             this._textField.value = oItem.getDate().format(this.cfg("dateFormat"));
         }
@@ -465,7 +503,14 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @return {Calendar.CalendarItem} the selected item
      */
     getSelectedItem: function() {
-        return this._selectedItem;
+        return this.getSelectedItems()[0];
+    },
+
+    /**
+     *
+     */
+    getSelectedItems: function() {
+        return this._selectedItems.values();
     },
 
     /**
@@ -491,7 +536,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      */
     getFormattedValue: function(format) {
         var pattern = format ? format : this.cfg("dateFormat");
-        return this._selectedItem.getDate().format(pattern);
+        return this.getSelectedItem().getDate().format(pattern);
     },
 
     /**
@@ -506,7 +551,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             this.component.setStyle({
                 display:"none"
             });
-            if(Prototype.Browser.IE6) {
+            if (Prototype.Browser.IE6) {
                 if (this._source.getAttribute("type") == "button") {
                     this._source.addClassName("jplex-calendar-button");
                 } else if (this._source.getAttribute("type") == "text") {
@@ -569,7 +614,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             });
             selectEnd.addClassName("end");
 
-            this._fastBrowseTooltip = new jplex.components.Tooltip(this.UID+"-fbtooltip", {
+            this._fastBrowseTooltip = new jplex.components.Tooltip(this.UID + "-fbtooltip", {
                 source: this._getTitle(),
                 trigger: jplex.components.Tooltip.TRIGGER_CLICK,
                 position: "bottom-right",
@@ -594,11 +639,11 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                     selectEnd
                     );
 
-            if(!Prototype.Browser.IE6) {
+            if (!Prototype.Browser.IE6) {
                 this._fastBrowseTooltip.setEvent("onShowEvent", function() {
                     if (!this._fastBrowseOverlay) {
 
-                        this._fastBrowseOverlay = new jplex.components.Overlay(this.UID+"-overlay", {
+                        this._fastBrowseOverlay = new jplex.components.Overlay(this.UID + "-overlay", {
                             z: this.cfg("zBase") + 1,
                             source: this.component,
                             opacity: 0.3,
@@ -608,15 +653,16 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
                     }
                     this._fastBrowseOverlay.show();
-
+                    this._fastBrowseOverlay.component.clonePosition(this.component);
                 }.bind(this));
 
                 this._fastBrowseTooltip.setEvent("onHideEvent", function() {
                     if (this._fastBrowseOverlay)
                         this._fastBrowseOverlay.hide();
                 }.bind(this));
+
             }
-            
+
             var preventClick = function(e) {
                 e = Event.extend(window.event ? window.event : e);
                 e.cancelBubble = true;
@@ -699,7 +745,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
     _fixPosition: function() {
         if (!this._source) return;
         var aOffsets = this._source.cumulativeOffset();
-        
+
         var newPos = {
             left: aOffsets.left,
             top: aOffsets.top + this._source.getHeight()
@@ -710,13 +756,13 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             top: newPos.top + "px"
         });
 
-        if(this._fastBrowseOverlay) {
+        if (this._fastBrowseOverlay) {
             this._fastBrowseOverlay.component.setStyle({
                 left: newPos.left + "px",
                 top: newPos.top + "px"
             });
         }
-        
+
         this.fireEvent("onPositionChangeEvent", {
             position: newPos,
             dimensions: this.component.getDimensions()
