@@ -14,11 +14,11 @@
 <body>
 <h1>jPlex Calendar Demo</h1>
 
-	<h2>Faded calendar from text input (fr)</h2>
+	<h2>Faded calendar from text input</h2>
 	<h3>XHTML Code</h3>
 
     <textarea name="code" class="xml">
-<input type="text" id="demo-fr" /></textarea>
+<input type="text" id="demo-text" /></textarea>
 
     <h3>JS Code</h3>
 
@@ -26,18 +26,18 @@
 var date = new Date();
 date.setDate(date.getDate()+10);
 
-new Calendar("myCalendar-fr", {
+new Calendar("myCalendar-text", {
     minDate: new Date(),
     maxDate: date,
-    source: "demo-fr"
+    source: "demo-text"
 });</textarea>
 
     <h3>Result</h3>
-    <input type="text" id="demo-fr"/><br /><br />
+    <input type="text" id="demo-text"/><br /><br />
 
     <select><option>Test IE6- windowed elements bug</option></select><br /><br />
 
-    <h2>Calendafor without fading (en)</h2>
+    <h2>Calendar without fading</h2>
 
     <h3>XHTML Code</h3>
 
@@ -186,6 +186,32 @@ new Calendar("mySimpleCalendar");</textarea>
     </table>
 
 
+<h2>Calendar with multiple selection allowed</h2>
+
+    <h3>XHTML Code</h3>
+
+	<textarea name="code" class="xml">
+<pre id="demo-multi-value"></pre>
+<input type="button" id="demo-multi" /></textarea>
+
+	<h3>JS Code</h3>
+
+	<textarea name="code" class="js">
+new Calendar("myCalendar-multi", {
+    source: "demo-multi",
+    dateFormat: "Y/m/d"
+});</textarea>
+
+	<h3>Result</h3>
+
+    <table border="0">
+        <tr>
+            <td style="width:300px;"><input type="button" id="demo-multi" style="margin-bottom:20em;" /></div></td>
+            <td style="vertical-align:top;">Selected dates : <pre id="demo-multi-value"></pre></td>
+        </tr>
+    </table>
+
+
 <script type="text/javascript">
     <!--
     jPlex.include('jplex.components.Calendar');
@@ -193,10 +219,10 @@ new Calendar("mySimpleCalendar");</textarea>
 	var date = new Date();
 	date.setDate(date.getDate()+10);
 
-    new Calendar("myCalendar-fr", {
+    new Calendar("myCalendar-text", {
         minDate: new Date(),
         maxDate: date,
-        source:"demo-fr"
+        source:"demo-text"
     });
 
 	new Calendar("myCalendar-en", {
@@ -224,6 +250,29 @@ new Calendar("mySimpleCalendar");</textarea>
     });
 
 	new Calendar("mySimpleCalendar");
+
+
+    var multiSelect = function(o) {
+        $("demo-multi-value").update("");
+        o.selected.each(function(d) {
+            $("demo-multi-value").innerHTML += d.format("Y/m/d")+"\n";
+        });
+    };
+
+    var c = new Calendar("myCalendar-multi", {
+        source: "demo-multi",
+        dateFormat: "Y/m/d",
+        multiselect: true,
+        events: {
+            onSelectEvent: multiSelect
+        }
+    });
+
+
+
+
+
+
 
     -->
 </script>

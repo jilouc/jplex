@@ -16,6 +16,8 @@ jPlex.provide("jplex.components.calendar.CalendarItem", {
         this._date = new Date();
         this._date.setTime(oDate.getTime());
         this._index = nIndex;
+        this._selected = false;
+
         this._cell = new Element("td", {
             id: this._calendar.ID + "_DAY_" + nIndex
         }).update(oDate.getDate().toString());
@@ -44,21 +46,33 @@ jPlex.provide("jplex.components.calendar.CalendarItem", {
     select: function(e, click) {
         if (!this.check()) return;
 
-        if (this._calendar.getSelectedItem()._unselect) {
-            this._calendar.getSelectedItem()._unselect();
-        }
-        if (!this._cell.hasClassName("selected")) {
-            this._cell.addClassName("selected");
+        if (this._calendar.cfg("multiselect") && this._selected) {
+            this._unselect();
+        } else {
+
+            if (!this._calendar.cfg("multiselect") && this._calendar.getSelectedItem()._unselect) {
+                this._calendar.getSelectedItem()._unselect();
+            }
+            if (!this._cell.hasClassName("selected")) {
+                this._cell.addClassName("selected");
+            }
+
+            this._selected = true;
+
+            this.focus();
+            if (this._calendar.cfg("multiselect")) {
+                this._calendar.addSelectedItem(this);
+            } else {
+                this._calendar.setSelectedItem(this);
+                if (click && this._calendar.getTextField()) {
+                    this._calendar.hide();
+                }
+            }
         }
 
-        this.focus();
-        this._calendar.setSelectedItem(this);
-
-        if (click && this._calendar.getTextField()) {
-            this._calendar.hide();
-        }
         this._calendar.fireEvent("onSelectEvent", {
-            date: this._date
+            date: this._date,
+            selected: this._calendar.getSelectedItems().pluck("_date")
         });
     },
 
@@ -86,8 +100,10 @@ jPlex.provide("jplex.components.calendar.CalendarItem", {
         var minDate = this._calendar.cfg("minDate"),
                 maxDate = this._calendar.cfg("maxDate");
 
-        return (!minDate || this._date.compareTo(minDate) >= -86400000) &&
-               (!maxDate || this._date.compareTo(maxDate) <= 0);
+        return this._date.compareTo(this._calendar.__fdom) >= 0
+                && this._date.compareTo(this._calendar.__ldom) <= 0
+                && (!minDate || this._date.compareTo(minDate) >= -86400000)
+                && (!maxDate || this._date.compareTo(maxDate) <= 0);
     },
 
     /**
@@ -121,7 +137,10 @@ jPlex.provide("jplex.components.calendar.CalendarItem", {
      * @private
      */
     _unselect: function() {
+
+        this._selected = false;
         this._cell.removeClassName("selected");
+        this._calendar.removeSelectedItem(this);
     },
 
     /**
