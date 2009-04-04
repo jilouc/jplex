@@ -128,7 +128,13 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
              * @config multiselect
              * @default false
              */
-            multiselect: false
+            multiselect: false,
+            /**
+             * Give the starting day of the week (Calendar.START_MONDAY or Calendar.START_SUNDAY)
+             * @config startWeekOn
+             * @default jplex.components.Calendar.START_SUNDAY
+             */
+            startWeekOn: "sunday" // = jplex.components.Calendar.START_SUNDAY
 
         },
         events: {
@@ -201,7 +207,6 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             this._textField = this._source;
         }
 
-        this._cache = new Hash();
         this._initialRender();
         this.render();
 
@@ -323,28 +328,35 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         var tb = this._getTbody();
         tb.removeChildren();
 
+        var startWeekOnOffset = this.cfg("startWeekOn") == jplex.components.Calendar.START_MONDAY ? 1 : 0;
 
         var oFirstDay = new Date(
                 oFirstDayOfMonth.getFullYear(),
                 oFirstDayOfMonth.getMonth(),
-                oFirstDayOfMonth.getDate() - oFirstDayOfMonth.getDay(),
+                oFirstDayOfMonth.getDate() - oFirstDayOfMonth.getDay() + startWeekOnOffset,
                 0
-                ),
-                oLastDay = new Date(
-                        oLastDayOfMonth.getFullYear(),
-                        oLastDayOfMonth.getMonth(),
-                        oLastDayOfMonth.getDate() + 6 - oLastDayOfMonth.getDay(),
-                        0
-                        );
+                );
+        if (oFirstDay.compareTo(this.__fdom) > 0) {
+            oFirstDay.setDate(oFirstDay.getDate() - 7);
+        }
+        var oLastDay = new Date(
+                oLastDayOfMonth.getFullYear(),
+                oLastDayOfMonth.getMonth(),
+                oLastDayOfMonth.getDate() + 6 - oLastDayOfMonth.getDay() + startWeekOnOffset,
+                0
+                );
+        if (oLastDay.compareTo(this.__ldom) < 0) {
+            oLastDay.setDate(oLastDay.getDate() + 7);
+        }
         var oDay = oFirstDay, eTR, i = 0;
         while (oLastDay.compareTo(oDay) >= 0) {
-            if (oDay.getDay() == 0) {
+            if (oDay.getDay() == startWeekOnOffset) {
                 eTR = new Element("tr");
                 this._getTbody().appendChild(eTR);
             }
             var oDayItem = new jplex.components.calendar.CalendarItem(this, oDay, i),
                     eDay = oDayItem.getCell();
-              
+
             if (this._selectedItems.get(oDay.format("Ymd"))) {
                 oDayItem.select();
                 oDayItem.focus();
@@ -417,10 +429,14 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             date.setYear(year);
         }
         this._currentMonth = date.firstDayOfMonth();
-        
+
         this.render();
 
-        var newIndex = this.__fdom.getDay() + Math.min(this.__ldom.getDate() - 1, n - fd);
+        var newIndex = this.__fdom.getDay() - (this.cfg("startWeekOn") == jplex.components.Calendar.START_MONDAY ? 1 : 0);
+        if (newIndex < 0) {
+            newIndex = 7 + newIndex;
+        }
+        //+ Math.min(this.__ldom.getDate() - 1, n - fd);
 
         this.items[newIndex].focus();
         if (this._source)
@@ -430,34 +446,54 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
     /**
      * Navigate to the left in the current month, from the currently focused day.
+     * If the focused day is the first day of the month, got to the previous month
      */
     left: function() {
         var n = Math.max(0, this._focusedItem.getIndex() - 1);
-        this.items[n].focus();
+        if (n == 0 || !this.items[n].focus()) {
+            if (this._focusedItem.getDate().compareTo(this._currentMonth.firstDayOfMonth()) == 0) {
+                this.previous();
+            }
+        }
     },
 
     /**
      * Navigate to the right in the current month, from the currently focused day.
+     * If the focused day is the last day of the month, go to the next month
      */
     right: function() {
-        var n = Math.min(this._focusedItem.getIndex() + 1, this.items.length - 1);
-        this.items[n].focus();
+        var n = Math.min(this._focusedItem.getIndex() + 1, this.items.length);
+        if (n == this.items.length || !this.items[n].focus()) {
+            if (this._focusedItem.getDate().compareTo(this._currentMonth.lastDayOfMonth()) == 0) {
+                this.next();
+            }
+        }
     },
 
     /**
      * Navigate up in the current month, from the currently focused day.
      */
     up: function() {
-        var n = Math.max(0, this._focusedItem.getIndex() - 7);
-        this.items[n].focus();
+        var currentIndex = this._focusedItem.getIndex();
+        var n = Math.max(0, currentIndex - 7);
+        if (!this.items[n].focus()) {
+            if (currentIndex > 6) {
+                this.items[currentIndex - this._focusedItem.getDate().getDate() + 1].focus();
+            }
+        }
     },
 
     /**
      * Navigate down in the current month, from the currently focused day.
      */
     down: function() {
-        var n = Math.min(this._focusedItem.getIndex() + 7, this.items.length - 1);
-        this.items[n].focus();
+        var currentIndex = this._focusedItem.getIndex();
+        var n = Math.min(currentIndex + 7, this.items.length - 1);
+        if (!this.items[n].focus()) {
+            if (currentIndex < this.items.length - 7) {
+                this.items[currentIndex + this.__ldom.getDate() - this._focusedItem.getDate().getDate()].focus();
+            }
+        }
     },
 
     /**
@@ -484,7 +520,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
     setSelectedItem: function(oItem) {
         this._selectedItems = $H();
         this._selectedItems.set(oItem.getDate().format("Ymd"), oItem);
-        
+
         if (this._textField && this._textField.getAttribute("type") != 'button') {
             this._textField.value = oItem.getDate().format(this.cfg("dateFormat"));
         }
@@ -593,7 +629,15 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         ePrevious.observe('click', this.previous.bindAsEventListener(this));
         eClose.observe('click', this.hide.bindAsEventListener(this));
 
-        $A(this.locale('Date', 'DAYS_SHORT')).each(function(s) {
+        var days = $A(this.locale('Date', 'DAYS_SHORT')).clone();
+
+        if (this.cfg("startWeekOn") == jplex.components.Calendar.START_MONDAY) {
+            var tmp = days.first();
+            days.shift();
+            days[days.length] = tmp;
+        }
+
+        days.each(function(s) {
             eTR.appendChild(new Element('th').update(s));
         });
 
@@ -768,5 +812,12 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             dimensions: this.component.getDimensions()
         });
     }
+});
+
+//---------- Static properties ----------
+
+jPlex.extend("jplex.components.Calendar", {
+    START_SUNDAY: "sunday",
+    START_MONDAY: "monday"
 });
 
