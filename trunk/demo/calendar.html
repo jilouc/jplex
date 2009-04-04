@@ -37,29 +37,30 @@ new Calendar("myCalendar-text", {
 
     <select><option>Test IE6- windowed elements bug</option></select><br /><br />
 
-    <h2>Calendar without fading</h2>
+    <h2>Calendar without fading (french)</h2>
 
     <h3>XHTML Code</h3>
 
 	<textarea name="code" class="xml">
-<input type="text" id="demo-en-value"/>
-<input type="button" id="demo-en" /></textarea>
+<input type="text" id="demo-fr-value"/>
+<input type="button" id="demo-fr" /></textarea>
 
 	<h3>JS Code</h3>
 
 	<textarea name="code" class="js">
-new Calendar("myCalendar-en", {
-    lang: "en",
+new Calendar("myCalendar-fr", {
+    lang: "fr",
     fade: false,
-    textField: "demo-en-value",
-    source: "demo-en",
-    dateFormat: "Y/m/d"
+    textField: "demo-fr-value",
+    source: "demo-fr",
+    dateFormat: "Y/m/d",
+    startWeekOn: Calendar.START_MONDAY
 });</textarea>
 
 	<h3>Result</h3>
 
-    <input type="text" id="demo-en-value"/>
-    <input type="button" id="demo-en" />
+    <input type="text" id="demo-fr-value"/>
+    <input type="button" id="demo-fr" />
 
     <h2>Calendar on button</h2>
 
@@ -225,12 +226,13 @@ new Calendar("myCalendar-multi", {
         source:"demo-text"
     });
 
-	new Calendar("myCalendar-en", {
-	    lang: "en",
+	new Calendar("myCalendar-fr", {
+	    lang: "fr",
 	    fade: false,
-	    textField: "demo-en-value",
-	    source: "demo-en",
-	    dateFormat: "Y/m/d"
+	    textField: "demo-fr-value",
+	    source: "demo-fr",
+	    dateFormat: "Y/m/d",
+	    startWeekOn: Calendar.START_MONDAY
     });
 
     var customSelect = function(o) {

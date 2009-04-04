@@ -80,7 +80,7 @@ jPlex.provide("jplex.components.calendar.CalendarItem", {
      * Set the focus on the item
      */
     focus: function() {
-        if (!this.check()) return;
+        if (!this.check()) return false;
 
         if (this._calendar.getFocusedItem()._blur) {
             this._calendar.getFocusedItem()._blur();
@@ -89,6 +89,8 @@ jPlex.provide("jplex.components.calendar.CalendarItem", {
             this._cell.addClassName("focused");
         }
         this._calendar.setFocusedItem(this);
+
+        return true;
     },
 
     /**
