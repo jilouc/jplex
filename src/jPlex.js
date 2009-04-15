@@ -17,7 +17,7 @@
  * @class jPlex
  */
 var jPlex = {
-    version: '1.0',
+    version: '1.1',
 
     /**
      * Array of the javascript to include in order to resolve the different dependancies
@@ -26,7 +26,7 @@ var jPlex = {
      * @type Array
      */
     _dependancies: [
-        'prototype-1.6.0.3',
+        'prototype-1.6.1_rc2',
         'scriptaculous'
     ],
     _dependanciesFF2: [

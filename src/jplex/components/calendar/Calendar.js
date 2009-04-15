@@ -1,5 +1,4 @@
 jPlex.include("jplex.components.Tooltip", false);
-jPlex.include("jplex.components.calendar.CalendarItem", false);
 jPlex.include("jplex.components.Overlay", false);
 
 /**
@@ -192,11 +191,15 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         var date = this.cfg('date');
         this._selectedItems = $H();
         this._focusedItem = {
-            getDate: function() {
-                return date;
+            retrieve: function(key) {
+                if(key == "date") {
+                    return date;
+                }
             }
         };
+
         this._selectedItems.set(date.format("Ymd"), this._focusedItem);
+
 
         this._currentMonth = date;
 
@@ -245,11 +248,11 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                         && !this._fastBrowseTooltip.component.isWithin(x, y)) {
                     this.hide();
                 }
-            }.bindAsEventListener(this));
+            }.bind(this));
 
             var selectHandler = function() {
                 if (this.component.visible())
-                    this._focusedItem.select(null, true);
+                    this.select(this._focusedItem.retrieve("index",0), true);
                 else
                     this.show();
             }.bind(this);
@@ -305,11 +308,105 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
     /**
      * Explicitly selects the index'th cell in the calendar
-     * @param {Integer} index Index of the cell to select (0 to oItems.length)
-     * @see Calendar.CalendarItem#select
+     * @param {int} index Index of the cell to select (0 to oItems.length)
+     * @param {bool} click `true` if the selection results from a click on the cell  
      */
-    select: function(index) {
-        this.items[index].select();
+    select: function(index, click) {
+        if (!this.check(index)) return;
+
+        var day = this.items[index];
+
+        if (this.cfg("multiselect") && day.retrieve("selected", false)) {
+            this.unselect(index);
+        } else {
+
+            if (!this.cfg("multiselect")) {
+                this.unselect(this.getSelectedItem().retrieve("index") || index);
+            }
+            if (!day.hasClassName("selected")) {
+                day.addClassName("selected");
+            }
+
+            day.store("selected", true);
+
+            this.focus(day.retrieve("index", 0));
+
+            if (this.cfg("multiselect")) {
+                this.addSelectedItem(day);
+            } else {
+                this.setSelectedItem(day);
+                if (click && this.getTextField()) {
+                    this.hide();
+                }
+            }
+        }
+
+        this.fireEvent("onSelectEvent", {
+            date: day.retrieve("date"),
+            selected: this.getSelectedItems().inject($A([]), function(acc, n) {
+                acc.push(n.retrieve("date"));
+                return acc;
+            })
+        });
+    },
+
+    /**
+     * Unselects the item at the given index in the calendar items array
+     * @param {int} index index of the item
+     */
+    unselect: function(index) {
+        var day = this.items[index];
+        day.store("selected", false);
+        day.removeClassName("selected");
+        this.removeSelectedItem(day);
+    },
+
+    /**
+     * Set the focus on the item at the given index
+     * @param {int} index index of the item
+     * @return {bool} false if it's not possible to focus the item, else true
+     */
+    focus: function(index) {
+        if (!this.check(index)) {
+            return false;
+        }
+        var day = this.items[index];
+
+        if (day.getStorage) {
+            this.blur(this.getFocusedItem().retrieve("index") || index);
+        }
+        if (!day.hasClassName("focused")) {
+            day.addClassName("focused");
+        }
+        this.setFocusedItem(day);
+
+        return true;
+    },
+
+    /**
+     * Remove the focus on the item at the given index
+     * @param {int} index index of the item
+     */
+    blur: function(index) {
+        this.items[index].removeClassName("focused");
+    },
+
+    /**
+     * Check whether the date of the item match a valid date or not
+     * (regarding to the valid range set in the calendar configuration)
+     * @return {bool} <code>true</code> if the date is valid
+     */
+    check: function(index) {
+        var day = this.items[index];
+        
+        var minDate = this.cfg("minDate");
+        var maxDate = this.cfg("maxDate");
+        var date = day.retrieve("date");
+
+        return date.compareTo(this.__fdom) >= 0
+                && date.compareTo(this.__ldom) <= 0
+                && (!minDate || date.compareTo(minDate) >= -86400000)
+                && (!maxDate || date.compareTo(maxDate) <= 0);
     },
 
     /**
@@ -354,24 +451,52 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                 eTR = new Element("tr");
                 this._getTbody().appendChild(eTR);
             }
-            var oDayItem = new jplex.components.calendar.CalendarItem(this, oDay, i),
-                    eDay = oDayItem.getCell();
 
-            if (this._selectedItems.get(oDay.format("Ymd"))) {
-                oDayItem.select();
-                oDayItem.focus();
+
+            var date = new Date();
+            date.setTime(oDay.getTime());
+
+            var day = new Element("td", {
+                id: this.ID + "_DAY_" + i
+            }).update(date.format('j'));
+
+            this.items[i] = day;
+
+            day.store("parent", this);
+            day.store("date", date);
+            day.store("index", i);
+            day.store("selected", false);
+
+            if (Prototype.Browser.IE6) {
+                day.observe("mouseover", function() {
+                    day.addClassName("ie6-hover");
+                });
+                day.observe("mouseout", function() {
+                    day.removeClassName("ie6-hover");
+                });
             }
 
-            this.items[i++] = oDayItem;
+            if (this.check(i)) {
+                day.observe("click", this.select.bind(this, i, true));
+            } else {
+                day.addClassName("disabled");
+            }
 
-            eTR.appendChild(eDay);
+            if (this._selectedItems.get(oDay.format("Ymd"))) {
+                this.select(i);
+                this.focus(i);
+            }
+
+            eTR.appendChild(day);
 
             if (oFirstDayOfMonth.compareTo(oDay) > 0
                     || oLastDayOfMonth.compareTo(oDay) < 0) {
-                eDay.addClassName("outofmonth");
+                day.addClassName("outofmonth");
             }
 
             oDay.setNextDay();
+
+            i++;
         }
 
 
@@ -417,7 +542,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @param {Integer} year New year (optional)
      */
     goTo: function(month, year) {
-        var n = this._focusedItem.getIndex();
+        var n = this._focusedItem.retrieve("index");
         var fd = this.__fdom.getDay();
         var date = new Date();
         date.setDate(1);
@@ -438,7 +563,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         }
         //+ Math.min(this.__ldom.getDate() - 1, n - fd);
 
-        this.items[newIndex].focus();
+        this.focus(newIndex);
         if (this._source)
             this._source.activate();
 
@@ -449,9 +574,9 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * If the focused day is the first day of the month, got to the previous month
      */
     left: function() {
-        var n = Math.max(0, this._focusedItem.getIndex() - 1);
-        if (n == 0 || !this.items[n].focus()) {
-            if (this._focusedItem.getDate().compareTo(this._currentMonth.firstDayOfMonth()) == 0) {
+        var n = Math.max(0, this._focusedItem.retrieve("index") - 1);
+        if (n == 0 || !this.focus(n)) {
+            if (this._focusedItem.retrieve("date").compareTo(this._currentMonth.firstDayOfMonth()) == 0) {
                 this.previous();
             }
         }
@@ -462,9 +587,9 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * If the focused day is the last day of the month, go to the next month
      */
     right: function() {
-        var n = Math.min(this._focusedItem.getIndex() + 1, this.items.length);
-        if (n == this.items.length || !this.items[n].focus()) {
-            if (this._focusedItem.getDate().compareTo(this._currentMonth.lastDayOfMonth()) == 0) {
+        var n = Math.min(this._focusedItem.retrieve("index") + 1, this.items.length);
+        if (n == this.items.length || !this.focus(n)) {
+            if (this._focusedItem.retrieve("date").compareTo(this._currentMonth.lastDayOfMonth()) == 0) {
                 this.next();
             }
         }
@@ -474,11 +599,11 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * Navigate up in the current month, from the currently focused day.
      */
     up: function() {
-        var currentIndex = this._focusedItem.getIndex();
+        var currentIndex = this._focusedItem.retrieve("index");
         var n = Math.max(0, currentIndex - 7);
-        if (!this.items[n].focus()) {
+        if (!this.focus(n)) {
             if (currentIndex > 6) {
-                this.items[currentIndex - this._focusedItem.getDate().getDate() + 1].focus();
+                this.focus(currentIndex - this._focusedItem.retrieve("date").getDate() + 1);
             }
         }
     },
@@ -487,11 +612,11 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * Navigate down in the current month, from the currently focused day.
      */
     down: function() {
-        var currentIndex = this._focusedItem.getIndex();
+        var currentIndex = this._focusedItem.retrieve("index");
         var n = Math.min(currentIndex + 7, this.items.length - 1);
-        if (!this.items[n].focus()) {
+        if (!this.focus(n)) {
             if (currentIndex < this.items.length - 7) {
-                this.items[currentIndex + this.__ldom.getDate() - this._focusedItem.getDate().getDate()].focus();
+                this.focus(currentIndex + this.__ldom.getDate() - this._focusedItem.retrieve("date").getDate());
             }
         }
     },
@@ -501,7 +626,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @param {calendar.CalendarItem} oItem the date to be added
      */
     addSelectedItem: function(oItem) {
-        this._selectedItems.set(oItem.getDate().format("Ymd"), oItem);
+        this._selectedItems.set(oItem.retrieve("date").format("Ymd"), oItem);
     },
 
     /**
@@ -509,7 +634,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @param {calendar.CalendarItem} oItem the date to be removed
      */
     removeSelectedItem: function(oItem) {
-        this._selectedItems.unset(oItem.getDate().format("Ymd"));
+        this._selectedItems.unset(oItem.retrieve("date").format("Ymd"));
     },
 
 
@@ -519,10 +644,10 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      */
     setSelectedItem: function(oItem) {
         this._selectedItems = $H();
-        this._selectedItems.set(oItem.getDate().format("Ymd"), oItem);
+        this._selectedItems.set(oItem.retrieve("date").format("Ymd"), oItem);
 
         if (this._textField && this._textField.getAttribute("type") != 'button') {
-            this._textField.value = oItem.getDate().format(this.cfg("dateFormat"));
+            this._textField.value = oItem.retrieve("date").format(this.cfg("dateFormat"));
         }
     },
 
@@ -572,7 +697,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      */
     getFormattedValue: function(format) {
         var pattern = format ? format : this.cfg("dateFormat");
-        return this.getSelectedItem().getDate().format(pattern);
+        return this.getSelectedItem().retrieve("date").format(pattern);
     },
 
     /**
