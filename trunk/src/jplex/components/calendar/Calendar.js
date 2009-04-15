@@ -189,15 +189,16 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         $super(eElement, oConfig);
 
         var date = this.cfg('date');
+        this.first = date.firstDayOfMonth();
         this._selectedItems = $H();
 
         // Simulate initial state with fake item
         this._focusedItem = {
             retrieve: function(key) {
-                if(key == "date") {
+                if (key == "date") {
                     return date;
-                } else if(key == "index") {
-                    return date.getDate() - (this.cfg("startWeekOn") == "sunday" ? 0 : 1) + date.firstDayOfMonth().getDay()
+                } else if (key == "index") {
+                    return date.getDate() - (this.cfg("startWeekOn") == "sunday" ? 0 : 1) + this.first.getDay();
                 }
             }.bind(this)
         };
@@ -205,29 +206,30 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         this._selectedItems.set(date.format("Ymd"), this._focusedItem);
 
 
-        this._currentMonth = date;
-
         this._source = $(this.cfg("source"));
         this._textField = $(this.cfg("textField"));
 
-        if (!this._textField && this._source) {
+        if (!this._textField && this._source && this._source.readAttribute("type").toLowerCase() == "text") {
             this._textField = this._source;
         }
 
         this._initialRender();
         this.render();
 
-        if (this._textField && this._source) {
+        if (this._source) {
             this.component.setStyle({
                 position: 'absolute',
                 zIndex: this.cfg('zBase')
             });
 
             // Who knows why IE uses an uppercase 'o'...
-            if (Prototype.Browser.IE) {
-                this._textField.setAttribute("readOnly", true);
-            } else {
-                this._textField.setAttribute("readonly", true);
+
+            if (this._textField !== null) {
+                if (Prototype.Browser.IE) {
+                    this._textField.setAttribute("readOnly", true);
+                } else {
+                    this._textField.setAttribute("readonly", true);
+                }
             }
 
             var focusHandler = (function() {
@@ -237,49 +239,40 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                 }
                 this.show();
                 this._source.activate();
-            }).bindAsEventListener(this);
+            }).bind(this);
 
             this._source.observe("focus", focusHandler);
             // Webkit-based browser don't fire focus event on click on a button (in case of the calendar button)
             this._source.observe("click", focusHandler);
 
-            document.observe("click", function(e) {
-                e = Event.extend(window.event || e);
-                var x = e.pointerX(),
-                        y = e.pointerY();
-                if (!this._source.isWithin(x, y)
-                        && !this.component.isWithin(x, y)
-                        && !this._fastBrowseTooltip.component.isWithin(x, y)) {
+
+            this.__documentWideHideObserver = function(e) {
+                var x = e.pointerX();
+                var y = e.pointerY();
+                if (!this.component.contains(x, y)
+                        && !this._source.contains(x, y)
+                        && !this._fastBrowseTooltip.component.contains(x, y)) {
                     this.hide();
                 }
-            }.bind(this));
-
-            var selectHandler = function() {
-                if (this.component.visible())
-                    this.select(this._focusedItem.retrieve("index",0), true);
-                else
-                    this.show();
             }.bind(this);
 
+            var selectHandler = function() {
+                if (this.component.visible()) {
+                    this.select(this._focusedItem.retrieve("index"), true);
+                } else {
+                    this.show();
+                }
+            }.bind(this);
+
+            var hideHandler = this.hide.bind(this);
+
+            this._source.bindKey(Event.Key.ESCAPE, hideHandler, {preventDefault:true});
             this._source.bindKey(Event.Key.ENTER, selectHandler, {preventDefault:true});
             this._source.bindKey(Event.Key.SPACE, selectHandler, {preventDefault:true});
-
-            this._source.bindKey(Event.Key.TAB, (function() {
-                this.hide();
-            }).bind(this));
-            this._source.bindKey(Event.Key.TAB, (function() {
-                this.hide();
-            }).bind(this), {shift:true});
-
-            this._source.bindKey(Event.Key.ESCAPE, function() {
-                if (this.component.visible()) {
-                    this.hide();
-                }
-            }.bind(this), {preventDefault:true});
-
+            this._source.bindKey(Event.Key.TAB, hideHandler);
+            this._source.bindKey(Event.Key.TAB, hideHandler, {shift:true});
             this._source.bindKey(Event.Key.PAGE_UP, this.previous.bind(this), {preventDefault:true});
             this._source.bindKey(Event.Key.PAGE_DOWN, this.next.bind(this), {preventDefault:true});
-
             this._source.bindKey(Event.Key.LEFT_ARROW, this.left.bind(this), {preventDefault:true});
             this._source.bindKey(Event.Key.RIGHT_ARROW, this.right.bind(this), {preventDefault:true});
             this._source.bindKey(Event.Key.UP_ARROW, this.up.bind(this), {preventDefault:true});
@@ -293,27 +286,31 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      */
     show: function() {
         this._fixPosition();
-        if (this.cfg("fade") == 0)
+        document.observe("click", this.__documentWideHideObserver);
+        if (this.cfg("fade") == 0) {
             this.component.show();
-        else
+        } else {
             new Effect.Appear(this.component, {duration: this.cfg("fade")});
+        }
     },
 
     /**
      * Makes the calendar disappear, with a fade out effect if configured so
      */
     hide: function() {
-        this._fixPosition();
-        if (this.cfg("fade") == 0)
+        document.stopObserving("click", this.__documentWideHideObserver);
+
+        if (this.cfg("fade") == 0) {
             this.component.hide();
-        else
+        } else {
             new Effect.Fade(this.component, {duration: this.cfg("fade")});
+        }
     },
 
     /**
      * Explicitly selects the index'th cell in the calendar
      * @param {int} index Index of the cell to select (0 to oItems.length)
-     * @param {bool} click `true` if the selection results from a click on the cell  
+     * @param {bool} click `true` if the selection results from a click on the cell
      */
     select: function(index, click) {
         if (!this.check(index)) return;
@@ -327,11 +324,8 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             if (!this.cfg("multiselect")) {
                 this.unselect(this.getSelectedItem().retrieve("index"));
             }
-            if (!day.hasClassName("selected")) {
-                day.addClassName("selected");
-            }
 
-            day.store("selected", true);
+            day.addClassName("selected").store("selected", true);
 
             this.focus(day.retrieve("index", 0));
 
@@ -339,7 +333,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                 this.addSelectedItem(day);
             } else {
                 this.setSelectedItem(day);
-                if (click && this.getTextField()) {
+                if (click && this.getTextField() !== null) {
                     this.hide();
                 }
             }
@@ -347,7 +341,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
         this.fireEvent("onSelectEvent", {
             date: day.retrieve("date"),
-            selected: this.getSelectedItems().inject($A([]), function(acc, n) {
+            selected: this.getSelectedItems().inject($A(), function(acc, n) {
                 acc.push(n.retrieve("date"));
                 return acc;
             })
@@ -360,10 +354,10 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      */
     unselect: function(index) {
         var day = this.items[index];
-        if(!day) return;
-        day.store("selected", false);
-        day.removeClassName("selected");
-        this.removeSelectedItem(day);
+        if (!Object.isUndefined(day)) {
+            day.store("selected", false).removeClassName("selected");
+            this.removeSelectedItem(day);
+        }
     },
 
     /**
@@ -380,9 +374,8 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         if (day.getStorage) {
             this.blur(this.getFocusedItem().retrieve("index"));
         }
-        if (!day.hasClassName("focused")) {
-            day.addClassName("focused");
-        }
+        day.addClassName("focused");
+
         this.setFocusedItem(day);
 
         return true;
@@ -393,9 +386,11 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @param {int} index index of the item
      */
     blur: function(index) {
-        var day = this.items[index]
-        if(!day) return;
-        day.removeClassName("focused");
+        var day = this.items[index];
+        if (!Object.isUndefined(day)) {
+            day.removeClassName("focused");
+        }
+
     },
 
     /**
@@ -405,74 +400,67 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      */
     check: function(index) {
         var day = this.items[index];
-        
+
         var minDate = this.cfg("minDate");
         var maxDate = this.cfg("maxDate");
         var date = day.retrieve("date");
 
-        return date.compareTo(this.__fdom) >= 0
-                && date.compareTo(this.__ldom) <= 0
+        return date.compareTo(this.first) >= 0
+                && date.compareTo(this.last) <= 0
                 && (!minDate || date.compareTo(minDate) >= -86400000)
                 && (!maxDate || date.compareTo(maxDate) <= 0);
     },
 
     /**
      * Render the calendar for the current month
-     * @see Calendar.CalendarItem
      */
     render: function() {
 
-        var oFirstDayOfMonth = this._currentMonth.firstDayOfMonth(),
-                oLastDayOfMonth = this._currentMonth.lastDayOfMonth();
-        this.__fdom = oFirstDayOfMonth;
-        this.__ldom = oLastDayOfMonth;
-
+        this.last = this.first.lastDayOfMonth();
 
         this.items = $A([]);
-        var tb = this._getTbody();
-        tb.removeChildren();
+        this.body.removeChildren();
 
         var startWeekOnOffset = this.cfg("startWeekOn") == jplex.components.Calendar.START_MONDAY ? 1 : 0;
 
-        var oFirstDay = new Date(
-                oFirstDayOfMonth.getFullYear(),
-                oFirstDayOfMonth.getMonth(),
-                oFirstDayOfMonth.getDate() - oFirstDayOfMonth.getDay() + startWeekOnOffset,
+        var date = new Date(
+                this.first.getFullYear(),
+                this.first.getMonth(),
+                this.first.getDate() - this.first.getDay() + startWeekOnOffset,
                 0
                 );
-        if (oFirstDay.compareTo(this.__fdom) > 0) {
-            oFirstDay.setDate(oFirstDay.getDate() - 7);
+        if (date.compareTo(this.first) > 0) {
+            date.setDate(date.getDate() - 7);
         }
-        var oLastDay = new Date(
-                oLastDayOfMonth.getFullYear(),
-                oLastDayOfMonth.getMonth(),
-                oLastDayOfMonth.getDate() - oLastDayOfMonth.getDay() - (1-startWeekOnOffset),
+        var lastDate = new Date(
+                this.last.getFullYear(),
+                this.last.getMonth(),
+                this.last.getDate() - this.last.getDay() - (1 - startWeekOnOffset),
                 0
                 );
-        if (oLastDay.compareTo(this.__ldom) < 0) {
-            oLastDay.setDate(oLastDay.getDate() + 7);
+        if (lastDate.compareTo(this.last) < 0) {
+            lastDate.setDate(lastDate.getDate() + 7);
         }
-        var oDay = oFirstDay, eTR, i = 0;
-        while (oLastDay.compareTo(oDay) >= 0) {
-            if (oDay.getDay() == startWeekOnOffset) {
-                eTR = new Element("tr");
-                this._getTbody().appendChild(eTR);
+        var row, i = 0;
+        while (lastDate.compareTo(date) >= 0) {
+
+            var copyDate = new Date();
+            copyDate.setTime(date.getTime());
+
+            if (copyDate.getDay() == startWeekOnOffset) {
+                row = new Element("tr");
+                this.body.appendChild(row);
             }
-
-
-            var date = new Date();
-            date.setTime(oDay.getTime());
 
             var day = new Element("td", {
                 id: this.ID + "_DAY_" + i
-            }).update(date.format('j'));
+            }).update(copyDate.format('j'));
 
             this.items[i] = day;
 
-            day.store("parent", this);
-            day.store("date", date);
-            day.store("index", i);
-            day.store("selected", false);
+            day.store("date", copyDate)
+                    .store("index", i)
+                    .store("selected", false);
 
             if (Prototype.Browser.IE6) {
                 day.observe("mouseover", function() {
@@ -489,26 +477,25 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                 day.addClassName("disabled");
             }
 
-            if (this._selectedItems.get(oDay.format("Ymd"))) {
+            if (this._selectedItems.get(copyDate.format("Ymd"))) {
                 this.select(i);
                 this.focus(i);
             }
 
-            eTR.appendChild(day);
-
-            if (oFirstDayOfMonth.compareTo(oDay) > 0
-                    || oLastDayOfMonth.compareTo(oDay) < 0) {
+            if (this.first.compareTo(copyDate) > 0
+                    || this.last.compareTo(copyDate) < 0) {
                 day.addClassName("outofmonth");
             }
 
-            oDay.setNextDay();
+            row.appendChild(day);
+            date.setNextDay();
 
             i++;
         }
 
 
-        this._setTitle(this._currentMonth.getMonth(),
-                this._currentMonth.getFullYear());
+        this._setTitle(this.first.getMonth(),
+                this.first.getFullYear());
 
         if (this._fastBrowseOverlay && this._fastBrowseOverlay.component.visible()) {
             this._fastBrowseOverlay.component.clonePosition(this.component);
@@ -521,8 +508,8 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * Go to the next month
      */
     next: function() {
-        var month = this._currentMonth.getMonth() + 1;
-        var year = this._currentMonth.getFullYear();
+        var month = this.first.getMonth() + 1;
+        var year = this.first.getFullYear();
         if (month > 11) {
             month = 0;
             year++;
@@ -534,8 +521,8 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * Go to the previous month
      */
     previous: function() {
-        var month = this._currentMonth.getMonth() - 1;
-        var year = this._currentMonth.getFullYear();
+        var month = this.first.getMonth() - 1;
+        var year = this.first.getFullYear();
         if (month < 0) {
             month = 11;
             year--;
@@ -545,12 +532,12 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
     /**
      * Change the page of the calendar to the specified month and year
-     * @param {Integer} month New month (optional)
-     * @param {Integer} year New year (optional)
+     * @param {int} month New month (optional)
+     * @param {int} year New year (optional)
      */
     goTo: function(month, year) {
         var n = this._focusedItem.retrieve("index");
-        var fd = this.__fdom.getDay();
+        var fd = this.first.getDay();
         var date = new Date();
         date.setDate(1);
 
@@ -560,16 +547,16 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         if (year) {
             date.setYear(year);
         }
-        this._currentMonth = date.firstDayOfMonth();
+        this.first = date.firstDayOfMonth();
 
         this.render();
 
-        var newIndex = this.__fdom.getDay() - (this.cfg("startWeekOn") == jplex.components.Calendar.START_MONDAY ? 1 : 0);
-        newIndex += Math.min(this.__ldom.getDate() - 1, n - fd);
+        var newIndex = this.first.getDay() - (this.cfg("startWeekOn") == jplex.components.Calendar.START_MONDAY ? 1 : 0);
+        newIndex += Math.min(this.last.getDate() - 1, n - fd);
         if (newIndex < 0) {
             newIndex = 7 + newIndex;
         }
-        //+ Math.min(this.__ldom.getDate() - 1, n - fd);
+        //+ Math.min(this.last.getDate() - 1, n - fd);
 
         this.focus(newIndex);
         if (this._source)
@@ -584,7 +571,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
     left: function() {
         var n = Math.max(0, this._focusedItem.retrieve("index") - 1);
         if (n == 0 || !this.focus(n)) {
-            if (this._focusedItem.retrieve("date").compareTo(this._currentMonth.firstDayOfMonth()) == 0) {
+            if (this._focusedItem.retrieve("date").compareTo(this.first) == 0) {
                 this.previous();
             }
         }
@@ -597,7 +584,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
     right: function() {
         var n = Math.min(this._focusedItem.retrieve("index") + 1, this.items.length);
         if (n == this.items.length || !this.focus(n)) {
-            if (this._focusedItem.retrieve("date").compareTo(this._currentMonth.lastDayOfMonth()) == 0) {
+            if (this._focusedItem.retrieve("date").compareTo(this.last) == 0) {
                 this.next();
             }
         }
@@ -624,52 +611,52 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         var n = Math.min(currentIndex + 7, this.items.length - 1);
         if (!this.focus(n)) {
             if (currentIndex < this.items.length - 7) {
-                this.focus(currentIndex + this.__ldom.getDate() - this._focusedItem.retrieve("date").getDate());
+                this.focus(currentIndex + this.last.getDate() - this._focusedItem.retrieve("date").getDate());
             }
         }
     },
 
     /**
      * Add a new date to the currently selected elements
-     * @param {calendar.CalendarItem} oItem the date to be added
+     * @param {Element} item the date to be added (`td` element)
      */
-    addSelectedItem: function(oItem) {
-        this._selectedItems.set(oItem.retrieve("date").format("Ymd"), oItem);
+    addSelectedItem: function(item) {
+        this._selectedItems.set(item.retrieve("date").format("Ymd"), item);
     },
 
     /**
      * Removes an item from the selection list
-     * @param {calendar.CalendarItem} oItem the date to be removed
+     * @param {Element} item the date to be removed (`td` element)
      */
-    removeSelectedItem: function(oItem) {
-        this._selectedItems.unset(oItem.retrieve("date").format("Ymd"));
+    removeSelectedItem: function(item) {
+        this._selectedItems.unset(item.retrieve("date").format("Ymd"));
     },
 
 
     /**
      * Sets the current selected item of the calendar
-     * @param {Calendar.CalendarItem} oItem calendar item to be marked as selected
+     * @param {Element} item calendar item to be marked as selected (`td` element)
      */
-    setSelectedItem: function(oItem) {
+    setSelectedItem: function(item) {
         this._selectedItems = $H();
-        this._selectedItems.set(oItem.retrieve("date").format("Ymd"), oItem);
+        this._selectedItems.set(item.retrieve("date").format("Ymd"), item);
 
         if (this._textField && this._textField.getAttribute("type") != 'button') {
-            this._textField.value = oItem.retrieve("date").format(this.cfg("dateFormat"));
+            this._textField.value = item.retrieve("date").format(this.cfg("dateFormat"));
         }
     },
 
     /**
      * Sets the current focused item of the calendar (the one that would be selected)
-     * @param {Calendar.CalendarItem} oItem calendar item to be marked as focused
+     * @param {Element} item calendar item to be marked as focused (`td` element)
      */
-    setFocusedItem: function(oItem) {
-        this._focusedItem = oItem;
+    setFocusedItem: function(item) {
+        this._focusedItem = item;
     },
 
     /**
      * Get the currently selected item of the calendar
-     * @return {Calendar.CalendarItem} the selected item
+     * @return {Element} the `td` selected item
      */
     getSelectedItem: function() {
         return this.getSelectedItems()[0];
@@ -684,7 +671,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
     /**
      * Get the currently focused item of the calendar
-     * @return {Calendar.CalendarItem} the focused item
+     * @return {Element} the `td` focused item
      */
     getFocusedItem: function() {
         return this._focusedItem;
@@ -717,9 +704,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
         if (this._source) {
             this._source.addClassName("jplex-calendar");
-            this.component.setStyle({
-                display:"none"
-            });
+            this.component.hide();
             if (Prototype.Browser.IE6) {
                 if (this._source.getAttribute("type") == "button") {
                     this._source.addClassName("jplex-calendar-button");
@@ -729,38 +714,30 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             }
         }
 
-        var eTop = new Element("div").addClassName("top"),
-                eTitle = new Element("span", {
-                    id: this.UID + "_TITLE"
-                }).addClassName("title"),
-                ePrevious = new Element("span").addClassName("previous").update("&nbsp;&laquo;&nbsp"),
-                eNext = new Element("span").addClassName("next").update("&nbsp;&raquo;&nbsp"),
-                eTable = new Element("table", {
-                    id: this.UID + "_TABLE"
-                }).addClassName("calendar"),
-                eTBody = new Element("tbody").update("&nbsp;"),
-                eTHead = new Element("thead"),
-                eTR = new Element("tr"),
-                eClose = new Element("div", {
-                    id: this.UID + "_CLOSE"
-                }).addClassName("close").update("&nbsp;" + this.lang("CLOSE") + "&nbsp;");
+        this.title   = new Element("span", { id: this.UID + "_TITLE" }).addClassName("title");
+        this.body    = new Element("tbody");
+        var header   = new Element("div").addClassName("top");
+        var previous = new Element("span").addClassName("previous").update("&nbsp;&laquo;&nbsp");
+        var next     = new Element("span").addClassName("next").update("&nbsp;&raquo;&nbsp");
+        var table    = new Element("table", { id: this.UID + "_TABLE" }).addClassName("calendar");
+        var thead    = new Element("thead");
+        var row      = new Element("tr");
 
-        eTHead.appendChild(eTR);
-        eTable.appendChild(eTHead);
-        eTable.appendChild(eTBody);
-        eTop.appendChild(ePrevious);
-        eTop.appendChild(eTitle);
-        eTop.appendChild(eNext);
-        this.component.appendChild(eTop);
-        this.component.appendChild(eTable);
-        if (this._textField && this._source) {
-            this.component.appendChild(eClose);
+        thead.appendChild(row);
+        table.appendChildren(thead, this.body);
+        header.appendChildren(previous, this.title, next);
+        this.component.appendChildren(header, table);
+
+        if (this._source !== null) {
+            var close    = new Element("div", { id: this.UID + "_CLOSE" }).addClassName("close")
+                            .update("&nbsp;" + this.lang("CLOSE") + "&nbsp;");            
+            this.component.appendChild(close);
+            close.observe('click', this.hide.bind(this));
         }
         this.component.IEFixCombobox();
 
-        eNext.observe('click', this.next.bindAsEventListener(this));
-        ePrevious.observe('click', this.previous.bindAsEventListener(this));
-        eClose.observe('click', this.hide.bindAsEventListener(this));
+        next.observe('click', this.next.bind(this));
+        previous.observe('click', this.previous.bind(this));
 
         var days = $A(this.locale('Date', 'DAYS_SHORT')).clone();
 
@@ -771,7 +748,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         }
 
         days.each(function(s) {
-            eTR.appendChild(new Element('th').update(s));
+            row.appendChild(new Element('th').update(s));
         });
 
         if (this.cfg("fastBrowse")) {
@@ -788,33 +765,23 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             var selectEnd = new Element("input", {
                 value: this.lang("SELECT_END"),
                 type: "button"
-            });
-            selectEnd.addClassName("end");
+            }).addClassName("end");
 
             this._fastBrowseTooltip = new jplex.components.Tooltip(this.UID + "-fbtooltip", {
-                source: this._getTitle(),
+                source: this.title,
                 trigger: jplex.components.Tooltip.TRIGGER_CLICK,
                 position: "bottom-right",
                 positionRatio: 0.35,
                 zIndex: this.cfg("zBase") + 2
             });
 
-            var tooltipBody = this._fastBrowseTooltip.getBody();
             this._fastBrowseTooltip.component.addClassName("jplex-calendar-tooltip");
 
-
-            var divSelectMonth = new Element("div").update(this.lang("SELECT_MONTH") + "<br/>");
-            divSelectMonth.appendChild(selectMonth);
-            divSelectMonth.addClassName("select");
-            var divSelectYear = new Element("div").update(this.lang("SELECT_YEAR") + "<br/>");
-            divSelectYear.appendChild(selectYear);
-            divSelectYear.addClassName("select");
-
-            tooltipBody.appendChildren(
-                    divSelectMonth,
-                    divSelectYear,
-                    selectEnd
-                    );
+            var divSelectMonth = new Element("div").update(this.lang("SELECT_MONTH")).addClassName("select")
+                .insert(selectMonth);
+            var divSelectYear = new Element("div").update(this.lang("SELECT_YEAR")).addClassName("select")            
+                .insert(selectYear);
+            this._fastBrowseTooltip.getBody().appendChildren(divSelectMonth, divSelectYear, selectEnd);
 
             if (!Prototype.Browser.IE6) {
                 this._fastBrowseTooltip.setEvent("onShowEvent", function() {
@@ -866,45 +833,9 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
     },
 
     /**
-     * Get the tbody element of the calendar
-     * @return {Element} The tbody element of the calendar table
-     * @private
-     */
-    _getTbody: function() {
-        return $(this.UID + "_TABLE").childNodes[1];
-    },
-
-    /**
-     * Get the thead element of the calendar
-     * @return {Element} The thead element of the calendar table
-     * @private
-     */
-    _getThead: function() {
-        return $(this.UID + "_TABLE").childNodes[0];
-    },
-
-    /**
-     * Get the table element of the calendar
-     * @return {Element} The table element of the calendar
-     * @private
-     */
-    _getTable: function() {
-        return $(this.UID + "_TABLE");
-    },
-
-    /**
-     * Get the title element of the calendar (i.e. the current month-year)
-     * @return {Element} The span element containing the current month-year string
-     * @private
-     */
-    _getTitle: function() {
-        return $(this.UID + '_TITLE');
-    },
-
-    /**
      * Sets the title of the calendar (typically the current month-year
-     * @param {Integer} month Number of the month
-     * @param {Integer} year Year
+     * @param {int} month Number of the month
+     * @param {int} year Year
      * @private
      */
     _setTitle: function(month, year) {
@@ -912,7 +843,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
                 .gsub("{M}", this.locale("Date", "MONTHS")[month])
                 .gsub("{Y}", year)
                 .gsub("{m}", (month + 1).toString());
-        this._getTitle().update("&nbsp;" + title + "&nbsp;");
+        this.title.update("&nbsp;" + title + "&nbsp;");
     },
 
     /**

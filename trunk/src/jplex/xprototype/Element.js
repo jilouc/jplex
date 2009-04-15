@@ -32,12 +32,20 @@ Element.addMethods({
     },
 
     /**
-     * Determines wheter the point of coordinates (x,y) on the page is within the element or not
-     * @param {Integer} x Horizontal coordinate
-     * @param {Integer} y Vertical coordinate
-     * @return {Boolean} true if (x,y) is within the element
+     * Determines whether the point of coordinates (x,y) on the page is within the element or not
+     * @deprecated in favour of Element#contains
      */
     isWithin: function(element, x, y) {
+        return element.contains(x, y);
+    },
+
+    /**
+     * Determines whether the element contains the point at coordinates (x,y) or not
+     * @param {int} x Horizontal coordinate
+     * @param {int} y Vertical coordinate
+     * @return {bool} true if (x,y) is within the element
+     */
+    contains: function(element, x, y) {
         var offsets = element.cumulativeOffset();
         offsets = [x - offsets[0], y - offsets[1]];
         var dims = element.getDimensions();

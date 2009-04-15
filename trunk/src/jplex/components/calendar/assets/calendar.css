@@ -127,6 +127,9 @@ div.jplex-calendar-tooltip div.select {
     margin-top:0.5em;
     
 }
+div.jplex-calendar-tooltip div.select select {
+    display:block;
+}
 
 div.jplex-calendar-tooltip input.end {
     margin:0.5em 0 0.5em 0;
