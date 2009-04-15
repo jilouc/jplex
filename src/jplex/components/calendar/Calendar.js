@@ -190,12 +190,16 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
 
         var date = this.cfg('date');
         this._selectedItems = $H();
+
+        // Simulate initial state with fake item
         this._focusedItem = {
             retrieve: function(key) {
                 if(key == "date") {
                     return date;
+                } else if(key == "index") {
+                    return date.getDate() - (this.cfg("startWeekOn") == "sunday" ? 0 : 1) + date.firstDayOfMonth().getDay()
                 }
-            }
+            }.bind(this)
         };
 
         this._selectedItems.set(date.format("Ymd"), this._focusedItem);
@@ -321,7 +325,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         } else {
 
             if (!this.cfg("multiselect")) {
-                this.unselect(this.getSelectedItem().retrieve("index") || index);
+                this.unselect(this.getSelectedItem().retrieve("index"));
             }
             if (!day.hasClassName("selected")) {
                 day.addClassName("selected");
@@ -356,6 +360,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      */
     unselect: function(index) {
         var day = this.items[index];
+        if(!day) return;
         day.store("selected", false);
         day.removeClassName("selected");
         this.removeSelectedItem(day);
@@ -373,7 +378,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         var day = this.items[index];
 
         if (day.getStorage) {
-            this.blur(this.getFocusedItem().retrieve("index") || index);
+            this.blur(this.getFocusedItem().retrieve("index"));
         }
         if (!day.hasClassName("focused")) {
             day.addClassName("focused");
@@ -388,7 +393,9 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
      * @param {int} index index of the item
      */
     blur: function(index) {
-        this.items[index].removeClassName("focused");
+        var day = this.items[index]
+        if(!day) return;
+        day.removeClassName("focused");
     },
 
     /**
@@ -439,7 +446,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         var oLastDay = new Date(
                 oLastDayOfMonth.getFullYear(),
                 oLastDayOfMonth.getMonth(),
-                oLastDayOfMonth.getDate() + 6 - oLastDayOfMonth.getDay() + startWeekOnOffset,
+                oLastDayOfMonth.getDate() - oLastDayOfMonth.getDay() - (1-startWeekOnOffset),
                 0
                 );
         if (oLastDay.compareTo(this.__ldom) < 0) {
@@ -558,6 +565,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         this.render();
 
         var newIndex = this.__fdom.getDay() - (this.cfg("startWeekOn") == jplex.components.Calendar.START_MONDAY ? 1 : 0);
+        newIndex += Math.min(this.__ldom.getDate() - 1, n - fd);
         if (newIndex < 0) {
             newIndex = 7 + newIndex;
         }

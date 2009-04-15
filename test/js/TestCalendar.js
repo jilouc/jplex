@@ -54,7 +54,7 @@ new Test.Unit.Runner({
     },
     testSelectDate: function() {
         var s = cal.getSelectedItem();
-        var d = s.getDate();
+        var d = s.retrieve('date');
         this.assertEqual(cal.getSelectedItem(), cal.getFocusedItem());
         this.assertEqual(d.format("d-m-Y"), cal.getTextField().value);
         cal.next();
@@ -66,14 +66,14 @@ new Test.Unit.Runner({
         //Do not modify
         this.assertEqual(d.format("d-m-Y"), cal.getFormattedValue("d-m-Y"));
         this.assertEqual(d.format("d-m-Y"), cal.getTextField().value);
-        this.assertEqual(cal.getSelectedItem().getDate(), cal.getFocusedItem().getDate());
-        cal.getSelectedItem().select(); // in case of bugs
-        var d = cal.getFocusedItem().getDate();
+        this.assertEqual(cal.getSelectedItem().retrieve("date"), cal.getFocusedItem().retrieve("date"));
+        cal.select(cal.getSelectedItem().retrieve("index")); // in case of bugs
+        var d = cal.getFocusedItem().retrieve("date");
         var date = new Date(d.getTime());
         cal.up();
-        cal.getFocusedItem().select();
+        cal.select(cal.getFocusedItem().retrieve("index"));
         date.setDate(date.getDate()-7);
-        this.assertEqual(date.format("d-m-Y"), cal.getFocusedItem().getDate().format("d-m-Y"));
+        this.assertEqual(date.format("d-m-Y"), cal.getFocusedItem().retrieve("date").format("d-m-Y"));
         this.assertEqual(date.format("d-m-Y"), cal.getTextField().value);
                                 
         
