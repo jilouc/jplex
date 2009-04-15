@@ -10,15 +10,7 @@ Object.extend(String.prototype, {
      * @returns {String} the padded string
      */
     lpad: function(length, character) {
-        var source = this;
-        if (!length || length <= source.length)
-            return this;
-        if (!character)
-            character = ' ';
-        while (source.length < length) {
-            source = character + '' + source;
-        }
-        return source;
+        return (character || " ").times(length - this.length) + this;
     },
 
     /**
@@ -28,14 +20,6 @@ Object.extend(String.prototype, {
      * @return {String} the padded string
      */
     rpad: function(length, character) {
-        var source = this;
-        if (!length || length <= source.length)
-            return this;
-        if (!character)
-            character = ' ';
-        while (source.length < length) {
-            source += character + '';
-        }
-        return source;
+        return this + (character || " ").times(length - this.length);
     }
 });

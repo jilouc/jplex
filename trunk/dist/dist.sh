@@ -11,7 +11,7 @@ if [ $1 = "win" ]; then
 fi         
                      
 echo "Dist files:"  
-echo "\tPrototype:\t1.6.0.3" 
+echo "\tPrototype:\t1.6.1 RC2" 
 echo "\tScriptaculous:\t1.8.1"
 echo "\tjPlex:\t\t$VERSION"
 
