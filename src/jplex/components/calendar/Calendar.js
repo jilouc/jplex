@@ -249,9 +249,9 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
             this.__documentWideHideObserver = function(e) {
                 var x = e.pointerX();
                 var y = e.pointerY();
-                if (!this.component.contains(x, y)
-                        && !this._source.contains(x, y)
-                        && !this._fastBrowseTooltip.component.contains(x, y)) {
+                if (!this.component.inside(x, y)
+                        && !this._source.inside(x, y)
+                        && !this._fastBrowseTooltip.component.inside(x, y)) {
                     this.hide();
                 }
             }.bind(this);
@@ -552,7 +552,7 @@ jPlex.provide("jplex.components.Calendar", "jplex.common.Component", {
         this.render();
 
         var newIndex = this.first.getDay() - (this.cfg("startWeekOn") == jplex.components.Calendar.START_MONDAY ? 1 : 0);
-        newIndex += Math.min(this.last.getDate() - 1, n - fd);
+        //newIndex += Math.min(this.last.getDate() - 1, n - fd);
         if (newIndex < 0) {
             newIndex = 7 + newIndex;
         }

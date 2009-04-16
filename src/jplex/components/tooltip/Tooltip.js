@@ -26,8 +26,8 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
              */
 			content: "",
             /**
-             * Sets the position of the bubble relative to the source component. This parameter must be expressed 
-             * as a join of two strings. The first one is the vertical align (`top` or `bottom`) and the second is 
+             * Sets the position of the bubble relative to the source component. This parameter must be expressed
+             * as a join of two strings. The first one is the vertical align (`top` or `bottom`) and the second is
              * the horizontal align (`left` or `right`)
              * @config position
              * @default "top-right"
@@ -47,7 +47,7 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
              */
             trigger: "mouseover", // jplex.components.Tooltip.TRIGGER_MOUSEOVER
             /**
-             * Sets the position of the bubble compared to the element. This ratio is the x-position of the pin related 
+             * Sets the position of the bubble compared to the element. This ratio is the x-position of the pin related
              * to the beginning (or end) of the element divided by the width of the element
              * @config positionRatio
              * @default 0.83
@@ -61,12 +61,12 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
             zIndex: 99
         },
         events: {
-            /**                   
+            /**
              * Fired after showing the component
              * @event onShowEvent
              */
             onShowEvent: Prototype.emptyFunction,
-            
+
             /**
              * Fired after hiding the component
              * @event onHideEvent
@@ -81,21 +81,21 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 		this.render();
 
         if(this.cfg("trigger") == jplex.components.Tooltip.TRIGGER_MOUSEOVER) {
-            this._source.observe("mouseover", this.show.bindAsEventListener(this));
-            this.component.observe("mouseover", this.show.bindAsEventListener(this));
-            this._source.observe("mouseout", this.hide.bindAsEventListener(this));
-            this.component.observe("mouseout", this.hide.bindAsEventListener(this));
+            this._source.observe("mouseover", this.show.bind(this));
+            this.component.observe("mouseover", this.show.bind(this));
+            this._source.observe("mouseout", this.hide.bind(this));
+            this.component.observe("mouseout", this.hide.bind(this));
         } else if(this.cfg("trigger") == jplex.components.Tooltip.TRIGGER_CLICK) {
-            this._source.observe("click", this.show.bindAsEventListener(this));
+            this._source.observe("click", this.show.bind(this));
             document.observe("click", function(e) {
                 var x = e.pointerX(),
                     y = e.pointerY();
-                if (!this._source.isWithin(x, y) &&
-                    !this.component.isWithin(x, y)) {
+                if (!this._source.inside(x, y) &&
+                    !this.component.inside(x, y)) {
                     this.hide();
                 }
 
-            }.bindAsEventListener(this));
+            }.bind(this));
         }
 	},
 
@@ -151,14 +151,14 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 		this._fixShadow();
 		this._fixPin();
 
-		this._source.addClassName("jplex-bubbler");      
+		this._source.addClassName("jplex-bubbler");
 
 		this.setContent(this.cfg("content"));
 		this.hide();
 	},
 
     /**
-     * Set the content of the tooltip (Support HTML content) 
+     * Set the content of the tooltip (Support HTML content)
      * @param newContent Raw text or HTML content
      */
     setContent: function(newContent) {
@@ -169,7 +169,7 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 
     /**
      * Get the body `div` HTML element of the tooltip (content placeholder)
-     * @return {Element} the body of the tooltip 
+     * @return {Element} the body of the tooltip
      */
     getBody: function() {
         return this._body;
@@ -204,7 +204,7 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
 
         this.component.show();
         this._shadow.show();
-        
+
         var pos = this._source.cumulativeOffset();
 		var position = this.cfg("position"),
 			left = pos.left, top = pos.top;
@@ -226,7 +226,7 @@ jPlex.provide('jplex.components.Tooltip', 'jplex.common.Component',  {
         this._fixShadow();
         this.fireEvent("onShowEvent");
     },
-      
+
     /**
      * Hides the bubble
      */

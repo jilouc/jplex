@@ -25,8 +25,8 @@ jPlex.provide('jplex.components.menubar.MenuBarItem', {
 
         this.render(item.items);
 
-        this.me.observe("mouseover", this._onMouseOver.bindAsEventListener(this));
-        this.me.observe("click", this._onClick.bindAsEventListener(this));
+        this.me.observe("mouseover", this._onMouseOver.bind(this));
+        this.me.observe("click", this._onClick.bind(this));
 
         if (this._shortcut) {
             document.bindKey(

@@ -87,7 +87,7 @@ jPlex.provide('jplex.components.frame.FrameSet', 'jplex.common.Component', {
         w.component.setStyle({
             zIndex:length
         });
-        w.component.observe('click', w.toFront.bindAsEventListener(w));
+        w.component.observe('click', w.toFront.bind(w));
 
         this.fireEvent("onAddFrameEvent", {
             frame: w
