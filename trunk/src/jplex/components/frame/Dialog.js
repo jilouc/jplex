@@ -105,7 +105,7 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
                 value: s.label
             });
             down.appendChild(bt);
-            bt.observe('click', s.click.bindAsEventListener(this));
+            bt.observe('click', s.click.bind(this));
         }.bind(this));
 
         if (this.cfg('okButton')) {
@@ -115,7 +115,7 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
                 value: this.cfg('okButtonLabel') || true ? this.lang('OK') : this.cfg('okButtonLabel')
             });
             down.appendChild(ok);
-            ok.observe('click', this._okButtonClick.bindAsEventListener(this));
+            ok.observe('click', this._okButtonClick.bind(this));
         }
 
         if (this.cfg('cancelButton')) {
@@ -125,7 +125,7 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
                 value: this.cfg('cancelButtonLabel').blank() ? this.lang('CANCEL') : this.cfg('cancelButtonLabel')
             });
             down.appendChild(cancel);
-            cancel.observe('click', this._cancelButtonClick.bindAsEventListener(this));
+            cancel.observe('click', this._cancelButtonClick.bind(this));
         }
 
 
