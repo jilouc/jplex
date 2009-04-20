@@ -5,7 +5,7 @@
 Element.addMethods({
     /**
      * Appends all elements listed as arguments to the DOM element
-     * @param {List<Element>} Elements to add
+     * @param {List<Element>} element Elements to add
      * @return {Element} the extended DOM Element
      */
     appendChildren: function(element) {
