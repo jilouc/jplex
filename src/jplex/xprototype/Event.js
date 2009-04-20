@@ -188,7 +188,7 @@ Object.extend(Event, function() {
          * the presence every Event._ready_POLL_INTERVAL milliseconds.
          * If not found after Event._ready_POLL_LIMIT tries, we simply
          * give up.
-         * By default this limit is set to 800 tries, with a 5 ms delay
+         * By default this limit is set to 800 tries, with a 50 ms delay
          * between them (40s max.)
          *
          * Note that 'this' refers to the Element (i.e. $(element))

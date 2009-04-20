@@ -55,6 +55,7 @@ var jPlex = {
         'jplex.xprototype.Object',
         'jplex.xprototype.String',
         'jplex.components.Calendar',
+        'jplex.components.Datatable',
         'jplex.components.MenuBar',
         'jplex.components.MouseOverImage',
         'jplex.components.Overlay',

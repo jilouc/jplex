@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
+    <script src="../src/jPlex.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+<script type="text/javascript">
+
+    jPlex.include("jplex.xprototype.*");
+    jPlex.include("jplex.common.DataSource");
+
+    var ds1 = new DataSource(DataSource.TYPE_ARRAY, ["pif", "paf", "pouf"], {
+        process: function(data) {
+            console.log("Data from JS Array");
+            console.log(data);
+        }
+    });
+    ds1.request();
+
+    var s2 = "pif.paf.pouf";
+    var ds2 = new DataSource(DataSource.TYPE_FUNCTION, s2.split.bind(s2).curry("."), {
+        process: function(data) {
+            console.log("Data from Function");
+            console.log(data);
+        }
+    });
+    ds2.request();
+
+    var ds3 = new DataSource(DataSource.TYPE_JSON, "datasource.json", {
+        process: function(data) {
+            console.log("Data from JSON");
+            console.log(data);
+        }
+    });
+    ds3.request();
+
+    var ds4 = new DataSource(DataSource.TYPE_XML, "datasource.xml", {
+        poll: true,
+        pollInterval: 5,
+        schema: {
+            properties: ["name"]
+        },
+
+        process: function(data) {
+            console.log("Data from XML");
+            console.log(data.pluck("name"));
+        }
+    });
+    ds4.request();
+
+
+</script>
+</body>
+</html>
