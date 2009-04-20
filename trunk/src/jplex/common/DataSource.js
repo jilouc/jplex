@@ -40,10 +40,9 @@ jPlex.provide("jplex.common.DataSource", function() {
         request: function() {
             var cache = CACHE.get(this.UID);
             var now = new Date();
-            var res;
 
-            if (this.config.cache && cache.last !== null && now.compareTo(cache.last) < this.config.poll * 1000) {
-                res = cache.data;
+            if (this.config.cache && cache.last !== null && now.compareTo(cache.last) < this.config.lifetime * 1000) {
+                this.update(cache.data, true);
             } else {
                 this.retrieve(this.update.bind(this));
             }
@@ -55,10 +54,12 @@ jPlex.provide("jplex.common.DataSource", function() {
             }
         },
 
-        update: function(data) {
+        update: function(data, fromCache) {
             var cache = CACHE.get(this.UID);
-            cache.last = new Date();
-            cache.data = this.parse(data);
+            if(!fromCache) {
+                cache.last = new Date();
+                cache.data = this.parse(data);
+            }
 
             this.config.process(cache.data);
         },

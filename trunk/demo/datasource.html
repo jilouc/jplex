@@ -40,6 +40,8 @@
     var ds4 = new DataSource(DataSource.TYPE_XML, "datasource.xml", {
         poll: true,
         pollInterval: 5,
+        lifetime: 12,
+        cache:true,
         schema: {
             properties: ["name"]
         },
