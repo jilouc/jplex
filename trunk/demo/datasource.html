@@ -9,10 +9,11 @@
 <body>
 <script type="text/javascript">
 
+
     jPlex.include("jplex.xprototype.*");
     jPlex.include("jplex.common.DataSource");
 
-    var ds1 = new DataSource(DataSource.TYPE_ARRAY, ["pif", "paf", "pouf"], {
+    var ds1 = new DataSource(DataSource.TYPE_ARRAY, ["pif", "paf", "pouf"], null, {
         process: function(data) {
             console.log("Data from JS Array");
             console.log(data);
@@ -21,7 +22,7 @@
     ds1.request();
 
     var s2 = "pif.paf.pouf";
-    var ds2 = new DataSource(DataSource.TYPE_FUNCTION, s2.split.bind(s2).curry("."), {
+    var ds2 = new DataSource(DataSource.TYPE_FUNCTION, s2.split.bind(s2).curry("."), null, {
         process: function(data) {
             console.log("Data from Function");
             console.log(data);
@@ -30,25 +31,27 @@
     ds2.request();
 
     var ds3 = new DataSource(DataSource.TYPE_JSON, "datasource.json", {
+        root:"['nestedData'].data",
+        properties: [{key:"C1", path:"['obj']['[nested]'].renested[0]"}, "C2", "C3"]
+    }, {
         process: function(data) {
             console.log("Data from JSON");
-            console.log(data);
+            console.log(data.pluck("C1"));
         }
     });
     ds3.request();
 
     var ds4 = new DataSource(DataSource.TYPE_XML, "datasource.xml", {
+        properties: [{key:"C1", path:"nested[0]/C1[2]@value"}, "C2", "C3"]
+    }, {
         poll: true,
         pollInterval: 5,
         lifetime: 12,
         cache:true,
-        schema: {
-            properties: ["name"]
-        },
 
         process: function(data) {
             console.log("Data from XML");
-            console.log(data.pluck("name"));
+            console.log(data.pluck("C1"));
         }
     });
     ds4.request();

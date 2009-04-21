@@ -1,3 +1,8 @@
 {
-    data: ["pif", "paf", "pouf"]
+    nestedData: {data: [
+        {obj:{'[nested]': { renested: ["pif"]}}, C2:"paf", C3:"pouf"},
+        {obj:{'[nested]': { renested: ["paf"]}}, C2:"pouf", C3:"pif"},
+        {obj:{'[nested]': { renested: ["pouf"]}}, C2:"piff", C3:"paf"}
+    ]
+    }
 }
