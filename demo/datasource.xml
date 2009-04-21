@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
     <item>
-        <name>pif</name>
+        <nested>
+            <C1 value="fake"/>
+            <C1 value="fake"/>
+            <C1 value="pif"/>
+        </nested>
+        <C2>paf</C2>
+        <C3>pouf</C3>
     </item>
     <item>
-        <name>paf</name>
+        <nested>
+            <C1 value="fake"/>
+            <C1 value="fake"/>
+            <C1 value="paf"/>
+        </nested>
+        <C2>pouf</C2>
+        <C3>pif</C3>
     </item>
     <item>
-        <name>pouf</name>
+        <nested>
+            <C1 value="fake"/>
+            <C1 value="fake"/>
+            <C1 value="pouf"/>
+        </nested>
+        <C2>pif</C2>
+        <C3>paf</C3>
     </item>
 </root>

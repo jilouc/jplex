@@ -17,7 +17,22 @@
 
 <script type="text/javascript">
     jPlex.include("jplex.components.Datatable");
-    new Datatable("pwet");
+
+    var schema = {
+        properties:[
+            { key:"C1", path:"nested/C1[2]@value" },
+            "C2",
+            "C3"
+        ]
+    };
+    var ds = new DataSource(DataSource.TYPE_XML, "datasource.xml", schema);
+
+    var cols = [
+        {label:"C1", key:"C1"},
+        {label:"C2", key:"C2"} ,
+        {label:"C3", key:"C3"}
+    ];
+    new Datatable("pwet", ds, cols);
 </script>
 </body>
 </html>
