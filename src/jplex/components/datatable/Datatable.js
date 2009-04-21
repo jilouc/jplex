@@ -15,9 +15,13 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
     _definition: {
         name: "Datatable",
         defaultConfig: {
-            
+            // TODO 
+            select: "none" // jplex.components.Datatable.SELECT_NONE
         },
-        events: {},
+        events: {
+            onRowSelectionEvent: Prototype.emptyFunction,
+            onRowDoubleClickEvent: Prototype.emptyFunction
+        },
         defaultContainer: "table"
     },
 
@@ -28,18 +32,19 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
         this.datasource = datasource;
 
         datasource.config.process = this.populate.bind(this);
-        
+
         this.render();
-        datasource.request();
+        this.reloadData();
 
     },
 
     render: function() {
         //this.component.setStyle({width:"500px"});
+        this.component.addClassName("jplex-datatable");
         this._headers = new Element('tr');
         this.component.insert(this._headers.wrap('thead'));
         this.columns.each(function(s, i) {
-            var th = new Element("th", { id: this.UID+"-h"+i }).update(s.label);
+            var th = new Element("th", { id: this.UID + "-h" + i }).update(s.label);
             th.store("info", s);
             th.store("column", i);
             this._headers.insert(th);
@@ -48,17 +53,123 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
     },
 
     populate: function(data) {
+        this.data = data;
 
-        data.each(function(g) {
+        var selectHandler = this.didSelectRow.bind(this);
+        var doubleClickHandler = this.didDoubleClickOnRow.bind(this);
+        var mouseOverHandler = this.didStartHoverOnRow.bind(this);
+        var mouseOutHandler = this.didEndHoverOnRow.bind(this);
+        data.each(function(g, i) {
 
-            var row = new Element('tr');
+            var row = new Element('tr').addClassName(i % 2 === 0 ? 'even' : 'odd').addClassName("selectable");
+            row.store("row", i);
+            row.store("selected", false);
             this._body.insert(row);
 
-            this.columns.each(function(c, i) {
-                var col = new Element('td').update(g[this.columns[i].key]);
+            this.columns.each(function(c, j) {
+                var col = new Element('td').update(g[this.columns[j].key]);
+                if (j == this.columns.length - 1) {
+                    col.addClassName("last");
+                }
+                col.store("row", i);
+                col.store("col", j);
                 row.insert(col);
             }, this);
+
+
+            row.observe("click", selectHandler);
+            row.observe("dblclick", doubleClickHandler);
+            row.observe("mouseover", mouseOverHandler);
+            row.observe("mouseout", mouseOutHandler);
         }.bind(this), "");
+    },
+
+    didStartHoverOnRow: function(e) {
+        var row = e.element().up('tr');
+        if (row !== null && !row.retrieve("selected")) {
+            row.addClassName("hover");
+        }
+    },
+
+    didEndHoverOnRow: function(e) {
+        var row = e.element().up('tr');
+        if (row !== null) {
+            row.removeClassName("hover");
+        }
+    },
+
+    didDoubleClickOnRow: function(e) {
+        var row = e.findElement('tr');
+        var n, col, colInfo, colIndex, colKey;
+
+        if (!Object.isUndefined(row)) {
+
+            n = row.retrieve("row");
+            col = e.findElement('td');
+            if(Object.isUndefined(col)) {
+                colInfo = null;
+            } else {
+                colIndex = col.retrieve("col");
+                colKey = this.columns[colIndex].key || this.columns[colIndex];
+                colInfo = {
+                    index: colIndex,
+                    key: colKey,
+                    data: this.data[n][colKey]
+                };
+            }
+
+            this.fireEvent("onRowDoubleClickEvent", {
+                htmlRow: row,
+                row: n,
+                data: this.data[n],
+                column: colInfo
+            });
+        }
+    },
+
+    didSelectRow: function(e) {
+        if(e.detail && e.detail === 2) {
+            // Double click
+            return;
+        }
+
+        var row = e.findElement('tr');
+        var n, col, colIndex, colKey, colInfo;
+
+        if (!Object.isUndefined(row)) {
+            if (row.retrieve('selected', true)) {
+                row.removeClassName('selected');
+                row.store('selected', false);
+            } else {
+                row.addClassName('selected');
+                row.store('selected', true);
+            }
+
+            n = row.retrieve('row');
+            col = e.findElement('td');
+            if(Object.isUndefined(col)) {
+                colInfo = null;
+            } else {
+                colIndex = col.retrieve('col');
+                colKey = this.columns[colIndex].key || this.columns[colIndex];
+                colInfo = {
+                    index: colIndex,
+                    key: colKey,
+                    data: this.data[n][colKey]
+                };
+            }
+
+            this.fireEvent('onRowSelectionEvent', {
+                htmlRow: row,
+                row: n,
+                data: this.data[n],
+                column: colInfo
+            });
+        }
+    },
+
+    reloadData: function() {
+        this.datasource.request();
     }
 
 
@@ -80,5 +191,7 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
 //---------- Static properties ----------
 
 jPlex.extend('jplex.components.Datatable', {
-
+    SELECT_NONE: "none",
+    SELECT_SINGLE: "single",
+    SELECT_MULTIPLE: "multiple"
 });

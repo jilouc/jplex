@@ -4,12 +4,14 @@
 <head>
     <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
 	<link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>
-    <link rel="stylesheet" href="../src/jplex/components/tooltip/assets/tooltip.css" type="text/css"/>
-    <link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar.css" type="text/css"/>
-	<!--[if IE 6]><link rel="stylesheet" href="../src/jplex/components/calendar/assets/calendar-ie6.css" type="text/css"/><![endif]-->
+    <link rel="stylesheet" href="../src/jplex/components/datatable/assets/datatable.css" type="text/css"/>
     <script src="../src/jPlex.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./syntax-highlighter-1.5.1/syntax-highlighter.js" type="text/javascript" charset="utf-8"></script>
-
+    <style type="text/css">
+        body {
+            font: 13px / 18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+        }
+    </style>
 </head>
 <body>
 <h1>jPlex Datatable Demo</h1>
@@ -32,7 +34,14 @@
         {label:"C2", key:"C2"} ,
         {label:"C3", key:"C3"}
     ];
-    new Datatable("pwet", ds, cols);
+    var dt = new Datatable("pwet", ds, cols);
+    dt.setEvent("onRowSelectionEvent", function(o) {
+        console.log(o);
+    });
+
+    dt.setEvent("onRowDoubleClickEvent", function(o) {
+        console.log("DBL CLICK : "+(o.column.data || "Unknown"));
+    });
 </script>
 </body>
 </html>

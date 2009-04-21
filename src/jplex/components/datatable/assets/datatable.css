@@ -1,0 +1,39 @@
+table.jplex-datatable {
+    border-collapse:collapse;
+    border:1px #666666 solid;
+}
+
+table.jplex-datatable th {
+    background:url('th-bg.png') repeat-x;
+    font-weight:bold;
+    border-right: 1px #bbbbbb solid;
+}
+
+table.jplex-datatable td {
+    border-right:1px #bbbbbb solid;
+    padding:0.2em 0.5em 0.2em 0.5em;
+}
+
+table.jplex-datatable td:last-child,
+table.jplex-datatable th:last-child {
+    border-right:0;
+}
+
+table.jplex-datatable tr.even td {
+    background:#edf5ff;
+}
+
+table.jplex-datatable tr.odd td {
+    background:#fefefe;
+}
+
+table.jplex-datatable tr.hover td {
+    background:#b2d2ff;
+    cursor:pointer;
+}
+
+table.jplex-datatable tr.selected td {
+    background:#426fd9;
+    color:white;
+    cursor:pointer;
+}
