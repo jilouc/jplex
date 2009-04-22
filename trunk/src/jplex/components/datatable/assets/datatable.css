@@ -3,6 +3,10 @@ table.jplex-datatable {
     border:1px #666666 solid;
 }
 
+table.jplex-datatable:hover {
+    cursor:default;
+}
+
 table.jplex-datatable th {
     background:url('th-bg.png') repeat-x;
     font-weight:bold;

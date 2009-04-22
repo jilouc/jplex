@@ -34,7 +34,7 @@
         {label:"C2", key:"C2"} ,
         {label:"C3", key:"C3"}
     ];
-    var dt = new Datatable("pwet", ds, cols);
+    var dt = new Datatable("pwet", ds, cols, {select:Datatable.SELECT_MULTIPLE});
     dt.setEvent("onRowSelectionEvent", function(o) {
         console.log(o);
     });
