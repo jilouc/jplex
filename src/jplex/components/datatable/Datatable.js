@@ -30,11 +30,15 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
 
         this.columns = columns;
         this.datasource = datasource;
+        this.selectedRows = $A();
+        this._minSelectedRow = -1;
+        this._maxSelectedRow = -1;
 
         datasource.config.process = this.populate.bind(this);
 
         this.render();
         this.reloadData();
+
 
     },
 
@@ -55,7 +59,7 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
     populate: function(data) {
         this.data = data;
 
-        var selectHandler = this.didSelectRow.bind(this);
+        var selectHandler = this._didClickOnRow.bind(this);
         var doubleClickHandler = this.didDoubleClickOnRow.bind(this);
         var mouseOverHandler = this.didStartHoverOnRow.bind(this);
         var mouseOutHandler = this.didEndHoverOnRow.bind(this);
@@ -85,97 +89,233 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
     },
 
     didStartHoverOnRow: function(e) {
-        var row = e.element().up('tr');
-        if (row !== null && !row.retrieve("selected")) {
-            row.addClassName("hover");
+        var row = e.findElement('tr');
+        if (!Object.isUndefined(row)) {
+            if (this.cfg("select") !== jplex.components.Datatable.SELECT_NONE &&
+                !row.retrieve("selected")) {
+                row.addClassName("hover");
+            }
+            this.fireEvent('onRowStartHoverEvent', this._getRowMetadata(row, e.findElement('td')));
         }
     },
 
     didEndHoverOnRow: function(e) {
-        var row = e.element().up('tr');
-        if (row !== null) {
-            row.removeClassName("hover");
+        var row = e.findElement('tr');
+        if (!Object.isUndefined(row)) {
+            if (this.cfg("select") !== jplex.components.Datatable.SELECT_NONE &&
+                !row.retrieve("selected")) {
+                row.removeClassName("hover");
+            }
+            this.fireEvent('onRowEndHoverEvent', this._getRowMetadata(row, e.findElement('td')));
         }
     },
 
     didDoubleClickOnRow: function(e) {
         var row = e.findElement('tr');
-        var n, col, colInfo, colIndex, colKey;
 
         if (!Object.isUndefined(row)) {
 
-            n = row.retrieve("row");
-            col = e.findElement('td');
-            if(Object.isUndefined(col)) {
-                colInfo = null;
-            } else {
-                colIndex = col.retrieve("col");
-                colKey = this.columns[colIndex].key || this.columns[colIndex];
-                colInfo = {
-                    index: colIndex,
-                    key: colKey,
-                    data: this.data[n][colKey]
-                };
-            }
+            this._clearTextSelection();
 
-            this.fireEvent("onRowDoubleClickEvent", {
-                htmlRow: row,
-                row: n,
-                data: this.data[n],
-                column: colInfo
-            });
+            row.addClassName('selected');
+            row.store('selected', true);
+
+            this.fireEvent("onRowDoubleClickEvent", this._getRowMetadata(row, e.findElement('td')));
         }
     },
 
-    didSelectRow: function(e) {
-        if(e.detail && e.detail === 2) {
+    _didClickOnRow: function(e) {
+        if (e.detail && e.detail === 2) {
             // Double click
             return;
         }
 
-        var row = e.findElement('tr');
-        var n, col, colIndex, colKey, colInfo;
-
-        if (!Object.isUndefined(row)) {
-            if (row.retrieve('selected', true)) {
-                row.removeClassName('selected');
-                row.store('selected', false);
-            } else {
-                row.addClassName('selected');
-                row.store('selected', true);
-            }
-
-            n = row.retrieve('row');
-            col = e.findElement('td');
-            if(Object.isUndefined(col)) {
-                colInfo = null;
-            } else {
-                colIndex = col.retrieve('col');
-                colKey = this.columns[colIndex].key || this.columns[colIndex];
-                colInfo = {
-                    index: colIndex,
-                    key: colKey,
-                    data: this.data[n][colKey]
-                };
-            }
-
-            this.fireEvent('onRowSelectionEvent', {
-                htmlRow: row,
-                row: n,
-                data: this.data[n],
-                column: colInfo
-            });
+        if (this.cfg("select") == jplex.components.Datatable.SELECT_NONE) {
+            return;
         }
+
+        var row = e.findElement('tr');
+        var col = e.findElement('td');
+
+        if (this.cfg("select") == jplex.components.Datatable.SELECT_SINGLE) {
+            this.selectedRows.each(function(r) {
+                if (r !== row) {
+                    this.didDeselectRow(r);
+                }
+            }, this);
+            if (!row.retrieve('selected')) {
+                this.didSelectRow(row, col);
+            } else {
+                this.didDeselectRow(row);
+            }
+        } else if (this.cfg("select") === jplex.components.Datatable.SELECT_MULTIPLE) {
+
+            var shiftKey = e.shiftKey;
+            var ctrlKey = e.ctrlKey || ((navigator.userAgent.toLowerCase().indexOf("mac") != -1) && e.metaKey);
+
+            if (shiftKey) {
+                var n = row.retrieve('row');
+                var range;
+
+                if (n < this._maxSelectedRow) {
+                    range = $R(n, this._maxSelectedRow);
+                } else if (n > this._minSelectedRow && this._minSelectedRow !== -1) {
+                    range = $R(this._minSelectedRow, n);
+                } else {
+                    range = $R(n, n);
+                }
+                this.selectedRows.each(function(r) {
+                    if (!range.include(r.retrieve('row'))) {
+                        this.didDeselectRow(r);
+                    }
+                }, this);
+                range.each(function(r) {
+                    this.didSelectRow(r);
+                }, this);
+
+            } else {
+                if (!ctrlKey) {
+                    this.selectedRows.each(function(r) {
+                        if (r !== row) {
+                            this.didDeselectRow(r);
+                        }
+                    }, this);
+                }
+                if (!row.retrieve('selected')) {
+                    this.didSelectRow(row, col);
+                } else {
+                    this.didDeselectRow(row);
+                }
+            }
+        }
+        this._clearTextSelection();
     },
+
+    didDeselectRow: function(row) {
+        if (Object.isNumber(row)) {
+            row = this.rowAtIndex(row);
+            if (Object.isUndefined(row)) {
+                return;
+            }
+        }
+        row.removeClassName('selected');
+        row.store('selected', false);
+        this.selectedRows = this.selectedRows.without(row);
+
+        var meta = this._getRowMetadata(row);
+        if (this._minSelectedRow == meta.row) {
+            this._minSelectedRow = this.selectedRows.min(function(r) {
+                return r.retrieve('row');
+            });
+            if (Object.isUndefined(this._minSelectedRow)) {
+                this._minSelectedRow = -1;
+            }
+        }
+        if (this._maxSelectedRow == meta.row) {
+            this._maxSelectedRow = this.selectedRows.max(function(r) {
+                return r.retrieve('row');
+            });
+            if (Object.isUndefined(this._maxSelectedRow)) {
+                this._maxSelectedRow = -1;
+            }
+        }
+
+        this.fireEvent('onRowDeselectionEvent', meta);
+    }
+    ,
+
+    didSelectRow: function(row, col) {
+        if (Object.isNumber(row)) {
+            row = this.rowAtIndex(row);
+            if (Object.isUndefined(row)) {
+                return;
+            }
+        }
+        if (row.retrieve('selected')) {
+            return;
+        }
+        row.removeClassName('hover');
+        row.addClassName('selected');
+        row.store('selected', true);
+        this.selectedRows.push(row);
+
+        var meta = this._getRowMetadata(row, col);
+        if (this._minSelectedRow == -1 || this._minSelectedRow > meta.row) {
+            this._minSelectedRow = meta.row;
+        }
+        if (this._maxSelectedRow == -1 || this._maxSelectedRow < meta.row) {
+            this._maxSelectedRow = meta.row;
+        }
+
+        this.fireEvent('onRowSelectionEvent', meta);
+
+    }
+    ,
 
     reloadData: function() {
         this.datasource.request();
     }
+    ,
+
+    rowAtIndex: function(i) {
+        if (i < 0 || i >= this.data.length) {
+            return;
+        }
+        return this._body.down('tr', i);
+    }
+    ,
 
 
     //---------- Private methods ----------
 
-    // _myPrivateMethod: function() {},
+    _getRowMetadata: function(row, col /*optional*/) {
+        var n = row.retrieve('row');
+        var colInfo, colIndex;
+        if (Object.isUndefined(col) || col === null) {
+            colInfo = null;
+        } else {
+            colIndex = col.retrieve('col');
+            colKey = this.columns[colIndex].key || this.columns[colIndex];
+            colInfo = {
+                index: colIndex,
+                key: colKey,
+                data: this.data[n][colKey]
+            };
+        }
+
+        return {
+            htmlRow: row,
+            row: n,
+            data: this.data[n],
+            column: colInfo
+        };
+
+
+    },
+
+    _clearTextSelection: function() {
+        var sel;
+        if (window.getSelection) {
+            sel = window.getSelection();
+        }
+        else if (document.getSelection) {
+            sel = document.getSelection();
+        }
+        else if (document.selection) {
+                sel = document.selection;
+            }
+        if (sel) {
+            if (sel.empty) {
+                sel.empty();
+            }
+            else if (sel.removeAllRanges) {
+                sel.removeAllRanges();
+            }
+            else if (sel.collapse) {
+                    sel.collapse();
+                }
+        }
+    }
 
 
     //---------- Private properties ----------
@@ -186,7 +326,8 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
      * @private
      */
 
-});
+})
+        ;
 
 //---------- Static properties ----------
 
