@@ -30,9 +30,17 @@
     var ds = new DataSource(DataSource.TYPE_XML, "datasource.xml", schema);
 
     var cols = [
-        {label:"C1", key:"C1"},
+        {label:"C1", key:"C1", formatter: function() {
+            this.setStyle({background:"darkred", color:"white"});
+            return {
+                value: this.retrieve('data'),
+                alignment: 'right',
+                type: 'WOOT'
+            };
+        }
+        },
         {label:"C2", key:"C2"} ,
-        {label:"C3", key:"C3"}
+        {label:"C3", key:"C3", formatter:Datatable.CellFormatter.Currency('USD', true, 4, 2)}
     ];
     var dt = new Datatable("pwet", ds, cols, {select:Datatable.SELECT_MULTIPLE});
     dt.setEvent("onRowSelectionEvent", function(o) {

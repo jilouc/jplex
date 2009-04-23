@@ -15,7 +15,7 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
     _definition: {
         name: "Datatable",
         defaultConfig: {
-            // TODO 
+            // TODO cell block & Interval 
             select: "none" // jplex.components.Datatable.SELECT_NONE
         },
         events: {
@@ -71,12 +71,10 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
             this._body.insert(row);
 
             this.columns.each(function(c, j) {
-                var col = new Element('td').update(g[this.columns[j].key]);
-                if (j == this.columns.length - 1) {
-                    col.addClassName("last");
-                }
-                col.store("row", i);
-                col.store("col", j);
+                var col = this._createCellForIndexes(i, j, {
+                    rowData:g,
+                    columnInfo:c
+                });
                 row.insert(col);
             }, this);
 
@@ -150,7 +148,7 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
             }
         } else if (this.cfg("select") === jplex.components.Datatable.SELECT_MULTIPLE) {
 
-            var shiftKey = e.shiftKey;
+            var shiftKey = !!e.shiftKey;
             var ctrlKey = e.ctrlKey || ((navigator.userAgent.toLowerCase().indexOf("mac") != -1) && e.metaKey);
 
             if (shiftKey) {
@@ -203,7 +201,7 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
         this.selectedRows = this.selectedRows.without(row);
 
         var meta = this._getRowMetadata(row);
-        if (this._minSelectedRow == meta.row) {
+        if (this._minSelectedRow == meta.index) {
             this._minSelectedRow = this.selectedRows.min(function(r) {
                 return r.retrieve('row');
             });
@@ -211,7 +209,7 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
                 this._minSelectedRow = -1;
             }
         }
-        if (this._maxSelectedRow == meta.row) {
+        if (this._maxSelectedRow == meta.index) {
             this._maxSelectedRow = this.selectedRows.max(function(r) {
                 return r.retrieve('row');
             });
@@ -221,8 +219,7 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
         }
 
         this.fireEvent('onRowDeselectionEvent', meta);
-    }
-    ,
+    },
 
     didSelectRow: function(row, col) {
         if (Object.isNumber(row)) {
@@ -240,80 +237,110 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
         this.selectedRows.push(row);
 
         var meta = this._getRowMetadata(row, col);
-        if (this._minSelectedRow == -1 || this._minSelectedRow > meta.row) {
-            this._minSelectedRow = meta.row;
+        if (this._minSelectedRow == -1 || this._minSelectedRow > meta.index) {
+            this._minSelectedRow = meta.index;
         }
-        if (this._maxSelectedRow == -1 || this._maxSelectedRow < meta.row) {
-            this._maxSelectedRow = meta.row;
+        if (this._maxSelectedRow == -1 || this._maxSelectedRow < meta.index) {
+            this._maxSelectedRow = meta.index;
         }
 
         this.fireEvent('onRowSelectionEvent', meta);
 
-    }
-    ,
+    },
 
     reloadData: function() {
         this.datasource.request();
-    }
-    ,
+    },
 
     rowAtIndex: function(i) {
         if (i < 0 || i >= this.data.length) {
             return;
         }
         return this._body.down('tr', i);
-    }
-    ,
+    },
 
 
     //---------- Private methods ----------
 
-    _getRowMetadata: function(row, col /*optional*/) {
-        var n = row.retrieve('row');
-        var colInfo, colIndex;
-        if (Object.isUndefined(col) || col === null) {
-            colInfo = null;
-        } else {
-            colIndex = col.retrieve('col');
-            colKey = this.columns[colIndex].key || this.columns[colIndex];
-            colInfo = {
-                index: colIndex,
-                key: colKey,
-                data: this.data[n][colKey]
-            };
+    _createCellForIndexes: function(row, col, meta) {
+        var data = meta.rowData[this.columns[col].key];
+        var cell = new Element('td');
+        var formatter;
+
+        if (col == this.columns.length - 1) {
+            cell.addClassName('last');
         }
+        cell.store('row', row);
+        cell.store('col', col);
+        cell.store('data', data);
+
+        if (meta.columnInfo.formatter) {
+            formatter = meta.columnInfo.formatter;
+        } else {
+            formatter = jplex.components.Datatable.CellFormatter.String();
+        }
+        var formatted = formatter.bind(cell)();
+        console.log(formatted);
+
+        cell.store('type', formatted.type);
+        cell.update(formatted.value);
+        if (!Object.isUndefined(formatted.alignment)) {
+            cell.setStyle({
+                textAlign: formatted.alignment
+            });
+        }
+
+        return cell;
+    },
+
+    _getRowMetadata: function(row, cell) {
+        var n = row.retrieve('row');
+        var cellInfo = this._getCellMetaData(cell);
 
         return {
             htmlRow: row,
-            row: n,
+            index: n,
             data: this.data[n],
-            column: colInfo
+            cell: cellInfo
         };
 
 
+    },
+
+    _getCellMetaData: function(cell) {
+        var colInfo, colIndex;
+        if (Object.isUndefined(cell) || cell === null) {
+            colInfo = null;
+        } else {
+            colIndex = cell.retrieve('col');
+            colKey = this.columns[colIndex].key || this.columns[colIndex];
+            colInfo = {
+                htmlCell: cell,
+                index: colIndex,
+                key: colKey,
+                data: this.data[cell.retrieve('row')][colKey]
+            };
+        }
+        return colInfo;
     },
 
     _clearTextSelection: function() {
         var sel;
         if (window.getSelection) {
             sel = window.getSelection();
-        }
-        else if (document.getSelection) {
+        } else if (document.getSelection) {
             sel = document.getSelection();
+        } else if (document.selection) {
+            sel = document.selection;
         }
-        else if (document.selection) {
-                sel = document.selection;
-            }
         if (sel) {
-            if (sel.empty) {
+            if (sel.empty) { // Webkit-based
                 sel.empty();
-            }
-            else if (sel.removeAllRanges) {
+            } else if (sel.removeAllRanges) { // Firefox, Opera
                 sel.removeAllRanges();
+            } else if (sel.collapse) {
+                sel.collapse();
             }
-            else if (sel.collapse) {
-                    sel.collapse();
-                }
         }
     }
 
@@ -334,5 +361,66 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
 jPlex.extend('jplex.components.Datatable', {
     SELECT_NONE: "none",
     SELECT_SINGLE: "single",
-    SELECT_MULTIPLE: "multiple"
+    SELECT_MULTIPLE: "multiple",
+
+    CellFormatter: (function() {
+
+        var formatNumber = function(precision, leftPadding, base) {
+            base = base || 10;
+            var data = parseFloat(this.retrieve('data'));
+            var formattedData;
+            if (!isNaN(data)) {
+                if (!Object.isUndefined(precision)) {
+                    data = data.toFixed(precision);
+                }
+                var tmp = Math.floor(data).toString();
+                var tmp2 = tmp.lpad(leftPadding || 1, '0'); 
+                formattedData = tmp2 + data.toString(base).substring(tmp.length);
+            } else {
+                formattedData = '###';
+            }
+            return {
+                type: 'Number',
+                value: formattedData,
+                alignment: 'right'
+            };
+        };
+
+        var formatString = function() {
+            return {
+                type: 'String',
+                value: this.retrieve('data')
+            };
+        };
+
+        var formatCurrency = function(symbol, after, precision, leftPadding) {
+            if(Object.isUndefined(precision)) {
+                precision = 2;
+            }
+            var num = formatNumber.bind(this)(precision, leftPadding);
+            return Object.extend(num, {
+                type: 'Currency',
+                value: after ? num.value + ' ' + symbol : symbol + ' ' + num.value
+            });
+        };
+
+        return {
+            Number: function(precision, leftPadding, base) {
+                return formatNumber.curry(precision, leftPadding, base);
+            },
+
+
+            Date: function() {
+                return formatDate;
+            },
+
+            Currency: function(symbol, after, precision, leftPadding) {
+                return formatCurrency.curry(symbol, after, precision, leftPadding);
+            },
+
+            String: function() {
+                return formatString;
+            }
+        };
+    })()
 });
