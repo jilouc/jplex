@@ -7,7 +7,7 @@
             <C1 value="pif"/>
         </nested>
         <C2>paf</C2>
-        <C3>pouf</C3>
+        <C3>1.618</C3>
     </item>
     <item>
         <nested>
@@ -16,7 +16,7 @@
             <C1 value="paf"/>
         </nested>
         <C2>pouf</C2>
-        <C3>pif</C3>
+        <C3>42</C3>
     </item>
     <item>
         <nested>
@@ -25,7 +25,7 @@
             <C1 value="pouf"/>
         </nested>
         <C2>pif</C2>
-        <C3>paf</C3>
+        <C3>coin</C3>
     </item>
     <item>
         <nested>
@@ -34,7 +34,7 @@
             <C1 value="pif"/>
         </nested>
         <C2>paf</C2>
-        <C3>pouf</C3>
+        <C3>1515.34</C3>
     </item>
     <item>
         <nested>
@@ -43,7 +43,7 @@
             <C1 value="paf"/>
         </nested>
         <C2>pouf</C2>
-        <C3>pif</C3>
+        <C3>0</C3>
     </item>
     <item>
         <nested>
@@ -52,7 +52,7 @@
             <C1 value="pouf"/>
         </nested>
         <C2>pif</C2>
-        <C3>paf</C3>
+        <C3>51.52</C3>
     </item>
     <item>
         <nested>
@@ -61,7 +61,7 @@
             <C1 value="pif"/>
         </nested>
         <C2>paf</C2>
-        <C3>pouf</C3>
+        <C3>2.543</C3>
     </item>
     <item>
         <nested>
@@ -70,7 +70,7 @@
             <C1 value="paf"/>
         </nested>
         <C2>pouf</C2>
-        <C3>pif</C3>
+        <C3>10.3</C3>
     </item>
     <item>
         <nested>
@@ -79,7 +79,7 @@
             <C1 value="pouf"/>
         </nested>
         <C2>pif</C2>
-        <C3>paf</C3>
+        <C3>3.14</C3>
     </item>
     <item>
         <nested>
@@ -88,7 +88,7 @@
             <C1 value="pif"/>
         </nested>
         <C2>paf</C2>
-        <C3>pouf</C3>
+        <C3>1.836</C3>
     </item>
     <item>
         <nested>
@@ -97,7 +97,7 @@
             <C1 value="paf"/>
         </nested>
         <C2>pouf</C2>
-        <C3>pif</C3>
+        <C3>1.707</C3>
     </item>
     <item>
         <nested>
@@ -106,6 +106,6 @@
             <C1 value="pouf"/>
         </nested>
         <C2>pif</C2>
-        <C3>paf</C3>
+        <C3>8.7</C3>
     </item>
 </root>
