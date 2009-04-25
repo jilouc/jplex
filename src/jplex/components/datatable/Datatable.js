@@ -83,6 +83,8 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
     populate: function(data) {
         this.data = data;
         this._body.removeChildren();
+        this._minSelectedRow = -1;
+        this._maxSelectedRow = -1;
 
         var selectHandler = this._didClickOnRow.bind(this);
         var doubleClickHandler = this.didDoubleClickOnRow.bind(this);
@@ -92,8 +94,10 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
 
             var row = new Element('tr');
             var key;
+            var realKey = false;
             if (this.cfg('key') && !Object.isUndefined(g[this.cfg('key')])) {
                 key = g[this.cfg('key')];
+                realKey = true;
             } else {
                 key = i;
             }
@@ -101,7 +105,23 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
 
             row.store('key', key);
             row.store('row', i);
-            row.store('selected', false);
+            var oldSelection = this.selectedRows.find(function(r) {
+                return r.retrieve('key') === key;
+            });
+            if(!realKey || Object.isUndefined(oldSelection)) {
+                row.store('selected', false);
+            } else {
+                row.store('selected', true);
+                row.addClassName('selected');
+                this.selectedRows = this.selectedRows.without(oldSelection);
+                this.selectedRows.push(row);
+                if(i > this._maxSelectedRow) {
+                    this._maxSelectedRow = i;
+                }
+                if(this._minSelectedRow === -1 || i < this._minSelectedRow) {
+                    this._minSelectedRow = i;
+                }
+            }
 
             row.addClassName('selectable'); // TODO
 
@@ -211,14 +231,14 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
             return;
         }
 
-        if (this.cfg("select") == jplex.components.Datatable.SELECT_NONE) {
+        if (this.cfg('select') == jplex.components.Datatable.SELECT_NONE) {
             return;
         }
 
         var row = e.findElement('tr');
         var col = e.findElement('td');
 
-        if (this.cfg("select") == jplex.components.Datatable.SELECT_SINGLE) {
+        if (this.cfg('select') == jplex.components.Datatable.SELECT_SINGLE) {
             this.selectedRows.each(function(r) {
                 if (r !== row) {
                     this.didDeselectRow(r);
@@ -229,10 +249,10 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
             } else {
                 this.didDeselectRow(row);
             }
-        } else if (this.cfg("select") === jplex.components.Datatable.SELECT_MULTIPLE) {
+        } else if (this.cfg('select') === jplex.components.Datatable.SELECT_MULTIPLE) {
 
             var shiftKey = !!e.shiftKey;
-            var ctrlKey = e.ctrlKey || ((navigator.userAgent.toLowerCase().indexOf("mac") != -1) && e.metaKey);
+            var ctrlKey = e.ctrlKey || ((navigator.userAgent.toLowerCase().indexOf('mac') != -1) && e.metaKey);
 
             if (shiftKey) {
                 var n = row.retrieve('row');
@@ -554,9 +574,9 @@ jPlex.extend('jplex.components.Datatable', {
             if (isNaN(v1) && isNaN(v2)) {
                 return 0;
             } else if (isNaN(v1)) {
-                return order === jplex.components.Datatable.Sorter.ORDER_ASC ? 1 : -1;
-            } else if (isNaN(v2)) {
                 return order === jplex.components.Datatable.Sorter.ORDER_ASC ? -1 : 1;
+            } else if (isNaN(v2)) {
+                return order === jplex.components.Datatable.Sorter.ORDER_ASC ? 1 : -1;
             } else {
                 if (order === jplex.components.Datatable.Sorter.ORDER_ASC) {
                     if (v1 < v2) {
