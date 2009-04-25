@@ -12,6 +12,8 @@ table.jplex-datatable th {
     background:url('th-bg.png') repeat-x;
     font-weight:bold;
     border-right: 1px #bbbbbb solid;
+    border-top: 1px #666666 solid;
+    border-bottom: 1px #666666 solid;
 }
 
 table.jplex-datatable td {
@@ -32,7 +34,8 @@ table.jplex-datatable tr.odd td {
     background:#fefefe;
 }
 
-table.jplex-datatable th.highlighted {
+table.jplex-datatable th.highlighted,
+table.jplex-datatable th.sortable:hover {
     background:url('th-bg-sel.png') repeat-x;
 }
 
@@ -44,7 +47,8 @@ table.jplex-datatable tr.even td.highlighted {
 }
 
 table.jplex-datatable tr.selected td,
-table.jplex-datatable tr.selected td.highlighted {
+table.jplex-datatable tr.selected td.highlighted,
+table.jplex-datatable tr.selected td * {
     background:#426fd9;
     color:white;
     cursor:pointer;

@@ -21,30 +21,34 @@
     jPlex.include("jplex.components.Datatable");
 
     var schema = {
+        root:"ResultSet",
+        item:"Result",
         properties:[
-            { key:"C1", path:"nested/C1[2]@value" },
-            "C2",
-            "C3"
+            "Title", "Address", "City", "State", "Phone",
+            {key:"Rating", path:"Rating/AverageRating"},
+            "BusinessUrl"
         ]
     };
     var ds = new DataSource(DataSource.TYPE_XML, "datasource.xml", schema);
     var formatter = function(row, meta) {
-        if(meta.key === 'pif') {
-            row.setStyle({background:'darkgreen', color:'white'});
+        if(parseFloat(meta.data['Rating']) < 4) {
+            row.setStyle({background:'darkred', color:'white'});
             return;
         }
         Datatable.DefaultRowFormatter(row, meta);
     };
     var cols = [
-        {label:"Coin1", key:"C1", sort:Datatable.Sorter.String},
-        {label:"Coin2", key:"C2"} ,
-        {label:"Coin3", key:"C3", formatter:Datatable.CellFormatter.Currency('€', true), sort:Datatable.Sorter.Number}
+        {label:"Pizza", key:"Title", sort:Datatable.Sorter.String},
+        {label:"Address", key:"Address", sort:Datatable.Sorter.String} ,
+        {label:"City", key:"City", sort:Datatable.Sorter.String},
+        {label:"Phone", key:"Phone", sort:Datatable.Sorter.String},
+        {label:"Rating", key:"Rating", formatter:Datatable.CellFormatter.Number(2), sort:Datatable.Sorter.Number},
+        {label:"URL", key:"BusinessUrl"}
     ];
     var dt = new Datatable("pwet", ds, cols, {
         select: Datatable.SELECT_MULTIPLE,
-        rowFormatter: formatter,
-        key: 'C1',
-        sortedBy: {order:Datatable.Sorter.ORDER_ASC,key:'C1'}
+        rowFormatter: formatter
+        //sortedBy: { order:Datatable.Sorter.ORDER_ASC,key:'C1' }
     });
 
     dt.setEvent("onRowSelectionEvent", function(o) {

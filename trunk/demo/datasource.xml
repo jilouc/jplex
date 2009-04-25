@@ -1,111 +1,217 @@
-<?xml version="1.0" encoding="utf-8"?>
-<root>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="pif"/>
-        </nested>
-        <C2>paf</C2>
-        <C3>1.618</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="paf"/>
-        </nested>
-        <C2>pouf</C2>
-        <C3>42</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="pouf"/>
-        </nested>
-        <C2>pif</C2>
-        <C3>coin</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="pif"/>
-        </nested>
-        <C2>paf</C2>
-        <C3>1515.34</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="paf"/>
-        </nested>
-        <C2>pouf</C2>
-        <C3>0</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="pouf"/>
-        </nested>
-        <C2>pif</C2>
-        <C3>51.52</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="pif"/>
-        </nested>
-        <C2>paf</C2>
-        <C3>2.543</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="paf"/>
-        </nested>
-        <C2>pouf</C2>
-        <C3>10.3</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="pouf"/>
-        </nested>
-        <C2>pif</C2>
-        <C3>3.14</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="pif"/>
-        </nested>
-        <C2>paf</C2>
-        <C3>1.836</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="paf"/>
-        </nested>
-        <C2>pouf</C2>
-        <C3>1.707</C3>
-    </item>
-    <item>
-        <nested>
-            <C1 value="fake"/>
-            <C1 value="fake"/>
-            <C1 value="pouf"/>
-        </nested>
-        <C2>pif</C2>
-        <C3>8.7</C3>
-    </item>
-</root>
+<?xml version="1.0" encoding="UTF-8"?>
+<ResultSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:yahoo:lcl"
+           xsi:schemaLocation="urn:yahoo:lcl http://local.yahooapis.com/LocalSearchService/V2/LocalSearchResponse.xsd"
+           totalResultsAvailable="521" totalResultsReturned="10" firstResultPosition="1">
+    <ResultSetMapUrl>http://maps.yahoo.com/broadband/?q1=Sunnyvale%2C+CA+94089&amp;tt=pizza&amp;tp=1</ResultSetMapUrl>
+    <Result>
+        <Title>Giovannis Pizzeria</Title>
+        <Address>1127 N Lawrence Expy</Address>
+        <City>Sunnyvale</City>
+        <State>CA</State>
+        <Phone>(408) 734-4221</Phone>
+        <Latitude>37.397058</Latitude>
+        <Longitude>-121.996017</Longitude>
+        <Rating>
+            <AverageRating>4.5</AverageRating>
+            <TotalRatings>60</TotalRatings>
+            <TotalReviews>31</TotalReviews>
+            <LastReviewDate>1240436190</LastReviewDate>
+        </Rating>
+        <Distance>0.79</Distance>
+        <Url>http://local.yahoo.com/info-21341983-giovannis-pizzeria-sunnyvale</Url>
+        <ClickUrl>http://local.yahoo.com/info-21341983-giovannis-pizzeria-sunnyvale</ClickUrl>
+        <MapUrl>http://maps.yahoo.com/maps_result?q1=1127+N+Lawrence+Expy+Sunnyvale+CA&amp;gid1=21341983</MapUrl>
+        <BusinessUrl>http://giovannisnypizza.com/</BusinessUrl>
+        <BusinessClickUrl>http://giovannisnypizza.com/</BusinessClickUrl>
+    </Result>
+    <Result>
+        <Title>Vitos Famous Pizza</Title>
+        <Address>1155 Reed Ave</Address>
+        <City>Sunnyvale</City>
+        <State>CA</State>
+        <Phone>(408) 246-8800</Phone>
+        <Latitude>37.367029</Latitude>
+        <Longitude>-121.997904</Longitude>
+        <Rating>
+            <AverageRating>4.5</AverageRating>
+            <TotalRatings>18</TotalRatings>
+            <TotalReviews>15</TotalReviews>
+            <LastReviewDate>1208547726</LastReviewDate>
+        </Rating>
+        <Distance>2.58</Distance>
+        <Url>http://local.yahoo.com/info-21332026-vitos-famous-pizza-sunnyvale</Url>
+        <ClickUrl>http://local.yahoo.com/info-21332026-vitos-famous-pizza-sunnyvale</ClickUrl>
+        <MapUrl>http://maps.yahoo.com/maps_result?q1=1155+Reed+Ave+Sunnyvale+CA&amp;gid1=21332026</MapUrl>
+        <BusinessUrl>http://www.vitosfamouspizza.com/</BusinessUrl>
+        <BusinessClickUrl>http://www.vitosfamouspizza.com/</BusinessClickUrl>
+    </Result>
+    <Result>
+        <Title>Gumbas Cafe Italian Restaurant &amp; Pizzeria</Title>
+        <Address>176 S Murphy Ave</Address>
+        <City>Sunnyvale</City>
+        <State>CA</State>
+        <Phone>(408) 737-8384</Phone>
+        <Latitude>37.376442</Latitude>
+        <Longitude>-122.030102</Longitude>
+        <Rating>
+            <AverageRating>4</AverageRating>
+            <TotalRatings>47</TotalRatings>
+            <TotalReviews>30</TotalReviews>
+            <LastReviewDate>1231219819</LastReviewDate>
+        </Rating>
+        <Distance>2.23</Distance>
+        <Url>http://local.yahoo.com/info-21337886-gumbas-cafe-italian-restaurant-pizzeria-sunnyvale</Url>
+        <ClickUrl>http://local.yahoo.com/info-21337886-gumbas-cafe-italian-restaurant-pizzeria-sunnyvale</ClickUrl>
+        <MapUrl>http://maps.yahoo.com/maps_result?q1=176+S+Murphy+Ave+Sunnyvale+CA&amp;gid1=21337886</MapUrl>
+        <BusinessUrl/>
+        <BusinessClickUrl/>
+    </Result>
+    <Result>
+        <Title>Domino's Pizza</Title>
+        <Address>992 W El Camino Real</Address>
+        <City>Sunnyvale</City>
+        <State>CA</State>
+        <Phone>(408) 736-3666</Phone>
+        <Latitude>37.371434</Latitude>
+        <Longitude>-122.047559</Longitude>
+        <Rating>
+            <AverageRating>4</AverageRating>
+            <TotalRatings>10</TotalRatings>
+            <TotalReviews>7</TotalReviews>
+            <LastReviewDate>1223172698</LastReviewDate>
+        </Rating>
+        <Distance>3.11</Distance>
+        <Url>http://local.yahoo.com/info-21341882-domino-s-pizza-sunnyvale</Url>
+        <ClickUrl>http://local.yahoo.com/info-21341882-domino-s-pizza-sunnyvale</ClickUrl>
+        <MapUrl>http://maps.yahoo.com/maps_result?q1=992+W+El+Camino+Real+Sunnyvale+CA&amp;gid1=21341882</MapUrl>
+        <BusinessUrl>http://www.dominos.com/</BusinessUrl>
+        <BusinessClickUrl>http://www.dominos.com/</BusinessClickUrl>
+    </Result>
+    <Result>
+        <Title>Nizario's Pizza Sunnyvale</Title>
+        <Address>725 Sunnyvale Saratoga Rd</Address>
+        <City>Sunnyvale</City>
+        <State>CA</State>
+        <Phone>(408) 524-5555</Phone>
+        <Latitude>37.366858</Latitude>
+        <Longitude>-122.032484</Longitude>
+        <Rating>
+            <AverageRating>4.5</AverageRating>
+            <TotalRatings>3</TotalRatings>
+            <TotalReviews>3</TotalReviews>
+            <LastReviewDate>1240445791</LastReviewDate>
+        </Rating>
+        <Distance>2.87</Distance>
+        <Url>http://local.yahoo.com/info-41567024-nizario-s-pizza-sunnyvale-sunnyvale</Url>
+        <ClickUrl>http://local.yahoo.com/info-41567024-nizario-s-pizza-sunnyvale-sunnyvale</ClickUrl>
+        <MapUrl>http://maps.yahoo.com/maps_result?q1=725+Sunnyvale+Saratoga+Rd+Sunnyvale+CA&amp;gid1=41567024</MapUrl>
+        <BusinessUrl/>
+        <BusinessClickUrl/>
+    </Result>
+    <Result>
+        <Title>Domino's Pizza</Title>
+        <Address>615 Caliente Dr</Address>
+        <City>Sunnyvale</City>
+        <State>CA</State>
+        <Phone>(408) 732-3030</Phone>
+        <Latitude>37.391271</Latitude>
+        <Longitude>-122.013742</Longitude>
+        <Rating>
+            <AverageRating>3.5</AverageRating>
+            <TotalRatings>6</TotalRatings>
+            <TotalReviews>1</TotalReviews>
+            <LastReviewDate>1216497040</LastReviewDate>
+        </Rating>
+        <Distance>0.90</Distance>
+        <Url>http://local.yahoo.com/info-21335892-domino-s-pizza-sunnyvale</Url>
+        <ClickUrl>http://local.yahoo.com/info-21335892-domino-s-pizza-sunnyvale</ClickUrl>
+        <MapUrl>http://maps.yahoo.com/maps_result?q1=615+Caliente+Dr+Sunnyvale+CA&amp;gid1=21335892</MapUrl>
+        <BusinessUrl>http://www.dominos.com/</BusinessUrl>
+        <BusinessClickUrl>http://www.dominos.com/</BusinessClickUrl>
+    </Result>
+    <Result>
+        <Title>Pizza Depot</Title>
+        <Address>919 E Duane Ave</Address>
+        <City>Sunnyvale</City>
+        <State>CA</State>
+        <Phone>(408) 245-7760</Phone>
+        <Latitude>37.388527</Latitude>
+        <Longitude>-122.004046</Longitude>
+        <Rating>
+            <AverageRating>3</AverageRating>
+            <TotalRatings>6</TotalRatings>
+            <TotalReviews>5</TotalReviews>
+            <LastReviewDate>1228673030</LastReviewDate>
+        </Rating>
+        <Distance>1.06</Distance>
+        <Url>http://local.yahoo.com/info-21332021-pizza-depot-sunnyvale</Url>
+        <ClickUrl>http://local.yahoo.com/info-21332021-pizza-depot-sunnyvale</ClickUrl>
+        <MapUrl>http://maps.yahoo.com/maps_result?q1=919+E+Duane+Ave+Sunnyvale+CA&amp;gid1=21332021</MapUrl>
+        <BusinessUrl>http://pizza-depot.com/</BusinessUrl>
+        <BusinessClickUrl>http://pizza-depot.com/</BusinessClickUrl>
+    </Result>
+    <Result>
+        <Title>Pizza</Title>
+        <Address>123 Fifth St</Address>
+        <City>Sunnyvale</City>
+        <State>CA</State>
+        <Phone>(800) 555-1212</Phone>
+        <Latitude>37.4055</Latitude>
+        <Longitude>-122.002959</Longitude>
+        <Rating>
+            <AverageRating>NaN</AverageRating>
+            <TotalRatings>0</TotalRatings>
+            <TotalReviews>0</TotalReviews>
+        </Rating>
+        <Distance>0.31</Distance>
+        <Url>http://local.yahoo.com/info-49450668-pizza-sunnyvale</Url>
+        <ClickUrl>http://local.yahoo.com/info-49450668-pizza-sunnyvale</ClickUrl>
+        <MapUrl>http://maps.yahoo.com/maps_result?q1=123+Fifth+St+Sunnyvale+CA&amp;gid1=49450668</MapUrl>
+        <BusinessUrl/>
+        <BusinessClickUrl/>
+    </Result>
+    <Result>
+        <Title>Round Table Pizza Sunnyvale</Title>
+        <Address>665 S Bernardo Ave</Address>
+        <City>Sunnyvale</City>
+        <State>CA</State>
+        <Phone>(408) 732-6670</Phone>
+        <Latitude>37.372847</Latitude>
+        <Longitude>-122.056805</Longitude>
+        <Rating>
+            <AverageRating>4</AverageRating>
+            <TotalRatings>2</TotalRatings>
+            <TotalReviews>2</TotalReviews>
+            <LastReviewDate>1186608686</LastReviewDate>
+        </Rating>
+        <Distance>3.42</Distance>
+        <Url>http://local.yahoo.com/info-21328190-round-table-pizza-sunnyvale-sunnyvale</Url>
+        <ClickUrl>http://local.yahoo.com/info-21328190-round-table-pizza-sunnyvale-sunnyvale</ClickUrl>
+        <MapUrl>http://maps.yahoo.com/maps_result?q1=665+S+Bernardo+Ave+Sunnyvale+CA&amp;gid1=21328190</MapUrl>
+        <BusinessUrl>http://www.roundtablepizza.com/</BusinessUrl>
+        <BusinessClickUrl>http://www.roundtablepizza.com/</BusinessClickUrl>
+    </Result>
+    <Result>
+        <Title>Nizario's Pizza</Title>
+        <Address>725 Sunnyvale Saratoga Rd</Address>
+        <City>Sunnyvale</City>
+        <State>CA</State>
+        <Phone>(405) 524-5555</Phone>
+        <Latitude>37.366858</Latitude>
+        <Longitude>-122.032484</Longitude>
+        <Rating>
+            <AverageRating>3.5</AverageRating>
+            <TotalRatings>3</TotalRatings>
+            <TotalReviews>3</TotalReviews>
+            <LastReviewDate>1237950643</LastReviewDate>
+        </Rating>
+        <Distance>2.87</Distance>
+        <Url>http://local.yahoo.com/info-45731089-nizario-s-pizza-sunnyvale</Url>
+        <ClickUrl>http://local.yahoo.com/info-45731089-nizario-s-pizza-sunnyvale</ClickUrl>
+        <MapUrl>http://maps.yahoo.com/maps_result?q1=725+Sunnyvale+Saratoga+Rd+Sunnyvale+CA&amp;gid1=45731089</MapUrl>
+        <BusinessUrl>http://www.nizarios.com/</BusinessUrl>
+        <BusinessClickUrl>http://www.nizarios.com/</BusinessClickUrl>
+    </Result>
+</ResultSet>
+        <!-- ws03.search.re2.yahoo.com uncompressed/chunked Sat Apr 25 03:38:14 PDT 2009 -->
+        <!-- p1.ydn.re1.yahoo.com uncompressed/chunked Sat Apr 25 03:38:14 PDT 2009 -->
