@@ -16,7 +16,11 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
         name: "Datatable",
         defaultConfig: {
             // TODO cell block & Interval 
-            select: "none" // jplex.components.Datatable.SELECT_NONE
+            select: "none", // jplex.components.Datatable.SELECT_NONE
+            sortedBy: {
+                order: 'asc',
+                key: null
+            }
         },
         events: {
             onRowSelectionEvent: Prototype.emptyFunction,
@@ -33,8 +37,17 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
         this.selectedRows = $A();
         this._minSelectedRow = -1;
         this._maxSelectedRow = -1;
+        this._keyMap = $H();
+        this.sortedBy = this.cfg('sortedBy'); // TODO
 
-        datasource.config.process = this.populate.bind(this);
+        datasource.config.process = function(data) {
+            if(this.sortedBy.key === null) {
+                this.populate(data);
+            } else {
+                this.data = data;
+                this.sort(this.sortedBy.order, this.sortedBy.key);
+            }
+        }.bind(this);
 
         this.render();
         this.reloadData();
@@ -44,20 +57,32 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
 
     render: function() {
         //this.component.setStyle({width:"500px"});
-        this.component.addClassName("jplex-datatable");
+        this.component.addClassName('jplex-datatable');
         this._headers = new Element('tr');
         this.component.insert(this._headers.wrap('thead'));
+
+        var clickOnHeaderHandler = this._didClickOnColumnHeader.bind(this);
+
         this.columns.each(function(s, i) {
-            var th = new Element("th", { id: this.UID + "-h" + i }).update(s.label);
-            th.store("info", s);
-            th.store("column", i);
+            var th = new Element('th', { id: this.UID + '-h' + i }).update('<div>'+s.label+'</div>');
+            th.store('info', s);
+            th.store('column', i);
+            th.store('sort', 'none');
             this._headers.insert(th);
+            if (!Object.isUndefined(s.sort)) {
+                th.addClassName('sortable');
+                if(this.sortedBy.key !== null && this.sortedBy.key === s.key) {
+                    th.addClassName(this.sortedBy.order);
+                }
+                th.observe('click', clickOnHeaderHandler);
+            }
         }, this);
         this.component.insert(this._body = new Element('tbody'));
     },
 
     populate: function(data) {
         this.data = data;
+        this._body.removeChildren();
 
         var selectHandler = this._didClickOnRow.bind(this);
         var doubleClickHandler = this.didDoubleClickOnRow.bind(this);
@@ -65,25 +90,62 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
         var mouseOutHandler = this.didEndHoverOnRow.bind(this);
         data.each(function(g, i) {
 
-            var row = new Element('tr').addClassName(i % 2 === 0 ? 'even' : 'odd').addClassName("selectable");
-            row.store("row", i);
-            row.store("selected", false);
-            this._body.insert(row);
+            var row = new Element('tr');
+            var key;
+            if (this.cfg('key') && !Object.isUndefined(g[this.cfg('key')])) {
+                key = g[this.cfg('key')];
+            } else {
+                key = i;
+            }
+            this._keyMap.set(key, i);
+
+            row.store('key', key);
+            row.store('row', i);
+            row.store('selected', false);
+
+            row.addClassName('selectable'); // TODO
 
             this.columns.each(function(c, j) {
                 var col = this._createCellForIndexes(i, j, {
-                    rowData:g,
-                    columnInfo:c
+                    rowData: g,
+                    columnInfo: c
                 });
                 row.insert(col);
             }, this);
 
+            (this.cfg('rowFormatter') || jplex.components.Datatable.DefaultRowFormatter)(row, this._getRowMetadata(row));
 
-            row.observe("click", selectHandler);
-            row.observe("dblclick", doubleClickHandler);
-            row.observe("mouseover", mouseOverHandler);
-            row.observe("mouseout", mouseOutHandler);
+            this._body.insert(row);
+
+            row.observe('click', selectHandler);
+            row.observe('dblclick', doubleClickHandler);
+            row.observe('mouseover', mouseOverHandler);
+            row.observe('mouseout', mouseOutHandler);
         }.bind(this), "");
+    },
+
+    sort: function(order, key, column) {
+        if(Object.isUndefined(column)) {
+            column = 0;
+            while(this.columns[column].key !== key) column++;
+            if(column == this.columns.length) {
+                return;
+            }
+        }
+        var header = this._headers.childElements()[column];
+        if(Object.isUndefined(header)) {
+            return;
+        }
+        var selected = this._headers.select('th.highlighted');
+        selected.invoke('removeClassName', 'highlighted');
+        selected.invoke('removeClassName', 'asc');
+        selected.invoke('removeClassName', 'desc');
+        header.addClassName('highlighted');
+        header.store('sort', order);
+        header.addClassName(order);
+        this.data = this.data.sort(this.columns[column].sort.curry(order, key));
+        this.populate(this.data);
+        this._body.select('tr td:nth-child(' + (column + 1) + ')').invoke('addClassName', 'highlighted');
     },
 
     didStartHoverOnRow: function(e) {
@@ -120,6 +182,27 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
 
             this.fireEvent("onRowDoubleClickEvent", this._getRowMetadata(row, e.findElement('td')));
         }
+    },
+
+    _didClickOnColumnHeader: function(e) {
+        var DT = jplex.components.Datatable;
+        var header = e.findElement('th');
+
+        var sort = header.retrieve('sort');
+        var key = header.retrieve('info').key;
+        var column = header.retrieve('column');
+        var order;
+
+
+        this._clearTextSelection();
+
+        if (sort == DT.Sorter.ORDER_NONE || sort == DT.Sorter.ORDER_DESC) {
+            order = DT.Sorter.ORDER_ASC;
+        } else {
+            order = DT.Sorter.ORDER_DESC;
+        }
+
+        this.sort(order, key, column);
     },
 
     _didClickOnRow: function(e) {
@@ -262,6 +345,12 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
 
     //---------- Private methods ----------
 
+    _createRowForIndex: function(row, meta) {
+
+
+    },
+
+
     _createCellForIndexes: function(row, col, meta) {
         var data = meta.rowData[this.columns[col].key];
         var cell = new Element('td');
@@ -280,7 +369,6 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
             formatter = jplex.components.Datatable.CellFormatter.String();
         }
         var formatted = formatter.bind(cell)();
-        console.log(formatted);
 
         cell.store('type', formatted.type);
         cell.update(formatted.value);
@@ -300,6 +388,7 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
         return {
             htmlRow: row,
             index: n,
+            key: row.retrieve('key'),
             data: this.data[n],
             cell: cellInfo
         };
@@ -353,8 +442,7 @@ jPlex.provide("jplex.components.Datatable", "jplex.common.Component", {
      * @private
      */
 
-})
-        ;
+});
 
 //---------- Static properties ----------
 
@@ -374,7 +462,7 @@ jPlex.extend('jplex.components.Datatable', {
                     data = data.toFixed(precision);
                 }
                 var tmp = Math.floor(data).toString();
-                var tmp2 = tmp.lpad(leftPadding || 1, '0'); 
+                var tmp2 = tmp.lpad(leftPadding || 1, '0');
                 formattedData = tmp2 + data.toString(base).substring(tmp.length);
             } else {
                 formattedData = '###';
@@ -386,6 +474,12 @@ jPlex.extend('jplex.components.Datatable', {
             };
         };
 
+        var formatDate = function() {
+            return Object.extend(formatString.bind(this)(), {
+                type: 'Date'
+            });
+        };
+
         var formatString = function() {
             return {
                 type: 'String',
@@ -394,7 +488,7 @@ jPlex.extend('jplex.components.Datatable', {
         };
 
         var formatCurrency = function(symbol, after, precision, leftPadding) {
-            if(Object.isUndefined(precision)) {
+            if (Object.isUndefined(precision)) {
                 precision = 2;
             }
             var num = formatNumber.bind(this)(precision, leftPadding);
@@ -409,7 +503,6 @@ jPlex.extend('jplex.components.Datatable', {
                 return formatNumber.curry(precision, leftPadding, base);
             },
 
-
             Date: function() {
                 return formatDate;
             },
@@ -422,5 +515,67 @@ jPlex.extend('jplex.components.Datatable', {
                 return formatString;
             }
         };
-    })()
+    })(),
+
+
+    DefaultRowFormatter: function(row, meta) {
+        row.addClassName(meta.index % 2 == 0 ? 'even' : 'odd');
+    },
+
+    Sorter: {
+
+        ORDER_ASC: 'asc',
+        ORDER_DESC: 'desc',
+        ORDER_NONE: 'none',
+
+        String: function(order, key, row1, row2) {
+            if (order === jplex.components.Datatable.Sorter.ORDER_ASC) {
+                if (row1[key] < row2[key]) {
+                    return -1;
+                } else if (row1[key] > row2[key]) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            } else {
+                if (row1[key] < row2[key]) {
+                    return 1;
+                } else if (row1[key] > row2[key]) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        },
+
+        Number: function(order, key, row1, row2) {
+            var v1 = parseFloat(row1[key]);
+            var v2 = parseFloat(row2[key]);
+            if (isNaN(v1) && isNaN(v2)) {
+                return 0;
+            } else if (isNaN(v1)) {
+                return order === jplex.components.Datatable.Sorter.ORDER_ASC ? 1 : -1;
+            } else if (isNaN(v2)) {
+                return order === jplex.components.Datatable.Sorter.ORDER_ASC ? -1 : 1;
+            } else {
+                if (order === jplex.components.Datatable.Sorter.ORDER_ASC) {
+                    if (v1 < v2) {
+                        return -1;
+                    } else if (v1 > v2) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                } else {
+                    if (row1[key] < row2[key]) {
+                        return 1;
+                    } else if (row1[key] > row2[key]) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        }
+    }
 });

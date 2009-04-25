@@ -1,6 +1,7 @@
 table.jplex-datatable {
     border-collapse:collapse;
     border:1px #666666 solid;
+    color:#222222;
 }
 
 table.jplex-datatable:hover {
@@ -31,13 +32,50 @@ table.jplex-datatable tr.odd td {
     background:#fefefe;
 }
 
-table.jplex-datatable tr.hover td {
-    background:#b2d2ff;
-    cursor:pointer;
+table.jplex-datatable th.highlighted {
+    background:url('th-bg-sel.png') repeat-x;
 }
 
-table.jplex-datatable tr.selected td {
+table.jplex-datatable tr.odd td.highlighted {
+    background:#edf5ff
+}
+table.jplex-datatable tr.even td.highlighted {
+    background:#dbeaff;
+}
+
+table.jplex-datatable tr.selected td,
+table.jplex-datatable tr.selected td.highlighted {
     background:#426fd9;
     color:white;
     cursor:pointer;
+}
+
+table.jplex-datatable tr.hover td,
+table.jplex-datatable tr.hover td.highlighted {
+    background:#b2d2ff;
+    cursor:pointer;
+    color:#222222;
+}
+
+table.jplex-datatable th.sortable {
+    
+}
+table.jplex-datatable th.sortable:hover {
+    cursor:pointer;
+}
+
+table.jplex-datatable th div {
+    white-space:nowrap;
+    margin:0;
+    padding:0.2em 0.5em 0.2em 0.5em;
+}
+table.jplex-datatable th.sortable div {
+    background:url('datatable-sortable.gif') no-repeat scroll right center;
+    padding:0.2em 1.5em 0.2em 0.5em;    
+}
+table.jplex-datatable th.asc div {
+    background:url('datatable-sorted-asc.gif') no-repeat scroll right center;
+}
+table.jplex-datatable th.desc div {
+    background:url('datatable-sorted-desc.gif') no-repeat scroll right center;
 }

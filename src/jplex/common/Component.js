@@ -159,7 +159,7 @@ jPlex.provide('jplex.common.Component', {
      */
     fireEvent: function(eventName, parameters) {
         if(this.getEvent(eventName)) {
-            this.getEvent(eventName).invoke("call", this, parameters);
+            this.getEvent(eventName).invoke('call', this, parameters);
         }
     },
 

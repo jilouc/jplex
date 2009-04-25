@@ -15,7 +15,7 @@
 </head>
 <body>
 <h1>jPlex Datatable Demo</h1>
-
+<table id="pwet"></table>
 
 <script type="text/javascript">
     jPlex.include("jplex.components.Datatable");
@@ -28,28 +28,29 @@
         ]
     };
     var ds = new DataSource(DataSource.TYPE_XML, "datasource.xml", schema);
-
-    var cols = [
-        {label:"C1", key:"C1", formatter: function() {
-            this.setStyle({background:"darkred", color:"white"});
-            return {
-                value: this.retrieve('data'),
-                alignment: 'right',
-                type: 'WOOT'
-            };
+    var formatter = function(row, meta) {
+        if(meta.key === 'pif') {
+            row.setStyle({background:'darkgreen', color:'white'});
+            return;
         }
-        },
-        {label:"C2", key:"C2"} ,
-        {label:"C3", key:"C3", formatter:Datatable.CellFormatter.Currency('USD', true, 4, 2)}
+        Datatable.DefaultRowFormatter(row, meta);
+    };
+    var cols = [
+        {label:"Coin1", key:"C1", sort:Datatable.Sorter.String},
+        {label:"Coin2", key:"C2"} ,
+        {label:"Coin3", key:"C3", formatter:Datatable.CellFormatter.Currency('€', true), sort:Datatable.Sorter.Number}
     ];
-    var dt = new Datatable("pwet", ds, cols, {select:Datatable.SELECT_MULTIPLE});
+    var dt = new Datatable("pwet", ds, cols, {
+        select: Datatable.SELECT_MULTIPLE,
+        rowFormatter: formatter,
+        key: 'C1',
+        sortedBy: {order:Datatable.Sorter.ORDER_ASC,key:'C1'}
+    });
+
     dt.setEvent("onRowSelectionEvent", function(o) {
         console.log(o);
     });
 
-    dt.setEvent("onRowDoubleClickEvent", function(o) {
-        console.log("DBL CLICK : "+(o.column.data || "Unknown"));
-    });
 </script>
 </body>
 </html>
