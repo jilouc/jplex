@@ -39,8 +39,8 @@ fi
 #Then copy the demo files
 
 cd ../demo/stable/
-rm -rf ./static/*
-php ../../dist/dist_demos.php;
+mkdir static
+php ../../dist/dist_demos.php
 
 cp -R assets libs static/;
 
@@ -60,3 +60,4 @@ for i in `find $FINALFILE/demo | grep '\.html$'`; do
 done;
 mv $FINALFILE/demo/stable/static $FINALFILE/demo/
 rm -rf $FINALFILE/demo/stable $FINALFILE/demo/static/libs/assets $FINALFILE/demo/static/libs/jplex.js
+rm -rf ../demo/stable/static
