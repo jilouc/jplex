@@ -29,6 +29,10 @@
             <block name="datepicker_menu"></block>
         </li>
         <li>
+            <a href="?p=menubar">MenuBar</a>
+            <block name="menubar_menu"></block>
+        </li>
+        <li>
             <a href="?p=frame">Frame / Dialog</a>
             <block name="frame_menu"></block>
         </li>
