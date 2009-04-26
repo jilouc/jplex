@@ -1,0 +1,107 @@
+* {
+    margin:0;
+    padding:0;
+}
+
+body {
+    font: 13px / 18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+    background:url('bg.gif') repeat-x;
+    color:#333333;
+}
+
+div#menu {
+    position:fixed;
+    top:0;
+    left:0;
+    padding:2em;
+    height:100%;
+}
+div#menu ul {
+    margin-top:2em;
+}
+div#menu li {
+    list-style:none;
+    line-height:2.4em;
+    background:url('item.png') no-repeat;
+    background-position:left top;
+    padding-left:3em;
+}
+div#menu ol {
+    padding:0 0 2em 2em;
+}
+div#menu ol li {
+    list-style:decimal;
+    background:none;
+    padding-left:0.5em;
+    line-height:1.3em;
+}
+div#menu a, div#menu a:visited {
+    color:#1b3848;
+}
+
+div#main {
+    margin:auto;
+    margin-top:100px;
+    margin-bottom:100px;
+    width:60%;
+}
+
+h1 {
+    color:#666666;
+    font-family:Georgia, serif;
+    margin:0 0 3em 3em; 
+}
+
+h2 {
+    color:#2b6681;
+    border-bottom:1px #dedede solid;
+    font-family:Georgia, serif;
+    margin:2em 0 1em 0;
+    padding-left:24px;
+    background:url('sprocket_light.png') no-repeat;
+}
+
+div#main ul.main {
+    margin:1em 2em 1em 3em;
+    list-style:url('list_item_tiny.gif');
+}
+div#main ul.main li {
+}
+
+dd {
+    border-bottom:1px #dedede dotted;
+    font-weight:bold;
+    background:#eef2f2;
+    padding-left:1.5em;
+}
+dl ul {
+    list-style:url('list_item_tiny.gif');
+    margin:0.5em 3em 0.5em 3em;
+}
+dl li {
+
+    background:none;
+    padding:0;
+}
+
+code {
+    background:#ffffd7;
+    font-weight:bold;
+    padding:0 0.5em 0 0.5em;
+    font-size:12px;
+    font-family: Monaco, Consolas, "Lucida Console", monospace;
+}
+
+pre {
+    margin:1em 2em 1em 2em;
+    border-left:3px #D0D0FF solid;
+    background:#F0F0FF;
+}
+
+pre code {
+    background:none;
+}
+
+span.string {
+    color:#3366CC;
+}

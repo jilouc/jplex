@@ -30,12 +30,8 @@ var jPlex = {
         'scriptaculous'
     ],
     _dependanciesFF2: [
-        'builder',
         'effects',
-        'dragdrop',
-        'controls',
-        'slider',
-        'sound'
+        'dragdrop'
     ],
 
     /**
@@ -48,6 +44,7 @@ var jPlex = {
         'jplex.common.Config',
         'jplex.common.Locale',
         'jplex.common.Component',
+        'jplex.common.DataSource',
         'jplex.xprototype.Core',
         'jplex.xprototype.Date',
         'jplex.xprototype.Element',
@@ -114,7 +111,7 @@ var jPlex = {
     },
 
     /**
-     * This function initialize jPlex if need. If prototype is already loaded, then it won't to anything.
+     * This function initialize jPlex if needed. If prototype is already loaded, then it won't to anything.
      */
     init: function() {
         var scripts = document.getElementsByTagName("script");
@@ -150,7 +147,7 @@ var jPlex = {
      * import XPrototype only). We have foreseen this trick by adding the possibility to use the * as a universal
      * selector.
      * @param {String} path The class/package you want
-     * @param dontdefine Optional - True if you do not want to override the global variable
+     * @param {bool} dontdefine Optional - True if you do not want to override the global variable
      * @return {Class} The provided class, or null if the package did not provide any class or if the * was used.
      */
     include: function(path, dontdefine) {
@@ -257,7 +254,7 @@ var jPlex = {
      * .custom-skin div.menubar { custom properties }
      * ...</code>
      *  
-     * @param {string} skin Name of a "fake" CSS class that will be added to the body of the page.
+     * @param {String} skin Name of a "fake" CSS class that will be added to the body of the page.
      */
     useSkin: function(skin) {
         var root = $(document.body);
