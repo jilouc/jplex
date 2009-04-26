@@ -35,7 +35,21 @@ if [ ! $? = 0 ]; then
     rm -rf $FINALFILE
 fi
 
+
 #Then copy the demo files
+
+cd ../demo/stable/
+rm -rf ./static/*
+php ../../dist/dist_demos.php;
+
+cp -R assets libs static/;
+
+for i in `find static | grep '\.svn$'`; do
+    rm -rf $i;
+done;
+
+cd -
+
 cp -r ../demo $FINALFILE/
 for i in `find $FINALFILE/demo | grep '\.svn$'`; do
     rm -rf $i;
@@ -44,3 +58,5 @@ for i in `find $FINALFILE/demo | grep '\.html$'`; do
     cat $i | sed -e 's/src\/jPlex\.js/jplex\.js/g' | sed -e 's/src\/.*ie7\.css/assets\/jplex-ie7\.css/g' | sed -e 's/src\/.*ie6\.css/assets\/jplex-ie6\.css/g' | sed -e 's/src\/.*\.css/assets\/jplex\.css/g'  > $i.tmp
     mv $i.tmp $i
 done;
+mv $FINALFILE/demo/stable/static $FINALFILE/demo/
+rm -rf $FINALFILE/demo/stable $FINALFILE/demo/static/libs/assets $FINALFILE/demo/static/libs/jplex.js

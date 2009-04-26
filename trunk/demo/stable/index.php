@@ -1,6 +1,6 @@
 <?php
 
-require('libs/templight.class.php');
+require_once('./templight.class.php');
 
 $matches = array();
 
