@@ -10,7 +10,7 @@ import java.nio.channels.FileChannel;
  * @author: Loic Petit
  */
 public class Main {
-    static String prototype = "prototype-1.6.0.3";
+    static String prototype = "prototype-1.6.1_rc2";
     static String[] scriptaculous = {"builder", "effects", "dragdrop", "controls", "slider", "sound"};
 
     private static ErrorReporter errorReporter = new ErrorReporter() {

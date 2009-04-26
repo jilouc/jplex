@@ -65,13 +65,53 @@
 
     <h2><a name="examples">Examples</a></h2>
 
-
+    <div class="info">Click on the title to run the example</div>
+    
+    <block name="examples"></block>
 </div>
 <div id="footer"></div>
 <script type="text/javascript">
     document.observe('dom:loaded', CodeHighlighter.init.bind(CodeHighlighter));
 
+
+    Demos = { examples:$A() };
+    Demos.toggleConfigs = function() {
+        $$('.config tbody, .compact-config, .expand-config').invoke('toggle');
+    };
+    Demos.Example = Class.create({
+        initialize: function(runner, source) {
+            this.alreadyRun = false;
+            var s = source;
+            this.run = runner.wrap(function(proceed) {
+                $(s+'-close').toggle();
+                $(s).toggle();
+                if(!this.alreadyRun) {
+                    this.alreadyRun = true;
+                    return proceed();
+                }
+            }.bind(this));
+        }
+    });
+    Demos.toggleExample = function(e, i) {
+        $('ex'+i+'-close').toggle();
+        $('examples').down('div.example', i-1).toggle();
+        e.stop();
+    };
+    
     <block name="js"></block>
+
+    $$('.compact-config, .expand-config').invoke('observe', 'click', Demos.toggleConfigs);
+    $('examples').select('li').each(function(s, i) {
+        s.insert(' <a id="ex'+(i+1)+'-close" class="close" style="display:none;">(Close)</a>');
+        $('ex'+(i+1)+'-close').observe('click', Demos.toggleExample.bindAsEventListener(s,i+1))
+
+        s.observe('click', Demos.examples[i].run);
+    });
+
+    $$('div.example').each(function(s) {
+        s.toggle();
+
+    });
 </script>
 
 </body>

@@ -99,9 +99,87 @@ pre {
 }
 
 pre code {
+
+}
+
+td code, pre code {
+    font-weight:normal;
     background:none;
 }
 
 span.string {
     color:#3366CC;
+}
+
+div.expand-config, div.compact-config, div.info {
+    margin:auto;
+    width:93%;
+    background:#ffffd7;
+    border:2px #f0f0ff solid;
+    padding:0.2em;
+    text-align:center;
+    cursor:pointer;
+}
+
+table.config {
+    margin:auto;
+    margin-top:1em;
+    margin-bottom:1em;
+    width:94%;
+}
+table.config th {
+    font-weight:bold;
+    border-bottom:3px #D0D0FF solid;
+    border-top:3px #D0D0FF solid;
+    padding:0.2em 0.5em 0.2em 0.5em;
+}
+table.config td {
+    border-bottom:1px #D0D0FF solid;
+    padding:0.2em 0.5em 0.2em 0.5em;
+    vertical-align:top;
+}
+
+table.config tr:hover td {
+    background:#f0f0ff;
+}
+
+ol#examples {
+    margin:0 2em 2em 2em;
+    border-left:3px #f0f0ff solid;
+}
+ol#examples li {
+    font-weight:bold;
+    padding:0.3em 1em 0.3em 1em;
+    cursor:pointer;
+}
+ol#examples li:hover {
+    background:#f0f0ff;
+}
+
+div.example {
+    margin:auto;
+    
+    border-bottom:3px #f0f0ff solid;
+    padding:2em;
+    padding-top:1em;
+}
+
+div.example pre {
+    margin:0.5em 0 2em 0;
+    border-left:0;
+    background:#F0F0FF;
+}
+
+span.info {
+    color:#999999;
+    font-style:italic;
+}
+
+a.close {
+    cursor:pointer;
+    color:#3366CC;
+    font-weight:normal;
+}
+a.close:hover {
+    text-decoration:underline;
 }
