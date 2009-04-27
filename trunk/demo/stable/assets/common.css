@@ -61,6 +61,11 @@ h2 {
     background:url('sprocket_light.png') no-repeat;
 }
 
+h3 {
+    margin:2em 0 1em 3%;
+    font-size:1.1em;
+}
+
 div#main ul.main {
     margin:1em 2em 1em 3em;
     list-style:url('list_item_tiny.gif');
@@ -111,7 +116,9 @@ span.string {
     color:#3366CC;
 }
 
-div.expand-config, div.compact-config, div.info {
+div.expand-config, div.compact-config,
+div.expand-events, div.compact-events,
+div.info {
     margin:auto;
     width:93%;
     background:#ffffd7;
@@ -121,26 +128,36 @@ div.expand-config, div.compact-config, div.info {
     cursor:pointer;
 }
 
-table.config {
+table.config,
+table.events {
     margin:auto;
     margin-top:1em;
     margin-bottom:1em;
     width:94%;
 }
-table.config th {
+
+table.config th,
+table.events th {
     font-weight:bold;
     border-bottom:3px #D0D0FF solid;
     border-top:3px #D0D0FF solid;
     padding:0.2em 0.5em 0.2em 0.5em;
 }
-table.config td {
+table.config td,
+table.events td {
     border-bottom:1px #D0D0FF solid;
     padding:0.2em 0.5em 0.2em 0.5em;
     vertical-align:top;
 }
 
-table.config tr:hover td {
+table.config tr:hover td,
+table.events tr:hover td {
     background:#f0f0ff;
+}
+
+table.config td ul,
+table.events td ul {
+    margin-left:1em;
 }
 
 ol#examples {

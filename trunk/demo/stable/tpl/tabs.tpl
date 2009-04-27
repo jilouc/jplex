@@ -5,6 +5,3 @@
 <block name="tabs_menu">
     <include path="tpl/menu.tpl"/>
 </block>
-<block name="overview">
-    jPlex Tabs plapi plapo
-</block>

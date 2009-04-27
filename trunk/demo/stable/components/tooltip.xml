@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="Tooltip" path="jplex.components.Tooltip">
+    <overview><![CDATA[]]></overview>
+    <releases>
+        <rls name="Nightly"/>
+        <rls name="Pangolin 1.0"/>
+    </releases>
+    <usage><![CDATA[]]></usage>
+    <configuration/>
+    <events/>
+    <examples/>
+</component>

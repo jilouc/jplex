@@ -53,7 +53,7 @@
 
     <h2><a name="overview">Overview</a></h2>
 
-    <block name="overview"></block>
+    <!--%Overview%-->
 
     <h2><a name="changes">Change log</a></h2>
 
@@ -61,13 +61,28 @@
 
     <h2><a name="usage">Usage</a></h2>
 
-    <block name="usage"></block>
+    <!--%Usage%-->
+    
+    <h3>Available configuration parameters:</h3>
+    
+    <div class="expand-config">Click here to expand configuration properties.</div>
+    <div class="compact-config" style="display:none;">Click here to shrink configuration properties.</div>
+    <!--%Configs%-->
+    <div class="compact-config" style="display:none;">Click here to shrink configuration properties.</div>
+
+    <h3>Available events:</h3>
+
+    <div class="expand-events">Click here to expand events list.</div>
+    <div class="compact-events" style="display:none;">Click here to shrink events list.</div>
+    <!--%Events%-->
+    <div class="compact-events" style="display:none;">Click here to shrink events list.</div>
 
     <h2><a name="examples">Examples</a></h2>
 
     <div class="info">Click on the title to run the example</div>
     
-    <block name="examples"></block>
+    <!--%Examples%-->
+    
 </div>
 <div id="footer"></div>
 <script type="text/javascript">
@@ -77,6 +92,9 @@
     Demos = { examples:$A() };
     Demos.toggleConfigs = function() {
         $$('.config tbody, .compact-config, .expand-config').invoke('toggle');
+    };
+    Demos.toggleEvents = function() {
+        $$('.events tbody, .compact-events, .expand-events').invoke('toggle');
     };
     Demos.Example = Class.create({
         initialize: function(runner, source) {
@@ -97,10 +115,15 @@
         $('examples').down('div.example', i-1).toggle();
         e.stop();
     };
-    
-    <block name="js"></block>
+
+    jPlex.include('/***JSPath***/');
+    var runners = [/***JSRunners***/];
+    runners.each(function(s,i) {
+        Demos.examples[i] = new Demos.Example(s, 'ex'+(i+1));
+    });
 
     $$('.compact-config, .expand-config').invoke('observe', 'click', Demos.toggleConfigs);
+    $$('.compact-events, .expand-events').invoke('observe', 'click', Demos.toggleEvents);
     $('examples').select('li').each(function(s, i) {
         s.insert(' <a id="ex'+(i+1)+'-close" class="close" style="display:none;">(Close)</a>');
         $('ex'+(i+1)+'-close').observe('click', Demos.toggleExample.bindAsEventListener(s,i+1))

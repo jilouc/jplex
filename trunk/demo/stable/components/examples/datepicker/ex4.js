@@ -1,0 +1,1 @@
+new Calendar('example-4');

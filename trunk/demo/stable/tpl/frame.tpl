@@ -5,6 +5,3 @@
 <block name="frame_menu">
     <include path="tpl/menu.tpl"/>
 </block>
-<block name="overview">
-    jPlex Frame plapi plapo
-</block>
