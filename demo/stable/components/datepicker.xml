@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component path="jplex.components.Calendar" name="Calendar">
+    <overview><![CDATA[
+        jPlex Calendar / DatePicker provides a simple date picker. Its main features are:
+        <ul class="main">
+            <li>Link it with any text field / button or simply add it statically to the page</li>
+            <li>Browse the dates and the month using arrow keys</li>
+            <li>Go straight to the desired month/year using the fast browse feature</li>
+            <li>Allows single selection and multiple selections</li>
+            <li>Fires custom events at key moments of the component life (selection, rendering, browse...)</li>
+            <li>Fully customizable CSS</li>
+            <li>Handles any date format thanks to jPlex XPrototype's `Date#format`</li>
+            <li>Other configuration options <em>(localization)</em></li>
+        </ul>
+    ]]></overview>
+    <releases>
+        <rls name="Nightly">
+            <feature>Multiple selection allowed : configuration `multiple: true`</feature>
+            <feature>Allow to chose between monday and sunday as 1st day of the week (configuration `startWeekOn`)
+            </feature>
+            <feature>Enhanced navigation when using arrow keys</feature>
+        </rls>
+        <rls name="Pangolin 1.0">
+            <feature>Format the output date as you want, configuration `dateFormat: "d/m/Y"`</feature>
+            <feature>English &amp; French localization, Japanese incomplete</feature>
+            <feature>Browse months and years quickly using or fast browse utility. Click on the month name.</feature>
+            <feature>Navigation through dates and months using up/down/left/right keys and Page Up/Page Down</feature>
+            <feature>Use in combination with text fields or buttons, or static.</feature>
+        </rls>
+    </releases>
+    <usage><![CDATA[
+    The first step basically consists in including the component. It is easy thanks to the embedded packaging system:
+    ``jPlex.include('jplex.components.Calendar');``
+    Then it's easy to create a new calendar:
+    ``var myCal = new Calendar('myCal', config);``
+    where `config` is an object listing all configuration properties of your calendar.
+    ]]></usage>
+    <configuration>
+        <param name="date" default="new Date()"><![CDATA[
+            Thedefault date to select
+        ]]></param>
+        <param name="minDate" default="false"><![CDATA[
+            All dates that are below this one are not allowed
+        ]]></param>
+        <param name="maxDate" default="false"><![CDATA[All dates that are above this one are not allowed]]></param>
+        <param name="dateFormat" default="d-m-Y"><![CDATA[
+            Pattern to format the output string of the calendar (see `jPlex.xprototype.Date#format` for
+            more details)
+        ]]></param>
+        <param name="titleFormat" default="{M} {Y}"><![CDATA[
+            Template for the title of the calendar. You can use 3 tokens: `{M}` the month full name, `{m}` month number,
+            `{Y}` year with 4 digits
+        ]]></param>
+        <param name="fade" default="0.3"><![CDATA[
+            Time in seconds to show/hide the popup calendar. `0` or false` to disable fade
+            in/out.
+        ]]></param>
+        <param name="textField" default="null"><![CDATA[
+            The textfield linked with the calendar (edited when a new date is selected). See the `source`
+            configuration parameter for more details.
+        ]]></param>
+        <param name="source" default="null"><![CDATA[The source element for the calendar. Use one of the following configuration:
+        <ul>
+            <li>`textField = null, source = a text field`: links the calendar to a single text field</li>
+            <li>`textField = a text field, source = a butto``: links the calendar to a button, the
+                result will be printed in the textfield
+            </li>
+            <li>`textField = null, source = a button`: links the calendar to a button, use the custom
+                event `onSelectEvent` to catch the selected date and do what you want with it
+            </li>
+            <li>`textField = null, source = null`: just show a calendar without show/hide things</li>
+        </ul>
+        ]]></param>
+        <param name="fastBrowse" default="true"><![CDATA[If set to `true`, a click on the title of the calendar (month or year)
+            will pop up a tooltip
+            allowing the user to set a value for the month
+        ]]></param>
+        <param name="fastBrowseYearStart" default="(new Date()).getFullYear() - 5"><![CDATA[
+            Minimum year in the combobox for fast browse
+        ]]></param>
+        <param name="fastBrowseYearEnd" default="(new Date()).getFullYear() + 5"><![CDATA[
+            Maximum year in the combobx for fast browse
+        ]]></param>
+        <param name="zBase" default="11000"><![CDATA[The z-index base for the calendar. Adjust the value if some of your elements
+            have z-index interaction
+            with the date picker.
+        ]]></param>
+        <param name="multiselect" default="false"><![CDATA[Allow multiple selections within the calendar. If set to `true`, the
+            associated form control
+            is not automatically updated when a date is selected. You have to use the onSelectEvent` to
+            do what you want.
+        ]]></param>
+        <param name="startWeekOn" default="Calendar.START_SUNDAY"><![CDATA[
+            Give the starting day of the week (Calendar.START_MONDAY or Calendar.START_SUNDAY)
+        ]]></param>
+    </configuration>
+    <events>
+        <event name="onSelectEvent">
+            <params>
+                <param name="date" type="Date">The selected date</param>
+                <param name="selected" type="Array">Array of currently selected dates in the calendar</param>
+            </params>
+            <description>When a new date is selected</description>
+        </event>
+        <event name="onShowEvent">
+            <params/>
+            <description>When the calendar appears (textfield receiving focus for instance).</description>
+        </event>
+        <event name="onHideEvent">
+            <params/>
+            <description>When the calendar disappears (textfield losing focus, new date selected for instance)</description>
+        </event>
+        <event name="onPositionChangeEvent">
+            <params>
+                <param name="position" type="Object">The computed position (position.top and position.left)</param>
+                <param name="position" type="Object">Dimensions of the calendar container (width and height)</param>
+            </params>
+            <description>Called each time the position of the calendar is re-computed</description>
+        </event>
+    </events>
+    <examples>
+        <example html="datepicker/ex1.html" js="datepicker/ex1.js" title="DatePicker from a text field"/>
+        <example html="datepicker/ex2.html" js="datepicker/ex2.js" title="DatePicker from a button. Value linked to a text field. French localization"/>
+        <example html="datepicker/ex3.html" js="datepicker/ex3.js" title="DatePicker from a button. Use of custom event to update form values"/>
+        <example html="datepicker/ex4.html" js="datepicker/ex4.js" title="Static DatePicker on the page"/>
+        <example html="datepicker/ex5.html" js="datepicker/ex5.js" title="DatePicker with multiple selection enabled"/>
+    </examples>
+
+</component>

@@ -5,6 +5,3 @@
 <block name="menubar_menu">
     <include path="tpl/menu.tpl"/>
 </block>
-<block name="overview">
-    jPlex MenuBar plapi plapo
-</block>

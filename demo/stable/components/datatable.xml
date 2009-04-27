@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="Datatable" path="jplex.components.Datatable">
+    <overview><![CDATA[]]></overview>
+    <releases>
+        <rls name="Nightly">
+
+        </rls>
+    </releases>
+    <usage><![CDATA[]]></usage>
+    <configuration/>
+    <events/>
+    <examples/>
+</component>

@@ -5,6 +5,3 @@
 <block name="tooltip_menu">
     <include path="tpl/menu.tpl"/>
 </block>
-<block name="overview">
-    jPlex Tootlip plapi plapo
-</block>

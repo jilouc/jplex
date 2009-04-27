@@ -5,6 +5,3 @@
 <block name="datatable_menu">
     <include path="tpl/menu.tpl"/>
 </block>
-<block name="overview">
-    jPlex Datatable plapi plapo
-</block>

@@ -1,0 +1,20 @@
+HTML code of the example :
+
+<HTML>
+<input type="text" id="example-2-tf"/>
+<input type="button" id="example-2-bt"/>
+</HTML>
+
+This date picker will have French localization and weeks starting on Monday.
+
+<script type="text/javascript">
+new Calendar('example-2', {
+    source: 'example-2-bt',
+    textField: 'example-2-tf',
+    lang: 'fr',
+    startWeekOn: Calendar.START_MONDAY
+});
+</script>
+        
+<input type="text" id="example-2-tf"/>
+<input type="button" id="example-2-bt"/>

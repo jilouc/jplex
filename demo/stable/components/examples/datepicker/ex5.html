@@ -1,0 +1,27 @@
+HTML code of the example :
+
+<HTML><input type="text" id="example-1-tf"/></HTML>
+
+Again, we use the `onSelectEvent` custom event to catch the selected dates. The object parameter
+receives a `selected` field: it's an array containing all selected dates.
+
+<script type="text/javascript">
+    var multiSelect = function(o) {
+        $('example-5-values').update(
+                '&lt;li&gt;' + o.selected.invoke('format', 'Y/m/d').join('&lt;/li&gt;&lt;li&gt;') + '&lt;/li&gt;'
+        );
+    };
+
+    new Calendar('example-5', {
+        source: 'example-5-bt',
+        dateFormat: 'Y/m/d',
+        multiselect: true,
+        events: {
+            onSelectEvent: multiSelect
+        }
+    });
+</script>
+
+<input type="button" id="example-5-bt"/>
+<div style="margin-left:250px;">Selected values:</div>
+<ul id="example-5-values" style="margin-left:250px;"></ul>
