@@ -20,6 +20,13 @@
 <div id="menu">
     <img src="assets/jplex.png" alt="jPlex"/>
     <ul>
+        <li>Common
+            <ul style="margin-top:0">
+                <li style="background:none; padding-left:0;">
+                    <a href="?p=datasource">DataSource</a>
+                </li>
+            </ul>
+        </li>
         <li>
             <a href="?p=datatable">Datatable</a>
             <block name="datatable_menu"></block>

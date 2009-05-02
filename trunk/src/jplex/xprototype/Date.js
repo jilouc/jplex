@@ -11,7 +11,7 @@ Object.extend(Date, {
      * return different result for Date.getYear
      * @property YEAR_OFFSET
      * @static
-     * @type Integer
+     * @type int
      */
     YEAR_OFFSET: Prototype.Browser.IE || Prototype.Browser.Opera ? 0 : 1900
 });
@@ -42,7 +42,7 @@ Object.extend(Date.prototype, {
      * @return {Boolean} true if the date belongs to a leap year
      */
     isLeapYear: function() {
-        var src = this.getYear() + Date.YEAR_OFFSET;
+        var src = this.getFullYear();
         return src % 4 == 0 && (src % 100 != 0 || src % 400 == 0);
     },
 
@@ -83,8 +83,8 @@ Object.extend(Date.prototype, {
      * @param {Date} date to compare
      * @return {Integer} <li>n=0 if the dates are equal</li><li>n<0 if oDate is after</li><li>n>0 if oDate is before</li>
      */
-    compareTo: function(oDate) {
-        return this.getTime() - oDate.getTime();
+    compareTo: function(date) {
+        return this.getTime() - date.getTime();
     },
 
     /**
@@ -132,12 +132,13 @@ Object.extend(Date.prototype, {
         f = f.gsub(/[^dDjlNSwzWFmMntLoYyaABgGhHisueIOPTZ]/, '');
         var tokens = $A(f.toArray()).uniq();
         var tokRep = {};
-        tokens.each(function(s, i) {
+        var first;
+        tokens.each(function(s) {
             switch (s) {
                 case 'd': tokRep.d = d.getDate().toString().lpad(2, '0'); break;
-                case 'D': tokRep.D = Locale.get('Date', 'en').get("DAYS")[d.getDay()]; break;
+                case 'D': tokRep.D = Locale.get('Date', 'en').get("DAYS_SHORT")[d.getDay()]; break; 
                 case 'j': tokRep.j = d.getDate().toString(); break;
-                case 'l': tokRep.l = Locale.get('Date', 'en').get("DAYS_SHORT")[d.getDay()]; break;
+                case 'l': tokRep.l = Locale.get('Date', 'en').get("DAYS")[d.getDay()]; break;
                 case 'N': tokRep.N = d.getDay() == 0 ? 7 : d.getDay() + 1; break;
                 case 'S':
                     var mday = d.getDate();
@@ -150,11 +151,11 @@ Object.extend(Date.prototype, {
                     break;
                 case 'w': tokRep.w = d.getDay(); break;
                 case 'z':
-                    var first = new Date(d.getFullYear(), 0, 1);
+                    first = new Date(d.getFullYear(), 0, 1);
                     tokRep.z = Math.round((d.getTime() - first.getTime()) / 86400000 + 0.5, 0);
                     break;
                 case 'W':
-                    var first = new Date(d.getFullYear(), 0, 1);
+                    first = new Date(d.getFullYear(), 0, 1);
                     tokRep.z = Math.round((d.getTime() - first.getTime()) / 86400000 + first.getDay()/7, 0);
                     break;
                 case 'F': tokRep.F = Locale.get('Date', 'en').get("MONTHS")[d.getMonth()]; break;
@@ -177,8 +178,7 @@ Object.extend(Date.prototype, {
                 case 's': tokRep.s = d.getSeconds().toString().lpad(2,'0'); break;
                 case 'u': throw "Unsupported option (not yet implemented)"; break;
                 case 'e':
-                    var s = d.toString();
-                    tokRep.e = /GMT[+\-0-9]+/.exec(s);
+                    tokRep.e = /GMT[+\-0-9]+/.exec(d.toString());
                     break;
                 case 'I': 
                 case '0':
@@ -194,7 +194,7 @@ Object.extend(Date.prototype, {
             pattern = pattern.gsub(s, "##"+s+"##");
         });
 
-        tokens.each(function(s, i) {
+        tokens.each(function(s) {
             pattern = pattern.gsub("##"+s+"##", tokRep[s]);
         });
         return pattern;

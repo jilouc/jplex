@@ -7,10 +7,6 @@ jPlex.provide("jplex.common.DataSource", function() {
     var CACHE = $H();
     var UID = 0;
 
-    var JSONPath = function(data, path) {
-        return eval(path);
-    };
-
     return {
         initialize: function(type, source, schema, config) {
             this.UID = "jplex-ds-" + (++UID);
@@ -117,18 +113,23 @@ jPlex.provide("jplex.common.DataSource", function() {
 
         parse: function(data) {
             var res;
+            var DS = jplex.common.DataSource;
             switch (this.type) {
-                case jplex.common.DataSource.TYPE_ARRAY:
-                case jplex.common.DataSource.TYPE_FUNCTION:
-                    return data;
-                case jplex.common.DataSource.TYPE_JSON:
-
+                case DS.TYPE_ARRAY:
+                case DS.TYPE_FUNCTION:
+                case DS.TYPE_JSON:
+                          
                     res = $A();
 
                     if (this.config.parser !== null) {
                         res = this.config.parser(data);
                     } else {
-                        var items = eval("data" + (this.schema.root.charAt(0) == '[' ? "" : ".") + this.schema.root);
+                        var items;
+                        if(this.type == DS.TYPE_JSON) {
+                            items = eval("data" + (this.schema.root.charAt(0) == '[' ? "" : ".") + this.schema.root);
+                        } else {
+                            items = data;
+                        }
                         items.each(function(item) {
                             var it = {};
                             if (this.schema.properties.length > 0) {
@@ -143,7 +144,7 @@ jPlex.provide("jplex.common.DataSource", function() {
                         }, this);
                     }
                     return res;
-                case jplex.common.DataSource.TYPE_XML:
+                case DS.TYPE_XML:
 
                     res = $A();
 

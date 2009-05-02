@@ -1,7 +1,7 @@
 jPlex.include("jplex.common.DataSource");
 
 /**
- * My Class description
+ *  
  * @class Datatable
  * @extends  jplex.common.Component
  * @param {String|Element} element ID string or HTML element for the component
