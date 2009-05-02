@@ -16,6 +16,7 @@
 <body>
 <h1>jPlex Datatable Demo</h1>
 <table id="pwet"></table>
+<table id="ProtoString"></table>
 
 <script type="text/javascript">
     jPlex.include("jplex.components.Datatable");
@@ -47,14 +48,45 @@
     ];
     var dt = new Datatable("pwet", ds, cols, {
         select: Datatable.SELECT_MULTIPLE,
-        rowFormatter: formatter
-        //sortedBy: { order:Datatable.Sorter.ORDER_ASC,key:'C1' }
+        rowFormatter: formatter,
+        sortedBy: { order:Datatable.Sorter.ORDER_ASC, key:'Title' }
     });
 
     dt.setEvent("onRowSelectionEvent", function(o) {
         console.log(o);
     });
 
+
+    var f = function(obj) {
+        var res = [];
+        return $H(obj.prototype).inject(res, function(acc, n) {
+            if(Object.isArray(n) && Object.isFunction(n[1])) {
+                acc.push(n);
+            }
+            return acc;
+        });
+    };
+
+    jPlex.include('jplex.components.*');
+
+    var ds3 = new DataSource(DataSource.TYPE_ARRAY, f(jplex.components.Calendar), {
+        properties:[
+            {key:"name", path:'[0]'},
+            {key:"params", path:"[1].argumentNames().join(', '); new Date().format('F, l jS @ H:i:s');"}
+        ]
+    });
+
+    var cols3 = [
+        {label:"Method name", key:"name", sort:Datatable.Sorter.String},
+        {label:"Parameters", key:"params"}
+    ];
+
+    new Datatable("ProtoString", ds3, cols3, {
+        select: Datatable.SELECT_SINGLE,
+        sortedBy: { order:Datatable.Sorter.ORDER_ASC, key:'name' },
+        key: "name"
+    });
+    
 </script>
 </body>
 </html>

@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="Datatable" path="jplex.components.Datatable">
-    <overview><![CDATA[]]></overview>
+    <overview><![CDATA[
+    jPlex's Datatable provides a fast and easy-to-use way to present a data set.
+    You can bind your datable with all sources supported by our `DataSource` utility:
+    <ul class="main">
+        <li>Raw JavaScript array</li>
+        <li>Function returning an array</li>
+        <li>Ajax call to a JSON file</li>
+        <li>Ajax call to a XML file</li>
+    </ul>
+    It also brings some classical features you may expect, such as:
+    <ul class="main">
+        <li>Sort by columns, with support for custom sorters</li>
+        <li>Row formatting, Cell formatting (numbers, dates, currencies)</li>
+        <li>Row selection, including support for modifier keys</li>
+    </ul>
+    ]]></overview>
     <releases>
         <rls name="Nightly">
-
+            <feature>Bind to jPlex available `DataSource` (Arrays, Function, JSON or XML)</feature>
+            <feature>Row selection modes: none, single or multiple. Multiple mode supports modifier keys. Configuration parameter: `select`.</feature>
+            <feature>Rows sorting by column (asc/descending). Configuration ``sortedBy: { order: /*asc or desc*/, key: /*column key*/}`` gives the initial behavior.</feature>
+            <feature>Cell formatters for String (default), Numbers and Currencies (`Datatable.CellFormatter.*`)</feature>
+            <feature>Custom row formatting thanks to the `rowFormatter` configuration parameter.</feature>
+            <feature>Action for double-click on a row (custom event `onRowDoubleClickEvent`) and row selection (`onRowSelectionEvent`)</feature>
         </rls>
     </releases>
     <usage><![CDATA[]]></usage>
