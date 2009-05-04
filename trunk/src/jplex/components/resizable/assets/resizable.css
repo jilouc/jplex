@@ -1,0 +1,10 @@
+a.jplex-resizable-hbr {
+    cursor:se-resize;
+    width:16px;
+    height:16px;
+    background:url('handle-br.png') top left no-repeat;
+    position:absolute;
+    bottom:0;
+    right:0;
+    
+}

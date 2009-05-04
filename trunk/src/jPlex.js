@@ -56,6 +56,7 @@ var jPlex = {
         'jplex.components.MenuBar',
         'jplex.components.MouseOverImage',
         'jplex.components.Overlay',
+        'jplex.components.Resizable',
         'jplex.components.Tabs',
         'jplex.components.Tooltip',
         'jplex.components.Frame',
