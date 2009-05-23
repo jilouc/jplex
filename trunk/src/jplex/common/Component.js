@@ -139,7 +139,9 @@ jPlex.provide('jplex.common.Component', {
         if(!this._events.get(eventName)) {
             this._events.set(eventName, $A([]));
         }
-        this.getEvent(eventName).push(handler.bind(this));
+        [handler].flatten().each(function(h) {
+            this.getEvent(eventName).push(h.bind(this));
+        }, this);
     },
 
     /**
