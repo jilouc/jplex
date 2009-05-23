@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content='text/html; charset=UTF-8'/>
     <link rel="stylesheet" href="syntax-highlighter-1.5.1/css/SyntaxHighlighter.css" type="text/css"/>
-    <link rel="stylesheet" href="../src/jplex/components/menubar/assets/menubar.css" type="text/css"/>
+    <link rel="stylesheet" href="../src/jplex/components/menu/assets/menu.css" type="text/css"/>
     <!--[if IE 6]><link rel="stylesheet" href="../src/jplex/components/menubar/assets/menubar-ie6.css" type="text/css"/><![endif]-->
     <!--[if IE 7]><link rel="stylesheet" href="../src/jplex/components/menubar/assets/menubar-ie7.css" type="text/css"/><![endif]-->
     <script src="../src/jPlex.js" type="text/javascript" charset="utf-8">
@@ -127,7 +127,7 @@ m.getItem(1)
 <script type="text/javascript">
 
 var t = new Date().getTime();
-jPlex.include('jplex.components.MenuBar');
+jPlex.include('jplex.components.menu.MenuBar');
 
 clickHandler = function() {
     var div = new Element("div");
@@ -135,9 +135,9 @@ clickHandler = function() {
         padding: "3px",
         margin: "3px",
         border: "1px #c0efc0 solid"
-    }).update("Trigger Handler for " + this.getDetails().label);
+    }).update("Trigger Handler for " + this.retrieve('label'));
     $("events").appendChild(div);
-}
+};
 
 var myData = [{
     name: "Menu #1",
@@ -180,6 +180,7 @@ var myData = [{
     }]
 }];
 var m = new MenuBar("menubar", {data:myData});
+
 </script>
 </body>
 </html>

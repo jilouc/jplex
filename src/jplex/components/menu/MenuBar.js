@@ -1,5 +1,4 @@
-jPlex.include('jplex.components.menubar.MenuBarItem', false);
-/**
+/*
  * @description !MenuBar component
  * Place a nice menu bar on your page. It's designed as
  * the classical menu bars in applications.
@@ -46,7 +45,8 @@ jPlex.include('jplex.components.menubar.MenuBarItem', false);
  * @requires menubar.Item
  * @constructor
  */
-jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
+jPlex.include('jplex.components.Menu', false);
+jPlex.provide('jplex.components.menu.MenuBar', 'jplex.common.Component', {
 
     _definition: {
         name: "MenuBar",
@@ -58,26 +58,10 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
         },
         events: {
             /**
-             * Event that fires before the rendering of the menu
-             * @event beforeRenderEvent
-             */
-            beforeRenderEvent: Prototype.emptyFunction,
-            /**
-             * Event that fires after the rendering of the menu
-             * @event afterRenderEvent
-             */
-            afterRenderEvent: Prototype.emptyFunction,
-            /**
-             * Event that fires when the menu is clicked
-             * @event onClickEvent
-             * @param {Event} event the DOM Event information
-             */
-            onClickEvent: Prototype.emptyFunction,
-            /**
              * Event that fires when an item is added to the menu
              * When an item is added, the handler is copied to the event of the same name of its submenu.
              * @event onItemAddEvent
-             * @param {menubar.MenuBarItem} item the added item
+             * @param {Element} item the added item
              */
             onItemAddEvent: Prototype.emptyFunction
         },
@@ -99,8 +83,7 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
 
         // Hide the menu when clicking outside of it
         document.observe("click", function(e) {
-            e = Event.extend(window.event ? window.event : e);
-            if (!$(Event.element(e)).up("li.item")) {
+            if (!e.findElement("li.item, li.first")) {
                 this.setActive(false);
                 this.hide();
             }
@@ -111,7 +94,6 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
 
         // IE6 CSS3 Hacks
         // TODO Le faire aussi quand on ajoute des items
-        // TODO Cassé sur IE6 : Le Background apparaît plusieurs fois
         if (Prototype.Browser.IE6) {
             $$("div.jplex-menubar ul.with-icon > li.item-with-icon",
                     "div.jplex-menubar ul.with-icon > li.item-without-icon").each(function(s) {
@@ -129,7 +111,7 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
     render: function() {
         this.fireEvent("beforeRenderEvent");
         this.component.addClassName("jplex-menubar");
-        this.me = new Element("ul");
+        this.me = new Element("ul").addClassName('jplex-menubar');
         
         this.component.appendChild(this.getHTMLElement());
         this.fireEvent("afterRenderEvent");
@@ -140,7 +122,7 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
      */
     hide: function() {
         this._items.each(function(s) {
-            s.getSubmenu().hide();
+            s.retrieve('menu').hide();
         });
     },
 
@@ -152,23 +134,59 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
      * @return {MenuBar} the modified MenuBar (allows chained items adds)
      */
     addItem: function(newItem, before) {
-        var item = new jplex.components.menubar.MenuBarItem(this, newItem, 0);
+        var theItem = new Element('li').addClassName('first').update(newItem.name);
+        var id = 'jplex-submenu-'+theItem.identify();
+        theItem.appendChild(new Element('ul', {
+            id: id
+        }));
+
         if (before) {
-            this.getHTMLElement().insertBefore(item.getHTMLElement(), this._items[before].getHTMLElement());
+            this.getHTMLElement().insertBefore(theItem, this._items[before]);
             var tmp = $A([]);
             for (var i = 0; i < this._items.length; i++) {
                 if (i == before) {
-                    tmp.push(item);
+                    tmp.push(theItem);
                 }
                 tmp.push(this._items[i]);
             }
             this._items = tmp.compact();
         } else {
-            this.getHTMLElement().appendChild(item.getHTMLElement());
-            this._items.push(item);
+            this.getHTMLElement().appendChild(theItem);
+            this._items.push(theItem);
         }
+
+        var menu = new jplex.components.Menu(id, newItem.items, {
+            source: theItem
+        });
+        var that = this;
+        menu.setEvent('onItemAddEvent', this.getEvent('onItemAddEvent'));
+        menu.setEvent('onItemClick', this.getEvent('onItemClick'));
+        menu.setEvent('onItemClick', function(o) {
+            if(o.item.retrieve('submenu').isEmpty()) {
+                that.hide();
+            }
+        });
+        
+        theItem.store('menu', menu);
+        theItem.observe('click', function() {
+            if(menu.component.visible()) {
+                this.setActive(false);
+                menu.hide();
+            } else {
+                this.setActive(true);
+                menu.show();
+            }
+        }.bind(this));
+
+        theItem.observe('mouseover', function() {
+            if(this.isActive() && !menu.component.visible()) {
+                this.hide();
+                menu.show();
+            }
+        }.bind(this));
+
         this.fireEvent("onItemAddEvent", {
-            item: item
+            item: theItem
         });
         return this;
     },
@@ -189,7 +207,9 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
      * @return {MenuBar.Submenu} the submenu of the specified item
      */
     getItem: function(index) {
-        return this._items[index].getSubmenu();
+        console.log(this._items[index].getStorage());
+        return this._items[index].retrieve('menu');
+
     },
 
     /**
@@ -242,12 +262,13 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
      * @return {Array} the items of the menu
      */
     _getData: function() {
+        var MenuBar = jplex.components.menu.MenuBar;
         var data;
-        if (jplex.components.MenuBar.SOURCE_JS_ARRAY == this.cfg("source")) {
+        if (MenuBar.SOURCE_JS_ARRAY == this.cfg("source")) {
             data = this.cfg("data");
-        } else if (jplex.components.MenuBar.SOURCE_AJAX_XML == this.cfg("source")) {
+        } else if (MenuBar.SOURCE_AJAX_XML == this.cfg("source")) {
             // TODO XML Source
-        } else if (jplex.components.MenuBar.SOURCE_AJAX_JSON == this.cfg("source")) {
+        } else if (MenuBar.SOURCE_AJAX_JSON == this.cfg("source")) {
             // TODO JSON Source
         }
         return $A(data);
@@ -262,7 +283,7 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
      * @property _items
      * @type Array
      * @private
-     * @see menubar.MenuBarItem
+     * @see Element
      */
 
     /**
@@ -280,25 +301,25 @@ jPlex.provide('jplex.components.MenuBar', 'jplex.common.Component', {
      */
 });
 
-jPlex.extend('jplex.components.MenuBar', {
+jPlex.extend('jplex.components.menu.MenuBar', {
     /**
      * Configuration constant indicating that menu items comes from a raw JS array
      * @property SOURCE_JS_ARRAY
-     * @type Integer
+     * @type int
      * @static
      */
     SOURCE_JS_ARRAY: 0,
     /**
      * Configuration constant indicating that menu items comes from a XML document
      * @property SOURCE_AJAX_XML
-     * @type Integer
+     * @type int
      * @static
      */
     SOURCE_AJAX_XML: 1,
     /**
      * Configuration constant indicating that menu items comes from a JSON document
      * @property SOURCE_AJAX_JSON
-     * @type Integer
+     * @type int
      * @static
      */
     SOURCE_AJAX_JSON: 2
