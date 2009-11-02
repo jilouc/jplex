@@ -112,7 +112,7 @@ jPlex.provide('jplex.components.frame.Dialog', 'jplex.components.Frame', {
             var ok = new Element('input', {
                 type: 'button',
                 id: this.sID + '-ok',
-                value: this.cfg('okButtonLabel') || true ? this.lang('OK') : this.cfg('okButtonLabel')
+                value: this.cfg('okButtonLabel').blank() ? this.lang('OK') : this.cfg('okButtonLabel')
             });
             down.appendChild(ok);
             ok.observe('click', this._okButtonClick.bind(this));
