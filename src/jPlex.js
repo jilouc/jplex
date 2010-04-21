@@ -26,7 +26,7 @@ var jPlex = {
      * @type Array
      */
     _dependancies: [
-        'prototype-1.6.1_rc2',
+        'prototype-1.6.1',
         'scriptaculous'
     ],
     _dependanciesFF2: [
@@ -63,7 +63,7 @@ var jPlex = {
         'jplex.components.Frame',
         'jplex.components.frame.Dialog',
         'jplex.components.frame.Modal',
-        'jplex.components.frame.FrameSet'
+        'jplex.components.frame.FrameSet' 
     ],
 
     /**

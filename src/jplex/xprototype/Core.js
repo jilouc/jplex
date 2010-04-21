@@ -32,8 +32,9 @@ Object.extend(Prototype.Browser, {
     IE8: Prototype.Browser.IE &&
          navigator.userAgent.indexOf("MSIE 8.0") != -1,
 
-    IElt8: Prototype.Browser.IE6 || Prototype.Browser.IE7
+    IElt8: Prototype.Browser.IE6 || Prototype.Browser.IE7,
 });
+
 var console;
 
 /**

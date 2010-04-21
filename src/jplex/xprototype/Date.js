@@ -13,9 +13,8 @@ Object.extend(Date, {
      * @static
      * @type int
      */
-    YEAR_OFFSET: Prototype.Browser.IE || Prototype.Browser.Opera ? 0 : 1900
+    YEAR_OFFSET: Prototype.Browser.IE || Prototype.Browser.Opera && navigator.appVersion < "9.80" ? 0 : 1900
 });
-
 // Non-static Content
 
 Object.extend(Date.prototype, {
