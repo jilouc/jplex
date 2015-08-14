@@ -1,0 +1,8 @@
+  * [jPlex Pangolin Release](APIPangolin.md)
+  * [Common](APIPangolincommonIndex.md)
+    * [Component](APIPangolincommonComponent.md)
+    * [Config](APIPangolincommonConfig.md)
+    * [Locale](APIPangolincommonLocale.md)
+  * [Components](APIPangolincomponentsIndex.md)
+  * [jPlex](APIPangolinjplexIndex.md)
+  * [XPrototype](APIPangolinxprototypeIndex.md)
